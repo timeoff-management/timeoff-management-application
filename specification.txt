@@ -43,6 +43,54 @@ Admin basic view:
 -- user is emailed with calendar feed
 
 
+Yet to be covered by spec:
+
 Implements users to have only one person that approves their vacations.
 
 Admins can cancel request at any point.
+
+Admins can create absense events on behalf of users.
+
+Each employee can have its own working pattern. For instance she does not work on
+Mondays.
+
+Departments are hierachical - tree like.
+
+Requests could have two types of notes: public notes and private notes: one for
+manager, another for everybody to see on absense event.
+
+Use this as payment processor?
+    * https://stripe.com
+    * Ppaypal
+
+Google keywords for searching competitors: "manage staff leave"
+
+LIST of competitors features:
+
+* http://timetastic.co.uk
+    This is very good design, we need to have something
+    like this. Probably would copy them first.
+
+* https://www.actiplans.com/
+    Those guys look nice as well.
+
+* http://www.leaveplanner.com/leave-planner-features.aspx
+    These guys created nice and clear workflows and UX is nice, but desing is
+    quite out of date.
+
+* http://www.whosoff.com/features/
+    Classics
+
+* http://www.e-days.co.uk/
+    So-so
+
+* http://www.timeoffmanager.com/features.aspx
+    This looks like big provider
+
+* http://www.leavewizard.com/
+    Not sure.
+
+* http://www.annualleave.com/
+    This looks like very old application
+
+* https://leavetrackapp.com/
