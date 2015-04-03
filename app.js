@@ -38,43 +38,25 @@ app.use(require('express-session')({
 app.use(passport.initialize());
 app.use(passport.session());
 
+var dashboard_routes = require('./lib/route/dashboard.js');
 
-var routes = require('./lib/route/index'),
-    dashboard_routes = require('./lib/route/dashboard.js');
+// Custom middlewares
+app.use(function(req,res,next){
+    res.locals.session = req.session;
+
+    next();
+});
+
 
 // Here will be publicly accessible routes
 
-// custom routes
-app.get('/login', function(req, res){
-    res.render('login');
-});
 
-app.post('/login',
-    passport.authenticate('local', {
-        successRedirect: '/',
-        failureRedirect: '/login',
-    })
+// All rotes bellow are only for authenticated users
+app.use(
+    '/',
+    require('./lib/route/index'),
+    require('./lib/route/login')(passport)
 );
-
-
-// Here will be a call to midleware that authentificate user
-//app.use(function(req, res, next){
-//    passport.authenticate('local', function(err, user, info) {
-//        if (err) { return next(err); }
-//        if (!user) {
-//            var err = new Error('Not Found');
-//            err.status = 404;
-//            next(err);
-//        }
-//        req.logIn(user, function(err) {
-//            if (err) { return next(err); }
-//            return res.redirect('/');
-//        });
-//    })(req, res, next);
-//});
-
-// All rotes bellow are only for authentificated users
-app.use('/', routes);
 app.use('/dashboard/', dashboard_routes);
 
 
@@ -84,6 +66,7 @@ app.use(function(req, res, next) {
     err.status = 404;
     next(err);
 });
+
 
 // error handlers
 
