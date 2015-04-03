@@ -6,16 +6,13 @@ var logger       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 
-var routes = require('./lib/route/index'),
-    dashboard_routes = require('./lib/route/dashboard.js');
-
 var app = express();
 
-// view engine setup
+// View engine setup
 var handlebars = require('express-handlebars')
     .create({
-        defaultLayout: 'main',
-        extname: '.hbs',
+        defaultLayout : 'main',
+        extname       : '.hbs',
     });
 app.engine('.hbs', handlebars.engine);
 app.set('view engine', '.hbs');
@@ -30,37 +27,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-
-
-var passport = require('passport')
-  , LocalStrategy = require('passport-local').Strategy;
-
-passport.use(new LocalStrategy(
-    function(username, password, done) {
-        console.log('>>>> ' + username);
-        if (username === 'Pavlo') {
-            return done( null, { id : 12, username : 'Pavlo' });
-        }
-        return done(null, false, { message : 'Incorrect user name!' });
-    }
-));
-passport.serializeUser(function(user, done) {
-    done(null, user.id);
-});
-passport.deserializeUser(function(id, done) {
-    done(null, { name : "Pavlo", id : 12 });
-});
-
+// Setup authentication mechanism
+var passport = require('./lib/passport')();
 
 app.use(require('express-session')({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: false
+    secret            : 'my dirty secret ;khjsdkjahsdajhasdam,nnsnad,',
+    resave            : false,
+    saveUninitialized : false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 
 
+var routes = require('./lib/route/index'),
+    dashboard_routes = require('./lib/route/dashboard.js');
 
 // Here will be publicly accessible routes
 
