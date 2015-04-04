@@ -1,18 +1,17 @@
 <div class="header">
 <nav>
   <ul class="nav nav-pills pull-right">
-    <li role="presentation" {{# if footer_helper.is_home }} class="active"{{/if}}><a href="{{ footer_helper.get_home_url }}">Home</a></li>
-    <li role="presentation" {{# if footer_helper.is_catalogue }} class="active" {{/if}} ><a href="{{ footer_helper.get_catalogue_url }}">Catalogue</a></li>
-    <li role="presentation" {{# if footer_helper.is_contact_us }} class="active" {{/if}}><a href="{{ footer_helper.get_contact_us_url }}">Contact</a></li>
 
     {{# if session.passport.user }}
+        <li role="presentation"><a href="/dashboard/">Dashboard</a></li>
         <li role="presentation"><a href="/logout/">Logout</a></li>
     {{else}}
         <li role="presentation"><a href="/login/">Login</a></li>
     {{/if}}
+
   </ul>
 </nav>
-<h3 class="text-muted">Corner shop</h3>
+<h3 class="text-muted">Vacation Manager</h3>
 </div>   
 
 
