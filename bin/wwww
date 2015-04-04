@@ -2,12 +2,12 @@
 
 var debug = require('debug')('vacation-tracker');
 var app   = require('../app');
-//var model = require("../lib/model/db");
+var model = require("../lib/model/db");
 
 app.set('port', process.env.PORT || 3000);
 
-//model.sequelize.sync().then(function () {
+model.sequelize.sync().then(function () {
   var server = app.listen(app.get('port'), function() {
     debug('Express server listening on port ' + server.address().port);
   });
-//});
+});

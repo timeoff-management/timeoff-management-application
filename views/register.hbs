@@ -1,0 +1,32 @@
+<h1>Register new user</h1>
+
+{{# each error_messages }}
+<div class="alert alert-warning" role="alert">{{ . }}</div>
+{{/each}}
+
+<form action="/register" method="post">
+    <div>
+        <label>Name:</label>
+        <input type="text" name="name"/>
+    </div>
+    <div>
+        <label>Last name:</label>
+        <input type="text" name="lastname"/>
+    </div>
+    <div>
+        <label>Email:</label>
+        <input type="email" name="email"/>
+    </div>
+    <div>
+        <label>Password:</label>
+        <input type="password" name="password"/>
+    </div>
+    <div>
+        <label>Confirm password:</label>
+        <input type="password" name="password_confirmed"/>
+    </div>
+ 
+    <div>
+        <input type="submit" value="Sign up!"/>
+    </div>
+</form>
