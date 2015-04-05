@@ -40,9 +40,42 @@ app.use(passport.session());
 
 var dashboard_routes = require('./lib/route/dashboard.js');
 
+
 // Custom middlewares
+//
+// Make sure session object is available in templates
 app.use(function(req,res,next){
     res.locals.session = req.session;
+
+    next();
+});
+
+// Move flash object out of session and place it in to locals
+// so template is aware of it
+app.use(function(req, res, next){
+    res.locals.flash = req.session.flash;
+    delete req.session.flash;
+
+    var install_flash_array = function(key) {
+
+        return function(error_message){
+            if ( ! this._flash  ) {
+                this._flash = {};
+            } 
+            if ( ! this._flash[key] ) {
+                this._flash[key] = [];
+            }
+
+            if (Array.isArray(error_message)) {
+                this._flash[key].concat( error_message );
+            } else {
+                this._flash[key].push( error_message );
+            }
+        };
+    };
+
+//    req.session.flash_error = install_flash_array('errors'); 
+//    req.session.flash_error = install_flash_array('messages'); 
 
     next();
 });

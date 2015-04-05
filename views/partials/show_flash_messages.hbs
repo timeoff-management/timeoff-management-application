@@ -1,0 +1,15 @@
+
+{{# if flash }}
+    {{#if flash.errors }}
+        {{# each flash.errors }}
+            <div class="alert alert-danger" role="alert">{{ . }}</div>
+        {{/each}}
+    {{/if}}
+    {{#if flash.messages }}
+        {{# each flash.messages }}
+            <div class="alert alert-success" role="alert">{{ . }}</div>
+        {{/each}}
+    {{/if}}
+{{/if}}
+
+

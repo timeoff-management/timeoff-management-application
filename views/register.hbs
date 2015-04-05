@@ -1,13 +1,6 @@
 <h1>Register new user</h1>
 
-{{# each error_messages }}
-<div class="alert alert-danger" role="alert">{{ . }}</div>
-{{/each}}
-{{# each messages }}
-<div class="alert alert-success" role="alert">{{ . }}</div>
-{{/each}}
-
-
+{{> show_flash_messages }}
 
 <form action="/register" method="post">
     <div>
