@@ -94,3 +94,6 @@ LIST of competitors features:
     This looks like very old application
 
 * https://leavetrackapp.com/
+
+* http://www.teamseer.com
+    Looks like big player. I like their public website design.
