@@ -50,41 +50,8 @@ app.use(function(req,res,next){
     next();
 });
 
-// Move flash object out of session and place it in to locals
-// so template is aware of it
-// TODO this should be placed as separate middleware
-app.use(function(req, res, next){
-    res.locals.flash = req.session.flash;
-    delete req.session.flash;
-
-    // TODO provide proper docs
-    var install_flash_array = function(key) {
-
-        return function(error_message){
-            if ( ! this.flash  ) {
-                this.flash = {};
-            } 
-            if ( ! Array.isArray( this.flash[key] ) ) {
-                this.flash[key] = [];
-            }
-
-            if (Array.isArray(error_message)) {
-                this.flash[key] = this.flash[key].concat( error_message );
-            } else {
-                this.flash[key].push( error_message );
-            }
-        };
-    };
-
-    req.session.flash_error   = install_flash_array('errors'); 
-    req.session.flash_message = install_flash_array('messages'); 
-
-    req.session.flash_has_errors = function(){
-        return Array.isArray( this.flash.errors ) && this.flash.errors.length > 0;
-    };
-
-    next();
-});
+// Enable flash messages within session
+app.use( require('./lib/middleware/flash_messages') );
 
 
 // Here will be publicly accessible routes
