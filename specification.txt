@@ -73,6 +73,7 @@ LIST of competitors features:
     
     their reviews: http://www.reviews.co.uk/company-reviews/store/timetastic
     
+    their FAQ: https://timetastic.zendesk.com/hc/en-us
     
     
 
