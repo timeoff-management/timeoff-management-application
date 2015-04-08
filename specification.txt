@@ -70,6 +70,12 @@ LIST of competitors features:
 * http://timetastic.co.uk
     This is very good design, we need to have something
     like this. Probably would copy them first.
+    
+    their reviews: http://www.reviews.co.uk/company-reviews/store/timetastic
+    
+    their FAQ: https://timetastic.zendesk.com/hc/en-us
+    
+    
 
 * https://www.actiplans.com/
     Those guys look nice as well.
