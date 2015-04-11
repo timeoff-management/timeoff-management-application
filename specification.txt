@@ -106,3 +106,15 @@ LIST of competitors features:
 
 
 How about domain name of: timeoff.management?
+
+
+
+
+== Ideas of web application structure.
+
+The web application is going to have following structure:
+
+/          -> (public/private) -> main page, shows either description and link to the register form, or dashboard if user is logged in.
+/register/ -> (public)         -> page allows user to register new company
+/login/    -> (public)         -> login page
+/logout/   -> (private)        -> logout page
