@@ -12,9 +12,12 @@ var test           = require('selenium-webdriver/testing'),
 
 describe('Try to access private pages with guest user', function(){
 
+    // The app is really slow and does not manage to handle request in
+    // default 2 seconds, so be more patient.
+    this.timeout(50000);
+
     test.it('Check logout page', function(done) {
 
-        // Create new instance of driver
         var driver = new webdriver.Builder()
             .withCapabilities(webdriver.Capabilities.chrome())
             .build();
@@ -24,6 +27,21 @@ describe('Try to access private pages with guest user', function(){
         driver.getCurrentUrl()
             .then(function(url){
                 expect(url).to.be.equal(application_host);
+            });
+        driver.quit().then(function(){ done(); });
+    });
+
+    test.it('Check main (dashboard) page', function(done) {
+
+        var driver = new webdriver.Builder()
+            .withCapabilities(webdriver.Capabilities.chrome())
+            .build();
+
+        // Open front page
+        driver.get( application_host);
+        driver.getTitle()
+            .then(function(title){
+                expect(title).to.be.equal('Time off management');
             });
         driver.quit().then(function(){ done(); });
     });

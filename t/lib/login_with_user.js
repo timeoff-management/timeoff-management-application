@@ -83,6 +83,11 @@ module.exports = Promise.promisify(function(args, callback){
       expect(text).to.be.equal('Dashboard');
     });
 
+  driver.getTitle()
+    .then(function(title){
+        expect(title).to.be.equal('Dashboard');
+    });
+
   driver
     .findElement(
       By.css('div.alert-success')

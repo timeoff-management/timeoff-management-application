@@ -38,7 +38,6 @@ app.use(require('express-session')({
 app.use(passport.initialize());
 app.use(passport.session());
 
-var dashboard_routes = require('./lib/route/dashboard.js');
 
 
 // Custom middlewares
@@ -57,13 +56,13 @@ app.use( require('./lib/middleware/flash_messages') );
 // Here will be publicly accessible routes
 
 
-// All rotes bellow are only for authenticated users
 app.use(
     '/',
-    require('./lib/route/index'),
-    require('./lib/route/login')(passport)
+    require('./lib/route/login')(passport),
+
+    // All rotes bellow are only for authenticated users
+    require('./lib/route/dashboard.js')
 );
-app.use('/dashboard/', dashboard_routes);
 
 
 // catch 404 and forward to error handler
