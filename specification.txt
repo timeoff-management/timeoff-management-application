@@ -118,3 +118,10 @@ The web application is going to have following structure:
 /register/ -> (public)         -> page allows user to register new company
 /login/    -> (public)         -> login page
 /logout/   -> (private)        -> logout page
+
+
+== NEXT TODO:
+
+* settings management
+** edit company details
+** CRUD for departments
