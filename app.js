@@ -64,6 +64,11 @@ app.use(
     require('./lib/route/dashboard.js')
 );
 
+app.use(
+    '/settings/',
+    require('./lib/route/settings.js')
+);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
