@@ -5,8 +5,36 @@
 
 <p>Company settings</p>
 
-
 {{> show_flash_messages }}
+
+<form class="form-horizontal">
+  <div class="form-group">
+    <label for="company_name" class="col-sm-2 control-label">Company name</label>
+    <div class="col-sm-10">
+      <input class="form-control" id="company_name" placeholder="Our company name" value="{{company.name}}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox"> Remember me
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">Sign in</button>
+    </div>
+  </div>
+</form>
 
 
 
