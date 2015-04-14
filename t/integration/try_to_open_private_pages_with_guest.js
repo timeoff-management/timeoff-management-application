@@ -22,6 +22,7 @@ describe('Try to access private pages with guest user', function(){
 
 
         Promise.all(_.map(
+          // Add more URLs to check into the array below
           ['logout/', 'settings/company/'],
           function(path) {
 
