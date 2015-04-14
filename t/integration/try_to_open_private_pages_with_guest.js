@@ -6,7 +6,9 @@ var test           = require('selenium-webdriver/testing'),
     new_user_email,
     webdriver = require('selenium-webdriver'),
     By        = require('selenium-webdriver').By,
-    expect    = require('chai').expect;
+    expect    = require('chai').expect,
+    _         = require('underscore'),
+    Promise   = require("bluebird");
 
 
 
@@ -18,22 +20,24 @@ describe('Try to access private pages with guest user', function(){
 
     test.it('Check logout page', function(done) {
 
-        ['logout/', 'settings/company/']
 
-        .map(function(path){
+        Promise.all(_.map(
+          ['logout/', 'settings/company/'],
+          function(path) {
 
-            var driver = new webdriver.Builder()
-                .withCapabilities(webdriver.Capabilities.chrome())
-                .build();
+              var driver = new webdriver.Builder()
+                  .withCapabilities(webdriver.Capabilities.chrome())
+                  .build();
 
-            // Open front page
-            driver.get( application_host + path);
-            driver.getCurrentUrl()
-                .then(function(url){
-                    expect(url).to.be.equal(application_host);
-                });
-            driver.quit().then(function(){ done(); });
-        });
+              // Open front page
+              driver.get( application_host + path);
+              driver.getCurrentUrl()
+                  .then(function(url){
+                      expect(url).to.be.equal(application_host);
+                  });
+              return driver.quit();
+          }))
+          .then(function(){ done(); });
     });
 
     test.it('Check main (dashboard) page', function(done) {
