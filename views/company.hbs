@@ -7,31 +7,29 @@
 
 {{> show_flash_messages }}
 
-<form class="form-horizontal">
+<form class="form-horizontal" method="POST">
   <div class="form-group">
-    <label for="company_name" class="col-sm-2 control-label">Company name</label>
+    <label for="input_company_name" class="col-sm-2 control-label">Company name</label>
     <div class="col-sm-10">
-      <input class="form-control" id="company_name" placeholder="Our company name" value="{{company.name}}">
+      <input class="form-control" id="input_company_name" placeholder="Our company name" value="{{company.name}}" name="name">
     </div>
   </div>
   <div class="form-group">
-    <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+    <label for="input_country" class="col-sm-2 control-label">Country</label>
     <div class="col-sm-10">
-      <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+      <input class="form-control" id="input_country" value="{{company.country}}" name="country">
     </div>
   </div>
+  <div class="form-group">
+    <label for="input_year_starts" class="col-sm-2 control-label">Year starts on</label>
+    <div class="col-sm-10">
+      <input class="form-control" id="input_year_starts" value="{{company.start_of_new_year}}" name="year_starts">
+    </div>
+  </div>
+ 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <div class="checkbox">
-        <label>
-          <input type="checkbox"> Remember me
-        </label>
-      </div>
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-default">Sign in</button>
+      <button type="submit" class="btn btn-default">Sace changes</button>
     </div>
   </div>
 </form>
