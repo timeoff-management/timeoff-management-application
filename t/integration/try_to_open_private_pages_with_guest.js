@@ -18,17 +18,22 @@ describe('Try to access private pages with guest user', function(){
 
     test.it('Check logout page', function(done) {
 
-        var driver = new webdriver.Builder()
-            .withCapabilities(webdriver.Capabilities.chrome())
-            .build();
+        ['logout/', 'settings/company/']
 
-        // Open front page
-        driver.get( application_host + 'logout/');
-        driver.getCurrentUrl()
-            .then(function(url){
-                expect(url).to.be.equal(application_host);
-            });
-        driver.quit().then(function(){ done(); });
+        .map(function(path){
+
+            var driver = new webdriver.Builder()
+                .withCapabilities(webdriver.Capabilities.chrome())
+                .build();
+
+            // Open front page
+            driver.get( application_host + path);
+            driver.getCurrentUrl()
+                .then(function(url){
+                    expect(url).to.be.equal(application_host);
+                });
+            driver.quit().then(function(){ done(); });
+        });
     });
 
     test.it('Check main (dashboard) page', function(done) {
@@ -45,6 +50,5 @@ describe('Try to access private pages with guest user', function(){
             });
         driver.quit().then(function(){ done(); });
     });
-
 
 });
