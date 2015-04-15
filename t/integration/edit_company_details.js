@@ -21,43 +21,86 @@ describe('Register new user', function(){
 
     // Performing registration process
     register_new_user_func({
-      application_host : application_host,
-    })
-
-    .then(function(data){
-      new_user_email = data.email;
-
-      // Checking that new user can login
-      return login_user_func({
         application_host : application_host,
-        user_email       : new_user_email,
-      });
-
     })
 
+    // Login with newly created user
     .then(function(data){
+        new_user_email = data.email;
 
+        // Checking that new user can login
+        return login_user_func({
+            application_host : application_host,
+            user_email       : new_user_email,
+        });
+    })
+
+    // Open page for editing company details
+    .then(function(data){
         return open_page_func({
             url    : application_host + 'settings/company',
             driver : data.driver,
         });
-
     })
 
+    // Try to submit form with incorrect company name
     .then(function(data){
-
         return submit_form_func({
-            driver : data.driver,
+            driver      : data.driver,
+            form_params : [{
+                selector : 'input[name="name"]',
+                value    : '<script>Test companu ltd',
+            }],
+            message : /Name should contain only letters and numbers/,
         });
-
     })
 
-
-
+    // Check that country allows to add only letters and number (no spaces)
     .then(function(data){
+         return submit_form_func({
+            driver      : data.driver,
+            form_params : [{
+                selector : 'input[name="country"]',
+                value    : 'United Kingdom',
+            }],
+            message : /Country should contain only letters and numbers/,
+        });   
+    })
 
-      // Close browser;
-      data.driver.quit().then(function(){ done(); });
+    // Check that start of the year is validated correctly
+    .then(function(data){
+         return submit_form_func({
+            driver      : data.driver,
+            form_params : [{
+                selector : 'input[name="year_starts"]',
+                value    : 'January',
+            }],
+            message : /Start of the year should be a month number/,
+        });   
+    })
+
+    // Check that company is been updated if valid values are submitted
+    .then(function(data){
+        return submit_form_func({
+            driver      : data.driver,
+            form_params : [{
+                selector : 'input[name="name"]',
+                value    : 'Test companu ltd',
+            },{
+                selector : 'input[name="country"]',
+                value    : 'UA',
+            },{
+                 selector : 'input[name="year_starts"]',
+                 value    : '3',
+            }],
+            message : /successfully/i,
+            should_be_successful : true,
+        });
+    })
+
+    // Close browser;
+    .then(function(data){
+        data.driver.quit().then(function(){ done(); });
     });
 
   });
