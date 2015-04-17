@@ -1,0 +1,16 @@
+
+{{> header }}
+
+<h1>Departments</h1>
+
+<p>Departments settings</p>
+
+{{#each departments}}
+<p>
+    {{name}} {{allowence}} {{include_public_holidays}} {{.}}
+</p>
+{{/each}}
+
+{{> show_flash_messages }}
+
+{{> footer }}
