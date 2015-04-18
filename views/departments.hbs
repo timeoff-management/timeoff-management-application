@@ -3,26 +3,71 @@
 
 <h1>Departments</h1>
 
-<p>Departments settings</p>
+<div class="row">
+    <div class="col-md-3">Departments settings</div>
+    <div class="col-md-3 col-md-offset-6">
+        <button type="button" class="pull-right btn btn-info">Add new</button>
+    </div>
+</div>
+
+<div class="row">&nbsp;</div>
+
+{{> show_flash_messages }}
+
+<div class="row">
+    <div class="col-md-4">Department</div>
+    <div class="col-md-3">Allowence</div>
+    <div class="col-md-3">Manager</div>
+    <div class="col-md-2">Users</div>
+</div>
+
+<div class="row">&nbsp;</div>
 
 {{#each departments}}
 <div class="row">
-    <div class="col-md-4">{{name}}</div>
-    <div class="col-md-1">{{allowence}}</div>
-    <div class="col-md-1">{{include_public_holidays}}</div>
+
+    <div class="col-md-4">
+        <input type="text" class="form-control" value="{{name}}">
+    </div>
+
+    <div class="col-md-1">
+        <select class="form-control">
+            {{#each ../allowence_options}}
+            <option value="{{value}}" {{#if_equal this.value ../allowence}} selected="selected"{{/if_equal}}>{{value}}</option>
+            {{/each}}
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <input id="inlude_public_holidays" type="checkbox" {{#if include_public_holidays}}checked="checked"{{/if}}>
+        <label for="include_public_holidays" class="control-label">Public holidays</label>
+    </div>
+
     <div class="col-md-3">
-        <select>
+        <select class="form-control">
         {{#each ../company.users}}
             <option {{#if_equal this.id ../bossId}} selected="selected"{{/if_equal}}>{{this.name}}</option>
         {{/each}}
         </select>
 
    </div>
+
     <div class="col-md-1">{{this.users.length}}</div>
-    <div class="col-md-2">X</div>
+
+    <div class="col-md-1">
+        <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
 </div>
 {{/each}}
 
-{{> show_flash_messages }}
+<div class="row">&nbsp;</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <button type="button" class="btn btn-success">Save changes</button>
+    </div>
+</div>
+
+<div class="row">&nbsp;</div>
 
 {{> footer }}
