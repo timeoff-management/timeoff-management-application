@@ -13,7 +13,18 @@ var handlebars = require('express-handlebars')
     .create({
         defaultLayout : 'main',
         extname       : '.hbs',
+        helpers : {
+            // Handlebars does not allow to have conditions in IF, here is
+            // workaround picked from here: http://stackoverflow.com/questions/8853396/logical-operator-in-a-handlebars-js-if-conditional
+            if_equal :  function(v1, v2, options){
+                if(v1 === v2) {
+                    return options.fn(this);
+                }
+                return options.inverse(this);
+            },
+        }
     });
+
 app.engine('.hbs', handlebars.engine);
 app.set('view engine', '.hbs');
 

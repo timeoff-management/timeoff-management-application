@@ -6,9 +6,21 @@
 <p>Departments settings</p>
 
 {{#each departments}}
-<p>
-    {{name}} {{allowence}} {{include_public_holidays}} {{.}}
-</p>
+<div class="row">
+    <div class="col-md-4">{{name}}</div>
+    <div class="col-md-1">{{allowence}}</div>
+    <div class="col-md-1">{{include_public_holidays}}</div>
+    <div class="col-md-3">
+        <select>
+        {{#each ../company.users}}
+            <option {{#if_equal this.id ../bossId}} selected="selected"{{/if_equal}}>{{this.name}}</option>
+        {{/each}}
+        </select>
+
+   </div>
+    <div class="col-md-1">{{this.users.length}}</div>
+    <div class="col-md-2">X</div>
+</div>
 {{/each}}
 
 {{> show_flash_messages }}
