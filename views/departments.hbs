@@ -3,6 +3,8 @@
 
 <h1>Departments</h1>
 
+{{> show_flash_messages }}
+
 <div class="row">
     <div class="col-md-3">Departments settings</div>
     <div class="col-md-3 col-md-offset-6">
@@ -12,8 +14,6 @@
 
 <div class="row">&nbsp;</div>
 
-{{> show_flash_messages }}
-
 <div class="row">
     <div class="col-md-4">Department</div>
     <div class="col-md-3">Allowence</div>
@@ -22,16 +22,17 @@
 </div>
 
 <div class="row">&nbsp;</div>
+<form method="post" action="/settings/departments/">
 
 {{#each departments}}
 <div class="row">
 
     <div class="col-md-4">
-        <input type="text" class="form-control" value="{{name}}">
+        <input type="text" class="form-control" value="{{name}}" name="name__{{@index}}">
     </div>
 
     <div class="col-md-1">
-        <select class="form-control">
+        <select class="form-control" name="allowence__{{@index}}">
             {{#each ../allowence_options}}
             <option value="{{value}}" {{#if_equal this.value ../allowence}} selected="selected"{{/if_equal}}>{{value}}</option>
             {{/each}}
@@ -39,12 +40,12 @@
     </div>
 
     <div class="col-md-2">
-        <input id="inlude_public_holidays" type="checkbox" {{#if include_public_holidays}}checked="checked"{{/if}}>
+        <input name="include_publick_holidays__{{this.id}}" id="inlude_public_holidays" type="checkbox" {{#if include_public_holidays}}checked="checked"{{/if}}>
         <label for="include_public_holidays" class="control-label">Public holidays</label>
     </div>
 
     <div class="col-md-3">
-        <select class="form-control">
+        <select class="form-control" name="boss_id__{{@index}}">
         {{#each ../company.users}}
             <option {{#if_equal this.id ../bossId}} selected="selected"{{/if_equal}}>{{this.name}}</option>
         {{/each}}
@@ -64,9 +65,11 @@
 
 <div class="row">
     <div class="col-md-4">
-        <button type="button" class="btn btn-success">Save changes</button>
+        <button type="submit" class="btn btn-success">Save changes</button>
     </div>
 </div>
+
+</form>
 
 <div class="row">&nbsp;</div>
 
