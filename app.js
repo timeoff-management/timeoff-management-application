@@ -56,7 +56,11 @@ app.use(passport.session());
 // Make sure session object is available in templates
 app.use(function(req,res,next){
     res.locals.session = req.session;
+    next();
+});
 
+app.use(function(req,res,next){
+    res.locals.custom_java_script = [];
     next();
 });
 
