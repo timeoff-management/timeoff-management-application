@@ -40,14 +40,14 @@
     </div>
 
     <div class="col-md-2">
-        <input name="include_publick_holidays__{{this.id}}" id="inlude_public_holidays" type="checkbox" {{#if include_public_holidays}}checked="checked"{{/if}}>
+        <input name="include_public_holidays__{{@index}}" id="include_public_holidays" type="checkbox" {{#if include_public_holidays}}checked="checked"{{/if}}>
         <label for="include_public_holidays" class="control-label">Public holidays</label>
     </div>
 
     <div class="col-md-3">
         <select class="form-control" name="boss_id__{{@index}}">
         {{#each ../company.users}}
-            <option {{#if_equal this.id ../bossId}} selected="selected"{{/if_equal}}>{{this.name}}</option>
+            <option value="{{this.id}}" {{#if_equal this.id ../bossId}} selected="selected"{{/if_equal}}>{{this.name}}</option>
         {{/each}}
         </select>
 
