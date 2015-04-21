@@ -22,6 +22,9 @@
 </div>
 
 <div class="row">&nbsp;</div>
+
+<form id="delete_form" method="post" action="/settings/departments/delete/"></form>
+
 <form method="post" action="/settings/departments/">
 
 {{#each departments}}
@@ -56,7 +59,7 @@
     <div class="col-md-1">{{this.users.length}}</div>
 
     <div class="col-md-1">
-        <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" aria-label="Close" value="{{@index}}"><span aria-hidden="true">&times;</span></button>
     </div>
 </div>
 
