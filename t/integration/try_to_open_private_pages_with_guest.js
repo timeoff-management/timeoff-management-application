@@ -23,7 +23,10 @@ describe('Try to access private pages with guest user', function(){
 
         Promise.all(_.map(
           // Add more URLs to check into the array below
-          ['logout/', 'settings/company/'],
+          [
+              'logout/', 'settings/company/', 'settings/departments/',
+              'settings/bankholidays/'
+          ],
           function(path) {
 
               var driver = new webdriver.Builder()

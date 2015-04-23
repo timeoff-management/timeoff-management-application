@@ -38,7 +38,7 @@ describe('Edit company details', function(){
     // Open page for editing company details
     .then(function(data){
         return open_page_func({
-            url    : application_host + 'settings/company',
+            url    : application_host + 'settings/departments/',
             driver : data.driver,
         });
     })
