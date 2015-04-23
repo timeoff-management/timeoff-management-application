@@ -28,15 +28,21 @@ module.exports = Promise.promisify( function(args, callback){
                 driver
                 .findElement(By.css( test_case.selector ))
                 .then(function(el){
-                    el.clear().then(function(){
-                        el.sendKeys( test_case.value );
-                    });
+                    if ( test_case.option_selector ) {
+                        el.click();
+                        return el.findElement(By.css( test_case.option_selector ))
+                          .then(function(el){ return el.click(); });
+                    } else {
+                        return el.clear().then(function(){
+                            el.sendKeys( test_case.value );
+                        });
+                    }
                 });
             })
     ]);
 
 
-    // Submit the form 
+    // Submit the form
     driver
         .findElement( By.css('button[type="submit"]') )
         .then(function(el){
