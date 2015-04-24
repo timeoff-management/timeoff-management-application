@@ -43,7 +43,7 @@ describe('Edit company details', function(){
         });
     })
 
-    // Try to submit form with incorrect company name
+    // Try to submit form with incorrect department name
     .then(function(data){
         return submit_form_func({
             driver      : data.driver,
@@ -55,7 +55,7 @@ describe('Edit company details', function(){
         });
     })
 
-    // Check that country allows to add only letters and number (no spaces)
+    // Check that updating departnebt allowence and Use allowence flag works
     .then(function(data){
          return submit_form_func({
             driver      : data.driver,
@@ -63,24 +63,38 @@ describe('Edit company details', function(){
                 selector        : 'select[name="allowence__0"]',
                 option_selector : 'option[value="50"]',
                 value : '50',
+            },{
+                selector : 'input[name="include_public_holidays__0"]',
+                tick     : true,
+                value    : 'off',
             }],
             should_be_successful : true,
             message : /Changes to departments were saved/,
         });
     })
 
-//    // Check that start of the year is validated correctly
-//    .then(function(data){
-//         return submit_form_func({
-//            driver      : data.driver,
-//            form_params : [{
-//                selector : 'input[name="year_starts"]',
-//                value    : 'January',
-//            }],
-//            message : /Start of the year should be a month number/,
-//        });
-//    })
-//
+    // Do check box once again just to check that its value keeps changing
+    .then(function(data){
+         return submit_form_func({
+            driver      : data.driver,
+            form_params : [{
+                selector : 'input[name="include_public_holidays__0"]',
+                tick     : true,
+                value    : 'on',
+            }],
+            should_be_successful : true,
+            message : /Changes to departments were saved/,
+        });
+    })
+
+
+    // TODO:
+    //  * alphabetick order is respoct in
+    //  ** presentation
+    //  ** editing
+    //  ** removing
+    //  * cannot remove if there are users in that department
+    //
 //    // Check that company is been updated if valid values are submitted
 //    .then(function(data){
 //        return submit_form_func({
