@@ -6,6 +6,7 @@ var test                 = require('selenium-webdriver/testing'),
   login_user_func        = require('../lib/login_with_user'),
   open_page_func         = require('../lib/open_page'),
   submit_form_func       = require('../lib/submit_form'),
+  check_elements_func    = require('../lib/check_elements'),
   application_host       = 'http://localhost:3000/',
   new_user_email;
 
@@ -87,32 +88,68 @@ describe('Edit company details', function(){
         });
     })
 
+    // Add mew "Marketing" deprtament
+    .then(function(data){
+         return submit_form_func({
+            driver      : data.driver,
+            form_params : [{
+                selector : '#add_new_department_btn',
+                tick     : true,
+            },{
+                selector : 'input[name="name__new"]',
+                value : 'Marketing',
+            },{
+                selector        : 'select[name="allowence__new"]',
+                option_selector : 'option[value="10"]',
+                value : '10',
+            }],
+            message : /Changes to departments were saved/,
+        });
+    })
+
+    // Add mew "Engineering" deprtament
+    .then(function(data){
+         return submit_form_func({
+            driver      : data.driver,
+            form_params : [{
+                selector : '#add_new_department_btn',
+                tick     : true,
+            },{
+                selector : 'input[name="name__new"]',
+                value : 'Engineering',
+            },{
+                selector        : 'select[name="allowence__new"]',
+                option_selector : 'option[value="15"]',
+                value : '15',
+            }],
+            message : /Changes to departments were saved/,
+        });
+    })
+
+    // Check the order of departments on the page: should be by ID
+    .then(function(data){
+        return check_elements_func({
+            driver : data.driver,
+            elements_to_check : [{
+                selector : 'input[name="name__0"]',
+                value    : 'Engineering',
+            },{
+                selector : 'input[name="name__1"]',
+                value    : 'Marketing',
+            },{
+                selector : 'input[name="name__2"]',
+                value    : 'Sales',
+            }],
+        });
+    })
+
 
     // TODO:
     //  * alphabetick order is respoct in
-    //  ** presentation
     //  ** editing
     //  ** removing
     //  * cannot remove if there are users in that department
     //
-//    // Check that company is been updated if valid values are submitted
-//    .then(function(data){
-//        return submit_form_func({
-//            driver      : data.driver,
-//            form_params : [{
-//                selector : 'input[name="name"]',
-//                value    : 'Test companu ltd',
-//            },{
-//                selector : 'input[name="country"]',
-//                value    : 'UA',
-//            },{
-//                 selector : 'input[name="year_starts"]',
-//                 value    : '3',
-//            }],
-//            message : /successfully/i,
-//            should_be_successful : true,
-//        });
-//    })
 
     // Close browser;
     .then(function(data){

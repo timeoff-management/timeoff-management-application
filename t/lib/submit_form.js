@@ -1,10 +1,11 @@
 'use strict';
 
-var webdriver = require('selenium-webdriver'),
-    By        = require('selenium-webdriver').By,
-    expect    = require('chai').expect,
-    _         = require('underscore'),
-    Promise   = require("bluebird");
+var webdriver  = require('selenium-webdriver'),
+By             = require('selenium-webdriver').By,
+expect         = require('chai').expect,
+_              = require('underscore'),
+Promise        = require("bluebird"),
+check_elements = require('./check_elements');
 
 
 module.exports = Promise.promisify( function(args, callback){
@@ -52,26 +53,17 @@ module.exports = Promise.promisify( function(args, callback){
         });
 
     if ( should_be_successful ) {
-        Promise.all([
-            _.map(
-                form_params,
-                function( test_case ){
-                    driver
-                    .findElement(By.css( test_case.selector ))
-                    .then(function(el){
-                        if (test_case.hasOwnProperty('tick')) {
-                            return el.isSelected().then(function(yes){
-                                return Promise.resolve( yes ? 'on' : 'off');
-                            });
-                        } else {
-                            return el.getAttribute('value');
-                        }
-                    })
-                    .then(function(text){
-                        expect(text).to.be.equal( test_case.value );
-                    });
-                })
-        ]);
+
+        Promise.resolve(
+            check_elements({
+                driver : driver,
+                elements_to_check : form_params,
+            })
+            .then(function(data){
+                driver = data.driver;
+            })
+        );
+
     }
 
     // Check that message is as expected
