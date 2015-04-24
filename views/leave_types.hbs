@@ -25,6 +25,13 @@
 
 <form method="post" action="/settings/leavetypes/">
 
+{{# unless company.leave_types.length }}
+<div class="row">
+    <div class="col-md-4">No Leave type records</div>
+</div>
+{{/unless}}
+
+
 {{#each company.leave_types}}
 <div class="row">
 

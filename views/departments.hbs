@@ -27,6 +27,12 @@
 
 <form method="post" action="/settings/departments/">
 
+{{# unless departments.length }}
+<div class="row">
+    <div class="col-md-4">No department records</div>
+</div>
+{{/unless}}
+
 {{#each departments}}
 <div class="row">
 
