@@ -17,6 +17,11 @@ module.exports = Promise.promisify( function(args, callback){
       // Array of object that have at least two keys: selector - css selector
       // and value - value to be entered
       form_params     = args.form_params || [],
+
+      // Defined how elemts are going to be checked in case of success,
+      // if that parameter is omitted - 'form_params' is used instead
+      elements_to_check   = args.elements_to_check || form_params,
+
       // Indicates whether form submission is going to be successful
       should_be_successful = args.should_be_successful || false;
 
@@ -57,7 +62,7 @@ module.exports = Promise.promisify( function(args, callback){
         Promise.resolve(
             check_elements({
                 driver : driver,
-                elements_to_check : form_params,
+                elements_to_check : elements_to_check,
             })
             .then(function(data){
                 driver = data.driver;

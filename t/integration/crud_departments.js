@@ -143,10 +143,25 @@ describe('Edit company details', function(){
         });
     })
 
+    // Edit 'Marketing' department to be 'The marketing'
+    .then(function(data){
+         return submit_form_func({
+            driver      : data.driver,
+            form_params : [{
+                selector : 'input[name="name__1"]',
+                value : 'The Marketing',
+            }],
+            elements_to_check : [{
+                selector : 'input[name="name__2"]',
+                value : 'The Marketing',
+            }],
+            should_be_successful : true,
+            message : /Changes to departments were saved/,
+        });
+    })
 
     // TODO:
     //  * alphabetick order is respoct in
-    //  ** editing
     //  ** removing
     //  * cannot remove if there are users in that department
     //
