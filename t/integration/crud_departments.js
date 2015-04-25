@@ -160,11 +160,46 @@ describe('Edit company details', function(){
         });
     })
 
-    // TODO:
-    //  * alphabetick order is respoct in
-    //  ** removing
-    //  * cannot remove if there are users in that department
-    //
+    // Try to remove department that still has users (should fail)
+    .then(function(data){
+         return submit_form_func({
+            driver                 : data.driver,
+            submit_button_selector : 'button[value="1"]',
+            message : /Cannot remove department Sales as it still has 1 users/,
+        });
+    })
+
+    // Check that we indeed did not remove any departments
+    .then(function(data){
+        return check_elements_func({
+            driver : data.driver,
+            elements_to_check : [{
+                selector : 'input[name="name__0"]',
+                value    : 'Engineering',
+            },{
+                selector : 'input[name="name__1"]',
+                value    : 'Sales',
+            },{
+                selector : 'input[name="name__2"]',
+                value    : 'The Marketing',
+            }],
+        });
+    })
+
+    .then(function(data){
+         return submit_form_func({
+            driver : data.driver,
+            elements_to_check : [{
+                selector : 'input[name="name__0"]',
+                value    : 'Sales',
+            },{
+                selector : 'input[name="name__1"]',
+                value    : 'The Marketing',
+            }],               
+            submit_button_selector : 'button[value="0"]',
+            message : /Department was successfully removed/,
+        });
+    })
 
     // Close browser;
     .then(function(data){

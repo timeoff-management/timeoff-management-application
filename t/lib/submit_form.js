@@ -23,7 +23,10 @@ module.exports = Promise.promisify( function(args, callback){
       elements_to_check   = args.elements_to_check || form_params,
 
       // Indicates whether form submission is going to be successful
-      should_be_successful = args.should_be_successful || false;
+      should_be_successful = args.should_be_successful || false,
+    
+      // CSS selecetor for form submition button
+      submit_button_selector = args.submit_button_selector ||'button[type="submit"]';
 
 
     // Enter form parameters
@@ -52,7 +55,7 @@ module.exports = Promise.promisify( function(args, callback){
 
     // Submit the form
     driver
-        .findElement( By.css('button[type="submit"]') )
+        .findElement( By.css( submit_button_selector ) )
         .then(function(el){
             el.click();
         });
