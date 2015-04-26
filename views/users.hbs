@@ -1,0 +1,60 @@
+
+{{> header }}
+
+<h1>Staff</h1>
+
+{{> show_flash_messages }}
+
+<div class="row">
+    <div class="col-md-3">{{company.name}}'s staff</div>
+    <div class="col-md-3 col-md-offset-6">
+        <button type="button" class="pull-right btn btn-info" id="add_new_department_btn">Add new</button>
+    </div>
+</div>
+
+<div class="row">&nbsp;</div>
+
+<form id="delete_form" method="post" action="/settings/departments/delete/"></form>
+
+<form method="post" action="/settings/departments/">
+
+<div class="row">
+<div class="col-md-2">
+    <ul>
+    {{#each company.departments}}
+        <li>{{this.name}}</li>
+    {{/each}}
+    </ul>
+</div>
+<div class="col-md-10">
+    <table class="table">
+
+    <thead>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Status<th>
+        <th></th>
+    </thead>
+
+    <tbody>
+
+    {{# each users}}
+        <td>{{this.name}} {{this.lastname}}</td>
+        <td>{{this.departmentId}}</td>
+        <td>{{this.active}}</td>
+        <td>
+            <button type="button" class="close pull-right" aria-label="Close" value="{{@index}}"><span aria-hidden="true">&times;</span></button>
+        <td>
+    {{/each}}
+
+    </tbody>
+
+    </table>
+</div>
+</div>
+
+</form>
+
+<div class="row">&nbsp;</div>
+
+{{> footer }}
