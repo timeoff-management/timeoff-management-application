@@ -20,6 +20,7 @@
 
 <div class="row">
 <div class="col-md-2">
+    <p>Departments</p>
     <ul>
     {{#each company.departments}}
         <li>{{this.name}}</li>
@@ -27,29 +28,24 @@
     </ul>
 </div>
 <div class="col-md-10">
-    <table class="table">
-
-    <thead>
-        <th>Name</th>
-        <th>Department</th>
-        <th>Status<th>
-        <th></th>
-    </thead>
-
-    <tbody>
+    <div class="row">
+        <div class="col-md-6">Name</div>
+        <div class="col-md-3">Department</div>
+        <div class="col-md-1">Status</div>
+    </div>
 
     {{# each users}}
-        <td>{{this.name}} {{this.lastname}}</td>
-        <td>{{this.departmentId}}</td>
-        <td>{{this.active}}</td>
-        <td>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-md-6">{{this.name}} {{this.lastname}}</div>
+        <div class="col-md-3">{{this.departmentId}}</div>
+        <div class="col-md-1">{{this.activated}}</div>
+        <div class="col-md-1 col-md-offset-1">
             <button type="button" class="close pull-right" aria-label="Close" value="{{@index}}"><span aria-hidden="true">&times;</span></button>
-        <td>
+        </div>
+    </div>
     {{/each}}
 
-    </tbody>
-
-    </table>
 </div>
 </div>
 
