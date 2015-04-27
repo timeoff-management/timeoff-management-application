@@ -3,14 +3,15 @@
 
 var test           = require('selenium-webdriver/testing'),
     application_host = 'http://localhost:3000/',
-    new_user_email,
     webdriver = require('selenium-webdriver'),
     By        = require('selenium-webdriver').By,
     expect    = require('chai').expect,
     _         = require('underscore'),
     Promise   = require("bluebird"),
     login_user_func        = require('../lib/login_with_user'),
-    register_new_user_func = require('../lib/register_new_user');
+    register_new_user_func = require('../lib/register_new_user'),
+    logout_user_func       = require('../lib/logout_user'),
+    add_new_user_func      = require('../lib/add_new_user');
 
 
 
@@ -64,7 +65,7 @@ describe('Try to access private pages with guest user', function(){
 });
 
 
-describe.skip('Try to access admin pages with non-admin user', function(){
+describe('Try to access admin pages with non-admin user', function(){
     this.timeout(50000);
 
     test.it('Check pages', function(done) {
@@ -73,9 +74,12 @@ describe.skip('Try to access admin pages with non-admin user', function(){
         Promise.all(_.map(
             [
               'settings/company/', 'settings/departments/',
-              'settings/bankholidays/', 'settings/leavetypes/'
+              'settings/bankholidays/', 'settings/leavetypes/',
+              'users/', 'users/add/'
             ],
             function(path) {
+
+                var non_admin_user_email, new_user_email;
 
                 return register_new_user_func({
                     application_host : application_host,
@@ -87,12 +91,31 @@ describe.skip('Try to access admin pages with non-admin user', function(){
                         application_host : application_host,
                         user_email       : new_user_email,
                     });
-
-                    // TODO: add new non-admin user and logon with it
+                })
+                .then(function(data){
+                    return add_new_user_func({
+                        application_host : application_host,
+                        driver           : data.driver,
+                    });
                 })
                 .then(function(data){
 
-                    console.error('>>> going through ' + path);
+                    non_admin_user_email = data.new_user_email;
+
+                    return logout_user_func({
+                        application_host : application_host,
+                        driver           : data.driver,
+                    });
+                })
+                .then(function(data){
+                    return login_user_func({
+                        application_host : application_host,
+                        user_email       : non_admin_user_email,
+                        driver           : data.driver,
+                    });
+                })
+                .then(function(data){
+
                     var driver = data.driver;
 
                     driver.get( application_host + path);
@@ -106,5 +129,5 @@ describe.skip('Try to access admin pages with non-admin user', function(){
         )) // end of map and Promise.all
         .then(function(){ done(); });
     });
- 
+
 });

@@ -13,10 +13,10 @@ module.exports = Promise.promisify(function(args, callback){
 
   var application_host = args.application_host,
       user_email       = args.user_email,
-      result_callback  = callback;
+      result_callback  = callback,
 
   // Create new instance of driver
-  driver = new webdriver.Builder()
+  driver = args.driver || new webdriver.Builder()
     .withCapabilities(webdriver.Capabilities.chrome())
     .build();
 
