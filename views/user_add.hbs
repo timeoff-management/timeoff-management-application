@@ -7,7 +7,7 @@
 
 {{> show_flash_messages }}
 
-<form class="form-horizontal" method="POST">
+<form class="form-horizontal" method="POST" action="/users/add/">
 
   <div class="form-group">
     <label for="name_inp" class="col-md-2 control-label">First Name</label>
@@ -35,7 +35,7 @@
     <div class="col-md-6">
       <select class="form-control" id="select_inp" name="department">
         {{#each company.departments}}
-            <option value="department__{{@index}}">{{this.name}}</option>
+            <option value="{{@index}}">{{this.name}}</option>
         {{/each}}
       </select>
     </div>
