@@ -9,7 +9,7 @@
     <div class="col-md-3">{{company.name}}'s staff</div>
     <form id="add_new_user_frm" method="get" action="/users/add/">
     <div class="col-md-3 col-md-offset-6">
-        <button type="submit" class="pull-right btn btn-info" id="add_new_department_btn">Add new</button>
+        <button type="submit" class="pull-right btn btn-info" id="add_new_department_btn">Add user</button>
     </div>
     </form>
 </div>
@@ -21,7 +21,7 @@
 <form method="post" action="/settings/departments/">
 
 <div class="row">
-<div class="col-md-2">
+<div class="col-md-3">
     <p>Departments</p>
     <ul>
     {{#each company.departments}}
@@ -29,22 +29,19 @@
     {{/each}}
     </ul>
 </div>
-<div class="col-md-10">
+<div class="col-md-9">
     <div class="row">
         <div class="col-md-6">Name</div>
         <div class="col-md-3">Department</div>
-        <div class="col-md-1">Status</div>
+        <div class="col-md-1">Confirmed</div>
     </div>
 
     {{# each users}}
     <div class="row">&nbsp;</div>
     <div class="row">
-        <div class="col-md-6">{{this.name}} {{this.lastname}}</div>
-        <div class="col-md-3">{{this.departmentId}}</div>
-        <div class="col-md-1">{{this.activated}}</div>
-        <div class="col-md-1 col-md-offset-1">
-            <button type="button" class="close pull-right" aria-label="Close" value="{{@index}}"><span aria-hidden="true">&times;</span></button>
-        </div>
+        <div class="col-md-6"><a href="/users/edit/{{this.id}}/">{{this.name}} {{this.lastname}}</a></div>
+        <div class="col-md-3">{{this.department.name}}</div>
+        <div class="col-md-1">{{# if this.activated}}Yes{{else}}No{{/if}}</div>
     </div>
     {{/each}}
 
