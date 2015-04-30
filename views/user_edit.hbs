@@ -1,32 +1,32 @@
 
 {{> header }}
 
-<h1>User details</h1>
+<h1>{{employee.name}} {{employee.lastname}}'s details</h1>
 
-<p>Company settings</p>
+<p>Employee details</p>
 
 {{> show_flash_messages }}
 
-<form class="form-horizontal" method="POST" action="/users/add/">
+<form class="form-horizontal" method="POST" action="/users/edit/">
 
   <div class="form-group">
     <label for="name_inp" class="col-md-2 control-label">First Name</label>
     <div class="col-md-6">
-      <input class="form-control" id="name_inp" placeholder="Employee fist name" name="name" value="{{employee.name}}">
+      <input class="form-control" id="name_inp" name="name" value="{{employee.name}}">
     </div>
   </div>
 
   <div class="form-group">
     <label for="lastname_inp" class="col-md-2 control-label">Last Name</label>
     <div class="col-md-6">
-      <input class="form-control" id="lastname_inp" placeholder="Employee Last Name" name="lastname">
+      <input class="form-control" id="lastname_inp" name="lastname" value="{{employee.lastname}}">
     </div>
   </div>
 
   <div class="form-group">
     <label for="email_inp" class="col-md-2 control-label">Email Address</label>
     <div class="col-md-6">
-      <input class="form-control" id="email_inp" type="email" placeholder="Employee email" name="email">
+      <input class="form-control" id="email_inp" type="email" name="email" value="{{employee.email}}">
     </div>
   </div>
 
@@ -35,7 +35,7 @@
     <div class="col-md-6">
       <select class="form-control" id="select_inp" name="department">
         {{#each company.departments}}
-            <option value="{{@index}}">{{this.name}}</option>
+            <option value="{{@index}}" {{#if_equal ../employee.DepartmentId this.id}} selected="selected"{{/if_equal}}>{{this.name}}</option>
         {{/each}}
       </select>
     </div>
