@@ -80,6 +80,11 @@ app.use(
 );
 
 app.use(
+    '/calendar/',
+    require('./lib/route/calendar.js')
+);
+
+app.use(
     '/settings/',
     require('./lib/route/settings.js')
 );

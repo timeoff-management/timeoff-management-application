@@ -1,0 +1,46 @@
+
+{{> header }}
+
+<h1>{{employee.name}} {{employee.lastname}}'s calendar</h1>
+
+<p>Employee calendar</p>
+
+{{> show_flash_messages }}
+
+<nav>
+  <ul class="pager">
+    <li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> 2014</a></li>
+    <span>January - December 2015</span>
+
+    <li class="next disabled"><a href="#">2016 <span aria-hidden="true">&rarr;</span></a></li>
+  </ul>
+</nav>
+
+<div class="row clearfix">
+
+    <div class="col-md-3 month_container">
+        <table class="calendar_month" border=1><tbody>
+        <tr>
+            <td colspan="14">January</td>
+        </tr>
+        <tr>
+            <td colspan="2">M</td>
+            <td colspan="2">T</td>
+            <td colspan="2">W</td>
+            <td colspan="2">T</td>
+            <td colspan="2">F</td>
+            <td colspan="2">S</td>
+            <td colspan="2">S</td>
+        </tr>
+        <tr>
+            <td class="half_1st"><span>1</span></td>
+            <td class="half_2nd"></td>
+        </tr>
+ 
+        </tbody></table>
+    </div>
+
+</div>
+
+
+{{> footer }}

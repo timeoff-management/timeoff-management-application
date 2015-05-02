@@ -86,3 +86,16 @@ body {
     border-bottom: 0;
   }
 }
+
+
+div.month_container {
+    height : 330px;
+}
+.calendar_month {
+    width : 100%;
+}
+.calendar_month td {
+    width 17px !important;
+    min-width 17px !important;
+    max-width 17px !important;
+}
