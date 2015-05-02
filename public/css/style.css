@@ -95,7 +95,18 @@ div.month_container {
     width : 100%;
 }
 .calendar_month td {
-    width 17px !important;
-    min-width 17px !important;
-    max-width 17px !important;
+    width          : 17px !important;
+    min-width      : 17px !important;
+    max-width      : 17px !important;
+    position       : relative;
+    text-align     : center;
+    padding-top    : 5px;
+    padding-bottom : 5px;
+}
+.calendar_month td span {
+    position   : relative;
+    left       : 10px;
+    top        : -1px;
+    display    : block;
+    text-align : center;
 }
