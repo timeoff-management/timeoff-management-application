@@ -39,7 +39,7 @@
     {{# each users}}
     <div class="row">&nbsp;</div>
     <div class="row">
-        <div class="col-md-6"><a href="/users/edit/{{this.id}}/">{{this.name}} {{this.lastname}}</a></div>
+        <div class="col-md-6"><a href="/users/edit/{{this.id}}/">{{this.full_name}}</a></div>
         <div class="col-md-3">{{this.department.name}}</div>
         <div class="col-md-1">{{# if this.activated}}Yes{{else}}No{{/if}}</div>
     </div>

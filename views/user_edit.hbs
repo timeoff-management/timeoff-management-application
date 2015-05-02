@@ -7,7 +7,7 @@
 
 {{> show_flash_messages }}
 
-<form class="form-horizontal" method="POST" action="/users/edit/">
+<form class="form-horizontal" method="POST" action="/users/edit/{{employee.id}}/">
 
   <div class="form-group">
     <label for="name_inp" class="col-md-2 control-label">First Name</label>
@@ -35,7 +35,7 @@
     <div class="col-md-6">
       <select class="form-control" id="select_inp" name="department">
         {{#each company.departments}}
-            <option value="{{@index}}" {{#if_equal ../employee.DepartmentId this.id}} selected="selected"{{/if_equal}}>{{this.name}}</option>
+            <option value="{{@index}}" {{#if_equal ../employee.DepartmentId this.id}} selected="selected"{{/if_equal}}>{{this.name}} (approver {{this.boss.name}} {{this.boss.lastname}})</option>
         {{/each}}
       </select>
     </div>
