@@ -18,11 +18,12 @@
 
 <div class="row clearfix">
 
+    {{# each calendar}}
     <div class="col-md-3 month_container">
         <table class="calendar_month">
         <thead>
         <tr>
-            <td colspan="14">January</td>
+            <td colspan="14">{{ this.month }}</td>
         </tr>
         <tr>
             <td colspan="2">M</td>
@@ -35,26 +36,18 @@
         </tr>
         </thead>
         <tbody>
+        {{#each this.weeks }}
         <tr>
-            <td class="half_1st"><span>1</span></td>
+            {{#each this}}
+            <td class="half_1st"><span>{{this}}</span></td>
             <td class="half_2nd"></td>
-            <td class="half_1st"><span>1</span></td>
-            <td class="half_2nd"></td>
-            <td class="half_1st"><span>1</span></td>
-            <td class="half_2nd"></td>
-            <td class="half_1st"><span>10</span></td>
-            <td class="half_2nd"></td>
-            <td class="half_1st"><span>1</span></td>
-            <td class="half_2nd"></td>
-            <td class="half_1st"><span>20</span></td>
-            <td class="half_2nd"></td>
-            <td class="half_1st"><span>1</span></td>
-            <td class="half_2nd"></td>
- 
+            {{/each}}
         </tr>
+        {{/each}}
  
         </tbody></table>
     </div>
+    {{/each}}
 
 </div>
 
