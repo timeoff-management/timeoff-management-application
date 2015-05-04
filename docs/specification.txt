@@ -126,3 +126,6 @@ The web application is going to have following structure:
 * settings management
 ** edit company details
 ** CRUD for departments
+
+
+How to generate calendar feeds? https://www.npmjs.com/package/ical-generator
