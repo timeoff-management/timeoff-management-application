@@ -3,7 +3,16 @@
 
 <h1>{{employee.name}} {{employee.lastname}}'s calendar</h1>
 
-<p>Employee calendar</p>
+<div class="row">
+    <div class="col-md-3">Employee calendar</div>
+    <form id="book_time_off_frm" method="POST" action="">
+    <div class="col-md-3 col-md-offset-6">
+        <button type="submit" class="pull-right btn btn-info" id="book_time_off_btn">Book time off</button>
+    </div>
+    </form>
+</div>
+
+<div class="row">&nbsp;</div>
 
 {{> show_flash_messages }}
 
@@ -39,8 +48,8 @@
         {{#each this.weeks }}
         <tr>
             {{#each this}}
-            <td class="half_1st"><span>{{this}}</span></td>
-            <td class="half_2nd"></td>
+            <td class="half_1st {{#if this.is_weekend}}weekend_cell{{/if}}"><span>{{this.val}}</span></td>
+            <td class="half_2nd {{#if this.is_weekend}}weekend_cell{{/if}}"></td>
             {{/each}}
         </tr>
         {{/each}}

@@ -40,16 +40,24 @@ describe('Check calendar month object', function(){
         expect( feb.how_many_blanks_at_the_end() ).to.be.equal(1);
     });
 
+    it('Knows whether day is weekend', function(){
+        var feb = new CalendarMonth('2015-02-12');
+        expect(feb.is_weekend(12)).not.to.be.ok();
+        expect(feb.is_weekend(21)).to.be.ok();
+        expect(feb.is_weekend(22)).to.be.ok();
+        expect(feb.is_weekend(23)).not.to.be.ok();
+    });
+
     it('Knows how to generate data structure for template', function(){
         var january = new CalendarMonth('2015-01-11');
         expect( january.as_for_template() ).to.be.eql(
-            {"month":"January","weeks":[["","","",1,2,3,4],[5,6,7,8,9,10,11],[12,13,14,15,16,17,18],[19,20,21,22,23,24,25],[26,27,28,29,30,31,""]]}
+            {"month":"January","weeks":[[{"val":""},{"val":""},{"val":""},{"val":1},{"val":2},{"val":3,"is_weekend":true},{"val":4,"is_weekend":true}],[{"val":5},{"val":6},{"val":7},{"val":8},{"val":9},{"val":10,"is_weekend":true},{"val":11,"is_weekend":true}],[{"val":12},{"val":13},{"val":14},{"val":15},{"val":16},{"val":17,"is_weekend":true},{"val":18,"is_weekend":true}],[{"val":19},{"val":20},{"val":21},{"val":22},{"val":23},{"val":24,"is_weekend":true},{"val":25,"is_weekend":true}],[{"val":26},{"val":27},{"val":28},{"val":29},{"val":30},{"val":31,"is_weekend":true},{"val":""}]]}
         );
 
 
         var apr = new CalendarMonth('2015-04-11');
         expect( apr.as_for_template() ).to.be.eql(
-            {"month":"April","weeks":[["","",1,2,3,4,5],[6,7,8,9,10,11,12],[13,14,15,16,17,18,19],[20,21,22,23,24,25,26],[27,28,29,30,"","",""]]}
+            {"month":"April","weeks":[[{"val":""},{"val":""},{"val":1},{"val":2},{"val":3},{"val":4,"is_weekend":true},{"val":5,"is_weekend":true}],[{"val":6},{"val":7},{"val":8},{"val":9},{"val":10},{"val":11,"is_weekend":true},{"val":12,"is_weekend":true}],[{"val":13},{"val":14},{"val":15},{"val":16},{"val":17},{"val":18,"is_weekend":true},{"val":19,"is_weekend":true}],[{"val":20},{"val":21},{"val":22},{"val":23},{"val":24},{"val":25,"is_weekend":true},{"val":26,"is_weekend":true}],[{"val":27},{"val":28},{"val":29},{"val":30},{"val":""},{"val":""},{"val":""}]]}
         );
 
     });

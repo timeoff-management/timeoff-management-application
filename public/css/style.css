@@ -109,4 +109,9 @@ div.month_container {
     top        : -1px;
     display    : block;
     text-align : center;
+    z-index : 10;
+}
+
+td.weekend_cell {
+    background : #F8F8F8;
 }
