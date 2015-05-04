@@ -115,3 +115,7 @@ div.month_container {
 td.weekend_cell {
     background : #F8F8F8;
 }
+
+td.bank_holiday_cell {
+    background : #31B0D5;
+}
