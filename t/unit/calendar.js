@@ -42,10 +42,10 @@ describe('Check calendar month object', function(){
 
     it('Knows whether day is weekend', function(){
         var feb = new CalendarMonth('2015-02-12');
-        expect(feb.is_weekend(12)).not.to.be.ok();
-        expect(feb.is_weekend(21)).to.be.ok();
-        expect(feb.is_weekend(22)).to.be.ok();
-        expect(feb.is_weekend(23)).not.to.be.ok();
+        expect(feb.is_weekend(12)).not.to.be.ok;
+        expect(feb.is_weekend(21)).to.be.ok;
+        expect(feb.is_weekend(22)).to.be.ok;
+        expect(feb.is_weekend(23)).not.to.be.ok;
     });
 
     it('Knows how to generate data structure for template', function(){
@@ -64,12 +64,19 @@ describe('Check calendar month object', function(){
 
 
     it('Sanity checks pass', function(){
-    
+
         var apr = new CalendarMonth('2015-04-01');
 
         expect(apr).to.be.a('object');
 
         expect(apr.how_many_days()).to.be.equal(30);
+    });
+
+    it('It knows whether day is bank holiday', function(){
+        var mar = new CalendarMonth('2015-03-19', { bank_holidays : ['2015-03-08'] });
+
+        expect(mar.is_bank_holiday(8)).to.be.ok;
+        expect(mar.is_bank_holiday(10)).not.to.be.ok;
     });
 
 });
