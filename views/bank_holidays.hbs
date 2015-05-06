@@ -40,7 +40,7 @@
 
     <div class="col-md-5">
         <div class="input-append date">
-        <input type="text" class="form-control" value="{{date}}" name="date__{{@index}}">
+        <input type="text" class="form-control" value="{{as_date date}}" name="date__{{@index}}" data-provide="datepicker" data-date-format="yyyy-mm-dd">
         <span class="add-on"><i class="icon-th"></i></span>
         </div>
     </div>
@@ -62,7 +62,7 @@
     </div>
 
     <div class="col-md-5">
-        <input type="text" class="form-control" value="{{date}}" name="date__new">
+        <input type="text" class="form-control" value="{{date}}" name="date__new" data-provide="datepicker" data-date-format="yyyy-mm-dd">
     </div>
 
 </div>

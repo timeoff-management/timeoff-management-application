@@ -5,6 +5,7 @@ var favicon      = require('serve-favicon');
 var logger       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
+var moment       = require('moment');
 
 var app = express();
 
@@ -21,6 +22,10 @@ var handlebars = require('express-handlebars')
                     return options.fn(this);
                 }
                 return options.inverse(this);
+            },
+
+            as_date : function(date_string) {
+              return moment(date_string).format('YYYY-MM-DD');
             },
         }
     });
