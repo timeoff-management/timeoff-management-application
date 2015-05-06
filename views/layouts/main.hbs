@@ -15,7 +15,9 @@
 
     <!-- Custom styles for this template -->
     <link rel='stylesheet' href='/css/style.css' />
-
+    {{#each custom_css}}
+    <link rel="stylesheet" href="{{this}}" />
+    {{/each}}
   </head>
 
   <body>
