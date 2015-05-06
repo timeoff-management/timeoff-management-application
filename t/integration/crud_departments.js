@@ -11,14 +11,14 @@ var test                 = require('selenium-webdriver/testing'),
   new_user_email;
 
 
-describe('Edit company details', function(){
+describe('CRUD for departments', function(){
   var driver;
 
   // The app is really slow and does not manage to handle request in
   // default 2 seconds, so be more patient.
-  this.timeout(50000);
+  this.timeout(60000);
 
-  test.it('Check default registration path', function(done){
+  test.it('Check in one go', function(done){
 
     // Performing registration process
     register_new_user_func({
@@ -186,6 +186,7 @@ describe('Edit company details', function(){
         });
     })
 
+    // Remove empty department
     .then(function(data){
          return submit_form_func({
             driver : data.driver,
@@ -195,7 +196,7 @@ describe('Edit company details', function(){
             },{
                 selector : 'input[name="name__1"]',
                 value    : 'The Marketing',
-            }],               
+            }],
             submit_button_selector : 'button[value="0"]',
             message : /Department was successfully removed/,
         });
