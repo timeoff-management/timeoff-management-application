@@ -119,3 +119,7 @@ td.weekend_cell {
 td.bank_holiday_cell {
     background : #31B0D5;
 }
+
+#exampleModal .modal-dialog {
+    width : 450px;
+}
