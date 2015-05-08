@@ -7,7 +7,7 @@
     <div class="col-md-3">Employee calendar</div>
     <form id="book_time_off_frm" method="POST" action="">
     <div class="col-md-3 col-md-offset-6">
-        <button type="button" class="btn btn-info pull-right" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Book time off</button>
+        <button type="button" class="btn btn-info pull-right" data-toggle="modal" data-target="#book_leave_modal">Book time off</button>
     </div>
     </form>
 </div>
@@ -53,78 +53,13 @@
             {{/each}}
         </tr>
         {{/each}}
- 
+
         </tbody></table>
     </div>
     {{/each}}
 
 </div>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="exampleModalLabel">Book time off</h4>
-      </div>
-      <div class="modal-body">
-        <form>
-
-          <div class="form-group">
-            <label for="employee" class="control-label">For employee:</label>
-            <select class="form-control" id="employee">
-                <option></option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="leave_type" class="control-label">Leave type:</label>
-            <select class="form-control" id="leave_type">
-                <option></option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="from" class="control-label">From:</label>
-            <div class="row">
-              <div class="col-md-7">
-                <input type="text" class="form-control" id="from">
-              </div>
-              <div class="col-md-5">
-                <select class="form-control">
-                    <option></option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="to" class="control-label">To:</label>
-            <div class="row">
-              <div class="col-md-7">
-                <input type="text" class="form-control" id="to">
-              </div>
-              <div class="col-md-5">
-                <select class="form-control">
-                    <option></option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="reason-text" class="control-label">Reason (optional):</label>
-            <textarea class="form-control" id="reason-text"></textarea>
-          </div>
-
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-success">Send request</button>
-      </div>
-    </div>
-  </div>
-</div>
+{{> book_leave_modal container_id='book_leave_modal' }}
 
 {{> footer }}
