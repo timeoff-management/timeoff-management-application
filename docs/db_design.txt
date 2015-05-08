@@ -39,7 +39,7 @@ Following was gfenerated by this tool: http://ondras.zarovi.cz/sql/demo/
 		<type label="SET" length="1" sql="SET" quote=""/>
 		<type label="Bit" length="0" sql="bit" quote=""/>
 	</group>
-</datatypes><table x="517" y="451" name="users">
+</datatypes><table x="527" y="559" name="users">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -74,7 +74,7 @@ Following was gfenerated by this tool: http://ondras.zarovi.cz/sql/demo/
 <part>id</part>
 </key>
 </table>
-<table x="424" y="136" name="company">
+<table x="466" y="132" name="company">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -134,7 +134,7 @@ Following was gfenerated by this tool: http://ondras.zarovi.cz/sql/demo/
 <part>id</part>
 </key>
 </table>
-<table x="116" y="120" name="leave_type">
+<table x="34" y="249" name="leave_type">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -155,7 +155,7 @@ Following was gfenerated by this tool: http://ondras.zarovi.cz/sql/demo/
 <part>id</part>
 </key>
 </table>
-<table x="152" y="413" name="leave">
+<table x="110" y="489" name="leave">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -170,12 +170,6 @@ Following was gfenerated by this tool: http://ondras.zarovi.cz/sql/demo/
 <row name="status" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="start_datetime" null="0" autoincrement="0">
-<datatype>DATETIME</datatype>
-<default>'NULL'</default></row>
-<row name="end_datetime" null="0" autoincrement="0">
-<datatype>DATETIME</datatype>
-<default>'NULL'</default></row>
 <row name="approver_id" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="users" row="id" />
@@ -186,14 +180,29 @@ Following was gfenerated by this tool: http://ondras.zarovi.cz/sql/demo/
 <row name="approver_comment" null="1" autoincrement="0">
 <datatype>VARCHAR</datatype>
 <default>NULL</default></row>
-<row name="result_confirmed_by_employee" null="1" autoincrement="0">
-<datatype>TINYINT</datatype>
-<default>NULL</default></row>
 <row name="created_at" null="1" autoincrement="0">
 <datatype>DATETIME</datatype>
 <default>NULL</default></row>
 <row name="decided_at" null="1" autoincrement="0">
 <datatype>DATETIME</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="342" y="357" name="leave_day">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="date" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="leave_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="leave" row="id" />
+</row>
+<row name="day_part" null="1" autoincrement="0">
+<datatype>TINYINT</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
