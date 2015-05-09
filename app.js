@@ -58,9 +58,10 @@ app.use(passport.session());
 
 // Custom middlewares
 //
-// Make sure session object is available in templates
+// Make sure session and user objects are available in templates
 app.use(function(req,res,next){
-    res.locals.session = req.session;
+    res.locals.session     = req.session;
+    res.locals.logged_user = req.user;
     next();
 });
 
