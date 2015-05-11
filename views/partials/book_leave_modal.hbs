@@ -22,7 +22,7 @@
             <label for="employee" class="control-label">For employee:</label>
             <select class="form-control" id="employee">
                 {{#each employees}}
-                <option value="{{@index}}">{{this.full_name}}</option>
+                <option value="{{@index}}" {{# if_equal this.id ../logged_user.id }}selected="selected"{{/if_equal}}>{{this.full_name}}</option>
                 {{/each}}
             </select>
           </div>
