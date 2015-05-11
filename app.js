@@ -46,11 +46,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Setup authentication mechanism
 var passport = require('./lib/passport')();
 
-app.use(require('express-session')({
+var session = require('express-session');
+// initalize sequelize with session store
+var SequelizeStore = require('connect-session-sequelize')(session.Store);
+var model = require('./lib/model/db');
+app.use(session({
     secret            : 'my dirty secret ;khjsdkjahsdajhasdam,nnsnad,',
     resave            : false,
-    saveUninitialized : false
-}));
+    saveUninitialized : false,
+    store: new SequelizeStore({
+      db: model.sequelize
+    }),
+}))
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -74,6 +81,7 @@ app.use(function(req,res,next){
 // Enable flash messages within session
 app.use( require('./lib/middleware/flash_messages') );
 
+app.use( require('./lib/middleware/session_aware_redirect') );
 
 // Here will be publicly accessible routes
 
