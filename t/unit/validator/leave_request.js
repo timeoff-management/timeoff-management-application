@@ -19,4 +19,92 @@ describe('Check validation for leave request', function(){
         expect( req.session.flash.errors.length ).to.be.equal( 5 );
     });
 
+
+    it('User index is invalid', function(){
+        var req = new MockExpressReq({params : {user : 'foo'}});
+
+        expect(function(){
+            leave_request_validator({req : req})
+        }).to.throw('Got validation errors');
+
+        expect(
+            _.findIndex(
+                req.session.flash.errors, function(msg){
+                    return msg === 'Incorrect employee';
+                })
+        ).to.be.greaterThan( -1 );
+
+        expect( req.session.flash.errors.length ).to.be.equal( 6 );
+    });
+
+    var valid_params = {
+        user           : '1',
+        leave_type     : '1',
+        from_date      : '2015-05-10',
+        from_date_part : '1',
+        to_date        : '2015-05-12',
+        to_date_part   : '2',
+        reason         : 'some reason',
+    };
+
+
+    it('Successfull scenario', function(){
+
+        var req = new MockExpressReq({params : valid_params});
+
+        expect(
+            leave_request_validator({req : req})
+        ).to.be.eql(valid_params);
+
+        expect( req.session ).not.to.have.property( 'flash' );
+    });
+
+    it('from_date_part has invalid value', function(){
+        var params = _.clone(valid_params);
+        params.from_date_part = "11";
+        var req = new MockExpressReq({params : params});
+        expect(function(){
+            leave_request_validator({req : req})
+        }).to.throw('Got validation errors');
+
+        expect(
+            _.findIndex(
+                req.session.flash.errors, function(msg){
+                    return msg === 'Incorrect day part';
+                })
+        ).to.be.greaterThan( -1 );
+
+        expect( req.session.flash.errors.length ).to.be.equal( 1 );
+    });
+
+
+    it('from_date has invalid value', function(){
+        var params = _.clone(valid_params);
+        params.from_date = "some horrible date";
+        var req = new MockExpressReq({params : params});
+        expect(function(){
+            leave_request_validator({req : req})
+        }).to.throw('Got validation errors');
+
+        expect(
+            _.findIndex(
+                req.session.flash.errors, function(msg){
+                    return msg === 'From date should be a date';
+                })
+        ).to.be.greaterThan( -1 );
+
+        expect( req.session.flash.errors.length ).to.be.equal( 1 );
+    });
+
+    it('start dates is greater than end one', function(){
+        var params = _.clone(valid_params);
+        params.from_date = '2015-04-12';
+        params.to_date   = '2015-04-02';
+        var req = new MockExpressReq({params : params});
+        expect(function(){
+            leave_request_validator({req : req})
+        }).to.throw('From date should be before To date');
+
+        expect( req.session ).not.to.have.property( 'flash' );
+    });
 });
