@@ -9,15 +9,7 @@
       <div class="modal-body">
         <form>
 
-          {{!--
-            For admin users it is possible to bock time off for any user
-
-            TODO
-            If current user is an approver for any departments, she should be
-            able to book leaves for employes from that departments
-
-          --}}
-          {{# if logged_user.admin }}
+          {{# if_equal employees.length 1 }}{{else}}
           <div class="form-group">
             <label for="employee" class="control-label">For employee:</label>
             <select class="form-control" id="employee">
@@ -26,7 +18,7 @@
                 {{/each}}
             </select>
           </div>
-          {{/if}}
+          {{/if_equal}}
 
           <div class="form-group">
             <label for="leave_type" class="control-label">Leave type:</label>
