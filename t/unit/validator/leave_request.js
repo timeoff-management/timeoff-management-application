@@ -16,7 +16,7 @@ describe('Check validation for leave request', function(){
             leave_request_validator({req : req})
         }).to.throw('Got validation errors');
 
-        expect( req.session.flash.errors.length ).to.be.equal( 5 );
+        expect( req.session.flash.errors.length ).to.be.equal( 4 );
     });
 
 
@@ -34,7 +34,7 @@ describe('Check validation for leave request', function(){
                 })
         ).to.be.greaterThan( -1 );
 
-        expect( req.session.flash.errors.length ).to.be.equal( 6 );
+        expect( req.session.flash.errors.length ).to.be.equal( 5 );
     });
 
     var valid_params = {
@@ -107,4 +107,20 @@ describe('Check validation for leave request', function(){
 
         expect( req.session ).not.to.have.property( 'flash' );
     });
+
+    it('Reason is optional', function(){
+
+        var params = _.clone( valid_params );
+        delete params.reason;
+        var vp = _.clone( valid_params );
+        vp.reason = '';
+        var req = new MockExpressReq({params : params});
+
+        expect(
+            leave_request_validator({req : req})
+        ).to.be.eql(vp);
+
+        expect( req.session ).not.to.have.property( 'flash' );
+    });
+
 });
