@@ -7,12 +7,12 @@
         <h4 class="modal-title" id="exampleModalLabel">Book time off</h4>
       </div>
       <div class="modal-body">
-        <form>
+        <form method="POST" action="{{leave_modal_form_action}}">
 
           {{# if_equal employees.length 1 }}{{else}}
           <div class="form-group">
             <label for="employee" class="control-label">For employee:</label>
-            <select class="form-control" id="employee">
+            <select class="form-control" id="employee" name="user">
                 {{#each employees}}
                 <option value="{{@index}}" {{# if_equal this.id ../logged_user.id }}selected="selected"{{/if_equal}}>{{this.full_name}}</option>
                 {{/each}}
@@ -22,7 +22,7 @@
 
           <div class="form-group">
             <label for="leave_type" class="control-label">Leave type:</label>
-            <select class="form-control" id="leave_type">
+            <select class="form-control" id="leave_type" name="leave_type">
             {{# each company.leave_types}}
                 <option value={{@index}}>{{this.name}}</option>
             {{/each}}
@@ -33,10 +33,10 @@
             <label for="from" class="control-label">From:</label>
             <div class="row">
               <div class="col-md-7">
-                <input type="text" class="form-control" id="from" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="{{as_date booking_start}}">
+                <input type="text" class="form-control" id="from" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="{{as_date booking_start}}" name="from_date">
               </div>
               <div class="col-md-5">
-                <select class="form-control">
+                <select class="form-control" name="from_date_part">
                   <option value="1" selected="selected">Morning</option>
                   <option value="2">Afternoon</option>
                 </select>
@@ -48,10 +48,10 @@
             <label for="to" class="control-label">To:</label>
             <div class="row">
               <div class="col-md-7">
-                <input type="text" class="form-control" id="to" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="{{as_date booking_end}}">
+                <input type="text" class="form-control" id="to" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="{{as_date booking_end}}" name="to_date">
               </div>
               <div class="col-md-5">
-                <select class="form-control">
+                <select class="form-control" name="to_date_part">
                   <option value="1">Afternoon</option>
                   <option value="2" selected="selected">End of day</option>
                 </select>
@@ -61,14 +61,14 @@
 
           <div class="form-group">
             <label for="reason-text" class="control-label">Reason (optional):</label>
-            <textarea class="form-control" id="reason-text"></textarea>
+            <textarea class="form-control" id="reason-text" name="reason"></textarea>
           </div>
 
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-success">Send request</button>
+        <button type="submit" class="btn btn-success">Send request</button>
       </div>
     </div>
   </div>
