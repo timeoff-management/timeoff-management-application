@@ -120,6 +120,10 @@ td.bank_holiday_cell {
     background : #31B0D5;
 }
 
+td.leave_cell {
+    background : #449D44;
+}
+
 .modal-dialog {
     width : 450px;
 }

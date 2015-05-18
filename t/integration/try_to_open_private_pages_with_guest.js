@@ -19,7 +19,7 @@ describe('Try to access private pages with guest user', function(){
 
     // The app is really slow and does not manage to handle request in
     // default 2 seconds, so be more patient.
-    this.timeout(70000);
+    this.timeout(90000);
 
     test.it('Check pages', function(done) {
 
