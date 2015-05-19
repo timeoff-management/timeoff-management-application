@@ -118,10 +118,12 @@ td.weekend_cell {
 
 td.bank_holiday_cell {
     background : #31B0D5;
+    color : white;
 }
 
 td.leave_cell {
     background : #449D44;
+    color : white;
 }
 
 .modal-dialog {
