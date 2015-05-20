@@ -53,7 +53,7 @@ describe('Check validation for leave request', function(){
         var req = new MockExpressReq({params : valid_params});
 
         expect(
-            leave_request_validator({req : req})
+            leave_request_validator({req : req}).as_data_object()
         ).to.be.eql(valid_params);
 
         expect( req.session ).not.to.have.property( 'flash' );
@@ -117,7 +117,7 @@ describe('Check validation for leave request', function(){
         var req = new MockExpressReq({params : params});
 
         expect(
-            leave_request_validator({req : req})
+            leave_request_validator({req : req}).as_data_object()
         ).to.be.eql(vp);
 
         expect( req.session ).not.to.have.property( 'flash' );
