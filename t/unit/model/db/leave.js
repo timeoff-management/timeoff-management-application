@@ -6,6 +6,77 @@ var expect  = require('chai').expect,
     model   = require('../../../../lib/model/db'),
     LeaveRequestParameters = require('../../../../lib/model/leave_request_parameters');
 
+describe('bug', function(){
+    var leave = model.Leave.build({
+        status : '1',
+    });
+    leave.days = [
+        model.LeaveDay.build({
+            date     : '2015-05-07 00:00:00.000 +00:00',
+            day_part : 2,
+        }),
+    ];
+
+    it('bug', function(){
+        expect(
+            leave.fit_with_leave_request(
+                new LeaveRequestParameters( {
+                    from_date      : '2015-05-07',
+                    from_date_part : 2,
+                    to_date        : '2015-05-07',
+                    // do not care about following parameters
+                    to_date_part : 2,
+                    leave_type   : 1,
+                    reason       : 1,
+                })
+            )
+        ).to.be.equal(false);
+    });
+});
+
+describe('leave request half a day with existing booking of half a day', function(){
+    var leave = model.Leave.build({
+        status : '1',
+    });
+    leave.days = [
+        model.LeaveDay.build({
+            date     : '2015-04-09',
+            day_part : 2,
+        }),
+    ];
+
+    it('clash', function(){
+        expect(
+            leave.fit_with_leave_request(
+                new LeaveRequestParameters( {
+                    from_date      : '2015-04-09',
+                    from_date_part : 2,
+                    to_date        : '2015-04-09',
+                    // do not care about following parameters
+                    to_date_part : 1,
+                    leave_type   : 1,
+                    reason       : 1,
+                })
+            )
+        ).to.not.be.ok;
+    });
+
+    it('fit', function(){
+        expect(
+            leave.fit_with_leave_request(
+                new LeaveRequestParameters( {
+                    from_date      : '2015-04-09',
+                    from_date_part : 3,
+                    to_date        : '2015-04-09',
+                    // do not care about following parameters
+                    to_date_part : 1,
+                    leave_type   : 1,
+                    reason       : 1,
+                })
+            )
+        ).to.be.ok;
+    });
+});
 
 describe('Leave request is spread through more then one day', function(){
     var leave = model.Leave.build({
