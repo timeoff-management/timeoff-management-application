@@ -22,7 +22,7 @@ describe('bug', function(){
             leave.fit_with_leave_request(
                 new LeaveRequestParameters( {
                     from_date      : '2015-05-07',
-                    from_date_part : 2,
+                    from_date_part : '2',
                     to_date        : '2015-05-07',
                     // do not care about following parameters
                     to_date_part : 2,
