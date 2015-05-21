@@ -6,7 +6,7 @@ var expect  = require('chai').expect,
     model   = require('../../../../lib/model/db'),
     LeaveRequestParameters = require('../../../../lib/model/leave_request_parameters');
 
-describe('bug', function(){
+describe('Check bug when type mismatch happenned', function(){
     var leave = model.Leave.build({
         status : '1',
     });
@@ -17,7 +17,7 @@ describe('bug', function(){
         }),
     ];
 
-    it('bug', function(){
+    it('String value of 2 properly used', function(){
         expect(
             leave.fit_with_leave_request(
                 new LeaveRequestParameters( {
