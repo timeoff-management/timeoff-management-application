@@ -1,0 +1,20 @@
+
+{{> header }}
+
+<h1>{{logged_user.name}} {{logged_user.lastname}} messages</h1>
+
+{{> show_flash_messages }}
+
+
+<div class="row">
+    <div class="col-md-6">All my leaves</div>
+</div>
+{{# each my_leaves }}
+
+<div class="row">
+    <div class="col-md-3">{{this.get_nice_created_at}}</div>
+</div>
+
+{{/ each }}
+
+{{> footer }}

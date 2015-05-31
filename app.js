@@ -109,6 +109,10 @@ app.use(
     require('./lib/route/users.js')
 );
 
+app.use(
+    '/requests/',
+    require('./lib/route/requests.js')
+);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
