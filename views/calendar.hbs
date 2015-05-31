@@ -48,8 +48,8 @@
         {{#each this.weeks }}
         <tr>
             {{#each this}}
-            <td class="half_1st {{#if this.is_bank_holiday}}bank_holiday_cell{{/if}} {{#if this.is_weekend}}weekend_cell{{/if}} {{#if this.is_leave_morning }}leave_cell{{/if}}"><span>{{this.val}}</span></td>
-            <td class="half_2nd {{#if this.is_bank_holiday}}bank_holiday_cell{{/if}} {{#if this.is_weekend}}weekend_cell{{/if}} {{#if this.is_leave_afternoon }}leave_cell{{/if}}"></td>
+            <td class="half_1st {{#if this.is_bank_holiday}}bank_holiday_cell{{/if}} {{#if this.is_weekend}}weekend_cell{{/if}} {{#if this.is_leave_morning }}leave_cell{{#if this.is_pended_leave}}_pended{{/if}}{{/if}}"><span>{{this.val}}</span></td>
+            <td class="half_2nd {{#if this.is_bank_holiday}}bank_holiday_cell{{/if}} {{#if this.is_weekend}}weekend_cell{{/if}} {{#if this.is_leave_afternoon }}leave_cell{{#if this.is_pended_leave}}_pended{{/if}}{{/if}}"></td>
             {{/each}}
         </tr>
         {{/each}}

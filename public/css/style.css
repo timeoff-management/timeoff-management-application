@@ -126,6 +126,10 @@ td.leave_cell {
     color : white;
 }
 
+td.leave_cell_pended {
+    background : #B839F8;
+    color : white;
+}
 .modal-dialog {
     width : 450px;
 }
