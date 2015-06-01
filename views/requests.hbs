@@ -12,7 +12,8 @@
 {{# each my_leaves }}
 
 <div class="row">
-    <div class="col-md-3">{{this.get_nice_created_at}}</div>
+    <div class="col-md-10">{{ this.UserId }} | {{this.ApproverId}}  | {{ this.approver.id }} |    {{#with this.approver}}{{this.full_name}}{{/with}}</div>
+    <div class="col-md-2">{{this.user.createdAt}}</div>
 </div>
 
 {{/ each }}
