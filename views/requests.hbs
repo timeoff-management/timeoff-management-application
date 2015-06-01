@@ -5,14 +5,14 @@
 
 {{> show_flash_messages }}
 
-
 <div class="row">
     <div class="col-md-6">All my leaves</div>
 </div>
+
 {{# each my_leaves }}
 
 <div class="row">
-    <div class="col-md-10">{{ this.UserId }} | {{this.ApproverId}}  | {{ this.approver.id }} |    {{#with this.approver}}{{this.full_name}}{{/with}}</div>
+    <div class="col-md-10">{{#with this.approver}}{{this.full_name}}{{/with}}</div>
     <div class="col-md-2">{{this.user.createdAt}}</div>
 </div>
 
