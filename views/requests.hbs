@@ -5,6 +5,50 @@
 
 {{> show_flash_messages }}
 
+
+<div class="row">
+    <div class="col-md-6">Leave request to approve</div>
+</div>
+
+<div class="row">
+  <div class="col-md-4">Employee</div>
+  <div class="col-md-6">Leave details</div>
+</div>
+
+{{#each to_be_approved_leaves }}
+
+<div class="row">&nbsp;</div>
+
+<div class="row">
+  <div class="col-md-4">
+    <div class="row">
+      <div class="col-md-12">{{#with this.user}}{{this.full_name}}{{/with}}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">{{this.user.department.name}}</div>
+      <div class="col-md-6">{{as_date this.createdAt}}</div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="row">
+      <div class="col-md-12">From {{#with this.get_start_leave_day}}{{as_date this.date}}{{/with}} to {{#with this.get_end_leave_day}}{{as_date this.date}}{{/with}}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">{{this.leave_type.name}}</div>
+      <div class="col-md-6">{{ this.get_deducted_days_number }}</div>
+    </div>
+  </div>
+
+  <div class="col-md-2">
+    <input class="btn btn-warning" type="submit" value="Reject">
+    <input class="btn btn-success" type="submit" value="Approve">
+  </div>
+</div>
+
+{{/each}}
+
+<div class="row">&nbsp;</div>
 <div class="row">
     <div class="col-md-6">All my leaves</div>
 </div>
@@ -17,6 +61,8 @@
 </div>
 
 {{# each my_leaves }}
+
+<div class="row">&nbsp;</div>
 
 <div class="row">
     <div class="col-md-2">{{ this.leave_type.name }}</div>
