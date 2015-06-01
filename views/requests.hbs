@@ -81,7 +81,7 @@
     <div class="col-md-1">{{ this.get_deducted_days_number }}</div>
     <div class="col-md-5">From {{#with this.get_start_leave_day}}{{as_date this.date}}{{/with}} to {{#with this.get_end_leave_day}}{{as_date this.date}}{{/with}}</div>
     <div class="col-md-3">{{#with this.approver}}{{this.full_name}}{{/with}}</div>
-    <div class="col-md-1">{{#if this.is_pended_leave }}Opened{{else}}Approved{{/if}}</div>
+    <div class="col-md-1">{{#if this.is_pended_leave }}Opened{{else}}{{#if this.is_approved_leave}}Approved{{else}}Rejected{{/if}}{{/if}}</div>
 </div>
 
 {{/ each }}
