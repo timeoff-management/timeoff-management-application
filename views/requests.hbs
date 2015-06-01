@@ -41,8 +41,20 @@
   </div>
 
   <div class="col-md-2">
-    <input class="btn btn-warning" type="submit" value="Reject">
-    <input class="btn btn-success" type="submit" value="Approve">
+    <div class="row">
+      <div class="col-md-6">
+      <form action="/requests/reject/" method="POST">
+        <input class="btn btn-warning" type="submit" value="Reject">
+        <input type="hidden" value="{{this.id}}" name="request">
+      </form>
+      </div>
+      <div class="col-md-6">
+      <form action="/requests/approve/" method="POST">
+        <input class="btn btn-success" type="submit" value="Approve">
+        <input type="hidden" value="{{this.id}}" name="request">
+      </form>
+      </div>
+    </div>
   </div>
 </div>
 
