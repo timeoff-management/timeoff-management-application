@@ -76,16 +76,9 @@ module.exports = Promise.promisify(function(args, callback){
     });
 
   // Make sure login was successful, check that we landed on user account page
-  driver
-    .findElement( By.css('h1') )
-    .then(function(el){ return el.getText(); })
-    .then(function(text){
-      expect(text).to.be.equal('Dashboard');
-    });
-
   driver.getTitle()
     .then(function(title){
-        expect(title).to.be.equal('Dashboard');
+        expect(title).to.be.equal('My calendar');
     });
 
   driver

@@ -66,7 +66,7 @@ describe('Try to access private pages with guest user', function(){
 
 
 describe('Try to access admin pages with non-admin user', function(){
-    this.timeout(50000);
+    this.timeout(90000);
 
     test.it('Check pages', function(done) {
 
@@ -121,7 +121,7 @@ describe('Try to access admin pages with non-admin user', function(){
                     driver.get( application_host + path);
                     driver.getCurrentUrl()
                       .then(function(url){
-                          expect(url).to.be.equal(application_host);
+                          expect(url).to.be.equal(application_host + 'calendar/');
                       });
                     return driver.quit();
                 });
