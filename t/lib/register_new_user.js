@@ -32,7 +32,7 @@ module.exports = Promise.promisify( function(args, callback){
       return el.getText();
     })
     .then(function(text){
-      expect(text).to.be.equal('Sign up');
+      expect(text).to.match(/Sign up/i);
     });
 
 
