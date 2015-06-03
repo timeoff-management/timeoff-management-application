@@ -5,21 +5,37 @@
 
 {{> show_flash_messages }}
 
-<form action="/login" method="post">
-    <div>
-        <label>Username:</label>
-        <input type="text" name="username"/>
+<form class="form-horizontal" action="/login" method="post">
+
+  <div class="row">&nbsp;</div>
+
+  <div class="form-group">
+    <label for="email_inp" class="col-md-2 control-label col-md-offset-2">Employee email:</label>
+    <div class="col-md-5">
+      <input class="form-control" id="email_inp" type="text" name="username">
     </div>
-    <div>
-        <label>Password:</label>
-        <input type="password" name="password"/>
+  </div>
+
+  <div class="form-group">
+    <label for="pass_inp" class="col-md-2 control-label col-md-offset-2">Password</label>
+    <div class="col-md-5">
+      <input class="form-control" id="pass_inp" type="password" name="password">
     </div>
-    <div>
-        <input id="submit_login" type="submit" value="Log In"/>
+  </div>
+
+
+  <div class="form-group">
+    <div class="col-md-offset-4 col-md-2">
+      <button type="submit" class="btn btn-success" id="submit_login">Login</button>
     </div>
+    <div class="col-md-4">
+      <p><a href="/">Forfot passport?</a> or <a href="/register/">Create new account</a></p>
+    </div>
+  </div>
+
 </form>
 
-<p><a href="/">Forfot passport?</a> or <a href="/register/">Create new account</a></p>
+<div class="row">&nbsp;</div>
 
 
 {{> footer }}
