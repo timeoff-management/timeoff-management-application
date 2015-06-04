@@ -5,31 +5,50 @@
 
 {{> show_flash_messages }}
 
-<form action="/register" method="post">
-    <div>
-        <label>Name:</label>
-        <input type="text" name="name"/>
-    </div>
-    <div>
-        <label>Last name:</label>
-        <input type="text" name="lastname"/>
-    </div>
-    <div>
-        <label>Email:</label>
-        <input type="email" name="email"/>
-    </div>
-    <div>
-        <label>Password:</label>
-        <input type="password" name="password"/>
-    </div>
-    <div>
-        <label>Confirm password:</label>
-        <input type="password" name="password_confirmed"/>
-    </div>
+<form class="form-horizontal" action="/register" method="post">
 
-    <div>
-        <input id="submit_registration" type="submit" value="Sign up!"/>
+  <div class="form-group">
+    <label for="name_inp" class="col-md-2 control-label">First Name</label>
+    <div class="col-md-6">
+      <input class="form-control" id="name_inp" placeholder="First name" name="name">
     </div>
+  </div>
+
+  <div class="form-group">
+    <label for="lastname_inp" class="col-md-2 control-label">Last Name</label>
+    <div class="col-md-6">
+      <input class="form-control" id="lastname_inp" placeholder="Last Name" name="lastname">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="email_inp" class="col-md-2 control-label">Email Address</label>
+    <div class="col-md-6">
+      <input class="form-control" id="email_inp" type="email" placeholder="Email" name="email">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="pass_inp" class="col-md-2 control-label">Password</label>
+    <div class="col-md-6">
+      <input class="form-control" id="pass_inp" type="password" placeholder="Password" name="password">
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <label for="confirm_pass_inp" class="col-md-2 control-label">Confirm Password</label>
+    <div class="col-md-6">
+      <input class="form-control" id="confirm_pass_inp" type="password" placeholder="Password" name="password_confirmed">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-offset-2 col-md-6">
+      <button id="submit_registration" type="submit" class="btn btn-success">Sign up!</button>
+    </div>
+  </div>
+
 </form>
 
 
