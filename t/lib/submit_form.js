@@ -24,7 +24,7 @@ module.exports = Promise.promisify( function(args, callback){
 
       // Indicates whether form submission is going to be successful
       should_be_successful = args.should_be_successful || false,
-    
+
       // CSS selecetor for form submition button
       submit_button_selector = args.submit_button_selector ||'button[type="submit"]';
 

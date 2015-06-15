@@ -7,7 +7,7 @@
     <div class="col-md-3">Employee calendar</div>
     <form id="book_time_off_frm" method="POST" action="">
     <div class="col-md-3 col-md-offset-6">
-        <button type="button" class="btn btn-info pull-right" data-toggle="modal" data-target="#book_leave_modal">Book time off</button>
+        <button type="button" class="btn btn-info pull-right" data-toggle="modal" data-target="#book_leave_modal" id="book_time_off_btn">Book time off</button>
     </div>
     </form>
 </div>
@@ -29,7 +29,7 @@
 
     {{# each calendar}}
     <div class="col-md-3 month_container">
-        <table class="calendar_month">
+        <table class="calendar_month month_{{ this.month }}">
         <thead>
         <tr>
             <td colspan="14">{{ this.month }}</td>
@@ -48,7 +48,7 @@
         {{#each this.weeks }}
         <tr>
             {{#each this}}
-            <td class="half_1st
+            <td class="half_1st day_{{ this.val }}
                 {{#if this.is_bank_holiday}}bank_holiday_cell{{/if}}
                 {{#if this.is_weekend}}weekend_cell{{/if}}
                 {{#if this.is_leave_morning }}
@@ -59,7 +59,7 @@
                     {{/if}}
                 {{/if}}
             "><span>{{this.val}}</span></td>
-            <td class="half_2nd
+            <td class="half_2nd day_{{ this.val }}
                 {{#if this.is_bank_holiday}}bank_holiday_cell{{/if}}
                 {{#if this.is_weekend}}weekend_cell{{/if}}
                 {{#if this.is_leave_afternoon }}
