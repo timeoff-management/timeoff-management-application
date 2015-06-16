@@ -127,7 +127,11 @@ The web application is going to have following structure:
 
 * settings management
 ** edit company details
-** CRUD for departments
 
 
 How to generate calendar feeds? https://www.npmjs.com/package/ical-generator
+
+In case of errors that soemthing cannot read a file: run this command before startting server
+  ulimit -n 2560
+
+(this increase number of open file handlers).
