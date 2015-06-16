@@ -2,19 +2,21 @@
 
 'use strict';
 
-var test      = require('selenium-webdriver/testing'),
+var test             = require('selenium-webdriver/testing'),
     application_host = 'http://localhost:3000/',
-    until = require('selenium-webdriver').until,
-    By        = require('selenium-webdriver').By,
-    expect    = require('chai').expect,
-    _         = require('underscore'),
-    Promise   = require("bluebird"),
+    until            = require('selenium-webdriver').until,
+    By               = require('selenium-webdriver').By,
+    expect           = require('chai').expect,
+    _                = require('underscore'),
+    Promise          = require("bluebird"),
+    moment           = require('moment'),
     login_user_func        = require('../lib/login_with_user'),
     register_new_user_func = require('../lib/register_new_user'),
     logout_user_func       = require('../lib/logout_user'),
     open_page_func         = require('../lib/open_page'),
     submit_form_func       = require('../lib/submit_form'),
     check_elements_func    = require('../lib/check_elements'),
+    check_booking_func     = require('../lib/check_booking_on_calendar'),
     add_new_user_func      = require('../lib/add_new_user');
 
 
@@ -36,7 +38,6 @@ describe('Basic leave request', function(){
   // The app is really slow and does not manage to handle request in
   // default 2 seconds, so be more patient.
   this.timeout(90000);
-
 
   test.it('Run', function(done){
 
@@ -80,9 +81,6 @@ describe('Basic leave request', function(){
             driver           : data.driver,
         });
     })
-
-
-
     // Open calendar page
     .then(function(data){
         return open_page_func({
@@ -98,8 +96,7 @@ describe('Basic leave request', function(){
         });
       return Promise.resolve(data);
     })
-
-
+    // Request new leave
     .then(function(data){
       var driver = data.driver;
 
@@ -139,23 +136,12 @@ describe('Basic leave request', function(){
 
         // Check that all days are marked as pended
         .then(function(){
-          return Promise.all([
-            _.map([15, 16], function(day){
-              return Promise.all([
-                _.map(['half_1st','half_2nd'],function(half){
-                  return driver.findElement(By.css('table.month_June td.day_'+day+'.'+half))
-                    .then(function(el){ return el.getAttribute('class'); })
-                    .then(function(css){
-                      expect(css).to.match(/leave_cell_pended/);
-                    })
-                })
-              ]);
-            })
-          ]);
-
-        })
-
-        .then(function(){ return Promise.resolve(data); });
+          return check_booking_func({
+            driver    : driver,
+            full_days : [moment('2015-06-15'), moment('2015-06-16')],
+            type      : 'pended',
+          });
+        });
     })
     // Logout from non-admin acount
     .then(function(data){
@@ -221,29 +207,20 @@ describe('Basic leave request', function(){
     })
     // And make sure that it is calendar indeed
     .then(function(data){
-      data.driver.getTitle()
+      return data.driver.getTitle()
+
         .then(function(title){
             expect(title).to.be.equal('My calendar');
         })
 
         // Check that all days are marked as pended
         .then(function(){
-          return Promise.all([
-            _.map([15, 16], function(day){
-              return Promise.all([
-                _.map(['half_1st','half_2nd'],function(half){
-                  return data.driver.findElement(By.css('table.month_June td.day_'+day+'.'+half))
-                    .then(function(el){ return el.getAttribute('class'); })
-                    .then(function(css){
-                      expect(css).to.match(/leave_cell/);
-                    })
-                })
-              ]);
-            })
-          ]);
-
+          return check_booking_func({
+            driver    : data.driver,
+            full_days : [moment('2015-06-15'), moment('2015-06-16')],
+            type      : 'approved',
+          });
         });
-      return Promise.resolve(data);
     })
 
     .then(function(data){ return data.driver.quit(); })
