@@ -122,7 +122,12 @@ describe('Basic leave request', function(){
 
           return submit_form_func({
             driver      : driver,
+            // The order matters here as we need to populate dropdown prior date filds
             form_params : [{
+                selector        : 'select[name="from_date_part"]',
+                option_selector : 'option[value="2"]',
+                value           : "2",
+            },{
                 selector : 'input#from',
                 value : '2015-06-15',
             },{
@@ -137,9 +142,10 @@ describe('Basic leave request', function(){
         // Check that all days are marked as pended
         .then(function(){
           return check_booking_func({
-            driver    : driver,
-            full_days : [moment('2015-06-15'), moment('2015-06-16')],
-            type      : 'pended',
+            driver         : driver,
+            full_days      : [moment('2015-06-16')],
+            halfs_1st_days : [moment('2015-06-15')],
+            type           : 'pended',
           });
         });
     })
@@ -216,9 +222,10 @@ describe('Basic leave request', function(){
         // Check that all days are marked as pended
         .then(function(){
           return check_booking_func({
-            driver    : data.driver,
-            full_days : [moment('2015-06-15'), moment('2015-06-16')],
-            type      : 'approved',
+            driver         : data.driver,
+            full_days      : [moment('2015-06-16')],
+            halfs_1st_days : [moment('2015-06-15')],
+            type           : 'approved',
           });
         });
     })
