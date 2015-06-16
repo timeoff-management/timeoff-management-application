@@ -102,15 +102,6 @@ describe('Basic leave request', function(){
           return el.click();
         })
 
-        // Following code is to ensure that non admin user can request leave only for
-        // herself
-        .then(function(){
-          return driver.isElementPresent(By.css('select#employee'))
-            .then(function(is_present){
-              expect(is_present).to.be.equal(false);
-            });
-        })
-
         // Create new leave request
         .then(function(){
 
@@ -148,15 +139,6 @@ describe('Basic leave request', function(){
       return driver.findElement(By.css('#book_time_off_btn'))
         .then(function(el){
           return el.click();
-        })
-
-        // Following code is to ensure that non admin user can request leave only for
-        // herself
-        .then(function(){
-          return driver.isElementPresent(By.css('select#employee'))
-            .then(function(is_present){
-              expect(is_present).to.be.equal(false);
-            });
         })
 
         // Create new leave request
