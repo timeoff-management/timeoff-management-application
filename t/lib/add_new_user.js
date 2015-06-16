@@ -20,7 +20,7 @@ module.exports = Promise.promisify(function(args, callback){
     .withCapabilities(webdriver.Capabilities.chrome())
     .build();
 
-  var new_user_email = uuid.v4() + '@test.com';
+  var new_user_email = (new Date()).getTime() + '@test.com';
 
   // Open front page
   driver.get( application_host );
@@ -50,7 +50,7 @@ module.exports = Promise.promisify(function(args, callback){
               value    : 'test name',
           },{
               selector : 'input[name="lastname"]',
-              value    : 'test lastname',
+              value    : 'lastname '+new_user_email.substring(0,new_user_email.lastIndexOf('@')),
           },{
               selector : 'input[name="email"]',
               value    : new_user_email,

@@ -16,7 +16,7 @@ var webdriver = require('selenium-webdriver'),
 module.exports = Promise.promisify( function(args, callback){
 
   var application_host = args.application_host,
-      new_user_email = uuid.v4() + '@test.com';
+      new_user_email = (new Date()).getTime() + '@test.com';
 
   // Instantiate new driver object
     driver = new webdriver.Builder()
