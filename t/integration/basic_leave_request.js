@@ -4,7 +4,6 @@
 
 var test             = require('selenium-webdriver/testing'),
     application_host = 'http://localhost:3000/',
-    until            = require('selenium-webdriver').until,
     By               = require('selenium-webdriver').By,
     expect           = require('chai').expect,
     _                = require('underscore'),
@@ -26,7 +25,7 @@ var test             = require('selenium-webdriver/testing'),
  *    - Create new user
  *    - Login as new user
  *    - Submit leave request for new user
- *    - Make sure that leve request is shown as a pending one for non admin user
+ *    - Make sure that leave request is shown as a pending one for non admin user
  *    - Login as an admin user and approve leave request
  *    - Login as non admin user and check that new request is now
  *      shown as approved
