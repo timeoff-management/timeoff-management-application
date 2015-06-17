@@ -1,21 +1,23 @@
 
+// Usage:
+//  node  bin/check_where_i_am_on_google.js --domain="nixieshop.com" --query="nixie shop"
 
 'use strict';
 
-var search_query = 'nixie+shop',
-web_site_domain  = 'nixieshop.com',
-stop_on_first    = true;
+var
+    optimist = require('optimist').argv,
+    search_query    = optimist.query  || 'time off manager',
+    web_site_domain = optimist.domain || 'timeoffmanager.com',
+    stop_on_first   = true;
 
-console.log('Cheking query string: '+search_query);
-console.log('Look forward domain: '+web_site_domain);
+console.log('-----------------------------------');
+console.log('  Cheking query string : '+search_query);
+console.log('  Look for domain      : '+web_site_domain);
+console.log('-----------------------------------');
 
 
 var webdriver = require('selenium-webdriver'),
-    By        = require('selenium-webdriver').By,
-    expect    = require('chai').expect,
     _         = require('underscore'),
-    uuid      = require('node-uuid'),
-    Promise   = require("bluebird"),
     google_url = 'https://www.google.com/search?q='+search_query+'&start=',
     driver;
 
