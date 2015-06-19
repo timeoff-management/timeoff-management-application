@@ -31,7 +31,8 @@
 </div>
 <div class="col-md-9">
     <div class="row">
-        <div class="col-md-6">Name</div>
+        <div class="col-md-5">Name</div>
+        <div class="col-md-1">Days used</div>
         <div class="col-md-3">Department</div>
         <div class="col-md-1">Confirmed</div>
     </div>
@@ -39,7 +40,8 @@
     {{# each users}}
     <div class="row">&nbsp;</div>
     <div class="row">
-        <div class="col-md-6"><a href="/users/edit/{{this.id}}/">{{this.full_name}}</a></div>
+        <div class="col-md-5"><a href="/users/edit/{{this.id}}/">{{this.full_name}}</a></div>
+        <div class="col-md-1">{{this.calculate_number_of_days_taken_from_allowence}}</div>
         <div class="col-md-3">{{this.department.name}}</div>
         <div class="col-md-1">{{# if this.activated}}Yes{{else}}No{{/if}}</div>
     </div>
