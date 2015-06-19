@@ -6,7 +6,10 @@
 <div class="row">
     <div class="col-md-3">Employee calendar</div>
     <form id="book_time_off_frm" method="POST" action="">
-    <div class="col-md-3 col-md-offset-6">
+    <div class="col-md-2 col-md-offset-6">
+      <span>{{#with current_user }}{{ this.calculate_number_of_days_available_in_allowence }} out of {{this.calculate_total_number_of_days_n_allowence }}{{/with}}</span>
+    </div>
+    <div class="col-md-1">
         <button type="button" class="btn btn-info pull-right" data-toggle="modal" data-target="#book_leave_modal" id="book_time_off_btn">Book time off</button>
     </div>
     </form>
