@@ -25,6 +25,7 @@ var handlebars = require('express-handlebars')
             },
 
             as_date : function(date_string) {
+              if (! date_string) return '';
               return moment(date_string).format('YYYY-MM-DD');
             },
         }
