@@ -4,6 +4,7 @@
 var webdriver = require('selenium-webdriver'),
     By        = require('selenium-webdriver').By,
     expect    = require('chai').expect,
+    until     = require('selenium-webdriver').until,
     _         = require('underscore'),
     Promise   = require("bluebird"),
     driver;
@@ -37,6 +38,8 @@ module.exports = Promise.promisify(function(args, callback){
     .then(function(el){
       return el.click();
     });
+
+  driver.wait(until.elementLocated(By.css('h1')), 1000);
 
   // Check that it is actually login page
   driver.findElement( By.css('h1') )
@@ -74,6 +77,8 @@ module.exports = Promise.promisify(function(args, callback){
     .then(function(el){
       el.click();
     });
+
+  driver.wait(until.elementLocated(By.css('div.alert-success')), 1000);
 
   // Make sure login was successful, check that we landed on user account page
   driver.getTitle()

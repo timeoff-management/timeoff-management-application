@@ -6,6 +6,7 @@
 
 var webdriver = require('selenium-webdriver'),
     By        = require('selenium-webdriver').By,
+    until     = require('selenium-webdriver').until,
     expect    = require('chai').expect,
     _         = require('underscore'),
     uuid      = require('node-uuid'),
@@ -42,6 +43,8 @@ module.exports = Promise.promisify( function(args, callback){
     .then(function(el){
       el.click();
     });
+
+  driver.wait(until.elementLocated(By.css('h1')), 1000);
 
   // Make sure that new page is a registration page
   driver.findElement(By.css('h1'))
@@ -99,6 +102,8 @@ module.exports = Promise.promisify( function(args, callback){
     .then(function(el){
       el.click();
     });
+
+  driver.wait(until.elementLocated(By.css('div.alert-success')), 1000);
 
   // Make sure registration completed successfully
   driver

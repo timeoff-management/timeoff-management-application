@@ -3,6 +3,7 @@
 var webdriver = require('selenium-webdriver'),
     By        = require('selenium-webdriver').By,
     expect    = require('chai').expect,
+    until     = require('selenium-webdriver').until,
     Promise   = require("bluebird");
 
 
@@ -31,6 +32,8 @@ module.exports = Promise.promisify( function(args, callback){
       return el.click();
     })
     .then(function(){
+
+      driver.wait(until.elementLocated(By.css('h1')), 1000);
 
       return driver.isElementPresent( By.css( logout_link_css_selector ) );
     })

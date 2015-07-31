@@ -5,6 +5,7 @@ var webdriver = require('selenium-webdriver'),
     By        = require('selenium-webdriver').By,
     expect    = require('chai').expect,
     _         = require('underscore'),
+    until     = require('selenium-webdriver').until,
     Promise   = require("bluebird"),
     uuid      = require('node-uuid'),
     submit_form_func = require('../lib/submit_form'),
@@ -38,11 +39,14 @@ module.exports = Promise.promisify(function(args, callback){
       return el.click();
     });
 
+  driver.wait(until.elementLocated(By.css('#add_new_department_btn')), 1000);
+
   driver.findElement( By.css('#add_new_department_btn') )
     .then(function(el){
       return el.click();
     })
     .then(function(){
+
       return submit_form_func({
           driver      : driver,
           form_params : [{

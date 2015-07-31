@@ -5,6 +5,7 @@ By             = require('selenium-webdriver').By,
 expect         = require('chai').expect,
 _              = require('underscore'),
 Promise        = require("bluebird"),
+until          = require('selenium-webdriver').until,
 check_elements = require('./check_elements');
 
 
@@ -58,6 +59,8 @@ module.exports = Promise.promisify( function(args, callback){
         .findElement( By.css( submit_button_selector ) )
         .then(function(el){
             el.click();
+
+            driver.wait(until.elementLocated(By.css('title')), 1000);
         });
 
     if ( should_be_successful ) {
