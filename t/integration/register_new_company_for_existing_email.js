@@ -33,22 +33,48 @@ describe('Reuse email from existing acount when creating new company', function(
 
   test.it('Go', function(done){
 
+    var admin_email;
+
     // Create new company
     return register_new_user_func({
         application_host : application_host,
     })
     // Login with newly created admin user
     .then(function(data){
-        var admin_email = data.email;
+        admin_email = data.email;
+
+        console.log('    Login with newly created account '+admin_email);
 
         return login_user_func({
             application_host : application_host,
             user_email       : admin_email,
         });
     })
-    // Close browser;
+    .then(function(data){
+      return logout_user_func({
+        application_host : application_host,
+        driver           : data.driver,
+      });
+    })
     .then(function(data){
         data.driver.quit().then(function(){ done(); });
+        return Promise.resolve(1);
+    })
+    .then(function(){
+        console.log('    Try to create another account with the same email '
+          + admin_email);
+
+        return register_new_user_func({
+          application_host      : application_host,
+          user_email            : admin_email,
+          failing_error_message : 'Failed to register user please contact customer service',
+        });
+    })
+
+    // Close browser;
+    .then(function(data){
+      done();
+//        data.driver.quit().then(function(){ done(); });
     });
 
 

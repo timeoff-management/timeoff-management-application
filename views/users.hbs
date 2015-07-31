@@ -24,8 +24,9 @@
 <div class="col-md-3">
     <p>Departments</p>
     <ul>
+    <li><a href="/users/">All</a></li>
     {{#each company.departments}}
-        <li>{{this.name}}</li>
+      <li><a href="/users/?department={{this.id}}">{{this.name}}</a></li>
     {{/each}}
     </ul>
 </div>

@@ -17,7 +17,8 @@ var webdriver = require('selenium-webdriver'),
 module.exports = Promise.promisify( function(args, callback){
 
   var application_host = args.application_host,
-      new_user_email = (new Date()).getTime() + '@test.com';
+      failing_error_message = args.failing_error_message,
+      new_user_email = args.user_email || (new Date()).getTime() + '@test.com';
 
   // Instantiate new driver object
     driver = new webdriver.Builder()
@@ -26,6 +27,8 @@ module.exports = Promise.promisify( function(args, callback){
 
   // Go to front page
   driver.get( application_host );
+
+  driver.wait(until.elementLocated(By.css('h1')), 1000);
 
   // Check if there is a registration link
   driver.findElement( By.css('a[href="/register/"]') )
@@ -103,19 +106,36 @@ module.exports = Promise.promisify( function(args, callback){
       el.click();
     });
 
-  driver.wait(until.elementLocated(By.css('div.alert-success')), 1000);
+  driver.wait(until.elementLocated(By.css('div')), 1000);
 
-  // Make sure registration completed successfully
-  driver
-    .findElement(
-      By.css('div.alert-success')
-    )
-    .then(function(el){
-      return el.getText();
-    })
-    .then(function(text){
-      expect(text).to.be.equal('Registration is complete. You can login to the system');
-    });
+  if (failing_error_message) {
+
+    driver
+      .findElement(
+        By.css('div.alert-danger')
+      )
+      .then(function(el){
+        return el.getText();
+      })
+      .then(function(text){
+        expect(text).to.be.equal(failing_error_message);
+      });
+
+  } else {
+
+    // Make sure registration completed successfully
+    driver
+      .findElement(
+        By.css('div.alert-success')
+      )
+      .then(function(el){
+        return el.getText();
+      })
+      .then(function(text){
+        expect(text).to.be.equal('Registration is complete. You can login to the system');
+      });
+
+  }
 
   // Close the driver and pass data back to the caller
   driver

@@ -8,11 +8,11 @@ var test           = require('selenium-webdriver/testing'),
     expect    = require('chai').expect,
     _         = require('underscore'),
     Promise   = require("bluebird"),
+    until     = require('selenium-webdriver').until,
     login_user_func        = require('../lib/login_with_user'),
     register_new_user_func = require('../lib/register_new_user'),
     logout_user_func       = require('../lib/logout_user'),
     add_new_user_func      = require('../lib/add_new_user');
-
 
 
 describe('Try to access private pages with guest user', function(){
@@ -73,9 +73,10 @@ describe('Try to access admin pages with non-admin user', function(){
 
         Promise.all(_.map(
             [
+              'users/add/',
+              'users/',
               'settings/company/', 'settings/departments/',
               'settings/bankholidays/', 'settings/leavetypes/',
-              'users/', 'users/add/'
             ],
             function(path) {
 
@@ -86,6 +87,7 @@ describe('Try to access admin pages with non-admin user', function(){
                 })
                 .then(function(data){
                     new_user_email = data.email;
+                    console.log('     Working on '+path+' path');
 
                     return login_user_func({
                         application_host : application_host,
@@ -119,6 +121,9 @@ describe('Try to access admin pages with non-admin user', function(){
                     var driver = data.driver;
 
                     driver.get( application_host + path);
+
+//                    driver.wait(until.elementLocated(By.css('h1')), 1000);
+
                     driver.getCurrentUrl()
                       .then(function(url){
                           expect(url).to.be.equal(application_host + 'calendar/');

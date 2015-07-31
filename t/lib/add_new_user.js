@@ -47,6 +47,8 @@ module.exports = Promise.promisify(function(args, callback){
     })
     .then(function(){
 
+      driver.wait(until.elementLocated(By.css('input[name="name"]')), 1000);
+
       return submit_form_func({
           driver      : driver,
           form_params : [{
