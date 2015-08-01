@@ -35,6 +35,12 @@ module.exports = Promise.promisify( function(args, callback){
         _.map(
             form_params,
             function( test_case ){
+
+                // Handle case when test case is empty
+                if (Object.keys(test_case).length === 0 ){
+                    return Promise.resolve(1);
+                }
+
                 driver
                 .findElement(By.css( test_case.selector ))
                 .then(function(el){

@@ -23,7 +23,7 @@
 <div class="row">
 <div class="col-md-3">
     <p>Departments</p>
-    <ul>
+    <ul class="all-departments">
     <li><a href="/users/">All</a></li>
     {{#each company.departments}}
       <li><a href="/users/?department={{this.id}}">{{this.name}}</a></li>
@@ -43,7 +43,7 @@
     <div class="row">
         <div class="col-md-5"><a href="/users/edit/{{this.id}}/">{{this.full_name}}</a></div>
         <div class="col-md-1">{{this.calculate_number_of_days_taken_from_allowence}}</div>
-        <div class="col-md-3">{{this.department.name}}</div>
+        <div class="col-md-3 user_department">{{this.department.name}}</div>
         <div class="col-md-1">{{# if this.activated}}Yes{{else}}No{{/if}}</div>
     </div>
     {{/each}}

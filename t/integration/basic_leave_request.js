@@ -63,7 +63,7 @@ describe('Basic leave request', function(){
             driver           : data.driver,
         });
     })
-    // Logout from admin acount
+    // Logout from admin account
     .then(function(data){
 
         non_admin_user_email = data.new_user_email;

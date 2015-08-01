@@ -56,7 +56,7 @@ describe('CRUD for departments', function(){
         });
     })
 
-    // Check that updating departnebt allowence and Use allowence flag works
+    // Check that updating department allowance and Use allowance flag works
     .then(function(data){
          return submit_form_func({
             driver      : data.driver,
@@ -88,7 +88,7 @@ describe('CRUD for departments', function(){
         });
     })
 
-    // Add mew "Marketing" deprtament
+    // Add mew "Marketing" department
     .then(function(data){
          return submit_form_func({
             driver      : data.driver,
@@ -107,7 +107,7 @@ describe('CRUD for departments', function(){
         });
     })
 
-    // Add mew "Engineering" deprtament
+    // Add mew "Engineering" department
     .then(function(data){
          return submit_form_func({
             driver      : data.driver,

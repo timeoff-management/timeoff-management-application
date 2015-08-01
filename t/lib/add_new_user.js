@@ -16,6 +16,7 @@ module.exports = Promise.promisify(function(args, callback){
 
   var application_host = args.application_host,
       result_callback  = callback,
+      department_index  = args.department_index,
 
   driver = args.driver || new webdriver.Builder()
     .withCapabilities(webdriver.Capabilities.chrome())
@@ -49,6 +50,15 @@ module.exports = Promise.promisify(function(args, callback){
 
       driver.wait(until.elementLocated(By.css('input[name="name"]')), 1000);
 
+      var select_department = {};
+      if (typeof department_index !== 'undefined') {
+           
+        select_department = {
+            selector        : 'select[name="department"]',
+            option_selector : 'option[value="'+department_index+'"]',
+        };
+      }
+
       return submit_form_func({
           driver      : driver,
           form_params : [{
@@ -63,7 +73,9 @@ module.exports = Promise.promisify(function(args, callback){
           },{
               selector : 'input[name="start_date"]',
               value : '2015-06-01',
-          }],
+          },
+              select_department,
+          ],
           should_be_successful : true,
           elements_to_check : [],
           message : /New user account successfully added/,
