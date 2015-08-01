@@ -9,6 +9,7 @@ var test             = require('selenium-webdriver/testing'),
     _                = require('underscore'),
     Promise          = require("bluebird"),
     moment           = require('moment'),
+    until            = require('selenium-webdriver').until,
     login_user_func        = require('../lib/login_with_user'),
     register_new_user_func = require('../lib/register_new_user'),
     logout_user_func       = require('../lib/logout_user'),
@@ -186,6 +187,10 @@ describe('Basic leave request', function(){
         'div[vpp="pending_for__'+non_admin_user_email+'"] .btn-success'
       ))
       .then(function(el){ return el.click(); })
+      .then(function(){
+        // Wait until page properly is reloaded
+        data.driver.wait(until.elementLocated(By.css('h1')), 1000);
+      })
       .then(function(){ return Promise.resolve(data); });
     })
     // Logout from admin acount
