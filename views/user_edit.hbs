@@ -63,10 +63,19 @@
   </div>
 
   <div class="form-group">
+    <label for="days_remaining_inp" class="col-md-2 control-label">Days remaining</label>
+    <div class="col-md-6 date">
+      <input class="form-control" id="days_remaining_inp" type="text" readonly value="{{#with employee}}{{ this.calculate_number_of_days_available_in_allowence }} out of {{this.calculate_total_number_of_days_n_allowence }}{{/with}}">
+    </div>
+  </div>
+
+  <div class="form-group">
     <div class="col-md-offset-2 col-md-6">
       <button type="submit" class="btn btn-success">Save changes</button>
     </div>
   </div>
+
+
 </form>
 
 {{> footer }}
