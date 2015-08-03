@@ -9,6 +9,7 @@ var test             = require('selenium-webdriver/testing'),
     expect           = require('chai').expect,
     _                = require('underscore'),
     Promise          = require("bluebird"),
+    until            = require('selenium-webdriver').until,
     login_user_func        = require('../lib/login_with_user'),
     register_new_user_func = require('../lib/register_new_user'),
     logout_user_func       = require('../lib/logout_user'),
@@ -52,7 +53,9 @@ describe('Basic leave request', function(){
     })
     // Login with newly created admin user
     .then(function(data){
-         admin_email = data.email;
+        admin_email = data.email;
+
+        console.log('    Login with newly created user');
 
         return login_user_func({
             application_host : application_host,
@@ -61,6 +64,9 @@ describe('Basic leave request', function(){
     })
     // Create new line manager user
     .then(function(data){
+
+        console.log('    Create new line manager');
+
         return add_new_user_func({
             application_host : application_host,
             driver           : data.driver,
@@ -71,6 +77,8 @@ describe('Basic leave request', function(){
 
         line_manager_email = data.new_user_email;
 
+        console.log('    Create new ordenary user');
+
         return add_new_user_func({
             application_host : application_host,
             driver           : data.driver,
@@ -79,6 +87,7 @@ describe('Basic leave request', function(){
     // Open department management page
     .then(function(data){
         ordenary_user_email = data.new_user_email;
+        console.log('    Create new department');
         return open_page_func({
             url    : application_host + 'settings/departments/',
             driver : data.driver,
@@ -86,6 +95,8 @@ describe('Basic leave request', function(){
     })
     // Save ID of ordenry user
     .then(function(data){
+
+      console.log('    And update its bose');
 
       return data.driver.findElement(
         By.css('select[name="boss_id__new"] option:nth-child(3)')
@@ -124,6 +135,8 @@ describe('Basic leave request', function(){
     })
     // Open user editing page for ordenry user
     .then(function(data){
+
+        console.log('    Make sure ordenary user is part of newly added department. Open page...');
         return open_page_func({
             url    : application_host + 'users/edit/'+ordenary_user_id+'/',
             driver : data.driver,
@@ -131,6 +144,8 @@ describe('Basic leave request', function(){
     })
     // And make sure it is part of the newly added department
     .then(function(data){
+      console.log('      ... and save changes');
+
       return submit_form_func({
           driver      : data.driver,
           form_params : [{
@@ -145,6 +160,8 @@ describe('Basic leave request', function(){
 
     // Logout from admin acount
     .then(function(data){
+        console.log('    Log out from admin user');
+
         return logout_user_func({
             application_host : application_host,
             driver           : data.driver,
