@@ -1,4 +1,4 @@
-To have nice visualisation og Database schema use this tool http://ondras.zarovi.cz/sql/demo/ and feed XML below.
+To have nice visualisation of database schema use this tool http://ondras.zarovi.cz/sql/demo/ and feed XML below.
 
 
 <?xml version="1.0" encoding="utf-8" ?>
