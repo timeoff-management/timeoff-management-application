@@ -2,6 +2,7 @@ Vacation tracker.
 
 Aim: to account employee vacations within a company.
 
+
 Basic user scenario:
 - user login to the system
 - check her vacation balance
@@ -43,37 +44,29 @@ Admin basic view:
 -- user is emailed with calendar feed
 
 
-Yet to be covered by spec:
+Ideas about future features:
 
-Implements users to have only one person that approves their vacations.
+* More then one approver
 
-Admins can cancel request at any point.
+* Admins can cancel request at any point
 
-Admins can create absense events on behalf of users.
+* Each employee can have its own working pattern. For instance she does not work on Mondays.
 
-Each employee can have its own working pattern. For instance she does not work on
-Mondays.
+* Departments are hierachical - tree like.
 
-Departments are hierachical - tree like.
-
-Requests could have two types of notes: public notes and private notes: one for
+* Requests could have two types of notes: public notes and private notes: one for
 manager, another for everybody to see on absense event.
 
-Use this as payment processor?
-    * https://stripe.com
-    * Ppaypal
 
-Google keywords for searching competitors: "manage staff leave"
-
-LIST of competitors features:
+List of similar commercial solutions:
 
 * http://timetastic.co.uk
-    This is very good design, we need to have something
-    like this. Probably would copy them first.
+
+    This is very good design, we need to have something like this.
     
-    their reviews: http://www.reviews.co.uk/company-reviews/store/timetastic
+    Their reviews: http://www.reviews.co.uk/company-reviews/store/timetastic
     
-    their FAQ: https://timetastic.zendesk.com/hc/en-us
+    Their FAQ: https://timetastic.zendesk.com/hc/en-us
     
 * Consider this guys as well: http://www.appogeehr.com
     https://kinhr.com/
@@ -110,14 +103,9 @@ LIST of competitors features:
 * http://www.replicon.com/time-attendance
 
 
-How about domain name of: timeoff.management?
+Ideas of web application structure.
 
-
-
-
-== Ideas of web application structure.
-
-The web application is going to have following structure:
+The web application is going to have following structure (incomplete):
 
 /          -> (public/private) -> main page, shows either description and link to the register form, or dashboard if user is logged in.
 /register/ -> (public)         -> page allows user to register new company
@@ -125,11 +113,7 @@ The web application is going to have following structure:
 /logout/   -> (private)        -> logout page
 
 
-== NEXT TODO:
-
-* settings management
-** edit company details
-
+MISC:
 
 How to generate calendar feeds? https://www.npmjs.com/package/ical-generator
 
