@@ -18,6 +18,18 @@ Employee requests a leave, manager says yes or no.
 
 ## Installation
 
+### Cloud hosting
+
+Visit http://timeoff.management/ 
+
+Create company account and use cloud based version.
+
+### Self hosting
+
+Install TimeOff Manager within your infrastructure:
+
+(make sure you have Node.js installed)
+
 ```bash
 git clone git@github.com:vpp/timeoff-management.git
 cd timeoff-management
