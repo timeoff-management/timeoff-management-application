@@ -1,6 +1,6 @@
-# vacation-tracker
+# TimeOff manager
 
-An application for accounting employee vacations.
+An application for accounting employee days off.
 
 To run tests:
 
