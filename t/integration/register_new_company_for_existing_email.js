@@ -74,7 +74,6 @@ describe('Reuse email from existing acount when creating new company', function(
     // Close browser;
     .then(function(data){
       done();
-//        data.driver.quit().then(function(){ done(); });
     });
 
 
