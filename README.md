@@ -5,15 +5,19 @@ Web application for accounting employee days off.
 ## Features 
 
 **Company departments**
+
  Create departments to group employees, each one has its own manager.
 
 **Customised Leave types** 
+
 Holidays, Sickness, Maternity, Paternity, Working from home, you name it. Configure if each of them uses vacation allowance or not.
 
 **Customised public holidays**
+
 Setup public holidays as well as company specific dates.
 
 **Simple workflow**
+
 Employee requests a leave, manager says yes or no.
 
 ## Installation
