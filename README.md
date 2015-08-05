@@ -40,6 +40,7 @@ cd timeoff-management
 npm install
 node bin/www
 ```
+Open http://localhost:3000/ in your browser.
 
 ## Run tests
 
