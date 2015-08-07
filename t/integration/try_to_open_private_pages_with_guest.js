@@ -33,7 +33,7 @@ describe('Try to access private pages with guest user', function(){
           function(path) {
 
               var driver = new webdriver.Builder()
-                  .withCapabilities(webdriver.Capabilities.chrome())
+                  .withCapabilities(webdriver.Capabilities.phantomjs())
                   .build();
 
               // Open front page
@@ -50,7 +50,7 @@ describe('Try to access private pages with guest user', function(){
     test.it('Check main (dashboard) page', function(done) {
 
         var driver = new webdriver.Builder()
-            .withCapabilities(webdriver.Capabilities.chrome())
+            .withCapabilities(webdriver.Capabilities.phantomjs())
             .build();
 
         // Open front page
