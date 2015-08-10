@@ -11,6 +11,5 @@ env:
 before_install:
   - git clone https://github.com/vpp/timeoff-management.git ~/tom
   - cd ~/tom
-  - git checkout phantomjs_integration_tests
 before_script:
-  - ulimit -n 2560 ; node bin/wwww > /dev/null &
+  - node bin/wwww > /dev/null &
