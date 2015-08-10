@@ -9,5 +9,5 @@ cache:
     - node_modules
 env:
 before_install:
-  - git clone git@github.com:vpp/timeoff-management.git ~/tom
+  - git clone https://github.com/vpp/timeoff-management.git ~/tom
   - cd ~/tom
