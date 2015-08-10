@@ -22,8 +22,11 @@ module.exports = Promise.promisify( function(args, callback){
 
   // Instantiate new driver object
     driver = new webdriver.Builder()
-      .withCapabilities(webdriver.Capabilities.chrome())
+      .withCapabilities(webdriver.Capabilities.phantomjs())
       .build();
+
+  // Make sure we are in desktop version
+  driver.manage().window().setSize(1024, 768);
 
   // Go to front page
   driver.get( application_host );

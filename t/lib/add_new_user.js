@@ -19,7 +19,7 @@ module.exports = Promise.promisify(function(args, callback){
       department_index  = args.department_index,
 
   driver = args.driver || new webdriver.Builder()
-    .withCapabilities(webdriver.Capabilities.chrome())
+    .withCapabilities(webdriver.Capabilities.phantomjs())
     .build();
 
   var new_user_email = (new Date()).getTime() + '@test.com';

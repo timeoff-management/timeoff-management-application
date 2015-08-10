@@ -18,11 +18,16 @@ module.exports = Promise.promisify(function(args, callback){
 
   // Create new instance of driver
   driver = args.driver || new webdriver.Builder()
-    .withCapabilities(webdriver.Capabilities.chrome())
+    .withCapabilities(webdriver.Capabilities.phantomjs())
     .build();
+
+  // Make sure we are in desktop version
+  driver.manage().window().setSize(1024, 768);
 
   // Open front page
   driver.get( application_host );
+
+  driver.wait(until.elementLocated(By.css('h1')), 1000);
 
   // Check that there is a login button
   driver.findElement( By.css('a[href="/login/"]') )
