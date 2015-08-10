@@ -27,5 +27,9 @@
     "chai": "^2.2.0",
     "mocha": "^2.2.4",
     "selenium-webdriver": "^2.45.1"
+  },
+  "scripts" : {
+    "test" : "node node_modules/mocha/bin/mocha --recursive t/*"
+    
   }
 }
