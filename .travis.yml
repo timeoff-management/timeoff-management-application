@@ -11,3 +11,5 @@ env:
 before_install:
   - git clone https://github.com/vpp/timeoff-management.git ~/tom
   - cd ~/tom
+before_script:
+  - node bin/wwww
