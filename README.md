@@ -2,6 +2,8 @@
 
 Web application for accounting employee days off.
 
+<a href="https://travis-ci.org/vpp/timeoff-management"><img align="right" src="https://travis-ci.org/vpp/timeoff-management.svg" alt="Build status" /></a>
+
 ## Features 
 
 **Company departments**
