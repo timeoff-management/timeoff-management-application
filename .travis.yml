@@ -13,4 +13,4 @@ before_install:
   - cd ~/tom
   - git checkout phantomjs_integration_tests
 before_script:
-  - node bin/wwww &
+  - node bin/wwww > /dev/null &
