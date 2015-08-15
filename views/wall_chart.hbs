@@ -1,0 +1,64 @@
+
+{{> header }}
+
+<h1>{{logged_user.name}} {{logged_user.lastname}}'s Wall chart</h1>
+
+<div class="row">
+    <div class="col-md-3">Wall chart</div>
+    <form id="book_time_off_frm" method="POST" action="">
+    <div class="col-md-2 col-md-offset-6">
+      <span></span>
+    </div>
+    <div class="col-md-1">
+        <button type="button" class="btn btn-info pull-right" data-toggle="modal" data-target="#book_leave_modal" id="book_time_off_btn">Book time off</button>
+    </div>
+    </form>
+</div>
+
+<div class="row">&nbsp;</div>
+
+{{> show_flash_messages }}
+
+<nav>
+  <ul class="pager">
+    <li class="previous"><a href="/calendar/wallchart/?date={{#with prev_date}}{{ this.format 'YYYY-MM' }}{{/with}}"><span aria-hidden="true">&larr;</span> {{#with prev_date}}{{ this.format 'MMM' }}{{/with}}</a></li>
+    <span>{{#with base_date}}{{ this.format 'MMMM, YYYY' }}{{/with}}</span>
+
+    <li class="next"><a href="/calendar/wallchart/?date={{#with next_date}}{{ this.format 'YYYY-MM' }}{{/with}}{{next_year}}">{{#with next_date}}{{this.format 'MMM'}}{{/with}} <span aria-hidden="true">&rarr;</span></a></li>
+  </ul>
+</nav>
+
+
+<div class="row clearfix">
+  <div class="col-md-2">
+    <table class="wallchart_users">
+      <tr><td>&nbsp;</td></tr>
+    {{# each users_and_leaves}}
+      <tr><td>{{#with this.user }}{{ this.full_name }}{{/with}}</td></tr>
+    {{/each}}
+    </table>
+  </div>
+
+  <div class="col-md-10">
+    <table class="calendar_month">
+      <tr>
+      {{# each users_and_leaves.0.days }}
+        <td colspan="2">{{# with this.moment }}{{this.format 'dd' }}{{/with}}</td>
+      {{/each}}
+      </tr>
+    {{# each users_and_leaves}}
+      <tr>
+        {{# each this.days}}
+          {{> calendar_cell day = this}}
+        {{/each}}
+      </tr>
+    {{/each}}
+    </table>
+  </div>
+</div>
+
+<div class="row clearfix">&nbsp;</div>
+
+{{> book_leave_modal container_id='book_leave_modal' leave_modal_form_action='/calendar/bookleave/' }}
+
+{{> footer }}

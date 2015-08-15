@@ -95,9 +95,9 @@ div.month_container {
     width : 100%;
 }
 .calendar_month td {
-    width          : 17px !important;
-    min-width      : 17px !important;
-    max-width      : 17px !important;
+    width          : 15px !important;
+    min-width      : 15px !important;
+    max-width      : 15px !important;
     position       : relative;
     text-align     : center;
     padding-top    : 5px;
@@ -132,4 +132,8 @@ td.leave_cell_pended {
 }
 .modal-dialog {
     width : 450px;
+}
+.wallchart_users td {
+    padding-top    : 5px;
+    padding-bottom : 5px;
 }
