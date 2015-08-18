@@ -4,6 +4,8 @@ Web application for accounting employee days off.
 
 <a href="https://travis-ci.org/vpp/timeoff-management"><img align="right" src="https://travis-ci.org/vpp/timeoff-management.svg" alt="Build status" /></a>
 
+<a href="https://codeclimate.com/github/vpp/timeoff-management"><img align="right"  src="https://codeclimate.com/github/vpp/timeoff-management/badges/gpa.svg" /></a>
+
 ## Features 
 
 **Company departments**
