@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/vpp/timeoff-management.png?label=ready&title=Ready)](https://waffle.io/vpp/timeoff-management)
 # TimeOff manager
 
 Web application for accounting employee days off.
