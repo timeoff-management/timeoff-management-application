@@ -32,7 +32,22 @@
 <div class="row clearfix">
   <div class="col-md-2">
     <table class="wallchart_users">
-      <tr><td>&nbsp;</td></tr>
+      <tr><td class="wallchart-header">
+
+        <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Dropdown
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </div>
+
+      </td></tr>
     {{# each users_and_leaves}}
       <tr><td>{{#with this.user }}{{ this.full_name }}{{/with}}</td></tr>
     {{/each}}
@@ -43,7 +58,7 @@
     <table class="calendar_month">
       <tr>
       {{# each users_and_leaves.0.days }}
-        <td colspan="2">{{# with this.moment }}{{this.format 'dd' }}{{/with}}</td>
+        <td colspan="2" class="wallchart-header">{{# with this.moment }}{{this.format 'dd' }}{{/with}}</td>
       {{/each}}
       </tr>
     {{# each users_and_leaves}}

@@ -137,3 +137,6 @@ td.leave_cell_pended {
     padding-top    : 5px;
     padding-bottom : 5px;
 }
+td.wallchart-header {
+    height: 43px;
+}
