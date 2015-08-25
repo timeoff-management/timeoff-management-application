@@ -16,7 +16,11 @@ module.exports = Promise.promisify( function(args, callback){
 
   // Open front page
   driver
-    .get( application_host )
+    .get( application_host );
+
+  driver
+    .findElement( By.css('a#me_menu') )
+    .then(function(el){ return el.click(); })
     // Make sure that Logout link exists
     .then(function(){
       return driver.isElementPresent( By.css( logout_link_css_selector ) );
