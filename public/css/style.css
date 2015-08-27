@@ -140,3 +140,12 @@ td.leave_cell_pended {
 td.wallchart-header {
     height: 43px;
 }
+body > div.container {
+  min-height: 700px;
+  position: relative;
+}
+
+.custom-footer {
+  position: absolute;
+  bottom :0;
+}
