@@ -147,5 +147,7 @@ body > div.container {
 
 .custom-footer {
   position: absolute;
-  bottom :0;
+  bottom : -20px;
+  width : 100%;
+  margin-top : 10px;
 }
