@@ -71,6 +71,10 @@ module.exports = Promise.promisify( function(args, callback){
     _.map(
       [
         {
+          selector : 'input[name="company_name"]',
+          value    : 'Company '+(new Date()).getTime(),
+        },
+        {
           selector : 'input[name="name"]',
           value    : 'Name of ' + new_user_email,
         },
