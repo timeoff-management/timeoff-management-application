@@ -82,11 +82,11 @@ describe('Check filtering on "users" page', function(){
                 application_host : application_host,
                 driver           : data.driver,
                 // We know that departments are ordered alphabetically, so newly
-                // added "ID" is before default "Sales" one 
+                // added "ID" is before default "Sales" one
                 department_index : "0",
             });
         })
- 
+
         // Open 'users' page
         .then(function(data){
             return open_page_func({
@@ -179,6 +179,6 @@ describe('Check filtering on "users" page', function(){
         .then(function(data){
             data.driver.quit().then(function(){ done(); });
         });
-    
+
     });
 });

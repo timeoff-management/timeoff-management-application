@@ -19,6 +19,7 @@ module.exports = Promise.promisify(function(args, callback){
   // Create new instance of driver
   driver = args.driver || new webdriver.Builder()
     .withCapabilities(webdriver.Capabilities.phantomjs())
+//    .withCapabilities(webdriver.Capabilities.chrome())
     .build();
 
   // Make sure we are in desktop version

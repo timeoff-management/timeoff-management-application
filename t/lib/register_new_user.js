@@ -18,7 +18,8 @@ module.exports = Promise.promisify( function(args, callback){
 
   var application_host = args.application_host,
       failing_error_message = args.failing_error_message,
-      new_user_email = args.user_email || (new Date()).getTime() + '@test.com';
+      random_token =  (new Date()).getTime(),
+      new_user_email = args.user_email || random_token + '@test.com';
 
   // Instantiate new driver object
     driver = new webdriver.Builder()
@@ -76,11 +77,11 @@ module.exports = Promise.promisify( function(args, callback){
         },
         {
           selector : 'input[name="name"]',
-          value    : 'Name of ' + new_user_email,
+          value    : 'name' + random_token,
         },
         {
           selector : 'input[name="lastname"]',
-          value    : 'Last name of ' + new_user_email,
+          value    : 'lastname' + random_token,
         },
         {
           selector : 'input[name="email"]',

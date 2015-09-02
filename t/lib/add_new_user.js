@@ -22,7 +22,8 @@ module.exports = Promise.promisify(function(args, callback){
     .withCapabilities(webdriver.Capabilities.phantomjs())
     .build();
 
-  var new_user_email = (new Date()).getTime() + '@test.com';
+  var random_token =  (new Date()).getTime();
+  var new_user_email = random_token + '@test.com';
 
   // Open front page
   driver.get( application_host );
@@ -52,7 +53,7 @@ module.exports = Promise.promisify(function(args, callback){
 
       var select_department = {};
       if (typeof department_index !== 'undefined') {
-           
+
         select_department = {
             selector        : 'select[name="department"]',
             option_selector : 'option[value="'+department_index+'"]',
@@ -63,10 +64,10 @@ module.exports = Promise.promisify(function(args, callback){
           driver      : driver,
           form_params : [{
               selector : 'input[name="name"]',
-              value    : 'test name',
+              value    : 'name'+random_token,
           },{
               selector : 'input[name="lastname"]',
-              value    : 'lastname '+new_user_email.substring(0,new_user_email.lastIndexOf('@')),
+              value    : 'lastname'+random_token,
           },{
               selector : 'input[name="email"]',
               value    : new_user_email,
