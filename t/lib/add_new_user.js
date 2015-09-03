@@ -17,13 +17,16 @@ module.exports = Promise.promisify(function(args, callback){
   var application_host = args.application_host,
       result_callback  = callback,
       department_index  = args.department_index,
+      // optional paramater, if provided the user adding action is expected to fail
+      // with that error
+      error_message = args.error_message,
 
   driver = args.driver || new webdriver.Builder()
     .withCapabilities(webdriver.Capabilities.phantomjs())
     .build();
 
   var random_token =  (new Date()).getTime();
-  var new_user_email = random_token + '@test.com';
+  var new_user_email = args.email || random_token + '@test.com';
 
   // Open front page
   driver.get( application_host );
@@ -77,9 +80,11 @@ module.exports = Promise.promisify(function(args, callback){
           },
               select_department,
           ],
-          should_be_successful : true,
+          should_be_successful : error_message ? false : true,
           elements_to_check : [],
-          message : /New user account successfully added/,
+          message : error_message ?
+            new RegExp(error_message) :
+            /New user account successfully added/,
       });
     })
 
