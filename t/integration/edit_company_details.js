@@ -67,18 +67,6 @@ describe('Edit company details', function(){
         });
     })
 
-    // Check that start of the year is validated correctly
-    .then(function(data){
-         return submit_form_func({
-            driver      : data.driver,
-            form_params : [{
-                selector : 'input[name="year_starts"]',
-                value    : 'January',
-            }],
-            message : /Start of the year should be a month number/,
-        });
-    })
-
     // Check that company is been updated if valid values are submitted
     .then(function(data){
         return submit_form_func({
@@ -89,9 +77,6 @@ describe('Edit company details', function(){
             },{
                 selector : 'input[name="country"]',
                 value    : 'UA',
-            },{
-                 selector : 'input[name="year_starts"]',
-                 value    : '3',
             }],
             message : /successfully/i,
             should_be_successful : true,
