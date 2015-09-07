@@ -7,6 +7,7 @@
     <div class="col-md-3">Employee calendar</div>
     <form id="book_time_off_frm" method="POST" action="">
     <div class="col-md-2 col-md-offset-6">
+      <span><a href="webcal://127.0.0.1:3000/ical.ics">iCal feed</span>
       <span>Days remaining<br>{{#with current_user }}{{ this.calculate_number_of_days_available_in_allowence ../current_year }} out of {{this.calculate_total_number_of_days_n_allowence ../current_year}}{{/with}}</span>
     </div>
     <div class="col-md-1">
