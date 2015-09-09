@@ -13,4 +13,15 @@
 
 <div class="row">&nbsp;</div>
 
+<div class="row">
+  <div class="col-md-4">
+    <form method="POST" action="/settings/feeds/regenerate/">
+    My calendar <a href="webcal://{{current_host}}/feed/{{calendar_feed.feed_token}}/ical.ics">feed</a>
+
+    <input type="hidden" name="token" value="{{calendar_feed.feed_token}}"/>
+    <input type="submit" value="Regenerate">
+    </form>
+  </div>
+</div>
+
 {{> footer }}
