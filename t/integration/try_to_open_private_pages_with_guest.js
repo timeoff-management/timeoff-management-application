@@ -40,7 +40,7 @@ describe('Try to access private pages with guest user', function(){
               driver.get( application_host + path);
               driver.getCurrentUrl()
                   .then(function(url){
-                      expect(url).to.be.equal(application_host);
+                      expect(url).to.be.equal(application_host+'login/');
                   });
               return driver.quit();
           }))
@@ -57,7 +57,7 @@ describe('Try to access private pages with guest user', function(){
         driver.get( application_host);
         driver.getTitle()
             .then(function(title){
-                expect(title).to.be.equal('Time off management');
+                expect(title).to.be.equal('Time Off Management');
             });
         driver.quit().then(function(){ done(); });
     });
@@ -122,7 +122,7 @@ describe('Try to access admin pages with non-admin user', function(){
 
                     driver.get( application_host + path);
 
-//                    driver.wait(until.elementLocated(By.css('h1')), 1000);
+                    driver.wait(until.elementLocated(By.css('body')), 1000);
 
                     driver.getCurrentUrl()
                       .then(function(url){

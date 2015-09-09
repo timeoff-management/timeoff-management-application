@@ -37,7 +37,7 @@ module.exports = Promise.promisify( function(args, callback){
     })
     .then(function(){
 
-      driver.wait(until.elementLocated(By.css('h1')), 1000);
+      driver.wait(until.elementLocated(By.css('body')), 1000);
 
       return driver.isElementPresent( By.css( logout_link_css_selector ) );
     })

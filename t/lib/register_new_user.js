@@ -40,7 +40,7 @@ module.exports = Promise.promisify( function(args, callback){
       return el.getText();
     })
     .then(function(text){
-      expect(text).to.match(/Sign up/i);
+      expect(text).to.match(/Create new account/i);
     });
 
 
