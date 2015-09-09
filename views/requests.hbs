@@ -5,16 +5,21 @@
 
 {{> show_flash_messages }}
 
-
+<div class="main-row_header">
 <div class="row">
-    <div class="col-md-6">Leave request to approve</div>
+    <div class="col-md-12"><br><br>Leave request to approve</div>
 </div>
-
+</div><br><br>
+<div class="content-rows">
+<div class="row-header">
 <div class="row">
-  <div class="col-md-4">Employee</div>
-  <div class="col-md-6">Leave details</div>
-</div>
+  <div class="col-md-2">Employee</div>
+  <div class="col-md-2">Date of request</div>
+  <div class="col-md-4">Leave details</div>
+  <div class="col-md-2">Number of days</div>
 
+</div>
+</div>
 {{#each to_be_approved_leaves }}
 
 <div class="row">&nbsp;</div>
@@ -59,11 +64,15 @@
 </div>
 
 {{/each}}
-
-<div class="row">&nbsp;</div>
-<div class="row">
-    <div class="col-md-6">All my leaves</div>
 </div>
+<div class="row">&nbsp;</div>
+<div class="main-row_header">
+<div class="row">
+   <div class="col-md-12"><br><br>All my leaves</div>
+</div><br><br>
+</div>
+<div class="content-rows">
+<div class="row-header">
 <div class="row">
     <div class="col-md-2">Type</div>
     <div class="col-md-1">Deducted</div>
@@ -71,8 +80,9 @@
     <div class="col-md-3">Approver</div>
     <div class="col-md-1">Status</div>
 </div>
-
+</div>
 {{# each my_leaves }}
+
 
 <div class="row">&nbsp;</div>
 
@@ -85,5 +95,16 @@
 </div>
 
 {{/ each }}
-
-{{> footer }}
+</div>
+<footer class="footer custom-footer">
+  <p>
+    <span class="pull-left">
+    © <a href="timeoff.management">TimeOff.management</a> 2015
+</span>
+    <span class="pull-right">
+      <a href="https://github.com/vpp/timeoff-management"><i class="fa fa-github fa-lg"></i></a>
+      <a href="https://twitter.com/FreeTimeOffApp"><i class="fa fa-twitter fa-lg"></i></a>
+      <a href="mailto://pavlo@timeoff.management"><i class="fa fa-envelope fa-lg"></i></a>
+    </span>
+  </p>
+</footer>
