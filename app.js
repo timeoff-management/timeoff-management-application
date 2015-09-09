@@ -70,7 +70,7 @@ app.use(passport.session());
 app.use(function(req,res,next){
     res.locals.session     = req.session;
     res.locals.logged_user = req.user;
-    res.locals.url_to_the_site_root = req.get('host').indexOf('app.timeoff') < 0 ? '/' : 'timeoff.management';
+    res.locals.url_to_the_site_root = '/';
     next();
 });
 
