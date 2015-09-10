@@ -15,7 +15,7 @@ if (cluster.isMaster ) {
     }
   });
 
-  [1,2,3,4].forEach(function(){cluster.fork()});
+  [1,2].forEach(function(){cluster.fork()});
 
 } else {
   app.set('port', process.env.PORT || 3000);
