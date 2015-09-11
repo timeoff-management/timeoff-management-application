@@ -4,7 +4,7 @@
 <h1>{{logged_user.name}} {{logged_user.lastname}} messages</h1>
 
 {{> show_flash_messages }}
-
+<div class="container-requests">
 <div class="main-row_header">
 <div class="row">
     <div class="col-md-12"><br><br>Leave request to approve</div>
@@ -14,53 +14,39 @@
 <div class="row-header">
 <div class="row">
   <div class="col-md-2">Employee</div>
+  <div class="col-md-1">Department</div>
   <div class="col-md-2">Date of request</div>
-  <div class="col-md-4">Leave details</div>
-  <div class="col-md-2">Number of days</div>
+  <div class="col-md-3">Leave dates</div>
+  <div class="col-md-1">Type</div>
+  <div class="col-md-1">Days</div>
 
 </div>
 </div>
+
 {{#each to_be_approved_leaves }}
-
 <div class="row">&nbsp;</div>
 
 <div class="row" vpp="pending_for__{{this.user.email}}">
-  <div class="col-md-4">
-    <div class="row">
-      <div class="col-md-12">{{#with this.user}}{{this.full_name}}{{/with}}</div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">{{this.user.department.name}}</div>
-      <div class="col-md-6">{{as_date this.createdAt}}</div>
-    </div>
-  </div>
 
-  <div class="col-md-6">
-    <div class="row">
-      <div class="col-md-12">From {{#with this.get_start_leave_day}}{{as_date this.date}}{{/with}} to {{#with this.get_end_leave_day}}{{as_date this.date}}{{/with}}</div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">{{this.leave_type.name}}</div>
-      <div class="col-md-6">{{ this.get_deducted_days_number }}</div>
-    </div>
-  </div>
-
-  <div class="col-md-2">
-    <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-2">{{#with this.user}}{{this.full_name}}{{/with}}</div>
+      <div class="col-md-1">{{this.user.department.name}}</div>
+      <div class="col-md-2">{{as_date this.createdAt}}</div>
+      <div class="col-md-3">From {{#with this.get_start_leave_day}}{{as_date this.date}}{{/with}} to {{#with this.get_end_leave_day}}{{as_date this.date}}{{/with}}</div>
+      <div class="col-md-1">{{this.leave_type.name}}</div>
+      <div class="col-md-1">{{ this.get_deducted_days_number }}</div>
+      <div class="col-md-1">
       <form action="/requests/reject/" method="POST">
         <input class="btn btn-warning" type="submit" value="Reject">
         <input type="hidden" value="{{this.id}}" name="request">
       </form>
       </div>
-      <div class="col-md-6">
+
+      <div class="col-md-1">
       <form action="/requests/approve/" method="POST">
         <input class="btn btn-success" type="submit" value="Approve">
         <input type="hidden" value="{{this.id}}" name="request">
       </form>
       </div>
-    </div>
-  </div>
 </div>
 
 {{/each}}
@@ -68,7 +54,7 @@
 <div class="row">&nbsp;</div>
 <div class="main-row_header">
 <div class="row">
-   <div class="col-md-12"><br><br>All my leaves</div>
+   <div class="col-md-12">All my leaves</div>
 </div><br><br>
 </div>
 <div class="content-rows">
@@ -77,7 +63,7 @@
     <div class="col-md-2">Type</div>
     <div class="col-md-1">Deducted</div>
     <div class="col-md-5">Dates</div>
-    <div class="col-md-3">Approver</div>
+    <div class="col-md-3">Approved by</div>
     <div class="col-md-1">Status</div>
 </div>
 </div>
@@ -91,20 +77,10 @@
     <div class="col-md-1">{{ this.get_deducted_days_number }}</div>
     <div class="col-md-5">From {{#with this.get_start_leave_day}}{{as_date this.date}}{{/with}} to {{#with this.get_end_leave_day}}{{as_date this.date}}{{/with}}</div>
     <div class="col-md-3">{{#with this.approver}}{{this.full_name}}{{/with}}</div>
-    <div class="col-md-1">{{#if this.is_pended_leave }}Opened{{else}}{{#if this.is_approved_leave}}Approved{{else}}Rejected{{/if}}{{/if}}</div>
+    <div class="col-md-1">{{#if this.is_pended_leave }}Pending{{else}}{{#if this.is_approved_leave}}Approved{{else}}Rejected{{/if}}{{/if}}</div>
 </div>
 
 {{/ each }}
 </div>
-<footer class="footer custom-footer">
-  <p>
-    <span class="pull-left">
-    © <a href="timeoff.management">TimeOff.management</a> 2015
-</span>
-    <span class="pull-right">
-      <a href="https://github.com/vpp/timeoff-management"><i class="fa fa-github fa-lg"></i></a>
-      <a href="https://twitter.com/FreeTimeOffApp"><i class="fa fa-twitter fa-lg"></i></a>
-      <a href="mailto://pavlo@timeoff.management"><i class="fa fa-envelope fa-lg"></i></a>
-    </span>
-  </p>
-</footer>
+</div>
+{{>footer}}
