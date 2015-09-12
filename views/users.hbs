@@ -43,7 +43,7 @@
     </div>
     {{# each users}}
     <div class="row">&nbsp;</div>
-    <div class="row">
+    <div class="row row-users">
         <div class="col-md-4"><a href="/users/edit/{{this.id}}/">{{this.full_name}}</a></div>
         <div class="col-md-2">{{this.calculate_number_of_days_taken_from_allowence}}</div>
         <div class="col-md-3 user_department">{{this.department.name}}</div>

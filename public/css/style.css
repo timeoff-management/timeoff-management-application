@@ -1,6 +1,7 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  color:#333333;
 }
 
 a {
@@ -118,14 +119,16 @@ body > div.container {
   position: relative;
 }
 
+/* styling requests.hbs and users.hbs*/
 
 .row-header {
   font-size: 15px;
   padding-top: 10px;
   border-radius: 2px;
   border: 1px solid #e5e5e5;
-  background-color: #eeeeee;
+  background-color: #F8F8F8;
   height: 40px;
+  padding-left: 5px;
 }
 
 .content-rows {
@@ -151,9 +154,9 @@ body > div.container {
 h1 {
   text-align: left;
   font:"Open Sans",sans-serif;
-  font-size: 3.5rem;
+  font-size: 2.8rem;
   line-height: 30px;
-  color: #7d878a;
+  color: #333333;
   padding: 0px;
 }
 
@@ -172,7 +175,7 @@ p.specific {
   padding-top: 10px;
   border-radius: 2px;
   border: 1px solid #e5e5e5;
-  background-color: #eeeeee;
+  background-color: #f8f8f8;
   height: 40px;
   padding-left: 5px;
 }
@@ -182,10 +185,23 @@ a {
 }
 
 .content {
-
   font-size: 15px;
 }
 
 .container-requests {
   padding-bottom: 5px;
+}
+
+/* styling users in users.hsb*/
+
+.subtitle-row {
+  text-align: left;
+  font:"Open Sans",sans-serif;
+  font-size: 14px;
+  color: #333333;
+  padding: 0px;;
+}
+
+.row-users {
+  padding-left: 5px;
 }
