@@ -5,82 +5,75 @@
 
 {{> show_flash_messages }}
 <div class="container-requests">
-<div class="main-row_header">
-<div class="row">
-    <div class="col-md-12"><br><br>Leave request to approve</div>
-</div>
-</div><br><br>
-<div class="content-rows">
-<div class="row-header">
-<div class="row">
-  <div class="col-md-2">Employee</div>
-  <div class="col-md-1">Department</div>
-  <div class="col-md-2">Date of request</div>
-  <div class="col-md-3">Leave dates</div>
-  <div class="col-md-1">Type</div>
-  <div class="col-md-1">Days</div>
+  <div class="main-row_header">
+    <div class="row">
+      <div class="col-md-12">Leave request to approve</div>
+    </div>
+  </div>
+  <div class="content-rows">
+    <div class="row-header">
+      <div class="row">
+        <div class="col-md-2">Employee</div>
+        <div class="col-md-1">Department</div>
+        <div class="col-md-2">Date of request</div>
+        <div class="col-md-3">Leave dates</div>
+        <div class="col-md-1">Type</div>
+        <div class="col-md-1">Days</div>
+      </div>
+    </div>
+    {{#each to_be_approved_leaves }}
 
-</div>
-</div>
-
-{{#each to_be_approved_leaves }}
-<div class="row">&nbsp;</div>
-
-<div class="row row-requests" vpp="pending_for__{{this.user.email}}">
-
-      <div class="col-md-2">{{#with this.user}}{{this.full_name}}{{/with}}</div>
-      <div class="col-md-1">{{this.user.department.name}}</div>
-      <div class="col-md-2">{{as_date this.createdAt}}</div>
-      <div class="col-md-3">From {{#with this.get_start_leave_day}}{{as_date this.date}}{{/with}} to {{#with this.get_end_leave_day}}{{as_date this.date}}{{/with}}</div>
-      <div class="col-md-1">{{this.leave_type.name}}</div>
-      <div class="col-md-1">{{ this.get_deducted_days_number }}</div>
-      <div class="col-md-1">
-      <form action="/requests/reject/" method="POST">
-        <input class="btn btn-warning" type="submit" value="Reject">
-        <input type="hidden" value="{{this.id}}" name="request">
-      </form>
+    <div class="row">&nbsp;</div>
+      <div class="row row-requests" vpp="pending_for__{{this.user.email}}">
+        <div class="col-md-2">{{#with this.user}}{{this.full_name}}{{/with}}</div>
+        <div class="col-md-1">{{this.user.department.name}}</div>
+        <div class="col-md-2">{{as_date this.createdAt}}</div>
+        <div class="col-md-3">From {{#with this.get_start_leave_day}}{{as_date this.date}}{{/with}} to {{#with this.get_end_leave_day}}{{as_date this.date}}{{/with}}</div>
+        <div class="col-md-1">{{this.leave_type.name}}</div>
+        <div class="col-md-1">{{ this.get_deducted_days_number }}</div>
+        <div class="col-md-1">
+          <form action="/requests/reject/" method="POST">
+          <input class="btn btn-warning" type="submit" value="Reject">
+          <input type="hidden" value="{{this.id}}" name="request">
+          </form>
       </div>
 
       <div class="col-md-1">
-      <form action="/requests/approve/" method="POST">
+        <form action="/requests/approve/" method="POST">
         <input class="btn btn-success" type="submit" value="Approve">
         <input type="hidden" value="{{this.id}}" name="request">
-      </form>
+        </form>
       </div>
-</div>
-
+  </div>
 {{/each}}
 </div>
+
 <div class="row">&nbsp;</div>
-<div class="main-row_header">
-<div class="row row-requests">
-   <div class="col-md-12">All my leaves</div>
-</div><br><br>
-</div>
-<div class="content-rows">
-<div class="row-header">
-<div class="row row-requests">
-    <div class="col-md-2">Type</div>
-    <div class="col-md-1">Deducted</div>
-    <div class="col-md-5">Dates</div>
-    <div class="col-md-3">Approved by</div>
-    <div class="col-md-1">Status</div>
-</div>
-</div>
+  <div class="main-row_header">
+    <div class="row row-requests">
+      <div class="col-md-12">All my leaves</div>
+    </div>
+  </div>
+  <div class="content-rows">
+    <div class="row-header">
+      <div class="row row-requests">
+        <div class="col-md-2">Type</div>
+        <div class="col-md-1">Deducted</div>
+        <div class="col-md-5">Dates</div>
+        <div class="col-md-3">Approved by</div>
+        <div class="col-md-1">Status</div>
+      </div>
+    </div>
 {{# each my_leaves }}
-
-
-<div class="row">&nbsp;</div>
-
-<div class="row row-requests">
-    <div class="col-md-2">{{ this.leave_type.name }}</div>
-    <div class="col-md-1">{{ this.get_deducted_days_number }}</div>
-    <div class="col-md-5">From {{#with this.get_start_leave_day}}{{as_date this.date}}{{/with}} to {{#with this.get_end_leave_day}}{{as_date this.date}}{{/with}}</div>
-    <div class="col-md-3">{{#with this.approver}}{{this.full_name}}{{/with}}</div>
-    <div class="col-md-1">{{#if this.is_pended_leave }}Pending{{else}}{{#if this.is_approved_leave}}Approved{{else}}Rejected{{/if}}{{/if}}</div>
-</div>
-
+    <div class="row">&nbsp;</div>
+      <div class="row row-requests">
+        <div class="col-md-2">{{ this.leave_type.name }}</div>
+        <div class="col-md-1">{{ this.get_deducted_days_number }}</div>
+        <div class="col-md-5">From {{#with this.get_start_leave_day}}{{as_date this.date}}{{/with}} to {{#with this.get_end_leave_day}}{{as_date this.date}}{{/with}}</div>
+        <div class="col-md-3">{{#with this.approver}}{{this.full_name}}{{/with}}</div>
+        <div class="col-md-1">{{#if this.is_pended_leave }}Pending{{else}}{{#if this.is_approved_leave}}Approved{{else}}Rejected{{/if}}{{/if}}</div>
+      </div>
 {{/ each }}
-</div>
-</div>
+  </div>
+
 {{>footer}}

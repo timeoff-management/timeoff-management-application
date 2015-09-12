@@ -39,6 +39,7 @@ body {
     bottom: -20px;
     width: 100%;
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .footer {
@@ -65,6 +66,7 @@ body {
   margin-bottom: 30px;
 }
 
+/* styling calendar*/
 
 div.month_container {
     height : 250px;
@@ -101,8 +103,8 @@ td.leave_cell {
     color : white;
 }
 td.leave_cell_pended {
-    background : #B839F8;
-    color : white;
+    background: #FFCBA4;
+    color: black;
 }
 .modal-dialog {
     width : 450px;
@@ -114,6 +116,7 @@ td.leave_cell_pended {
 td.wallchart-header {
     height: 43px;
 }
+
 body > div.container {
   min-height: 700px;
   position: relative;
@@ -143,6 +146,8 @@ body > div.container {
   font-size: 19px;
   line-height: 1.15em;
   text-align: left;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .row-requests {
@@ -205,3 +210,8 @@ a {
 .row-users {
   padding-left: 5px;
 }
+
+
+
+
+
