@@ -1,6 +1,7 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  color:#333333;
 }
 
 a {
@@ -13,18 +14,16 @@ body {
   padding-bottom: 20px;
 }
 
-/* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
-.marketing,
-.footer {
-  padding-right: 15px;
-  padding-left: 15px;
-}
-
 /* Custom page header */
 .header {
+  background-color: #eeeeee;
+  border-radius: 2px;
+
+  padding-right: 15px;
+  padding-left: 15px;
   /*border-bottom: 1px solid #e5e5e5;*/
 }
+
 /* Make the masthead heading the same height as the navigation */
 .header h3 {
   padding-bottom: 19px;
@@ -34,59 +33,40 @@ body {
 }
 
 /* Custom page footer */
+
+.custom-footer {
+    position: absolute;
+    bottom: -20px;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 .footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
+    padding-top: 19px;
+    color: #777;
+    border-top: 1px solid #e5e5e5;
 }
 
-/* Customize container */
-@media (min-width: 1200px) {
-  .container {
-    max-width: 1200px;
-  }
-}
-.container-narrow > hr {
-  margin: 30px 0;
-}
-
-/* Main marketing message and sign up button */
-.jumbotron {
-  text-align: center;
-  border-bottom: 1px solid #e5e5e5;
-}
-.jumbotron .btn {
-  padding: 14px 24px;
-  font-size: 21px;
-}
-
-/* Supporting marketing content */
-.marketing {
-  margin: 40px 0;
-}
-.marketing p + h4 {
-  margin-top: 28px;
-}
-
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 1200px) {
-  /* Remove the padding we set earlier */
-  .header,
-  .marketing,
-  .footer {
+.header, .marketing, .footer {
     padding-right: 0;
     padding-left: 0;
-  }
-  /* Space out the masthead */
-  .header {
-    margin-bottom: 30px;
-  }
-  /* Remove the bottom border on the jumbotron for visual effect */
-  .jumbotron {
-    border-bottom: 0;
-  }
 }
 
+
+/* Remove the padding we set earlier */
+.header,
+.marketing,
+.footer {
+  padding-right: 0;
+  padding-left: 0;
+}
+/* Space out the masthead */
+.header {
+  margin-bottom: 30px;
+}
+
+/* styling calendar*/
 
 div.month_container {
     height : 250px;
@@ -111,24 +91,20 @@ div.month_container {
     text-align : center;
     z-index : 10;
 }
-
 td.weekend_cell {
     background : #F8F8F8;
 }
-
 td.bank_holiday_cell {
     background : #31B0D5;
     color : white;
 }
-
 td.leave_cell {
     background : #449D44;
     color : white;
 }
-
 td.leave_cell_pended {
-    background : #B839F8;
-    color : white;
+    background: #FFCBA4;
+    color: black;
 }
 .modal-dialog {
     width : 450px;
@@ -140,14 +116,102 @@ td.leave_cell_pended {
 td.wallchart-header {
     height: 43px;
 }
+
 body > div.container {
   min-height: 700px;
   position: relative;
 }
 
-.custom-footer {
-  position: absolute;
-  bottom : -20px;
-  width : 100%;
-  margin-top : 10px;
+/* styling requests.hbs and users.hbs*/
+
+.row-header {
+  font-size: 15px;
+  padding-top: 10px;
+  border-radius: 2px;
+  border: 1px solid #e5e5e5;
+  background-color: #F8F8F8;
+  height: 40px;
+  padding-left: 5px;
 }
+
+.content-rows {
+  padding-bottom: 20px;
+}
+
+.main-row_header {
+  border: none;
+  font-weight: normal;
+  color: #5ba4e5;
+  letter-spacing: -0.01em;
+  font-size: 19px;
+  line-height: 1.15em;
+  text-align: left;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.row-requests {
+  margin-right: -5px;
+  margin-left: -15px;
+  padding-left: 5px;
+}
+
+h1 {
+  text-align: left;
+  font:"Open Sans",sans-serif;
+  font-size: 2.8rem;
+  line-height: 30px;
+  color: #333333;
+  padding: 0px;
+}
+
+.p#departments {
+  font-size: 20px;
+}
+
+ul {
+ list-style-type: none;
+ text-align: left;
+ padding-left: 5px;
+}
+
+p.specific {
+  font-size: 15px;
+  padding-top: 10px;
+  border-radius: 2px;
+  border: 1px solid #e5e5e5;
+  background-color: #f8f8f8;
+  height: 40px;
+  padding-left: 5px;
+}
+
+a {
+  color: #5ba4e5;
+}
+
+.content {
+  font-size: 15px;
+}
+
+.container-requests {
+  padding-bottom: 5px;
+}
+
+/* styling users in users.hsb*/
+
+.subtitle-row {
+  text-align: left;
+  font:"Open Sans",sans-serif;
+  font-size: 14px;
+  color: #333333;
+  padding: 0px;;
+}
+
+.row-users {
+  padding-left: 5px;
+}
+
+
+
+
+
