@@ -52,33 +52,17 @@ body {
 }
 
 
-/* Customize container */
-@media (min-width: 1200px) {
-  .container {
-    max-width: 1200px;
-  }
+/* Remove the padding we set earlier */
+.header,
+.marketing,
+.footer {
+  padding-right: 0;
+  padding-left: 0;
 }
-.container-narrow > hr {
-  margin: 30px 0;
+/* Space out the masthead */
+.header {
+  margin-bottom: 30px;
 }
-
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 1200px) {
-  /* Remove the padding we set earlier */
-  .header,
-  .marketing,
-  .footer {
-    padding-right: 0;
-    padding-left: 0;
-  }
-  /* Space out the masthead */
-  .header {
-    margin-bottom: 30px;
-  }
-  /* Remove the bottom border on the jumbotron for visual effect */
-  .jumbotron {
-    border-bottom: 0;
-  }
 
 
 div.month_container {
@@ -104,21 +88,17 @@ div.month_container {
     text-align : center;
     z-index : 10;
 }
-
 td.weekend_cell {
     background : #F8F8F8;
 }
-
 td.bank_holiday_cell {
     background : #31B0D5;
     color : white;
 }
-
 td.leave_cell {
     background : #449D44;
     color : white;
 }
-
 td.leave_cell_pended {
     background : #B839F8;
     color : white;
@@ -146,31 +126,26 @@ body > div.container {
   border: 1px solid #e5e5e5;
   background-color: #eeeeee;
   height: 40px;
-
 }
 
 .content-rows {
-
- padding-bottom: 20px;
+  padding-bottom: 20px;
 }
 
 .main-row_header {
-
-    border: none;
-    font-weight: normal;
-    color: #5ba4e5;
-    letter-spacing: -0.01em;
-    font-size: 19px;
-    line-height: 1.15em;
-    text-align: left;
+  border: none;
+  font-weight: normal;
+  color: #5ba4e5;
+  letter-spacing: -0.01em;
+  font-size: 19px;
+  line-height: 1.15em;
+  text-align: left;
 }
 
-
-
-.row {
-    margin-right: -5px;
-    margin-left: -15px;
-    padding-left: 5px;
+.row-requests {
+  margin-right: -5px;
+  margin-left: -15px;
+  padding-left: 5px;
 }
 
 h1 {
