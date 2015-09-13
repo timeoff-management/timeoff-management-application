@@ -87,6 +87,10 @@ app.use( require('./lib/middleware/session_aware_redirect') );
 
 // Here will be publicly accessible routes
 
+app.use(
+  '/feed/',
+  require('./lib/route/feed')
+);
 
 app.use(
     '/',
