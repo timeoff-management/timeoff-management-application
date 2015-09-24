@@ -3,13 +3,9 @@
 
 <h1>My feeds</h1>
 
-{{> show_flash_messages }}
+<p>Feeds for external calendars</p>
 
-<div class="row">
-    <div class="col-md-3">Feeds for external calendars</div>
-    <div class="col-md-3 col-md-offset-6">
-    </div>
-</div>
+{{> show_flash_messages }}
 
 <div class="row">
 
@@ -22,9 +18,12 @@
 
         <p class="description-paragraph">Share you TimeOff.Management data with external calendar providers such as Microsoft Outlook, Apple Calendar (iCal) or Google Calendar.</p>
 
-        <p class="description-paragraph">We provide two streams from:
-          <li><a href="/calendar/">My Calendar</a> page - feeds all data from My Calendar page</li>
-          <li><a href="/wallchart/">Wallchart</a> page - feeds Wallchart data for current month </li>
+        <p class="description-paragraph">We provide two streams from:</p>
+        <p class="description-paragraph">
+          <a href="/calendar/">My Calendar</a> page - feeds all data from My Calendar page
+        </p>
+        <p class="description-paragraph">
+          <a href="/wallchart/">Wallchart</a> page - feeds Wallchart data for current month 
         </p>
 
         <p class="description-paragraph">To export particular feed into default calendar application just click on corresponding link.</p>
@@ -38,7 +37,7 @@
 
 
       <div class="col-md-5 well">
-        <form method="POST" action="/settings/feeds/regenerate/">
+        <form method="POST" action="/calendar/feeds/regenerate/">
         <a href="webcal://{{current_host}}/feed/{{calendar_feed.feed_token}}/ical.ics">My calendar feed <i class="fa fa-rss"></i></a>
 
         <input type="hidden" name="token" value="{{calendar_feed.feed_token}}"/>
@@ -47,7 +46,7 @@
       </div>
 
       <div class="col-md-5 col-md-offset-2 well">
-        <form method="POST" action="/settings/feeds/regenerate/">
+        <form method="POST" action="/calendar/feeds/regenerate/">
         <a href="webcal://{{current_host}}/feed/{{wallchart_feed.feed_token}}/ical.ics">Wallchart feed <i class="fa fa-rss"></i></a>
 
         <input type="hidden" name="token" value="{{wallchart_feed.feed_token}}"/>
