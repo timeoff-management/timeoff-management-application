@@ -212,6 +212,25 @@ a {
 }
 
 
+.feed-calendar-big {
+  font-size: 450px;
+  color: #F8F8F8;
+}
 
+.feed-calendar-big-picture-holder {
+  text-align: center;
+}
 
+p.description-paragraph {
+  padding-top: 20px;
+  padding-left: 15px;
+}
+
+div.feeds-holder {
+  margin-top: 20px;
+}
+
+div.feeds-holder .well {
+  background-color: #f8f8f8;
+}
 
