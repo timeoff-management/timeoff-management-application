@@ -4,6 +4,7 @@
 <h1>Staff</h1>
 
 {{> show_flash_messages }}
+
 <div class="subtitle-row">
     <div class="row">
         <div class="col-md-3">{{company.name}}'s staff</div>
@@ -14,43 +15,45 @@
             </form>
     </div>
 </div>
-    <div class="row">&nbsp;</div>
-    <form id="delete_form" method="post" action="/settings/departments/delete/"></form>
-    <form method="post" action="/settings/departments/">
-    <div class="row">
-        <div class="content">
-            <div class="col-md-3">
-                <p class="specific">Departments</p>
-                <ul class="all-departments">
-                    <li><a href="/users/">All</a></li>
-    {{#each company.departments}}
-                    <li><a href="/users/?department={{this.id}}">{{this.name}}</a></li>
-    {{/each}}
-                </ul>
-            </div>
+
+<div class="row">&nbsp;</div>
+
+<div class="row">
+    <div class="content">
+        <div class="col-md-3">
+            <p class="specific">Departments</p>
+            <ul class="all-departments">
+                <li><a href="/users/">All</a></li>
+{{#each company.departments}}
+                <li><a href="/users/?department={{this.id}}">{{this.name}}</a></li>
+{{/each}}
+            </ul>
         </div>
-            <div class="col-md-9">
-                <div class="row-header">
-                    <div class="row">
-                        <div class="col-md-4">Name</div>
-                        <div class="col-md-2">Days used</div>
-                        <div class="col-md-3">Department</div>
-                        <div class="col-md-1">Confirmed</div>
-                    </div>
+
+        <div class="col-md-9">
+            <div class="row-header">
+                <div class="row">
+                    <div class="col-md-4">Name</div>
+                    <div class="col-md-2">Days used</div>
+                    <div class="col-md-3">Department</div>
+                    <div class="col-md-1">Confirmed</div>
                 </div>
+            </div>
     {{# each users}}
                 <div class="row">&nbsp;</div>
-                    <div class="row row-users">
-                        <div class="col-md-4"><a href="/users/edit/{{this.id}}/">{{this.full_name}}</a></div>
-                        <div class="col-md-2">{{this.calculate_number_of_days_taken_from_allowence}}</div>
-                        <div class="col-md-3 user_department">{{this.department.name}}</div>
-                        <div class="col-md-1">{{# if this.activated}}Yes{{else}}No{{/if}}</div>
-                    </div>
-    {{/each}}
+                <div class="row row-users">
+                    <div class="col-md-4"><a href="/users/edit/{{this.id}}/">{{this.full_name}}</a></div>
+                    <div class="col-md-2">{{this.calculate_number_of_days_taken_from_allowence}}</div>
+                    <div class="col-md-3 user_department">{{this.department.name}}</div>
+                    <div class="col-md-1">{{# if this.activated}}Yes{{else}}No{{/if}}</div>
                 </div>
+    {{/each}}
             </div>
+        </div>
 
-    </form>
+    </div>
+</div>
+
 
 
 <div class="row">&nbsp;</div>
