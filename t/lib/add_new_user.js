@@ -75,6 +75,12 @@ module.exports = Promise.promisify(function(args, callback){
               selector : 'input[name="email"]',
               value    : new_user_email,
           },{
+              selector : 'input[name="password"]',
+              value    : '123456',
+          },{
+              selector : 'input[name="password_confirm"]',
+              value    : '123456',
+          },{
               selector : 'input[name="start_date"]',
               value : '2015-06-01',
           },
