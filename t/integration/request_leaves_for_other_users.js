@@ -147,6 +147,7 @@ describe('Basic leave request', function(){
       console.log('      ... and save changes');
 
       return submit_form_func({
+          submit_button_selector : 'button#save_changes_btn',
           driver      : data.driver,
           form_params : [{
               selector : 'select[name="department"]',

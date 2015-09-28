@@ -3,7 +3,18 @@
 
 <h1>{{employee.name}} {{employee.lastname}}'s details</h1>
 
-<p>Employee details</p>
+<div class="subtitle-row">
+    <div class="row">
+        <div class="col-md-3">Employee details</div>
+            <form id="add_new_user_frm" method="post" action="/users/delete/{{employee.id}}/">
+                <div class="col-md-1 col-md-offset-8">
+                <button type="submit" class="pull-right btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Remove employee"><i class="fa fa-trash"></i></button>
+                </div>
+            </form>
+    </div>
+</div>
+
+<div class="row">&nbsp;</div>
 
 {{> show_flash_messages }}
 
@@ -71,7 +82,7 @@
 
   <div class="form-group">
     <div class="col-md-offset-2 col-md-6">
-      <button type="submit" class="btn btn-success">Save changes</button>
+      <button id="save_changes_btn" type="submit" class="btn btn-success">Save changes</button>
     </div>
   </div>
 
