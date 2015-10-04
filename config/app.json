@@ -1,0 +1,12 @@
+{
+  "send_emails"              : false,
+  "application_sender_email" : "email@test.com",
+  "email_transporter" : {
+    "host" : "localhost",
+    "port" : 25,
+    "auth" : {
+      "user" : "user",
+      "pass" : "pass"
+    }
+  }
+}
