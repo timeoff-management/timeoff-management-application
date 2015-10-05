@@ -28,21 +28,21 @@ describe('Check Email', function(){
 });
 
 
-describe('TEMP', function(){
-
-
-  it('foobar', function(done){
-
-    var email = new Email();
-
-    bluebird.resolve(email.promise_registration_email({
-      user : { name : "pavlo"},
-    }))
-    .then(function(){
-      console.log('done');
-      done();
-    });
-
-  });
-
-});
+//describe('TEMP', function(){
+//
+//
+//  it('foobar', function(done){
+//
+//    var email = new Email();
+//
+//    bluebird.resolve(email.promise_registration_email({
+//      user : { name : "pavlo"},
+//    }))
+//    .then(function(){
+//      console.log('done');
+//      done();
+//    });
+//
+//  });
+//
+//});
