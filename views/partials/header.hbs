@@ -1,7 +1,5 @@
 <div class="header">
 
-
-
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -18,9 +16,10 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        {{# if session.passport.user }}
+        {{# if logged_user }}
             <li><a href="/calendar/">My calendar</a></li>
             <li><a href="/calendar/wallchart/">Wall chart</a></li>
+            {{# if logged_user.admin }}
             <li><a href="/users/">Staff</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Settings <span class="caret"></span></a>
@@ -31,9 +30,10 @@
                 <li><a href="/settings/leavetypes/">Leave types</a></li>
               </ul>
             </li>
+            {{/if}}
         {{/if}}
         <li>
-          {{# if session.passport.user }}
+          {{# if logged_user }}
             <li class="dropdown">
               <a id="me_menu" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Me<span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">

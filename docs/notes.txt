@@ -2,7 +2,6 @@ Vacation tracker.
 
 Aim: to account employee vacations within a company.
 
-
 Basic user scenario:
 - user login to the system
 - check her vacation balance

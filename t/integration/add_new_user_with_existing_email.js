@@ -11,7 +11,7 @@ var test                 = require('selenium-webdriver/testing'),
 /*
  *  Scenario to check in thus test.
  *
- *  * Create an account and get a noyte of email
+ *  * Create an account and get a note of email
  *  * Try to add user with the same email
  *
  * */
