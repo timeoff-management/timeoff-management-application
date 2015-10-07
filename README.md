@@ -19,17 +19,17 @@ Web application for managing employees absence.
 
 Holidays, Sickness, Maternity, Paternity, Working from home, you name it. Configure if each of them uses vacation allowance or not.
 
-**Customised public holidays**
+**Customised public holidays** 
 
 Setup public holidays as well as company specific dates.
 
-**Simple workflow**
+**Simple workflow** 
 
 Employee requests a leave, manager says yes or no.
 
-**Accesss control**
+**Accesss control** 
 
-There are following types of users: employees, supervisors and administrators.
+There are following types of users: employees, supervisors, and administrators.
 
 **Multiple views**
 
@@ -78,3 +78,4 @@ Please report any issues or feedback to <a href="https://twitter.com/FreeTimeOff
 Statistics for processed tickets:
 
 [![Throughput Graph](https://graphs.waffle.io/vpp/timeoff-management/throughput.svg)](https://waffle.io/vpp/timeoff-management/metrics)
+
