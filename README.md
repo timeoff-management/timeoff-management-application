@@ -9,13 +9,13 @@ Web application for managing employees absence.
 
 [![Stories in Ready](https://badge.waffle.io/vpp/timeoff-management.png?label=ready&title=Ready)](https://waffle.io/vpp/timeoff-management)
 
-## Features 
+## Features
 
 **Company departments**
 
  Create departments to group employees, each one has its own manager.
 
-**Customised Leave types** 
+**Customised Leave types**
 
 Holidays, Sickness, Maternity, Paternity, Working from home, you name it. Configure if each of them uses vacation allowance or not.
 
@@ -47,7 +47,7 @@ Information about employees leaves could be broadcasted to all major calendar pr
 
 ### Cloud hosting
 
-Visit http://timeoff.management/ 
+Visit http://timeoff.management/
 
 Create company account and use cloud based version.
 
