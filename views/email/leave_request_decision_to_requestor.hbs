@@ -2,7 +2,7 @@ Leave request was decided
 =====
 Hello {{#with requester}}{{this.full_name}}{{/with}},
 
-{{#with approver }}{{this.full_name}}{{/with}} decided to {{action}} your leave request.
+{{#with approver }}{{this.full_name}}{{/with}} decided to {{action}} your leave request {{>leave_request_detail leave=leave }}.
 
 Thanks,
 Pavlo

@@ -2,7 +2,7 @@ Leave request decision is made
 =====
 Hello {{#with approver }}{{this.full_name}}{{/with}},
 
-You just processed leave request from {{#with requester}}{{this.full_name}}{{/with}}: to {{action}}.
+You just processed leave request {{>leave_request_detail leave=leave }} for {{#with requester}}{{this.full_name}}{{/with}}: to {{action}}.
 
 Thanks,
 Pavlo
