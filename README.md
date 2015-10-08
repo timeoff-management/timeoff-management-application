@@ -19,7 +19,7 @@ Web application for managing employees absence.
 
 Holidays, Sickness, Maternity, Paternity, Working from home, you name it. Configure if each of them uses vacation allowance or not.
 
-**Customised public holidays** 
+**Customised public holidays**
 
 Setup public holidays as well as company specific dates.
 
