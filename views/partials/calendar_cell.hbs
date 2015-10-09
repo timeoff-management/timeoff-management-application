@@ -3,7 +3,7 @@
     {{#if day.is_bank_holiday}}bank_holiday_cell{{/if}}
     {{#if day.is_weekend}}weekend_cell{{/if}}
     {{#if day.is_leave_morning }}
-        {{#if day.is_pended_leave}}
+        {{#if day.is_new_leave}}
             leave_cell_pended
         {{else}}
             leave_cell
@@ -14,7 +14,7 @@
     {{#if day.is_bank_holiday}}bank_holiday_cell{{/if}}
     {{#if day.is_weekend}}weekend_cell{{/if}}
     {{#if day.is_leave_afternoon }}
-        {{#if day.is_pended_leave}}
+        {{#if day.is_new_leave}}
             leave_cell_pended
         {{else}}
             leave_cell
