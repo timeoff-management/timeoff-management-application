@@ -35,7 +35,7 @@
       <div class="col-md-1">{{this.user.department.name}}</div>
       <div class="col-md-2">{{as_date this.createdAt}}</div>
       <div class="col-md-3">From {{#with this.get_start_leave_day}}{{as_date this.date}}{{/with}} to {{#with this.get_end_leave_day}}{{as_date this.date}}{{/with}}</div>
-      <div class="col-md-1">{{this.leave_type.name}}</div>
+      <div class="col-md-1">{{#if this.is_pended_revoke_leave}}REVOKE {{/if}}{{this.leave_type.name}}</div>
       <div class="col-md-1">{{ this.get_deducted_days_number }}</div>
       <div class="col-md-1">
         <form action="/requests/reject/" method="POST">
@@ -83,16 +83,18 @@
     {{# each my_leaves }}
     <div class="row">&nbsp;</div>
     <div class="row row-requests">
-      <div class="col-md-2">{{ this.leave_type.name }}</div>
+      <div class="col-md-2">{{ this.leave_type.name }}{{#if this.is_pended_revoke_leave}}<br>(pended revoke){{/if}}</div>
       <div class="col-md-1">{{ this.get_deducted_days_number }}</div>
       <div class="col-md-4">From {{#with this.get_start_leave_day}}{{as_date this.date}}{{/with}} to {{#with this.get_end_leave_day}}{{as_date this.date}}{{/with}}</div>
       <div class="col-md-3">{{#with this.approver}}{{this.full_name}}{{/with}}</div>
       <div class="col-md-1">
         {{# if this.is_approved_leave }}
+        {{# unless this.is_pended_revoke_leave}}
         <form method="post" action="/requests/revoke/">
           <input type="hidden" value="{{this.id}}" name="request">
           <button type="submit" class="pull-right btn btn-default btn-xs" title="Revoke leave request"><i class="fa fa-trash"></i></button>
         </form>
+        {{/unless}}
         {{/if}}
       </div>
       <div class="col-md-1">{{#if this.is_new_leave }}Pending{{else}}{{#if this.is_approved_leave}}Approved{{else}}Rejected{{/if}}{{/if}}</div>
