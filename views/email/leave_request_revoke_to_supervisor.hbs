@@ -1,0 +1,10 @@
+Revoke leave request
+=====
+Hello {{#with approver }}{{this.full_name}}{{/with}},
+
+{{#with requester}}{{this.full_name}}{{/with}} cancelled leave request {{>leave_request_detail leave=leave }}.
+
+Please visit http://app.timeoff.management/requests/ to approve or reject outstanding requests.
+
+Thanks,
+Pavlo
