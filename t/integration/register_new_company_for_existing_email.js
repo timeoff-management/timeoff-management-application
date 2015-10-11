@@ -67,7 +67,7 @@ describe('Reuse email from existing acount when creating new company', function(
         return register_new_user_func({
           application_host      : application_host,
           user_email            : admin_email,
-          failing_error_message : 'Failed to register user please contact customer service',
+          failing_error_message : 'Failed to register user please contact customer service. Error: Email is already used',
         });
     })
 
