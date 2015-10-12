@@ -15,7 +15,7 @@ Basic user scenario:
 - when decision on vacation request is done: user gets email notification; in case of approval - send another email with calendar event for user to feed into her calendar 
 
 Non admin users can recall holiday requests if the changed their minds.
-Recalls needs to be approved if they happened in past. 
+Recalls needs to be approved if they happened in past.
 Scenario:
 - user login into system
 - selects existing request and perform "recall" action
