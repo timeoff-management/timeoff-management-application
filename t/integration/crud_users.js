@@ -132,8 +132,6 @@ describe('CRUD for users', function(){
         return Promise.resolve(data);
       });
     })
-    // Add mew department and make its approver to be newle added
-    // line manager (she is second in a list as users are ordered by ID)
     .then(function(data){
 
          console.log('    And update its bose to be MANAGER');
@@ -422,7 +420,5 @@ describe('CRUD for users', function(){
     .then(function(data){ return data.driver.quit(); })
     .then(function(){ done(); });
   });
-
-
 
 });

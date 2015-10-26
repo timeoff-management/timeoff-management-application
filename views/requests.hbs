@@ -92,7 +92,7 @@
         {{# unless this.is_pended_revoke_leave}}
         <form method="post" action="/requests/revoke/">
           <input type="hidden" value="{{this.id}}" name="request">
-          <button type="submit" class="pull-right btn btn-default btn-xs" title="Revoke leave request"><i class="fa fa-trash"></i></button>
+          <button type="submit" class="pull-right btn btn-default btn-xs revoke-btn" title="Revoke leave request"><i class="fa fa-trash"></i></button>
         </form>
         {{/unless}}
         {{/if}}
