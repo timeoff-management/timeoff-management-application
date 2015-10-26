@@ -110,7 +110,7 @@ describe('Basic leave request', function(){
         return Promise.resolve(data);
       });
     })
-    // Add mew deprtament and make its approver to be newle added
+    // Add mew department and make its approver to be newly added
     // line manager (she is second in a list as users are ordered by AZ)
     .then(function(data){
          return submit_form_func({

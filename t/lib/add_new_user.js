@@ -17,7 +17,7 @@ module.exports = Promise.promisify(function(args, callback){
   var application_host = args.application_host,
       result_callback  = callback,
       department_index  = args.department_index,
-      // optional paramater, if provided the user adding action is expected to fail
+      // optional parameter, if provided the user adding action is expected to fail
       // with that error
       error_message = args.error_message,
 

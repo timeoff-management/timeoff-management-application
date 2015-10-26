@@ -9,7 +9,7 @@ var test                 = require('selenium-webdriver/testing'),
   application_host       = 'http://localhost:3000/';
 
 /*
- *  Scenario to check in thus test.
+ *  Scenario to check in this test:
  *
  *  * Create an account and get a note of email
  *  * Try to add user with the same email
