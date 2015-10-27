@@ -110,7 +110,7 @@ describe('Check filtering on "users" page', function(){
             return data.driver
                 // Departments are ordered by names so we are sure that first item
                 // after general link "All" is going to be "IT"
-                .findElement( By.css('ul.all-departments li:nth-child(2) a') ) 
+                .findElement( By.css('ul.all-departments li:nth-child(2) a') )
                 .then(function(element){
                     element.click();
                     data.driver.wait(until.elementLocated(By.css('h1')), 1000);
@@ -125,7 +125,7 @@ describe('Check filtering on "users" page', function(){
                     return elements[0].getText();
                 })
                 .then(function(text){
-                    expect(text).to.be.equal('IT'); 
+                    expect(text).to.be.equal('IT');
                     return Promise.resolve(data);
                 });
         })
