@@ -26,8 +26,12 @@ var test                 = require('selenium-webdriver/testing'),
  *    * Open Wall chart page and make sure that both users are shown A and B
  *    * Create new department IT
  *    * Create new user C and make sure that he is a member and supervisor of IT department.
+ *    * Login as B
  *    * Open Wall chart and make sure that it shows only two users A and B
- *    * Update IT department to be supervised by user A
+ *     * Login as A
+ *     * Open Wall chart and make sure that all three users are shown as A is admin
+ *     * Update IT department to be supervised by user B
+ *      * Login as B
  *    * Open Wall chart and make sure that it shows three users A, B, and C
  *    * Login with user C
  *    * Make sure that wall chart shows only user C
@@ -51,23 +55,6 @@ var test                 = require('selenium-webdriver/testing'),
                 expect(elements.length).to.be.equal( emails.length + 1 );
 
                 return Promise.resolve(data);
-
-//    new_user_email.substring(0,new_user_email.lastIndexOf('@'))
-//                elements.unshift();
-//                //Promise.map
-//
-//                // TODO Check users emails/ids/name?
-//                return Promise
-//                  .all(
-//                    _.map(
-//                      elements,
-//                      function(el){return el.getText()}
-//                    ), function(names){
-//
-//                      console.log('>>>> ' + JSON.stringify(names));
-//
-//                    })
-//                  .then(function(){  return Promise.resolve(data) ;});
             });
     });
   };
@@ -106,6 +93,10 @@ var test                 = require('selenium-webdriver/testing'),
                 // We have just one department so far
                 department_index : "0",
             });
+        })
+        .then(function(data){
+            user_B = data.new_user_email;
+            return Promise.resolve(data);
         })
 
         // Make sure that both users are shown on Wall chart page
@@ -170,12 +161,45 @@ var test                 = require('selenium-webdriver/testing'),
             });
         })
 
+        // Logout from A account
+        .then(function(data){
+            return logout_user_func({
+                application_host : application_host,
+                driver           : data.driver,
+            });
+        })
+        // Login as user B
+        .then(function(data){
+            return login_user_func({
+                application_host : application_host,
+                user_email       : user_B,
+                driver           : data.driver,
+            });
+        })
 
         // and make sure that only user A and B are presented
         .then(function(data){ return check_wallchart(data, [user_A, user_B]) })
 
+        // Logout from B account
+        .then(function(data){
+            return logout_user_func({
+                application_host : application_host,
+                driver           : data.driver,
+            });
+        })
+        // Login back as user A
+        .then(function(data){
+            return login_user_func({
+                application_host : application_host,
+                user_email       : user_A,
+                driver           : data.driver,
+            });
+        })
 
-        // Update IT department to be supervised by user A
+        // and make sure that all users are shown:  A, B, and C
+        .then(function(data){ return check_wallchart(data, [user_A, user_B, user_C]) })
+
+        // Update IT department to be supervised by user B
         .then(function(data){
             return open_page_func({
                 url    : application_host + 'settings/departments/',
@@ -187,20 +211,33 @@ var test                 = require('selenium-webdriver/testing'),
                 driver      : data.driver,
                 form_params : [{
                     selector        : 'select[name="boss_id__0"]',
-                    // because we have test names generated based on time, user A
-                    // is going to be first one in a drop down as it was added before
+                    // because we have test names generated based on time, user B
+                    // is going to be second one in a drop down as it was added before
                     // all other ones
-                    option_selector : 'option:nth-child(1)',
+                    option_selector : 'option:nth-child(2)',
                 }],
                 message : /Changes to departments were saved/,
             });
         })
 
-
+        // Logout from A account
+        .then(function(data){
+            return logout_user_func({
+                application_host : application_host,
+                driver           : data.driver,
+            });
+        })
+        // Login as user B
+        .then(function(data){
+            return login_user_func({
+                application_host : application_host,
+                user_email       : user_B,
+                driver           : data.driver,
+            });
+        })
 
         // and make sure that all users are shown:  A, B, and C
         .then(function(data){ return check_wallchart(data, [user_A, user_B, user_C]) })
-
 
         // Logout from admin account
         .then(function(data){
@@ -218,10 +255,8 @@ var test                 = require('selenium-webdriver/testing'),
             });
         })
 
-
         // and make sure that only one user C is here
         .then(function(data){ return check_wallchart(data, [user_C]) })
-
 
         // Close the browser
         .then(function(data){
