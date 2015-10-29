@@ -33,19 +33,17 @@
         <div class="col-md-9">
             <div class="row-header">
                 <div class="row">
-                    <div class="col-md-4">Name</div>
-                    <div class="col-md-2">Days used</div>
-                    <div class="col-md-3">Department</div>
-                    <div class="col-md-1">Confirmed</div>
+                    <div class="col-md-5">Name</div>
+                    <div class="col-md-4">Department</div>
+                    <div class="col-md-2 pull-right">Days used</div>
                 </div>
             </div>
     {{# each users}}
                 <div class="row">&nbsp;</div>
                 <div class="row row-users">
-                    <div class="col-md-4"><a href="/users/edit/{{this.id}}/">{{this.full_name}}</a></div>
-                    <div class="col-md-2">{{this.calculate_number_of_days_taken_from_allowence}}</div>
-                    <div class="col-md-3 user_department">{{this.department.name}}</div>
-                    <div class="col-md-1">{{# if this.activated}}Yes{{else}}No{{/if}}</div>
+                    <div class="col-md-5"><a href="/users/edit/{{this.id}}/">{{this.full_name}}</a></div>
+                    <div class="col-md-4 user_department">{{this.department.name}}</div>
+                    <div class="col-md-2 pull-right">{{this.calculate_number_of_days_taken_from_allowence}}</div>
                 </div>
     {{/each}}
             </div>
