@@ -49,7 +49,7 @@ var test                 = require('selenium-webdriver/testing'),
     })
     .then(function(data){
         return data.driver
-            .findElements(By.css( 'table.wallchart_users tr' ))
+            .findElements(By.css( 'table.team-view-users tr' ))
             .then(function(elements){
                 // We have 2 rows for users and 1 for header
                 expect(elements.length).to.be.equal( emails.length + 1 );
