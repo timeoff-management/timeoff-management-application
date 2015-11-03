@@ -21,10 +21,10 @@
 
 <nav>
   <ul class="pager">
-    <li class="previous"><a href="/calendar/wallchart/?{{> wall_chart_url_parameters base_date = prev_date }}"><span aria-hidden="true">&larr;</span> {{#with prev_date}}{{ this.format 'MMM' }}{{/with}}</a></li>
+    <li class="previous"><a href="/calendar/wallchart/?{{> team_view_url_parameters base_date = prev_date }}"><span aria-hidden="true">&larr;</span> {{#with prev_date}}{{ this.format 'MMM' }}{{/with}}</a></li>
     <span><b>{{#with base_date}}{{ this.format 'MMMM, YYYY' }}{{/with}}</b></span>
 
-    <li class="next"><a href="/calendar/wallchart/?{{> wall_chart_url_parameters base_date = next_date }}">{{#with next_date}}{{this.format 'MMM'}}{{/with}}<span aria-hidden="true">&rarr;</span></a></li>
+    <li class="next"><a href="/calendar/wallchart/?{{> team_view_url_parameters base_date = next_date }}">{{#with next_date}}{{this.format 'MMM'}}{{/with}}<span aria-hidden="true">&rarr;</span></a></li>
   </ul>
 </nav>
 
@@ -40,9 +40,9 @@
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <li><a href="?{{> wall_chart_url_parameters current_department = null }}">All</a></li>
+            <li><a href="?{{> team_view_url_parameters current_department = null }}">All</a></li>
             {{#each related_departments}}
-            <li><a href="?{{> wall_chart_url_parameters base_date = ../base_date current_department = this }}">{{this.name}}</a></li>
+            <li><a href="?{{> team_view_url_parameters base_date = ../base_date current_department = this }}">{{this.name}}</a></li>
             {{/each}}
           </ul>
         </div>
