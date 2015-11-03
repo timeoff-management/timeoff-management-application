@@ -23,28 +23,28 @@ var test                 = require('selenium-webdriver/testing'),
  *
  *    * Reigister new account for user A (supervisor and member of Sales department)
  *    * Create a new user B in Sales department
- *    * Open Wall chart page and make sure that both users are shown A and B
+ *    * Open Team view page and make sure that both users are shown A and B
  *    * Create new department IT
  *    * Create new user C and make sure that he is a member and supervisor of IT department.
  *    * Login as B
- *    * Open Wall chart and make sure that it shows only two users A and B
+ *    * Open Team view and make sure that it shows only two users A and B
  *     * Login as A
- *     * Open Wall chart and make sure that all three users are shown as A is admin
+ *     * Open Team view and make sure that all three users are shown as A is admin
  *     * Update IT department to be supervised by user B
  *      * Login as B
- *    * Open Wall chart and make sure that it shows three users A, B, and C
+ *    * Open Team view and make sure that it shows three users A, B, and C
  *    * Login with user C
- *    * Make sure that wall chart shows only user C
+ *    * Make sure that Team view page shows only user C
  *
  * */
 
-  // Helper function to check that provided users (email) are shown on the Wall chart
+  // Helper function to check that provided users (email) are shown on the Team view
   // page
-  function check_wallchart(data, emails){
+  function check_teamview(data, emails){
 
 
     return open_page_func({
-        url    : application_host + 'calendar/wallchart/',
+        url    : application_host + 'calendar/teamview/',
         driver : data.driver,
     })
     .then(function(data){
@@ -60,7 +60,7 @@ var test                 = require('selenium-webdriver/testing'),
   };
 
 
-  describe('Check basic scenario for Wall chart page', function(){
+  describe('Check basic scenario for Team view page', function(){
     var driver;
 
     this.timeout(60000);
@@ -99,8 +99,8 @@ var test                 = require('selenium-webdriver/testing'),
             return Promise.resolve(data);
         })
 
-        // Make sure that both users are shown on Wall chart page
-        .then(function(data){ return check_wallchart(data, [user_A, user_B]) })
+        // Make sure that both users are shown on Team view page
+        .then(function(data){ return check_teamview(data, [user_A, user_B]) })
 
         // Create new department: "IT"
         .then(function(data){
@@ -178,7 +178,7 @@ var test                 = require('selenium-webdriver/testing'),
         })
 
         // and make sure that only user A and B are presented
-        .then(function(data){ return check_wallchart(data, [user_A, user_B]) })
+        .then(function(data){ return check_teamview(data, [user_A, user_B]) })
 
         // Logout from B account
         .then(function(data){
@@ -197,7 +197,7 @@ var test                 = require('selenium-webdriver/testing'),
         })
 
         // and make sure that all users are shown:  A, B, and C
-        .then(function(data){ return check_wallchart(data, [user_A, user_B, user_C]) })
+        .then(function(data){ return check_teamview(data, [user_A, user_B, user_C]) })
 
         // Update IT department to be supervised by user B
         .then(function(data){
@@ -237,7 +237,7 @@ var test                 = require('selenium-webdriver/testing'),
         })
 
         // and make sure that all users are shown:  A, B, and C
-        .then(function(data){ return check_wallchart(data, [user_A, user_B, user_C]) })
+        .then(function(data){ return check_teamview(data, [user_A, user_B, user_C]) })
 
         // Logout from admin account
         .then(function(data){
@@ -256,7 +256,7 @@ var test                 = require('selenium-webdriver/testing'),
         })
 
         // and make sure that only one user C is here
-        .then(function(data){ return check_wallchart(data, [user_C]) })
+        .then(function(data){ return check_teamview(data, [user_C]) })
 
         // Close the browser
         .then(function(data){

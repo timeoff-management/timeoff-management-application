@@ -53,7 +53,7 @@ describe('Menu bar reflect permissions of logged in user', function(){
         presense  : true,
         selectors : [
           'li > a[href="/calendar/"]',
-          'li > a[href="/calendar/wallchart/"]',
+          'li > a[href="/calendar/teamview/"]',
           'li > a[href="/calendar/feeds/"]',
           'li > a[href="/users/"]',
           'li > a[href="/settings/company/"]',
@@ -99,7 +99,7 @@ describe('Menu bar reflect permissions of logged in user', function(){
         presense  : true,
         selectors : [
           'li > a[href="/calendar/"]',
-          'li > a[href="/calendar/wallchart/"]',
+          'li > a[href="/calendar/teamview/"]',
           'li > a[href="/calendar/feeds/"]',
           'li > a[href="/requests/"]',
           'li > a[href="/logout/"]',
