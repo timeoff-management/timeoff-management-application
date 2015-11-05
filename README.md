@@ -11,9 +11,9 @@ Web application for managing employees absence.
 
 ## Features
 
-**Company departments**
+**Employees By Department**
 
- Create departments to group employees, each one has its own manager.
+Bring your organisation structure into, set the supervisor for every department.
 
 **Customised Leave types**
 
@@ -33,11 +33,11 @@ There are following types of users: employees, supervisors, and administrators.
 
 **Multiple views**
 
-Leaves are presented via "calendar" view, "wall chart" view, or as a list.
+Leaves are presented via "calendar" view, "Team view" view, or as a list.
 
 **Email notifications**
 
-All involved employees are notified about leave request status.
+All involved parties are notified about leave request status.
 
 **Integration with third parties calendars**
 
@@ -49,7 +49,7 @@ Information about employees leaves could be broadcasted to all major calendar pr
 
 Visit http://timeoff.management/
 
-Create company account and use cloud based version.
+Create company account and use cloud based version (BETA).
 
 ### Self hosting
 
@@ -78,3 +78,4 @@ Please report any issues or feedback to <a href="https://twitter.com/FreeTimeOff
 Statistics for processed tickets:
 
 [![Throughput Graph](https://graphs.waffle.io/vpp/timeoff-management/throughput.svg)](https://waffle.io/vpp/timeoff-management/metrics)
+
