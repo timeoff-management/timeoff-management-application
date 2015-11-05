@@ -24,6 +24,7 @@ module.exports = Promise.promisify( function(args, callback){
   // Instantiate new driver object
     driver = new webdriver.Builder()
       .withCapabilities(webdriver.Capabilities.phantomjs())
+//      .withCapabilities(webdriver.Capabilities.chrome())
       .build();
 
   // Make sure we are in desktop version
@@ -140,18 +141,18 @@ module.exports = Promise.promisify( function(args, callback){
         return el.getText();
       })
       .then(function(text){
-        expect(text).to.be.equal('Registration is complete. You can login to the system');
+        expect(text).to.be.equal('Registration is complete.');
       });
 
   }
 
-  // Close the driver and pass data back to the caller
-  driver
-    .quit()
+  // Pass data back to the caller
+  driver.get( application_host )
     .then(function(){
        callback(
         null,
         {
+          driver : driver,
           email : new_user_email,
         }
       );

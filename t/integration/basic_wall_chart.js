@@ -74,19 +74,12 @@ var test                 = require('selenium-webdriver/testing'),
             application_host : application_host,
         })
 
-        // Login as user A
-        .then(function(data){
-            user_A = data.email;
-
-            return login_user_func({
-                application_host : application_host,
-                user_email       : user_A,
-            });
-        })
-
 
         // Create new user B
         .then(function(data){
+
+            user_A = data.email;
+
             return add_new_user_func({
                 application_host : application_host,
                 driver           : data.driver,

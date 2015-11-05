@@ -7,8 +7,7 @@ var test                 = require('selenium-webdriver/testing'),
   open_page_func         = require('../lib/open_page'),
   submit_form_func       = require('../lib/submit_form'),
   check_elements_func    = require('../lib/check_elements'),
-  application_host       = 'http://localhost:3000/',
-  new_user_email;
+  application_host       = 'http://localhost:3000/';
 
 
 describe('CRUD for leave types', function(){
@@ -23,17 +22,6 @@ describe('CRUD for leave types', function(){
     // Performing registration process
     register_new_user_func({
         application_host : application_host,
-    })
-
-    // Login with newly created user
-    .then(function(data){
-        new_user_email = data.email;
-
-        // Checking that new user can login
-        return login_user_func({
-            application_host : application_host,
-            user_email       : new_user_email,
-        });
     })
 
     // Open page with leave types

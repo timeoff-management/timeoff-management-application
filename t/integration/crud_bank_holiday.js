@@ -26,19 +26,9 @@ describe('CRUD for bank holidays', function(){
         application_host : application_host,
     })
 
-    // Login with newly created user
-    .then(function(data){
-        new_user_email = data.email;
-
-        // Checking that new user can login
-        return login_user_func({
-            application_host : application_host,
-            user_email       : new_user_email,
-        });
-    })
-
     // Open page with bank holidays
     .then(function(data){
+        new_user_email = data.email;
         return open_page_func({
             url    : application_host + 'settings/bankholidays/',
             driver : data.driver,

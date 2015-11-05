@@ -42,19 +42,11 @@ describe('Basic leave request', function(){
     return register_new_user_func({
         application_host : application_host,
     })
-    // Login with newly created admin user
-    .then(function(data){
-        new_user_email = data.email;
-
-        return login_user_func({
-            application_host : application_host,
-            user_email       : new_user_email,
-        });
-    })
 
 
     // Open calendar page
     .then(function(data){
+        new_user_email = data.email;
         return open_page_func({
             url    : application_host + 'calendar/',
             driver : data.driver,

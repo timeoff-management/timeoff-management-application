@@ -44,17 +44,9 @@ describe('Basic leave request', function(){
     return register_new_user_func({
         application_host : application_host,
     })
-    // Login with newly created admin user
-    .then(function(data){
-        new_user_email = data.email;
-
-        return login_user_func({
-            application_host : application_host,
-            user_email       : new_user_email,
-        });
-    })
     // Create new non-admin user
     .then(function(data){
+        new_user_email = data.email;
         return add_new_user_func({
             application_host : application_host,
             driver           : data.driver,

@@ -5,8 +5,7 @@ var test                 = require('selenium-webdriver/testing'),
   register_new_user_func = require('../lib/register_new_user'),
   login_user_func        = require('../lib/login_with_user'),
   logout_user_func       = require('../lib/logout_user'),
-  application_host       = 'http://localhost:3000/',
-  new_user_email;
+  application_host       = 'http://localhost:3000/';
 
 
 describe('Register new user', function(){
@@ -21,17 +20,6 @@ describe('Register new user', function(){
     // Performing registration process
     register_new_user_func({
       application_host : application_host,
-    })
-
-    .then(function(data){
-      new_user_email = data.email;
-
-      // Checking that new user can login
-      return login_user_func({
-        application_host : application_host,
-        user_email       : new_user_email,
-      });
-
     })
 
     .then(function(data){

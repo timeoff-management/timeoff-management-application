@@ -39,18 +39,10 @@ describe('Reuse email from existing acount when creating new company', function(
     return register_new_user_func({
         application_host : application_host,
     })
-    // Login with newly created admin user
     .then(function(data){
-        admin_email = data.email;
+      console.log('    Login with newly created account '+admin_email);
+      admin_email = data.email;
 
-        console.log('    Login with newly created account '+admin_email);
-
-        return login_user_func({
-            application_host : application_host,
-            user_email       : admin_email,
-        });
-    })
-    .then(function(data){
       return logout_user_func({
         application_host : application_host,
         driver           : data.driver,

@@ -38,14 +38,6 @@ describe('Menu bar reflect permissions of logged in user', function(){
     return register_new_user_func({
         application_host : application_host,
     })
-    // Login with newly created admin user
-    .then(function(data){
-
-        return login_user_func({
-            application_host : application_host,
-            user_email       : data.email,
-        });
-    })
 
     .then(function(data){
       var promises_to_check =  check_presense_promises({

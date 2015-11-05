@@ -51,20 +51,12 @@ describe('Basic leave request', function(){
     return register_new_user_func({
         application_host : application_host,
     })
-    // Login with newly created admin user
-    .then(function(data){
-        admin_email = data.email;
-
-        console.log('    Login with newly created user');
-
-        return login_user_func({
-            application_host : application_host,
-            user_email       : admin_email,
-        });
-    })
     // Create new line manager user
     .then(function(data){
 
+        admin_email = data.email;
+
+        console.log('    Login with newly created user');
         console.log('    Create new line manager');
 
         return add_new_user_func({

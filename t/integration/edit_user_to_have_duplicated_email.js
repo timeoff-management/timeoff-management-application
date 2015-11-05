@@ -35,18 +35,9 @@ describe('CRUD for users', function(){
     return register_new_user_func({
       application_host : application_host,
     })
-    // Login with newly created user
-    .then(function(data){
-
-      email_admin = data.email;
-
-      return login_user_func({
-          application_host : application_host,
-          user_email       : data.email,
-      });
-    })
     // Create second user
     .then(function(data){
+      email_admin = data.email;
       return add_new_user_func({
         application_host : application_host,
         driver           : data.driver,

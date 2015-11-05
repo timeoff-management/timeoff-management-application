@@ -35,20 +35,9 @@ describe('Basic leave request', function(){
 
   test.it('Run', function(done){
 
-    var new_user_email;
-
     // Create new company
     return register_new_user_func({
         application_host : application_host,
-    })
-    // Login with newly created user
-    .then(function(data){
-        new_user_email = data.email;
-
-        return login_user_func({
-            application_host : application_host,
-            user_email       : new_user_email,
-        });
     })
 
     // Open page with leave types

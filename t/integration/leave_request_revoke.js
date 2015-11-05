@@ -51,17 +51,10 @@ describe('Revoke leave request', function(){
     return register_new_user_func({
         application_host : application_host,
     })
-    // Login with newly created admin user
-    .then(function(data){
-      email_admin = data.email;
-      return login_user_func({
-          application_host : application_host,
-          user_email       : data.email,
-      });
-    })
 
     // Create MANAGER_A-to-be user
     .then(function(data){
+        email_admin = data.email;
         console.log('  Create MANAGER_A-to-be user');
         return add_new_user_func({
             application_host : application_host,

@@ -49,13 +49,6 @@ describe('CRUD for users', function(){
     return register_new_user_func({
         application_host : application_host,
     })
-    // Login with newly created user
-    .then(function(data){
-        return login_user_func({
-            application_host : application_host,
-            user_email       : data.email,
-        });
-    })
     // Create ADMIN-to-be user
     .then(function(data){
         console.log('  Create ADMIN-to-be user');

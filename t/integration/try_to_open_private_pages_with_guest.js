@@ -66,73 +66,81 @@ describe('Try to access private pages with guest user', function(){
 
 
 describe('Try to access admin pages with non-admin user', function(){
-    this.timeout(90000);
+  this.timeout(90000);
 
-    test.it('Check pages', function(done) {
+  test.it('Check pages', function(done) {
 
+    var non_admin_user_email;
 
-        Promise.all(_.map(
-            [
-              'users/add/',
-              'users/',
-              'settings/company/', 'settings/departments/',
-              'settings/bankholidays/', 'settings/leavetypes/',
-            ],
-            function(path) {
+    var check_pathes = function(driver, reachable){
 
-                var non_admin_user_email, new_user_email;
+      var admin_pages =  [
+        'users/add/',
+        'users/',
+        'settings/company/', 'settings/departments/',
+        'settings/bankholidays/', 'settings/leavetypes/',
+      ];
 
-                return register_new_user_func({
-                    application_host : application_host,
-                })
-                .then(function(data){
-                    new_user_email = data.email;
-                    console.log('     Working on '+path+' path');
-
-                    return login_user_func({
-                        application_host : application_host,
-                        user_email       : new_user_email,
-                    });
-                })
-                .then(function(data){
-                    return add_new_user_func({
-                        application_host : application_host,
-                        driver           : data.driver,
-                    });
-                })
-                .then(function(data){
-
-                    non_admin_user_email = data.new_user_email;
-
-                    return logout_user_func({
-                        application_host : application_host,
-                        driver           : data.driver,
-                    });
-                })
-                .then(function(data){
-                    return login_user_func({
-                        application_host : application_host,
-                        user_email       : non_admin_user_email,
-                        driver           : data.driver,
-                    });
-                })
-                .then(function(data){
-
-                    var driver = data.driver;
-
-                    driver.get( application_host + path);
-
-                    driver.wait(until.elementLocated(By.css('body')), 1000);
-
-                    driver.getCurrentUrl()
-                      .then(function(url){
-                          expect(url).to.be.equal(application_host + 'calendar/');
-                      });
-                    return driver.quit();
-                });
+      return Promise.each(admin_pages, function(path){
+        driver.get( application_host + path);
+        driver.wait(until.elementLocated(By.css('body')), 1000);
+        return driver.getCurrentUrl()
+          .then(function(url){
+             if (reachable) {
+              expect(url).to.be.equal(application_host + path);
+             } else {
+              expect(url).to.be.equal(application_host + 'calendar/');
              }
-        )) // end of map and Promise.all
-        .then(function(){ done(); });
-    });
+          });
+      })
+    };
+
+    // Register new admin user
+    return register_new_user_func({
+        application_host : application_host,
+    })
+    // Iterate through admin pages and make sure they are accessible
+    .then(function(data){
+      return check_pathes(data.driver, true)
+        .then(function(){
+          return Promise.resolve(data);
+        });
+    })
+    // Add new non-admin user
+    .then(function(data){
+      return add_new_user_func({
+        application_host : application_host,
+        driver           : data.driver,
+      });
+    })
+    // Logout from admin account
+    .then(function(data){
+      non_admin_user_email = data.new_user_email;
+      return logout_user_func({
+        application_host : application_host,
+        driver           : data.driver,
+      });
+    })
+    // And login with newly created non-admin account
+    .then(function(data){
+      return login_user_func({
+        application_host : application_host,
+        user_email       : non_admin_user_email,
+        driver           : data.driver,
+      });
+    })
+    // Iterate throough pathes and make sure they are not reachable
+    .then(function(data){
+      return check_pathes(data.driver, false)
+        .then(function(){
+          return Promise.resolve(data);
+        });
+    })
+
+    // Done!
+    .then(function(){
+      done();
+    })
+  });
 
 });

@@ -13,8 +13,7 @@ var test                 = require('selenium-webdriver/testing'),
   submit_form_func       = require('../lib/submit_form'),
   check_elements_func    = require('../lib/check_elements'),
   add_new_user_func      = require('../lib/add_new_user'),
-  application_host       = 'http://localhost:3000/',
-  new_user_email;
+  application_host       = 'http://localhost:3000/';
 
 /*
  *  Scenario to check that filtering by department feature on users page.
@@ -39,16 +38,6 @@ describe('Check filtering on "users" page', function(){
         // Performing registration process
         register_new_user_func({
             application_host : application_host,
-        })
-
-        // Login with newly created credentials
-        .then(function(data){
-            new_user_email = data.email;
-
-            return login_user_func({
-                application_host : application_host,
-                user_email       : new_user_email,
-            });
         })
 
         // Create new department: "IT"

@@ -27,17 +27,10 @@ describe('Admin tries to add user with email used for other one', function(){
     return register_new_user_func({
         application_host : application_host,
     })
-    // Login with newly created admin user
+    // Create new non-admin user
     .then(function(data){
         new_user_email = data.email;
 
-        return login_user_func({
-            application_host : application_host,
-            user_email       : new_user_email,
-        });
-    })
-    // Create new non-admin user
-    .then(function(data){
         return add_new_user_func({
             application_host : application_host,
             driver           : data.driver,

@@ -6,8 +6,7 @@ var test                 = require('selenium-webdriver/testing'),
   login_user_func        = require('../lib/login_with_user'),
   open_page_func         = require('../lib/open_page'),
   submit_form_func       = require('../lib/submit_form'),
-  application_host       = 'http://localhost:3000/',
-  new_user_email;
+  application_host       = 'http://localhost:3000/';
 
 
 describe('Edit company details', function(){
@@ -22,17 +21,6 @@ describe('Edit company details', function(){
     // Performing registration process
     register_new_user_func({
         application_host : application_host,
-    })
-
-    // Login with newly created user
-    .then(function(data){
-        new_user_email = data.email;
-
-        // Checking that new user can login
-        return login_user_func({
-            application_host : application_host,
-            user_email       : new_user_email,
-        });
     })
 
     // Open page for editing company details
