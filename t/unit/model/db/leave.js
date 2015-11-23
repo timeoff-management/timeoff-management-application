@@ -9,13 +9,11 @@ var expect  = require('chai').expect,
 describe('Check bug when type mismatch happenned', function(){
     var leave = model.Leave.build({
         status : '1',
+        date_start     : '2015-05-07 00:00:00.000 +00:00',
+        day_part_start : 2,
+        date_end     : '2015-05-07 00:00:00.000 +00:00',
+        day_part_end : 2,
     });
-    leave.days = [
-        model.LeaveDay.build({
-            date     : '2015-05-07 00:00:00.000 +00:00',
-            day_part : 2,
-        }),
-    ];
 
     it('String value of 2 properly used', function(){
         expect(
@@ -37,13 +35,11 @@ describe('Check bug when type mismatch happenned', function(){
 describe('leave request half a day with existing booking of half a day', function(){
     var leave = model.Leave.build({
         status : '1',
+        date_start : '2015-04-09',
+        date_end : '2015-04-09',
+        day_part_start : 2,
+        day_part_end : 2,
     });
-    leave.days = [
-        model.LeaveDay.build({
-            date     : '2015-04-09',
-            day_part : 2,
-        }),
-    ];
 
     it('clash', function(){
         expect(
@@ -81,17 +77,12 @@ describe('leave request half a day with existing booking of half a day', functio
 describe('Leave request is spread through more then one day', function(){
     var leave = model.Leave.build({
         status : '1',
+
+        date_start     : '2015-04-09',
+        date_end       : '2015-04-10',
+        day_part_start : 2,
+        day_part_end   : 1,
     });
-    leave.days = [
-        model.LeaveDay.build({
-            date     : '2015-04-09',
-            day_part : 2,
-        }),
-        model.LeaveDay.build({
-            date     : '2015-04-10',
-            day_part : 1,
-        }),
-    ];
 
     it('leave object is instanciated', function(){
         expect( leave ).to.be.ok;
@@ -182,17 +173,12 @@ describe('Case when leave request is within one day', function(){
 
     var leave = model.Leave.build({
         status : '1',
+
+        date_start     : '2015-04-09',
+        date_end       : '2015-04-10',
+        day_part_start : 2,
+        day_part_end   : 1,
     });
-    leave.days = [
-        model.LeaveDay.build({
-            date     : '2015-04-09',
-            day_part : 2,
-        }),
-        model.LeaveDay.build({
-            date     : '2015-04-10',
-            day_part : 1,
-        }),
-    ];
 
     it('Is half and attempt to stick to the half day part so they fit', function(){
         expect(
