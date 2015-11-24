@@ -49,14 +49,18 @@ describe('Check calendar month object', function(){
     });
 
     it('Knows how to generate data structure for template', function(){
-        var january = new CalendarMonth('2015-01-11');
-        expect( january.as_for_template() ).to.be.eql(
+        var january = new CalendarMonth('2015-01-11'),
+          object_to_test = january.as_for_template();
+        delete object_to_test['moment'];
+        expect( object_to_test ).to.be.eql(
             {"month":"January","weeks":[[{"val":""},{"val":""},{"val":""},{"val":1},{"val":2},{"val":3,"is_weekend":true},{"val":4,"is_weekend":true}],[{"val":5},{"val":6},{"val":7},{"val":8},{"val":9},{"val":10,"is_weekend":true},{"val":11,"is_weekend":true}],[{"val":12},{"val":13},{"val":14},{"val":15},{"val":16},{"val":17,"is_weekend":true},{"val":18,"is_weekend":true}],[{"val":19},{"val":20},{"val":21},{"val":22},{"val":23},{"val":24,"is_weekend":true},{"val":25,"is_weekend":true}],[{"val":26},{"val":27},{"val":28},{"val":29},{"val":30},{"val":31,"is_weekend":true},{"val":""}]]}
         );
 
 
         var apr = new CalendarMonth('2015-04-11');
-        expect( apr.as_for_template() ).to.be.eql(
+        object_to_test = apr.as_for_template();
+        delete object_to_test['moment'];
+        expect( object_to_test ).to.be.eql(
             {"month":"April","weeks":[[{"val":""},{"val":""},{"val":1},{"val":2},{"val":3},{"val":4,"is_weekend":true},{"val":5,"is_weekend":true}],[{"val":6},{"val":7},{"val":8},{"val":9},{"val":10},{"val":11,"is_weekend":true},{"val":12,"is_weekend":true}],[{"val":13},{"val":14},{"val":15},{"val":16},{"val":17},{"val":18,"is_weekend":true},{"val":19,"is_weekend":true}],[{"val":20},{"val":21},{"val":22},{"val":23},{"val":24},{"val":25,"is_weekend":true},{"val":26,"is_weekend":true}],[{"val":27},{"val":28},{"val":29},{"val":30},{"val":""},{"val":""},{"val":""}]]}
         );
 

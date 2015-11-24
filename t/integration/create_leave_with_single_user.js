@@ -48,7 +48,7 @@ describe('Basic leave request', function(){
     .then(function(data){
         new_user_email = data.email;
         return open_page_func({
-            url    : application_host + 'calendar/',
+            url    : application_host + 'calendar/?show_full_year=1',
             driver : data.driver,
         });
     })
