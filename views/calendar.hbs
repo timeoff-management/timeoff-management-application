@@ -69,12 +69,16 @@
 <div class="row">
   <div class="col-md-2 col-md-offset-5">
     {{# unless show_full_year}}
-    <a href="/calendar/?show_full_year=1"><span aria-hidden="true">More...</span></a>
+      <a href="/calendar/?show_full_year=1"><span aria-hidden="true">More...</span></a>
     {{else}}
-    <a href="/calendar/"><span aria-hidden="true">Less...</span></a>
+      <a href="/calendar/"><span aria-hidden="true">Less...</span></a>
     {{/unless}}
   </div>
 <div>
+
+{{# unless show_full_year}}
+  {{> user_requests leaves=current_user.my_leaves }}
+{{/unless}}
 
 {{# if show_full_year}}
   {{> book_leave_modal container_id='book_leave_modal' leave_modal_form_action='/calendar/bookleave/' redirect_back_to='/calendar/?show_full_year=1'}}
