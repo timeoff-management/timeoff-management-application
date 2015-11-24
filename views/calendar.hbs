@@ -10,27 +10,73 @@
       <span>Days remaining<br>{{#with current_user }}{{ this.calculate_number_of_days_available_in_allowence ../current_year }} out of {{this.calculate_total_number_of_days_n_allowence ../current_year}}{{/with}}</span>
     </div>
     <div class="col-md-1">
-        <button type="button" class="btn btn-info pull-right" data-toggle="modal" data-target="#book_leave_modal" id="book_time_off_btn">Book time off</button>
+        <button type="button" class="btn btn-info pull-right" data-toggle="modal" data-target="#book_leave_modal" id="book_time_off_btn">Request absence</button>
     </div>
     </form>
 </div>
 
-<div class="row">&nbsp;</div>
-
 {{> show_flash_messages }}
 
-<nav>
+
+<div class="row">
+  <div class="col-md-2 col-md-offset-5 calendar-section-caption">
+   Used so far in {{current_year}}
+  </div>
+</div>
+
+<div class="row">
+
+  <div class="col-md-3 top-leave-type-statistics">
+    <dl>
+      <dt>12</dt>
+      <dd>Holidays</dd>
+    </dl>
+  </div>
+
+  <div class="col-md-3 top-leave-type-statistics">
+    <dl>
+      <dt>5</dt>
+      <dd>Sick days</dd>
+    </dl>
+  </div>
+
+
+  <div class="col-md-3 top-leave-type-statistics">
+    <dl>
+      <dt>3</dt>
+      <dd>Working form home</dd>
+    </dl>
+  </div>
+
+
+</div>
+
+<div class="row">
+  <div class="col-md-2 col-md-offset-5 calendar-section-caption">
+    {{# unless show_full_leave_type_statistic}}
+    <a class="btn btn-default" href="/calendar/?show_full_leave_type_statistic=1"><span class="fa fa-chevron-down"></span></a>
+    {{else}}
+    <a class="btn btn-default" href="/calendar/"><span class="fa fa-chevron-up"></span></a>
+    {{/unless}}
+  </div>
+</div>
+
+
+<hr/>
+
+
+<div>
   <ul class="pager">
     {{#if show_full_year}}
     <li class="previous"><a href="/calendar/?year={{previous_year}}{{#if show_full_year}}&show_full_year=1{{/if}}"><span aria-hidden="true">&larr;</span>{{previous_year}} </a></li>
     {{/if}}
-    <span><strong>{{#if show_full_year}}January - December {{current_year}}{{else}}Next four months{{/if}}</strong></span>
+    <span><strong>{{#if show_full_year}}January - December {{current_year}}{{else}}Upcomming months{{/if}}</strong></span>
 
     {{#if show_full_year}}
     <li class="next"><a href="/calendar/?year={{next_year}}{{#if show_full_year}}&show_full_year=1{{/if}}">{{next_year}} <span aria-hidden="true">&rarr;</span></a></li>
     {{/if}}
   </ul>
-</nav>
+</div>
 
 <div class="row clearfix">
 
@@ -66,15 +112,18 @@
 
 </div>
 
+
+
 <div class="row">
-  <div class="col-md-2 col-md-offset-5">
+  <div class="col-md-2 col-md-offset-5 calendar-section-caption">
     {{# unless show_full_year}}
-      <a href="/calendar/?show_full_year=1"><span aria-hidden="true">More...</span></a>
+    <a class="btn btn-default" href="/calendar/?show_full_year=1"><span class="fa fa-chevron-down"></span></a>
     {{else}}
-      <a href="/calendar/"><span aria-hidden="true">Less...</span></a>
+    <a class="btn btn-default" href="/calendar/"><span class="fa fa-chevron-up"></span></a>
     {{/unless}}
   </div>
-<div>
+</div>
+
 
 {{# unless show_full_year}}
   {{> user_requests leaves=current_user.my_leaves }}
