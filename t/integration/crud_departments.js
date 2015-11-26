@@ -7,7 +7,9 @@ var test                 = require('selenium-webdriver/testing'),
   open_page_func         = require('../lib/open_page'),
   submit_form_func       = require('../lib/submit_form'),
   check_elements_func    = require('../lib/check_elements'),
+  By                     = require('selenium-webdriver').By,
   application_host       = 'http://localhost:3000/',
+  new_department_form_id = '#add_new_department_form',
   new_user_email;
 
 
@@ -80,39 +82,57 @@ describe('CRUD for departments', function(){
 
     // Add mew "Marketing" department
     .then(function(data){
-         return submit_form_func({
-            driver      : data.driver,
-            form_params : [{
-                selector : '#add_new_department_btn',
-                tick     : true,
-            },{
-                selector : 'input[name="name__new"]',
-                value : 'Marketing',
-            },{
-                selector        : 'select[name="allowence__new"]',
-                option_selector : 'option[value="10"]',
-                value : '10',
-            }],
-            message : /Changes to departments were saved/,
+
+      return data.driver.findElement(By.css('#add_new_department_btn'))
+        .then(function(el){
+          return el.click();
+        })
+        .then(function(){
+
+           // This is very important line when working with Bootstrap modals!
+           data.driver.sleep(1000);
+
+           return submit_form_func({
+              driver      : data.driver,
+              form_params : [{
+                  selector : new_department_form_id+' input[name="name__new"]',
+                  value : 'Marketing',
+              },{
+                  selector        : new_department_form_id+' select[name="allowence__new"]',
+                  option_selector : 'option[value="10"]',
+                  value : '10',
+              }],
+              submit_button_selector : new_department_form_id+' button[type="submit"]',
+              message : /Changes to departments were saved/,
+            });
         });
     })
 
     // Add mew "Engineering" department
     .then(function(data){
-         return submit_form_func({
-            driver      : data.driver,
-            form_params : [{
-                selector : '#add_new_department_btn',
-                tick     : true,
-            },{
-                selector : 'input[name="name__new"]',
-                value : 'Engineering',
-            },{
-                selector        : 'select[name="allowence__new"]',
-                option_selector : 'option[value="15"]',
-                value : '15',
-            }],
-            message : /Changes to departments were saved/,
+
+      return data.driver.findElement(By.css('#add_new_department_btn'))
+        .then(function(el){
+          return el.click();
+        })
+        .then(function(){
+
+           // This is very important line when working with Bootstrap modals!
+           data.driver.sleep(1000);
+
+           return submit_form_func({
+              driver      : data.driver,
+              form_params : [{
+                  selector : new_department_form_id+' input[name="name__new"]',
+                  value : 'Engineering',
+              },{
+                  selector        : new_department_form_id+' select[name="allowence__new"]',
+                  option_selector : 'option[value="15"]',
+                  value : '15',
+              }],
+              submit_button_selector : new_department_form_id+' button[type="submit"]',
+              message : /Changes to departments were saved/,
+            });
         });
     })
 

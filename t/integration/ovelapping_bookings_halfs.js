@@ -86,7 +86,7 @@ describe('Overlapping leaverequest (with halfs)', function(){
     .then(function(data){
       data.driver.getTitle()
         .then(function(title){
-            expect(title).to.be.equal('My calendar');
+            expect(title).to.be.equal('Calendar');
         });
       return Promise.resolve(data);
     })

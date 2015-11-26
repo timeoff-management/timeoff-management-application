@@ -34,17 +34,8 @@ body {
 
 /* Custom page footer */
 
-/*
-.custom-footer {
-    position: absolute;
-    bottom: -20px;
-    width: 100%;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-  */
-
 .footer {
+    margin-top: 20px;
     padding-top: 20px;
     color: #777;
     border-top: 1px solid #e5e5e5;
@@ -252,3 +243,12 @@ div.feeds-holder .well {
 .calendar-section-caption {
   text-align: center;
 }
+
+.setting-general-2nd-column {
+  padding-left: 30px;
+}
+
+.label.bigger {
+  font-size: large;
+}
+

@@ -71,12 +71,21 @@ app.use(function(req,res,next){
     res.locals.session     = req.session;
     res.locals.logged_user = req.user;
     res.locals.url_to_the_site_root = '/';
+    res.locals.requested_path = req.originalUrl;
+    // For book leave request modal
+    res.locals.booking_start = moment();
+    res.locals.booking_end = moment();
     next();
 });
 
 app.use(function(req,res,next){
-    res.locals.custom_java_script = [];
-    res.locals.custom_css = [];
+    res.locals.custom_java_script = [
+      '/js/bootstrap-datepicker.js'
+    ];
+    res.locals.custom_css = [
+      '/css/bootstrap-datepicker3.standalone.css'
+    ];
+
     next();
 });
 

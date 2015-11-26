@@ -13,6 +13,8 @@ var test                 = require('selenium-webdriver/testing'),
   submit_form_func       = require('../lib/submit_form'),
   check_elements_func    = require('../lib/check_elements'),
   add_new_user_func      = require('../lib/add_new_user'),
+  By                     = require('selenium-webdriver').By,
+  new_department_form_id = '#add_new_department_form',
   application_host       = 'http://localhost:3000/';
 
 /*
@@ -48,20 +50,29 @@ describe('Check filtering on "users" page', function(){
             });
         })
         .then(function(data){
-             return submit_form_func({
+
+          return data.driver.findElement(By.css('#add_new_department_btn'))
+            .then(function(el){
+              return el.click();
+            })
+            .then(function(){
+
+               // This is very important line when working with Bootstrap modals!
+               data.driver.sleep(1000);
+
+               return submit_form_func({
                 driver      : data.driver,
                 form_params : [{
-                    selector : '#add_new_department_btn',
-                    tick     : true,
-                },{
-                    selector : 'input[name="name__new"]',
+                    selector : new_department_form_id+' input[name="name__new"]',
                     value : 'IT',
                 },{
-                    selector        : 'select[name="allowence__new"]',
+                    selector        : new_department_form_id+' select[name="allowence__new"]',
                     option_selector : 'option[value="10"]',
                     value : '10',
                 }],
+                submit_button_selector : new_department_form_id+' button[type="submit"]',
                 message : /Changes to departments were saved/,
+              });
             });
         })
 

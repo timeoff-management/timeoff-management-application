@@ -6,7 +6,8 @@ var test                 = require('selenium-webdriver/testing'),
   login_user_func        = require('../lib/login_with_user'),
   open_page_func         = require('../lib/open_page'),
   submit_form_func       = require('../lib/submit_form'),
-  application_host       = 'http://localhost:3000/';
+  application_host       = 'http://localhost:3000/',
+  company_edit_form_id   ='#company_edit_form';
 
 
 describe('Edit company details', function(){
@@ -26,7 +27,7 @@ describe('Edit company details', function(){
     // Open page for editing company details
     .then(function(data){
         return open_page_func({
-            url    : application_host + 'settings/company',
+            url    : application_host + 'settings/general/',
             driver : data.driver,
         });
     })
@@ -36,9 +37,10 @@ describe('Edit company details', function(){
         return submit_form_func({
             driver      : data.driver,
             form_params : [{
-                selector : 'input[name="name"]',
+                selector : company_edit_form_id+' input[name="name"]',
                 value    : '<script>Test companu ltd',
             }],
+            submit_button_selector : company_edit_form_id+' button[type="submit"]',
             message : /Name should contain only letters and numbers/,
         });
     })
@@ -48,9 +50,10 @@ describe('Edit company details', function(){
          return submit_form_func({
             driver      : data.driver,
             form_params : [{
-                selector : 'input[name="country"]',
+                selector : company_edit_form_id+' input[name="country"]',
                 value    : 'United Kingdom',
             }],
+            submit_button_selector : company_edit_form_id+' button[type="submit"]',
             message : /Country should contain only letters and numbers/,
         });
     })
@@ -60,12 +63,13 @@ describe('Edit company details', function(){
         return submit_form_func({
             driver      : data.driver,
             form_params : [{
-                selector : 'input[name="name"]',
+                selector : company_edit_form_id+' input[name="name"]',
                 value    : 'Test companu ltd',
             },{
-                selector : 'input[name="country"]',
+                selector : company_edit_form_id+' input[name="country"]',
                 value    : 'UA',
             }],
+            submit_button_selector : company_edit_form_id+' button[type="submit"]',
             message : /successfully/i,
             should_be_successful : true,
         });

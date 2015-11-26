@@ -85,7 +85,7 @@ describe('Basic leave request', function(){
     .then(function(data){
       data.driver.getTitle()
         .then(function(title){
-            expect(title).to.be.equal('My calendar');
+            expect(title).to.be.equal('Calendar');
         });
       return Promise.resolve(data);
     })
@@ -213,7 +213,7 @@ describe('Basic leave request', function(){
       return data.driver.getTitle()
 
         .then(function(title){
-            expect(title).to.be.equal('My calendar');
+            expect(title).to.be.equal('Calendar');
         })
 
         // Check that all days are marked as pended

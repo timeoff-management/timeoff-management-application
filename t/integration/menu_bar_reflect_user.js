@@ -48,10 +48,8 @@ describe('Menu bar reflect permissions of logged in user', function(){
           'li > a[href="/calendar/teamview/"]',
           'li > a[href="/calendar/feeds/"]',
           'li > a[href="/users/"]',
-          'li > a[href="/settings/company/"]',
+          'li > a[href="/settings/general/"]',
           'li > a[href="/settings/departments/"]',
-          'li > a[href="/settings/bankholidays/"]',
-          'li > a[href="/settings/leavetypes/"]',
           'li > a[href="/requests/"]',
           'li > a[href="/logout/"]',
         ],
@@ -108,10 +106,8 @@ describe('Menu bar reflect permissions of logged in user', function(){
         presense  : false,
         selectors : [
           'li > a[href="/users/"]',
-          'li > a[href="/settings/company/"]',
+          'li > a[href="/settings/general/"]',
           'li > a[href="/settings/departments/"]',
-          'li > a[href="/settings/bankholidays/"]',
-          'li > a[href="/settings/leavetypes/"]',
         ],
       });
 

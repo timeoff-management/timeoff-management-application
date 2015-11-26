@@ -15,29 +15,42 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-left">
         {{# if logged_user }}
-            <li><a href="/calendar/">My calendar</a></li>
-            <li><a href="/calendar/teamview/">Team view</a></li>
+          <li><a href="/calendar/">Calendar</a></li>
+          <li><a href="/calendar/teamview/">Team View</a></li>
+          {{# if logged_user.admin }}
+          <li class="dropdown">
+            <a id="supervision_menu" href="#" data-toggle="dropdown" role="button" aria-expanded="false">Supervision <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li class="disabled"><a href="#/requested-leaves/">Incoming Leave Requests</a></li>
+              <li><a href="/users/">Employees</a></li>
+            </ul>
+          </li>
+          {{/if}}
+          <div class="navbar-form navbar-left">
+            <div class="form-group">
+              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#book_leave_modal" id="book_time_off_btn">New absence</button>
+            </div>
+          </div>
+        {{/if}}
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          {{# if logged_user }}
             {{# if logged_user.admin }}
-            <li><a href="/users/">Staff</a></li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Settings <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="fa fa-gears"></span> <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="/settings/company/">Company</a></li>
+                <li><a href="/settings/general/">General</a></li>
                 <li><a href="/settings/departments/">Departments</a></li>
-                <li><a href="/settings/bankholidays/">Bank holidays</a></li>
-                <li><a href="/settings/leavetypes/">Leave types</a></li>
               </ul>
             </li>
             {{/if}}
-        {{/if}}
-        <li>
-          {{# if logged_user }}
             <li class="dropdown">
-              <a id="me_menu" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Me<span class="caret"></span></a>
+              <a id="me_menu" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Me <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li class="active_"><a href="/requests/">Leave requests</a></li>
+                <li><a href="/requests/">My requests</a></li>
                 <li><a href="/calendar/feeds/">Feeds</a></li>
                 <li><a href="/logout/">Logout</a></li>
               </ul>
@@ -52,3 +65,5 @@
 </nav>
 
 </div>
+
+

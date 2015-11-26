@@ -9,13 +9,13 @@
       </div>
       <div class="modal-body">
 
-          {{# if_equal employees.length 1 }}{{else}}
+          {{# if_equal logged_user.supervised_users.length 1 }}{{else}}
           <div class="form-group">
             <label for="employee" class="control-label">For employee:</label>
             <select class="form-control" id="employee" name="user">
-                {{#each employees}}
-                <option value="{{@index}}" {{# if_equal this.id ../logged_user.id }}selected="selected"{{/if_equal}}>{{this.full_name}}</option>
-                {{/each}}
+              {{#each logged_user.supervised_users}}
+              <option value="{{@index}}" {{# if_equal this.id ../logged_user.id }}selected="selected"{{/if_equal}}>{{this.full_name}}</option>
+              {{/each}}
             </select>
           </div>
           {{/if_equal}}
@@ -23,7 +23,7 @@
           <div class="form-group">
             <label for="leave_type" class="control-label">Leave type:</label>
             <select class="form-control" id="leave_type" name="leave_type">
-            {{# each company.leave_types}}
+            {{# each logged_user.company.leave_types}}
                 <option value={{@index}}>{{this.name}}</option>
             {{/each}}
             </select>
@@ -67,6 +67,8 @@
         <button type="submit" class="btn btn-success">Create</button>
         {{# if redirect_back_to }}
           <input type="hidden" name="redirect_back_to" value="{{redirect_back_to}}">
+        {{else}}
+          <input type="hidden" name="redirect_back_to" value="{{requested_path}}">
         {{/if}}
       </div>
     </form>

@@ -93,7 +93,7 @@ describe('Check validation for leave request', function(){
                 })
         ).to.be.greaterThan( -1 );
 
-        expect( req.session.flash.errors.length ).to.be.equal( 1 );
+        expect( req.session.flash.errors.length ).to.be.equal( 2 );
     });
 
     it('start dates is greater than end one', function(){
@@ -106,6 +106,25 @@ describe('Check validation for leave request', function(){
         }).to.throw('From date should be before To date');
 
         expect( req.session ).not.to.have.property( 'flash' );
+    });
+
+    it('inter_year leave request', function(){
+        var params = _.clone(valid_params);
+        params.from_date = '2014-04-12';
+        params.to_date   = '2015-04-02';
+        var req = new MockExpressReq({params : params});
+        expect(function(){
+            leave_request_validator({req : req})
+        }).to.throw('Got validation errors');
+
+        expect(
+            _.findIndex(
+                req.session.flash.errors, function(msg){
+                    return msg === 'Current implementation does not allow inter year leaves. Please split your request into two parts';
+                })
+        ).to.be.greaterThan( -1 );
+
+        expect( req.session.flash.errors.length ).to.be.equal( 1 );
     });
 
     it('Reason is optional', function(){

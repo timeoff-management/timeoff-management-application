@@ -1,0 +1,58 @@
+
+<div class="modal fade" id="{{container_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    <form method="POST" action="{{form_action}}" id="add_new_department_form">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add new Department</h4>
+      </div>
+
+      {{#each departments}}
+        <input type="hidden" value="{{name}}" name="name__{{@index}}">
+        <input type="hidden" value="{{this.allowence}}" name="allowence__{{@index}}">
+        <input type="hidden" name="include_public_holidays__{{@index}}" value="{{include_public_holidays}}">
+        <input type="hidden" name="boss_id__{{@index}}" value="{{this.bossId}}">
+      {{/each}}
+
+      <div class="modal-body">
+
+        <div class="form-group">
+          <label for="department_name_new" class="control-label">Name:</label>
+          <input type="text" class="form-control" id="department_name_new" name="name__new" placeholder="New department name">
+        </div>
+
+        <div class="form-group">
+          <label for="department_allowence_new" class="control-label">Allowance:</label>
+          <select class="form-control" id="department_allowence_new" name="allowence__new">
+            {{#each allowence_options}}
+            <option value="{{value}}" >{{value}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <input type="checkbox" id="department_include_public_holiday_new" name="include_public_holidays__new" checked="checked">&nbsp;
+          <label for="department_include_public_holiday_new" class="control-label">Include Public Holidays?</label>
+        </div>
+
+        <div class="form-group">
+          <label for="department_superwiser_new" class="control-label">Supervisor</label>
+          <select class="form-control" id="department_allowence_new" name="boss_id__new">
+            {{#each company.users}}
+              <option value="{{this.id}}">{{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success">Create</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+

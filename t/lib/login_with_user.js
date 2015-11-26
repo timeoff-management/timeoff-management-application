@@ -89,7 +89,7 @@ module.exports = Promise.promisify(function(args, callback){
   // Make sure login was successful, check that we landed on user account page
   driver.getTitle()
     .then(function(title){
-        expect(title).to.be.equal('My calendar');
+        expect(title).to.be.equal('Calendar');
     });
 
   driver

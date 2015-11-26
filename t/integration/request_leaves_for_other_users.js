@@ -15,7 +15,8 @@ var test             = require('selenium-webdriver/testing'),
     logout_user_func       = require('../lib/logout_user'),
     open_page_func         = require('../lib/open_page'),
     submit_form_func       = require('../lib/submit_form'),
-    add_new_user_func      = require('../lib/add_new_user');
+    add_new_user_func      = require('../lib/add_new_user'),
+    new_department_form_id = '#add_new_department_form';
 
 
 /*
@@ -105,24 +106,33 @@ describe('Basic leave request', function(){
     // Add mew department and make its approver to be newly added
     // line manager (she is second in a list as users are ordered by AZ)
     .then(function(data){
-         return submit_form_func({
-            driver      : data.driver,
-            form_params : [{
-                selector : '#add_new_department_btn',
-                tick     : true,
-            },{
-                selector : 'input[name="name__new"]',
-                // Just to make sure it is always first in the lists
-                value : 'AAAAA',
-            },{
-                selector        : 'select[name="allowence__new"]',
-                option_selector : 'option[value="15"]',
-                value : '15',
-            },{
-                selector        : 'select[name="boss_id__new"]',
-                option_selector : 'select[name="boss_id__new"] option:nth-child(2)',
-            }],
-            message : /Changes to departments were saved/,
+
+      return data.driver.findElement(By.css('#add_new_department_btn'))
+        .then(function(el){
+          return el.click();
+        })
+        .then(function(){
+
+           // This is very important line when working with Bootstrap modals!
+           data.driver.sleep(1000);
+
+           return submit_form_func({
+              driver      : data.driver,
+              form_params : [{
+                  selector : new_department_form_id+' input[name="name__new"]',
+                  // Just to make sure it is always first in the lists
+                  value : 'AAAAA',
+              },{
+                  selector        : new_department_form_id+' select[name="allowence__new"]',
+                  option_selector : 'option[value="15"]',
+                  value : '15',
+              },{
+                  selector        : new_department_form_id+' select[name="boss_id__new"]',
+                  option_selector : 'select[name="boss_id__new"] option:nth-child(2)',
+              }],
+              submit_button_selector : new_department_form_id+' button[type="submit"]',
+              message : /Changes to departments were saved/,
+          });
         });
     })
     // Open user editing page for ordenry user

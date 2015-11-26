@@ -9,6 +9,7 @@ var webdriver = require('selenium-webdriver'),
     Promise   = require("bluebird"),
     uuid      = require('node-uuid'),
     submit_form_func = require('../lib/submit_form'),
+    add_new_user_form_id = '#add_new_user_form',
     driver;
 
 
@@ -31,12 +32,16 @@ module.exports = Promise.promisify(function(args, callback){
   // Open front page
   driver.get( application_host );
 
-  driver.findElement( By.css('a[href="/users/"]') )
+  driver.findElement( By.css('a#supervision_menu') )
+    .then(function(el){ return el.click(); })
+    .then(function(){
+      return driver.findElement( By.css('a[href="/users/"]') );
+    })
     .then(function(el){
       return el.getText();
     })
     .then(function(text){
-      expect(text).to.be.equal('Staff');
+      expect(text).to.be.equal('Employees');
     });
 
   driver.findElement( By.css('a[href="/users/"]') )
@@ -66,26 +71,27 @@ module.exports = Promise.promisify(function(args, callback){
       return submit_form_func({
           driver      : driver,
           form_params : [{
-              selector : 'input[name="name"]',
+              selector : add_new_user_form_id+' input[name="name"]',
               value    : 'name'+random_token,
           },{
-              selector : 'input[name="lastname"]',
+              selector : add_new_user_form_id+' input[name="lastname"]',
               value    : 'lastname'+random_token,
           },{
-              selector : 'input[name="email"]',
+              selector : add_new_user_form_id+' input[name="email"]',
               value    : new_user_email,
           },{
-              selector : 'input[name="password"]',
+              selector : add_new_user_form_id+' input[name="password"]',
               value    : '123456',
           },{
-              selector : 'input[name="password_confirm"]',
+              selector : add_new_user_form_id+' input[name="password_confirm"]',
               value    : '123456',
           },{
-              selector : 'input[name="start_date"]',
+              selector : add_new_user_form_id+' input[name="start_date"]',
               value : '2015-06-01',
           },
               select_department,
           ],
+          submit_button_selector : add_new_user_form_id+' button[type="submit"]',
           should_be_successful : error_message ? false : true,
           elements_to_check : [],
           message : error_message ?

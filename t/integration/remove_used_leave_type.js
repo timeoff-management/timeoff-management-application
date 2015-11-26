@@ -13,7 +13,9 @@ var test             = require('selenium-webdriver/testing'),
     open_page_func         = require('../lib/open_page'),
     submit_form_func       = require('../lib/submit_form'),
     check_elements_func    = require('../lib/check_elements'),
-    check_booking_func     = require('../lib/check_booking_on_calendar');
+    check_booking_func     = require('../lib/check_booking_on_calendar'),
+  leave_type_edit_form_id='#leave_type_edit_form',
+  leave_type_new_form_id ='#leave_type_new_form';
 
 
 /*
@@ -43,30 +45,35 @@ describe('Basic leave request', function(){
     // Open page with leave types
     .then(function(data){
         return open_page_func({
-            url    : application_host + 'settings/leavetypes/',
+            url    : application_host + 'settings/general/',
             driver : data.driver,
         });
     })
 
     // Add new leave type
     .then(function(data){
-         return submit_form_func({
-            driver      : data.driver,
-            form_params : [{
-                selector : '#add_new_department_btn',
-                tick     : true,
-            },{
-                selector : 'input[name="name__new"]',
-                value : 'AAAAA',
-            },{
-                selector : 'input[name="color__new"]',
-                value : '121212',
-            },{
-                selector : 'input[name="use_allowance__new"]',
-                value    : 'on',
-                tick     : true,
-            }],
-            message : /Changes to leave types were saved/,
+      return data.driver.findElement(By.css('#add_new_leave_type_btn'))
+        .then(function(el){
+          return el.click();
+        })
+        .then(function(){
+
+           // This is very important line when working with Bootstrap modals!
+           data.driver.sleep(1000);
+
+           return submit_form_func({
+              driver      : data.driver,
+              form_params : [{
+                  selector : leave_type_new_form_id+' input[name="name__new"]',
+                  value : 'AAAAA',
+              },{
+                  selector : leave_type_new_form_id+' input[name="use_allowance__new"]',
+                  value    : 'on',
+                  tick     : true,
+              }],
+              submit_button_selector : leave_type_new_form_id+' button[type="submit"]',
+              message : /Changes to leave types were saved/,
+          });
         });
     })
 
@@ -127,7 +134,7 @@ describe('Basic leave request', function(){
     // Open page with leave types
     .then(function(data){
         return open_page_func({
-            url    : application_host + 'settings/leavetypes/',
+            url    : application_host + 'settings/general/',
             driver : data.driver,
         });
     })
@@ -137,7 +144,7 @@ describe('Basic leave request', function(){
     .then(function(data){
          return submit_form_func({
             driver : data.driver,
-            submit_button_selector : 'button[value="0"]',
+            submit_button_selector : leave_type_edit_form_id+' button[value="0"]',
             message : /Cannot remove leave type: type is in use/,
         });
     })

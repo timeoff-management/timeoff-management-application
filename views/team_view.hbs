@@ -4,15 +4,7 @@
 <h1>{{logged_user.name}} {{logged_user.lastname}}'s team</h1>
 
 <div class="row">
-    <div class="col-md-3">Team view</div>
-    <form id="book_time_off_frm" method="POST" action="">
-    <div class="col-md-2 col-md-offset-6">
-      <span></span>
-    </div>
-    <div class="col-md-1">
-        <button type="button" class="btn btn-info pull-right" data-toggle="modal" data-target="#book_leave_modal" id="book_time_off_btn">Book time off</button>
-    </div>
-    </form>
+    <div class="col-md-3">Team view <a href="/calendar/feeds/"><span class="fa fa-rss"></span></a></div>
 </div>
 
 <div class="row">&nbsp;</div>
@@ -21,10 +13,10 @@
 
 <nav>
   <ul class="pager">
-    <li class="previous"><a href="/calendar/teamview/?{{> team_view_url_parameters base_date = prev_date }}"><span aria-hidden="true">&larr;</span> {{#with prev_date}}{{ this.format 'MMM' }}{{/with}}</a></li>
+    <li class="previous"><a href="/calendar/teamview/?{{> team_view_url_parameters base_date = prev_date }}"><span aria-hidden="true" class="fa fa-chevron-left"></span> {{#with prev_date}}{{ this.format 'MMM' }}{{/with}}</a></li>
     <span><b>{{#with base_date}}{{ this.format 'MMMM, YYYY' }}{{/with}}</b></span>
 
-    <li class="next"><a href="/calendar/teamview/?{{> team_view_url_parameters base_date = next_date }}">{{#with next_date}}{{this.format 'MMM'}}{{/with}}<span aria-hidden="true">&rarr;</span></a></li>
+    <li class="next"><a href="/calendar/teamview/?{{> team_view_url_parameters base_date = next_date }}">{{#with next_date}}{{this.format 'MMM'}}{{/with}} <span aria-hidden="true" class="fa fa-chevron-right"></span></a></li>
   </ul>
 </nav>
 

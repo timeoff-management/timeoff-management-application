@@ -3,29 +3,26 @@
 
 <h1>Departments</h1>
 
-{{> show_flash_messages }}
-
 <div class="row">
     <div class="col-md-3">Departments settings</div>
-    <div class="col-md-3 col-md-offset-6">
-        <button type="button" class="pull-right btn btn-info" id="add_new_department_btn">Add new</button>
-    </div>
 </div>
+
+{{> show_flash_messages }}
 
 <div class="row">&nbsp;</div>
 
 <div class="row">
-    <div class="col-md-4">Department</div>
-    <div class="col-md-3">Allowence</div>
-    <div class="col-md-3">Manager</div>
-    <div class="col-md-2">Users</div>
+    <div class="col-md-4"><label class="control-label">Name</label></div>
+    <div class="col-md-3"><label class="control-label">Allowence</label></div>
+    <div class="col-md-3"><label class="control-label">Manager</label></div>
+    <div class="col-md-2"><label class="control-label">Users</label></div>
 </div>
 
 <div class="row">&nbsp;</div>
 
 <form id="delete_form" method="post" action="/settings/departments/delete/"></form>
 
-<form method="post" action="/settings/departments/">
+<form method="post" action="/settings/departments/" id="edit_department_form">
 
 {{# unless departments.length }}
 <div class="row">
@@ -62,10 +59,10 @@
 
    </div>
 
-    <div class="col-md-1">{{this.users.length}}</div>
+    <div class="col-md-1"><a class="" href="/users/?department={{ this.id }}">{{this.users.length}}</a></div>
 
     <div class="col-md-1">
-        <button type="button" class="close" aria-label="Close" value="{{@index}}"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="btn btn-default pull-right departments-remove-btn" value="{{@index}}"><span class="fa fa-remove"></span></button>
     </div>
 </div>
 
@@ -73,47 +70,21 @@
 
 {{/each}}
 
-
-<div id="add_new_department_row" class="row hidden">
-    <div class="col-md-4">
-        <input type="text" class="form-control" name="name__new" placeholder="New department name">
-    </div>
-
-    <div class="col-md-1">
-        <select class="form-control" name="allowence__new">
-            {{#each allowence_options}}
-            <option value="{{value}}" >{{value}}</option>
-            {{/each}}
-        </select>
-    </div>
-
-    <div class="col-md-2">
-        <input name="include_public_holidays__new" id="include_public_holidays__new" type="checkbox" checked="checked">
-        <label for="include_public_holidays__new" class="control-label">Public holidays</label>
-    </div>
-
-    <div class="col-md-3">
-        <select class="form-control" name="boss_id__new">
-        {{#each company.users}}
-            <option value="{{this.id}}">{{this.name}}</option>
-        {{/each}}
-        </select>
-   </div>
-
-</div>
-
-
-
-<div class="row">&nbsp;</div>
-
 <div class="row">
-    <div class="col-md-4">
-        <button type="submit" class="btn btn-success">Save changes</button>
-    </div>
+  <div class="col-md-offset-9 col-md-3">
+    <button class="btn btn-default pull-right" data-toggle="modal" data-target="#add_new_department_modal" type="button" id="add_new_department_btn">Add new</button>
+    <span class="pull-right">&nbsp;&nbsp;&nbsp;</span>
+    <button type="submit" class="btn btn-success pull-right">Save changes</button>
+  </div>
 </div>
 
 </form>
 
 <div class="row">&nbsp;</div>
+
+{{> add_new_department_modal
+  container_id='add_new_department_modal'
+  form_action='/settings/departments/'
+}}
 
 {{> footer }}

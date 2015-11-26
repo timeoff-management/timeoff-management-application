@@ -1,0 +1,40 @@
+
+
+<div class="modal fade" id="{{container_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    <form method="POST" action="{{form_action}}" id="add_new_bank_holiday_form">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add new Bank Holiday</h4>
+      </div>
+
+
+      {{#each company.bank_holidays}}
+        <input type="hidden" value="{{name}}" name="name__{{@index}}">
+        <input type="hidden" value="{{as_date date}}" name="date__{{@index}}">
+      {{/each}}
+
+      <div class="modal-body">
+
+        <div class="form-group">
+          <label for="bank_holiday_name_new" class="control-label">Name:</label>
+          <input type="text" class="form-control" id="bank_holiday_name_new" name="name__new">
+        </div>
+
+        <div class="form-group">
+          <label for="bank_holiday_date_new" class="control-label">Date:</label>
+          <input type="text" class="form-control" id="bank_holiday_date_new" name="date__new">
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success">Create</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
