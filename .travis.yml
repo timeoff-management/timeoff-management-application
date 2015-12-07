@@ -1,5 +1,4 @@
 language: node_js
-# When changing node version also update it on line 35.
 node_js:
   - "0.10"
   - "0.12"
