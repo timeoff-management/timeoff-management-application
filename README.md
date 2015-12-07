@@ -66,7 +66,7 @@ Install TimeOff Manager within your infrastructure:
 (make sure you have Node.js installed)
 
 ```bash
-git clone git@github.com:vpp/timeoff-management.git
+git clone git@github.com:timeoff-management/application.git
 cd timeoff-management
 npm install
 node bin/www
@@ -81,8 +81,5 @@ node node_modules/mocha/bin/mocha --recursive t/*
 
 ## Feedback
 
-Please report any issues or feedback to <a href="https://twitter.com/FreeTimeOffApp">twitter</a> or <a href="https://waffle.io/vpp/timeoff-management">waffle board</a>.
+Please report any issues or feedback to <a href="https://twitter.com/FreeTimeOffApp">twitter</a>.
 
-Statistics for processed tickets:
-
-[![Throughput Graph](https://graphs.waffle.io/vpp/timeoff-management/throughput.svg)](https://waffle.io/vpp/timeoff-management/metrics)
