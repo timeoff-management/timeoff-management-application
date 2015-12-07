@@ -5,10 +5,6 @@ Web application for managing employees absence.
 
 <a href="https://travis-ci.org/timeoff-management/application"><img align="right" src="https://travis-ci.org/timeoff-management/application.svg?branch=master" alt="Build status" /></a>
 
-<a href="https://codeclimate.com/github/vpp/timeoff-management"><img  src="https://codeclimate.com/github/vpp/timeoff-management/badges/gpa.svg" /></a>
-
-[![Stories in Ready](https://badge.waffle.io/vpp/timeoff-management.png?label=ready&title=Ready)](https://waffle.io/vpp/timeoff-management)
-
 ## Features
 
 **Multiple views of staff absence**
