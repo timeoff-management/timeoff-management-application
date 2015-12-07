@@ -11,37 +11,45 @@ Web application for managing employees absence.
 
 ## Features
 
-**Employees By Department**
+**Multiple views of staff absence**
 
-Bring your organisation structure into, set the supervisor for every department.
+Calendar view, Team view, or Just plain list.
 
-**Customised Leave types**
+**Tune application to fit into your company policy**
 
-Holidays, Sickness, Maternity, Paternity, Working from home, you name it. Configure if each of them uses vacation allowance or not.
+Add custom absence types: Sickness, Maternity, Working from home, Birthday etc. Define if each uses vacation allowance.
 
-**Customised public holidays**
+Setup public holidays as well as company specific days off.
 
-Setup public holidays as well as company specific dates.
+Group employees by departments: bring your organisation structure into, set the supervisor for every department.
 
-**Simple workflow** 
+**3d Parties Calendar Integration**
 
-Employee requests a leave, manager says yes or no.
+Broadcast employees whereabout into external calendar providers: MS Outlook, Google Calendar, and iCal.
+
+**Three Steps Workflow**
+
+Employee request time off or revoke existing one.
+
+Supervisor get email notification and decide about upcoming employee absence.
+
+Absence is accounted. Peers are informed via team view or calendar feeds.
 
 **Accesss control** 
 
 There are following types of users: employees, supervisors, and administrators.
 
-**Multiple views**
+**Lots of other little things that would make life easier**
 
-Leaves are presented via "calendar" view, "Team view" view, or as a list.
+Manually adjust employees allowance
+e.g. employee has extra day in lieu.
 
-**Email notifications**
+Upon creation employee receives pro rata vacation allowance, depending on start date.
 
-All involved parties are notified about leave request status.
+Users of three types: admins, supervisors, and employees.
 
-**Integration with third parties calendars**
+Email notification to all involved parties.
 
-Information about employees leaves could be broadcasted to all major calendar providers: MS Outlook, Google Calendar, Apple Calendar. "Calendar" and "wall chart" views could be shared.
 
 ## Installation
 
