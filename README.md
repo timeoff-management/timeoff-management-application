@@ -3,7 +3,7 @@
 
 Web application for managing employees absence.
 
-<a href="https://travis-ci.org/vpp/timeoff-management"><img align="right" src="https://travis-ci.org/vpp/timeoff-management.svg" alt="Build status" /></a>
+<a href="https://travis-ci.org/vpp/timeoff-management"><img align="right" src="https://travis-ci.org/timeoff-management/application.svg?branch=master" alt="Build status" /></a>
 
 <a href="https://codeclimate.com/github/vpp/timeoff-management"><img  src="https://codeclimate.com/github/vpp/timeoff-management/badges/gpa.svg" /></a>
 
