@@ -5,58 +5,72 @@
 
 {{> show_flash_messages }}
 
-<form class="form-horizontal" action="/register" method="post">
+<div class="row">&nbsp;</div>
 
-  <div class="form-group">
-    <label for="company_name_inp" class="col-md-2 control-label">Company name</label>
-    <div class="col-md-6">
-      <input class="form-control" id="company_name_inp" placeholder="Company name" name="company_name">
-    </div>
+<div class="row">
+  <div class="col-md-9">
+    <form class="form-horizontal" action="/register" method="post">
+
+      <div class="form-group">
+        <label for="company_name_inp" class="col-md-2 control-label">Company name</label>
+        <div class="col-md-6">
+          <input class="form-control" id="company_name_inp" placeholder="Company name" name="company_name">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="name_inp" class="col-md-2 control-label">First Name</label>
+        <div class="col-md-6">
+          <input class="form-control" id="name_inp" placeholder="First name" name="name">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="lastname_inp" class="col-md-2 control-label">Last Name</label>
+        <div class="col-md-6">
+          <input class="form-control" id="lastname_inp" placeholder="Last Name" name="lastname">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email_inp" class="col-md-2 control-label">Email Address</label>
+        <div class="col-md-6">
+          <input class="form-control" id="email_inp" type="email" placeholder="Email" name="email">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="pass_inp" class="col-md-2 control-label">Password</label>
+        <div class="col-md-6">
+          <input class="form-control" id="pass_inp" type="password" placeholder="Password" name="password">
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="confirm_pass_inp" class="col-md-2 control-label">Confirm Password</label>
+        <div class="col-md-6">
+          <input class="form-control" id="confirm_pass_inp" type="password" placeholder="Password" name="password_confirmed">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-offset-2 col-md-6">
+          <button id="submit_registration" type="submit" class="btn btn-success">Sign up!</button>
+        </div>
+      </div>
+
+    </form>
   </div>
 
-  <div class="form-group">
-    <label for="name_inp" class="col-md-2 control-label">First Name</label>
-    <div class="col-md-6">
-      <input class="form-control" id="name_inp" placeholder="First name" name="name">
-    </div>
+  <div class="col-md-3">
+    Restore company from backup.
+    <form action="/import-company/" method="post" role="form" enctype="multipart/form-data" >
+      <input type="file" name="company_dump">
+      <input type="submit">Restore</input>
+    </form>
   </div>
 
-  <div class="form-group">
-    <label for="lastname_inp" class="col-md-2 control-label">Last Name</label>
-    <div class="col-md-6">
-      <input class="form-control" id="lastname_inp" placeholder="Last Name" name="lastname">
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="email_inp" class="col-md-2 control-label">Email Address</label>
-    <div class="col-md-6">
-      <input class="form-control" id="email_inp" type="email" placeholder="Email" name="email">
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="pass_inp" class="col-md-2 control-label">Password</label>
-    <div class="col-md-6">
-      <input class="form-control" id="pass_inp" type="password" placeholder="Password" name="password">
-    </div>
-  </div>
-
-
-  <div class="form-group">
-    <label for="confirm_pass_inp" class="col-md-2 control-label">Confirm Password</label>
-    <div class="col-md-6">
-      <input class="form-control" id="confirm_pass_inp" type="password" placeholder="Password" name="password_confirmed">
-    </div>
-  </div>
-
-  <div class="form-group">
-    <div class="col-md-offset-2 col-md-6">
-      <button id="submit_registration" type="submit" class="btn btn-success">Sign up!</button>
-    </div>
-  </div>
-
-</form>
-
+</div>
 
 {{> footer }}
