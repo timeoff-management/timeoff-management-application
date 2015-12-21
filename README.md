@@ -79,4 +79,3 @@ node node_modules/mocha/bin/mocha --recursive t/*
 
 Please report any issues or feedback to <a href="https://twitter.com/FreeTimeOffApp">twitter</a>.
 
-
