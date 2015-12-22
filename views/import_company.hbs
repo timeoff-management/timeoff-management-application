@@ -1,0 +1,68 @@
+
+
+{{> header }}
+
+<h1>Restore company</h1>
+
+{{> show_flash_messages }}
+
+<div class="row">&nbsp;</div>
+
+<div class="row">
+  <div class="col-md-10">
+    <p class="lead">
+      TimeOff.Management allows data migration between different installation.
+    </p>
+
+    <p>
+      Upload company dump file using form below to migrate data into current installation of TimeOff.Management.
+    </p>
+
+    <p>
+      Please take into consideration:
+
+      <dl class="col-md-offset-1">
+
+        <dt>Change of user's passwords</dt>
+        <dd>TimeOff.Management does not store user's passwords in any form, it is impossible for us to save and restore them through data migration process.</dd>
+        <dd>After company account is migrated to new TimeOff.Management installation <strong>all</strong> user accounts will have passwords to be <strong>changeme</strong></dd>
+        <dd>&nbsp;</dd>
+
+        <dt>User emails have to be unique</dt>
+        <dd>User emails from company that is about to be imported should be unique and there should not be any other companies withing current TimeOff.Management installation that contain any of those email addresses.<dd>
+        <dd>For example if you are about to restore a company Test Ltd that have john@test.com as an employee, but current installation has another company Another Test Ltd where there is an employee with same email address, the import would fail.</dd>
+      </dl>
+
+    </p>
+
+    <em>
+      In order to obtain company dump file, please login as an administrator user and go to Settings &nbgt; General page and press button next to "Export company data".
+    </em>
+
+  </div>
+</div>
+
+<div class="row">&nbsp;</div>
+
+<div class="row">
+
+  <div class="col-md-10 col-md-offset-1 panel panel-default">
+    <form action="/import-company/" method="post" role="form" enctype="multipart/form-data" class="panel-body">
+
+      <div class="form-group">
+        <label for="company_dump" class="control-label">Restore company from backup file</label>
+        <div class="">
+          <input id="company_dump" type="file" name="company_dump">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-success" type="submit">Restore</input>
+      </div>
+
+    </form>
+  </div>
+
+</div>
+
+{{> footer }}

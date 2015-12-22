@@ -8,48 +8,60 @@
 
 {{> show_flash_messages }}
 
-<div class="row main-row_header">
-  <div class="col-md-12">Company</div>
-</div>
+<div class="row">&nbsp;</div>
 
 <div class="row">
-  <div class="col-md-5">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Company
+      </div>
+      <div class="panel-body">
+        <div class="row">
 
-    <form class="form-horizontal" method="POST" action="/settings/company/" id="company_edit_form">
-      <div class="form-group">
-        <label for="input_company_name" class="col-md-4 control-label">Company name</label>
-        <div class="col-md-8">
-          <input class="form-control" id="input_company_name" placeholder="Our company name" value="{{company.name}}" name="name">
+          <div class="col-md-5">
+            <form class="form-horizontal" method="POST" action="/settings/company/" id="company_edit_form">
+              <div class="form-group">
+                <label for="input_company_name" class="col-md-4 control-label">Company name</label>
+                <div class="col-md-8">
+                  <input class="form-control" id="input_company_name" placeholder="Our company name" value="{{company.name}}" name="name">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="input_country" class="col-md-4 control-label">Country</label>
+                <div class="col-sm-8">
+                  <input class="form-control" id="input_country" value="{{company.country}}" name="country">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                  <button type="submit" class="btn btn-success pull-right">Save changes</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="col-md-offset-1 col-md-5">
+            <form class="form-horizontal" method="POST" action="/settings/company/export/" id="company_export_form">
+              <div class="form-group">
+                <label for="input_country" class="col-md-6 control-label">Export company data</label>
+                <div class="col-md-6">
+                  <button type="submit" class="btn btn-success">Download</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-md-offset-2">
+                  <em>Download company dump file that could be used to restore account on another TimeOff.Management installation</em>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-      <div class="form-group">
-        <label for="input_country" class="col-md-4 control-label">Country</label>
-        <div class="col-sm-8">
-          <input class="form-control" id="input_country" value="{{company.country}}" name="country">
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-          <button type="submit" class="btn btn-success pull-right">Save changes</button>
-        </div>
-      </div>
-    </form>
-
+    </div>
   </div>
-
-  <div class="col-md-offset-1 col-md-5">
-    <form class="form-horizontal" method="POST" action="/settings/company/export/" id="company_export_form">
-      <div class="form-group">
-        <label for="input_country" class="col-md-6 control-label">Export company data</label>
-        <div class="col-sm-6">
-          <button type="submit" class="btn btn-success">Download</button>
-        </div>
-      </div>
-    </form>
-  </div>
-
 </div>
+
 
 
 
