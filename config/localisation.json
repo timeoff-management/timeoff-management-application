@@ -1,0 +1,14 @@
+{
+  "countries" : {
+    "ES" : {
+      "name" : "Spain"
+    },
+    "UK" : {
+      "name" : "United Kingdom",
+      "default" : 1
+    },
+    "US" : {
+      "name" : "United States"
+    }
+  }
+}
