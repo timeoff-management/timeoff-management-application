@@ -96,6 +96,11 @@ module.exports = Promise.promisify( function(args, callback){
           selector : 'input[name="password_confirmed"]',
           value    : '123456',
         },
+        {
+          selector        : 'select[name="country"]',
+          option_selector : 'option[value="IS"]',
+          value           : 'IS',
+        },
       ],
       function( test_case ){
         driver
