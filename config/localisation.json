@@ -1,14 +1,124 @@
 {
   "countries" : {
+
+    "IS" : {
+      "name" : "Iceland"
+    },
     "ES" : {
-      "name" : "Spain"
+      "name" : "Spain",
+      "bank_holidays" : [
+        {
+          "name" : "New Year Day",
+          "date" : "2016-01-01"
+        },
+        {
+          "name" : "Epiphany",
+          "date" : "2016-01-06"
+        },
+        {
+          "name" : "Good Friday",
+          "date" : "2016-03-25"
+        },
+        {
+          "name" : "Labour Day",
+          "date" : "2016-05-01"
+        },
+        {
+          "name" : "Assumption Day",
+          "date" : "2016-08-15"
+        },
+        {
+          "name" : "Hispanic Day",
+          "date" : "2016-10-12"
+        },
+        {
+          "name" : "All Saints Day",
+          "date" : "2016-11-01"
+        },
+        {
+          "name" : "Constitution Day",
+          "date" : "2016-12-06"
+        },
+        {
+          "name" : "Immaculate Conception Day",
+          "date" : "2016-12-08"
+        },
+        {
+          "name" : "Christmas Day",
+          "date" : "2016-12-25"
+        }
+      ]
     },
     "UK" : {
       "name" : "United Kingdom",
-      "default" : 1
+      "default" : 1,
+      "bank_holidays" : [
+        {
+          "name" : "New Year Day",
+          "date" : "2016-01-01"
+        },
+        {
+          "name" : "Good Friday",
+          "date" : "2016-03-25"
+        },
+        {
+          "name" : "Easter Monday",
+          "date" : "2016-03-28"
+        },
+        {
+          "name" : "Early May Bank Holiday",
+          "date" : "2016-05-02"
+        },
+        {
+          "name" : "Spring Bank Holiday",
+          "date" : "2016-05-30"
+        },
+        {
+          "name" : "Boxing Day",
+          "date" : "2016-12-26"
+        },
+        {
+          "name" : "Christmas Day",
+          "date" : "2016-12-27"
+        }
+      ]
     },
     "US" : {
-      "name" : "United States"
+      "name" : "United States",
+      "bank_holidays" : [
+        {
+          "name" : "New Year Day",
+          "date" : "2016-01-01"
+        },
+        {
+          "name" : "Martin Luther King Day",
+          "date" : "2016-01-18"
+        },
+        {
+          "name" : "Memorial Day",
+          "date" : "2016-05-30"
+        },
+        {
+          "name" : "Independence Day",
+          "date" : "2016-07-04"
+        },
+        {
+          "name" : "Labor Day",
+          "date" : "2016-09-05"
+        },
+        {
+          "name" : "Veterans Day",
+          "date" : "2016-11-11"
+        },
+        {
+          "name" : "Thanksgiving",
+          "date" : "2016-11-24"
+        },
+        {
+          "name" : "Christmas Day",
+          "date" : "2016-12-26"
+        }
+      ]
     }
   }
 }
