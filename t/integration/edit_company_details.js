@@ -45,19 +45,6 @@ describe('Edit company details', function(){
         });
     })
 
-    // Check that country allows to add only letters and number (no spaces)
-    .then(function(data){
-         return submit_form_func({
-            driver      : data.driver,
-            form_params : [{
-                selector : company_edit_form_id+' input[name="country"]',
-                value    : 'United Kingdom',
-            }],
-            submit_button_selector : company_edit_form_id+' button[type="submit"]',
-            message : /Country should contain only letters and numbers/,
-        });
-    })
-
     // Check that company is been updated if valid values are submitted
     .then(function(data){
         return submit_form_func({
@@ -66,8 +53,9 @@ describe('Edit company details', function(){
                 selector : company_edit_form_id+' input[name="name"]',
                 value    : 'Test companu ltd',
             },{
-                selector : company_edit_form_id+' input[name="country"]',
-                value    : 'UA',
+                selector : company_edit_form_id+' select[name="country"]',
+                option_selector : 'option[value="US"]',
+                value    : 'US',
             }],
             submit_button_selector : company_edit_form_id+' button[type="submit"]',
             message : /successfully/i,
