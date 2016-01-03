@@ -78,7 +78,7 @@ describe('Overlapping leaverequest (with halfs)', function(){
     // Open calendar page
     .then(function(data){
         return open_page_func({
-            url    : application_host + 'calendar/?show_full_year=1',
+            url    : application_host + 'calendar/?show_full_year=1&year=2015',
             driver : data.driver,
         });
     })
