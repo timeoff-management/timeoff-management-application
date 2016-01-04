@@ -7,7 +7,6 @@ var test             = require('selenium-webdriver/testing'),
     expect           = require('chai').expect,
     _                = require('underscore'),
     Promise          = require("bluebird"),
-    moment           = require('moment'),
     until            = require('selenium-webdriver').until,
     login_user_func        = require('../lib/login_with_user'),
     register_new_user_func = require('../lib/register_new_user'),
@@ -24,15 +23,13 @@ var test             = require('selenium-webdriver/testing'),
  *    - Create new company with admin user
  *    - Create new user
  *    - Login as new user
- *    - Submit leave request for new user
- *    - Make sure that leave request is shown as a pending one for non admin user
- *    - Login as an admin user and approve leave request
- *    - Login as non admin user and check that new request is now
- *      shown as approved
+ *    - Submit leave request for new user that has more days that allowance
+ *    - Make sure that system complains about lack of allowance
  *
  * */
 
-describe('Basic leave request', function(){
+
+describe('Try to book more holidays then in allowance', function(){
 
   // The app is really slow and does not manage to handle request in
   // default 2 seconds, so be more patient.
@@ -121,110 +118,34 @@ describe('Basic leave request', function(){
                 value           : "2",
             },{
                 selector : 'input#from',
-                value : '2015-06-15',
+                value : '2016-06-15',
             },{
                 selector : 'input#to',
-                value : '2015-06-16',
+                value : '2016-07-16',
             }],
-            message : /New leave request was added/,
+            should_be_successful : false,
+            message : /Failed to create a leave request/,
           });
 
-        })
-
-        // Check that all days are marked as pended
-        .then(function(){
-          return check_booking_func({
-            driver         : driver,
-            full_days      : [moment('2015-06-16')],
-            halfs_1st_days : [moment('2015-06-15')],
-            type           : 'pended',
-          });
         });
-    })
-    // Logout from non-admin acount
-    .then(function(data){
-        return logout_user_func({
-            application_host : application_host,
-            driver           : data.driver,
-        });
-    })
-    // Login as admin user
-    .then(function(data){
-        return login_user_func({
-            application_host : application_host,
-            user_email       : new_user_email,
-            driver           : data.driver,
-        });
-    })
-    // Open requests page
-    .then(function(data){
-        return open_page_func({
-            url    : application_host + 'requests/',
-            driver : data.driver,
-        });
-    })
-    // Make sure newly created request is shown for approval
-    .then(function(data){
-      return check_elements_func({
-        driver : data.driver,
-        elements_to_check : [{
-          selector : 'div[vpp="pending_for__'+non_admin_user_email+'"] .btn-warning',
-          value    : "Reject",
-        }],
-      });
-    })
-    // Approve newly added leave request
-    .then(function(data){
-      return data.driver.findElement(By.css(
-        'div[vpp="pending_for__'+non_admin_user_email+'"] .btn-success'
-      ))
-      .then(function(el){ return el.click(); })
-      .then(function(){
-        // Wait until page properly is reloaded
-        data.driver.wait(until.elementLocated(By.css('h1')), 1000);
       })
-      .then(function(){ return Promise.resolve(data); });
-    })
-    // Logout from admin acount
     .then(function(data){
-        return logout_user_func({
-            application_host : application_host,
-            driver           : data.driver,
-        });
-    })
-    // Login as non-admin user
-    .then(function(data){
-        return login_user_func({
-            application_host : application_host,
-            user_email       : non_admin_user_email,
-            driver           : data.driver,
-        });
-    })
-    // Open calendar page
-    .then(function(data){
-        return open_page_func({
-            url    : application_host + 'calendar/?year=2015&show_full_year=1',
-            driver : data.driver,
-        });
-    })
-    // And make sure that it is calendar indeed
-    .then(function(data){
-      return data.driver.getTitle()
+      return data.driver.findElements( By.css('div.alert') )
+        .then(function(els){
 
-        .then(function(title){
-            expect(title).to.be.equal('Calendar');
-        })
+          return Promise.all(
+            _.map(els, function(el){ return el.getText(); })
+          )
+          .then(function(texts){
+            expect(
+              _.any(texts, function(text){ return /Requested absence is longer than remaining allowance/.test(text); })
+            ).to.be.equal(true);
 
-        // Check that all days are marked as pended
-        .then(function(){
-          return check_booking_func({
-            driver         : data.driver,
-            full_days      : [moment('2015-06-16')],
-            halfs_1st_days : [moment('2015-06-15')],
-            type           : 'approved',
+            return Promise.resolve(data);
           });
         });
     })
+
 
     .then(function(data){ return data.driver.quit(); })
     .then(function(){ done(); });

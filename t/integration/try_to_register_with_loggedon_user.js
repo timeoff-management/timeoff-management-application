@@ -49,6 +49,7 @@ describe('Try to open registeration page with active user in a session', functio
     })
 
     // Close browser;
+    .then(function(data){ return data.driver.quit(); })
     .then(function(data){
       done();
     });
