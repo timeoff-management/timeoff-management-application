@@ -10,7 +10,6 @@ var test             = require('selenium-webdriver/testing'),
     login_user_func        = require('../lib/login_with_user'),
     register_new_user_func = require('../lib/register_new_user'),
     logout_user_func       = require('../lib/logout_user'),
-    open_page_func         = require('../lib/open_page'),
     submit_form_func       = require('../lib/submit_form'),
     add_new_user_func      = require('../lib/add_new_user');
 
@@ -40,7 +39,7 @@ describe('Reuse email from existing acount when creating new company', function(
         application_host : application_host,
     })
     .then(function(data){
-      console.log('    Login with newly created account '+admin_email);
+      console.log('    Logout from newly created account '+admin_email);
       admin_email = data.email;
 
       return logout_user_func({
