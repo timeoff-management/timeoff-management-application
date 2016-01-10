@@ -29,12 +29,24 @@
               </div>
               <div class="form-group">
                 <label for="input_country" class="col-md-4 control-label">Country</label>
-                <div class="col-sm-8">
+                <div class="col-md-8">
                   <select class="form-control" id="input_country" name="country">
                     {{#each countries}}
                     <option value="{{@key}}" {{# if_equal @key ../company.country }} selected="selected"{{/if_equal}}>{{this.name}}</option>
                     {{/each}}
                   </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-md-offset-4 col-md-8">
+                  <div class="checkbox">
+                    <label for="share-all-absences">
+                      <input id="share-all-absences" type="checkbox" name="share_all_absences" {{# if company.share_all_absences }} checked="checked"{{/if}}>Share absences between all employees
+                    </label>
+                    <p>
+                      <em>If enabled all employees can see information about everybody's absences regardless departments.</em>
+                    </p>
+                  </div>
                 </div>
               </div>
               <div class="form-group">
