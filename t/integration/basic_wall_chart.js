@@ -17,12 +17,13 @@ var test                 = require('selenium-webdriver/testing'),
   add_new_user_func      = require('../lib/add_new_user'),
   logout_user_func       = require('../lib/logout_user'),
   new_department_form_id = '#add_new_department_form',
-  application_host       = 'http://localhost:3000/';
+  application_host       = 'http://localhost:3000/',
+  company_edit_form_id   ='#company_edit_form';
 
 /*
  *  Scenario to check in thus test.
  *
- *    * Reigister new account for user A (supervisor and member of Sales department)
+ *    * Register new account for user A (supervisor and member of Sales department)
  *    * Create a new user B in Sales department
  *    * Open Team view page and make sure that both users are shown A and B
  *    * Create new department IT
@@ -36,6 +37,11 @@ var test                 = require('selenium-webdriver/testing'),
  *    * Open Team view and make sure that it shows three users A, B, and C
  *    * Login with user C
  *    * Make sure that Team view page shows only user C
+ *
+ *    * Login as admin user A
+ *    * Update company settings to have share_all_absences be TRUE
+ *    * Login with user C
+ *    * Make sure that Team view page shows all users from within company
  *
  * */
 
@@ -260,6 +266,66 @@ var test                 = require('selenium-webdriver/testing'),
 
         // and make sure that only one user C is here
         .then(function(data){ return check_teamview(data, [user_C]) })
+
+        // Logout from user C account
+        .then(function(data){
+            return logout_user_func({
+                application_host : application_host,
+                driver           : data.driver,
+            });
+        })
+
+        // Login as user A
+        .then(function(data){
+            return login_user_func({
+                application_host : application_host,
+                user_email       : user_A,
+                driver           : data.driver,
+            });
+        })
+
+        // Open page for editing company details
+        .then(function(data){
+            return open_page_func({
+                url    : application_host + 'settings/general/',
+                driver : data.driver,
+            });
+        })
+
+        // Check that company is been updated if valid values are submitted
+        .then(function(data){
+            return submit_form_func({
+                driver      : data.driver,
+                form_params : [{
+                    selector : company_edit_form_id+' input[name="share_all_absences"]',
+                    tick     : true,
+                    value    : 'on',
+                }],
+                submit_button_selector : company_edit_form_id+' button[type="submit"]',
+                message : /successfully/i,
+                should_be_successful : true,
+            });
+        })
+
+        // Logout from user A account
+        .then(function(data){
+            return logout_user_func({
+                application_host : application_host,
+                driver           : data.driver,
+            });
+        })
+
+        // Login as user C
+        .then(function(data){
+            return login_user_func({
+                application_host : application_host,
+                user_email       : user_C,
+                driver           : data.driver,
+            });
+        })
+
+        // and make sure that all users are shown on Team view page
+        .then(function(data){ return check_teamview(data, [user_A, user_B, user_C]) })
 
         // Close the browser
         .then(function(data){
