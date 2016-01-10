@@ -1,0 +1,7 @@
+Introduce "Share all absences" flag to the company table.
+
+To get that field within existing TimeOff.Management application installation one
+needs to run following SQL:
+
+ALTER TABLE Companies ADD COLUMN share_all_absences TINYINT(1) NOT NULL DEFAULT 0;
+
