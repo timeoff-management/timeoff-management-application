@@ -46,7 +46,7 @@
 
 <div class="row">
   {{# if leave_type_statistics }}
-  <div class="col-md-5"><hr/></div>
+  <div class="col-md-5"><hr class="hidden-xs"/></div>
   <div class="col-md-2 calendar-section-caption">
     {{# unless show_full_leave_type_statistic}}
     <a class="btn btn-default" href="/calendar/?show_full_leave_type_statistic=1">More statistics <span class="fa fa-chevron-down"></span></a>
@@ -54,9 +54,9 @@
     <a class="btn btn-default" href="/calendar/">Less statistics <span class="fa fa-chevron-up"></span></a>
     {{/unless}}
   </div>
-  <div class="col-md-5"><hr/></div>
+  <div class="col-md-5"><hr class="hidden-xs"/></div>
   {{else}}
-    <div class="col-md-12"><hr/></div>
+    <div class="col-md-12"><hr class="hidden-xs"/></div>
   {{/if}}
 </div>
 
@@ -117,7 +117,7 @@
 
 
 <div class="row">
-  <div class="col-md-5"><hr/></div>
+  <div class="col-md-5"><hr class="hidden-xs"/></div>
   <div class="col-md-2 calendar-section-caption">
     {{# unless show_full_year}}
     <a class="btn btn-default" href="/calendar/?show_full_year=1">Show full {{current_year}} year <span class="fa fa-chevron-down"></span></a>
@@ -125,7 +125,7 @@
     <a class="btn btn-default" href="/calendar/">Show nearest future <span class="fa fa-chevron-up"></span></a>
     {{/unless}}
   </div>
-  <div class="col-md-5"><hr/></div>
+  <div class="col-md-5"><hr class="hidden-xs"/></div>
 </div>
 
 
