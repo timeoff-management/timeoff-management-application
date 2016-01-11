@@ -2,7 +2,7 @@ To have nice visualisation of database schema use this tool http://ondras.zarovi
 
 
 <?xml version="1.0" encoding="utf-8" ?>
-<!-- SQL XML created by WWW SQL Designer, http://code.google.com/p/wwwsqldesigner/ -->
+<!-- SQL XML created by WWW SQL Designer, https://github.com/ondras/wwwsqldesigner/ -->
 <!-- Active URL: http://ondras.zarovi.cz/sql/demo/ -->
 <sql>
 <datatypes db="mysql">
@@ -40,7 +40,7 @@ To have nice visualisation of database schema use this tool http://ondras.zarovi
 		<type label="SET" length="1" sql="SET" quote=""/>
 		<type label="Bit" length="0" sql="bit" quote=""/>
 	</group>
-</datatypes><table x="527" y="559" name="users">
+</datatypes><table x="494" y="80" name="users">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -75,7 +75,7 @@ To have nice visualisation of database schema use this tool http://ondras.zarovi
 <part>id</part>
 </key>
 </table>
-<table x="466" y="132" name="company">
+<table x="479" y="469" name="company">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -88,18 +88,17 @@ To have nice visualisation of database schema use this tool http://ondras.zarovi
 <row name="start_of_new_year" null="0" autoincrement="0">
 <datatype>TINYINT</datatype>
 <default>NULL</default></row>
+<row name="share_all_absences" null="0" autoincrement="0">
+<datatype>TINYINT</datatype>
+<default>0</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 </table>
-<table x="898" y="530" name="departments">
+<table x="830" y="175" name="departments">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="companyId" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default><relation table="company" row="id" />
-</row>
 <row name="name" null="0" autoincrement="0">
 <datatype>VARCHAR</datatype>
 <default>'NULL'</default></row>
@@ -113,11 +112,15 @@ To have nice visualisation of database schema use this tool http://ondras.zarovi
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="users" row="id" />
 </row>
+<row name="companyId" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="company" row="id" />
+</row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 </table>
-<table x="845" y="90" name="public_holiday">
+<table x="816" y="458" name="public_holiday">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -135,7 +138,7 @@ To have nice visualisation of database schema use this tool http://ondras.zarovi
 <part>id</part>
 </key>
 </table>
-<table x="34" y="249" name="leave_type">
+<table x="134" y="479" name="leave_type">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -156,7 +159,7 @@ To have nice visualisation of database schema use this tool http://ondras.zarovi
 <part>id</part>
 </key>
 </table>
-<table x="110" y="489" name="leave">
+<table x="170" y="91" name="leave">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -187,24 +190,18 @@ To have nice visualisation of database schema use this tool http://ondras.zarovi
 <row name="decided_at" null="1" autoincrement="0">
 <datatype>DATETIME</datatype>
 <default>NULL</default></row>
-<key type="PRIMARY" name="">
-<part>id</part>
-</key>
-</table>
-<table x="342" y="357" name="leave_day">
-<row name="id" null="1" autoincrement="1">
+<row name="date_start" null="1" autoincrement="0">
+<datatype>DATE</datatype>
+<default>'now()'</default></row>
+<row name="day_part_start" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<default>NULL</default></row>
-<row name="date" null="1" autoincrement="0">
+<default>1</default></row>
+<row name="date_end" null="1" autoincrement="0">
+<datatype>DATE</datatype>
+<default>'now()'</default></row>
+<row name="day_part_end" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<default>NULL</default></row>
-<row name="leave_id" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default><relation table="leave" row="id" />
-</row>
-<row name="day_part" null="1" autoincrement="0">
-<datatype>TINYINT</datatype>
-<default>NULL</default></row>
+<default>1</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
