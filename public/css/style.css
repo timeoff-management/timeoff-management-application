@@ -99,7 +99,7 @@ td.leave_cell_pended {
     color: black;
 }
 .modal-dialog {
-    width : 450px;
+    max-width : 450px;
 }
 .team-view-users td {
     padding-top    : 5px;
