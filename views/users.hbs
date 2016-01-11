@@ -5,15 +5,13 @@
 
 {{> show_flash_messages }}
 
-<div class="subtitle-row">
-    <div class="row">
-        <div class="col-md-3">{{company.name}}'s staff</div>
-            <form id="add_new_user_frm" method="get" action="/users/add/">
-                <div class="col-md-3 col-md-offset-9">
-                <button type="submit" class="pull-right btn btn-info" id="add_new_department_btn">Add user</button>
-                </div>
-            </form>
-    </div>
+<div class="row">
+    <div class="col-md-3 lead">{{company.name}}'s staff</div>
+    <form id="add_new_user_frm" method="get" action="/users/add/">
+        <div class="col-md-3 col-md-offset-6">
+        <button type="submit" class="pull-right btn btn-info" id="add_new_department_btn">Add user</button>
+        </div>
+    </form>
 </div>
 
 <div class="row">&nbsp;</div>
