@@ -168,7 +168,7 @@ describe('Basic leave request', function(){
       return check_elements_func({
         driver : data.driver,
         elements_to_check : [{
-          selector : 'div[vpp="pending_for__'+non_admin_user_email+'"] .btn-warning',
+          selector : 'tr[vpp="pending_for__'+non_admin_user_email+'"] .btn-warning',
           value    : "Reject",
         }],
       });
@@ -176,7 +176,7 @@ describe('Basic leave request', function(){
     // Approve newly added leave request
     .then(function(data){
       return data.driver.findElement(By.css(
-        'div[vpp="pending_for__'+non_admin_user_email+'"] .btn-success'
+        'tr[vpp="pending_for__'+non_admin_user_email+'"] .btn-success'
       ))
       .then(function(el){ return el.click(); })
       .then(function(){

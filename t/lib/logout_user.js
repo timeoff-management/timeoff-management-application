@@ -12,7 +12,7 @@ module.exports = Promise.promisify( function(args, callback){
   var application_host = args.application_host,
       driver           = args.driver,
       result_callback  = callback,
-      logout_link_css_selector = 'a[href="/logout/"]';
+      logout_link_css_selector = 'li.hidden-xs a[href="/logout/"]';
 
   // Open front page
   driver

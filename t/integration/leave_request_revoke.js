@@ -220,7 +220,7 @@ describe('Revoke leave request', function(){
       return check_elements_func({
         driver : data.driver,
         elements_to_check : [{
-          selector : 'div[vpp="pending_for__'+email_employee+'"] .btn-warning',
+          selector : 'tr[vpp="pending_for__'+email_employee+'"] .btn-warning',
           value    : "Reject",
         }],
       });
@@ -229,7 +229,7 @@ describe('Revoke leave request', function(){
     .then(function(data){
       console.log('Approve request');
       return data.driver.findElement(By.css(
-        'div[vpp="pending_for__'+email_employee+'"] .btn-success'
+        'tr[vpp="pending_for__'+email_employee+'"] .btn-success'
       ))
       .then(function(el){ return el.click(); })
       .then(function(){
@@ -354,7 +354,7 @@ describe('Revoke leave request', function(){
       return check_elements_func({
         driver : data.driver,
         elements_to_check : [{
-          selector : 'div[vpp="pending_for__'+email_employee+'"] .btn-warning',
+          selector : 'tr[vpp="pending_for__'+email_employee+'"] .btn-warning',
           value    : "Reject",
         }],
       });
@@ -363,7 +363,7 @@ describe('Revoke leave request', function(){
     .then(function(data){
       console.log('Approve revoke request');
       return data.driver.findElement(By.css(
-        'div[vpp="pending_for__'+email_employee+'"] .btn-success'
+        'tr[vpp="pending_for__'+email_employee+'"] .btn-success'
       ))
       .then(function(el){ return el.click(); })
       .then(function(){

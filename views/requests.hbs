@@ -5,55 +5,59 @@
 
 {{> show_flash_messages }}
 
-<div class="container-requests">
-  <div class="main-row_header">
-    <div class="row">
-      <div class="col-md-12">Leave request to approve</div>
+<div class="row main-row_header">
+  <p class="col-md-12">Leave request to approve</p>
+</div>
+
+<div class="row">
+  {{# unless to_be_approved_leaves}}
+  <div class="col-md-12 text-muted">
+    There are no leave request to decide on.
+  </div>
+  {{else}}
+  <div class="col-md-12">
+    <p class="visible-xs-block"><em class="text-muted">Scroll table horizontally</em></p>
+    <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Employee</th>
+          <th>Department</th>
+          <th>Date of request</th>
+          <th>Leave dates</th>
+          <th>Type</th>
+          <th>Days</th>
+          <th colspan="2"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each to_be_approved_leaves }}
+        <tr vpp="pending_for__{{this.user.email}}">
+          <td>{{#with this.user}}{{this.full_name}}{{/with}}</td>
+          <td>{{this.user.department.name}}</td>
+          <td>{{as_date this.createdAt}}</td>
+          <td>From {{#with this.get_start_leave_day}}{{as_date this.date}}{{/with}} to {{#with this.get_end_leave_day}}{{as_date this.date}}{{/with}}</td>
+          <td>{{#if this.is_pended_revoke_leave}}REVOKE {{/if}}{{this.leave_type.name}}</td>
+          <td>{{ this.get_deducted_days_number }}</td>
+          <td>
+            <form action="/requests/reject/" method="POST">
+            <input class="btn btn-warning" type="submit" value="Reject">
+            <input type="hidden" value="{{this.id}}" name="request">
+            </form>
+          </td>
+          <td>
+            <form action="/requests/approve/" method="POST">
+            <input class="btn btn-success" type="submit" value="Approve">
+            <input type="hidden" value="{{this.id}}" name="request">
+            </form>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
     </div>
   </div>
-  <div class="content-rows">
-    {{# unless to_be_approved_leaves}}
-    <div class="row-request text-muted">
-      There are no leave request to decide on.
-    </div>
-    {{else}}
-    <div class="row-header">
-      <div class="row">
-        <div class="col-md-2">Employee</div>
-        <div class="col-md-1">Department</div>
-        <div class="col-md-2">Date of request</div>
-        <div class="col-md-3">Leave dates</div>
-        <div class="col-md-1">Type</div>
-        <div class="col-md-1">Days</div>
-      </div>
-    </div>
-    {{#each to_be_approved_leaves }}
-
-    <div class="row">&nbsp;</div>
-    <div class="row row-requests" vpp="pending_for__{{this.user.email}}">
-      <div class="col-md-2">{{#with this.user}}{{this.full_name}}{{/with}}</div>
-      <div class="col-md-1">{{this.user.department.name}}</div>
-      <div class="col-md-2">{{as_date this.createdAt}}</div>
-      <div class="col-md-3">From {{#with this.get_start_leave_day}}{{as_date this.date}}{{/with}} to {{#with this.get_end_leave_day}}{{as_date this.date}}{{/with}}</div>
-      <div class="col-md-1">{{#if this.is_pended_revoke_leave}}REVOKE {{/if}}{{this.leave_type.name}}</div>
-      <div class="col-md-1">{{ this.get_deducted_days_number }}</div>
-      <div class="col-md-1">
-        <form action="/requests/reject/" method="POST">
-        <input class="btn btn-warning" type="submit" value="Reject">
-        <input type="hidden" value="{{this.id}}" name="request">
-        </form>
-      </div>
-
-      <div class="col-md-1">
-        <form action="/requests/approve/" method="POST">
-        <input class="btn btn-success" type="submit" value="Approve">
-        <input type="hidden" value="{{this.id}}" name="request">
-        </form>
-      </div>
-    </div>
-    {{/each}}
-    {{/unless}}
-  </div>
+  {{/unless}}
 </div>
 
 {{> user_requests leaves=my_leaves }}
