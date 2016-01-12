@@ -28,11 +28,11 @@
             </ul>
           </li>
           {{/if}}
-          <div class="navbar-form navbar-left">
+          <li class="navbar-form navbar-left">
             <div class="form-group">
               <button type="button" class="btn btn-info" data-toggle="modal" data-target="#book_leave_modal" id="book_time_off_btn">New absence</button>
             </div>
-          </div>
+          </li>
         {{/if}}
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -47,7 +47,9 @@
               </ul>
             </li>
             {{/if}}
-            <li class="dropdown">
+            <li class="visible-xs-block"><a href="/requests/">My requests</a></li>
+            <li class="visible-xs-block"><a href="/logout/">Logout</a></li>
+            <li class="dropdown hidden-xs">
               <a id="me_menu" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Me <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="/requests/">My requests</a></li>
