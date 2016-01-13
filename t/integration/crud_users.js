@@ -30,7 +30,7 @@ var test                 = require('selenium-webdriver/testing'),
  *      should be successful
  *    * Go to ADMIN user page and try to remove it,
  *      should get an error that such user is an admin
- *    * Remove admon privileges from ADMIN user and try
+ *    * Remove admin privileges from ADMIN user and try
  *      to remove it again, should be successful
  *
  * */
@@ -372,6 +372,32 @@ describe('CRUD for users', function(){
             url    : application_host + 'users/edit/'+admin_user_id+'/',
             driver : data.driver,
         });
+    })
+    .then(function(data){
+      console.log('While we on user edit page lets chek that Adjustment works');
+      console.log('  Check that system prevent using non-halfs for adjustments');
+      return submit_form_func({
+        driver      : data.driver,
+        form_params : [{
+            selector : 'input[name="adjustment"]',
+            value    : '1.2',
+        }],
+        submit_button_selector : 'button#save_changes_btn',
+        message : /New allowance adjustment of user should be either whole integer number or with half/,
+      });
+    })
+    .then(function(data){
+      console.log('  If the adjustment is with half, it is OK');
+      return submit_form_func({
+        driver      : data.driver,
+        form_params : [{
+          selector : 'input[name="adjustment"]',
+          value    : '1.5',
+        }],
+        submit_button_selector : 'button#save_changes_btn',
+        should_be_successful : true,
+        message : /Details for .+ were updated/,
+      });
     })
     .then(function(data){
       console.log('Revoke admin rights');
