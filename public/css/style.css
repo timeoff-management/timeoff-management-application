@@ -251,3 +251,7 @@ div.feeds-holder .well {
   font-size: large;
 }
 
+/* Fix for issue with modal scrollings on mobiles */
+@media (max-width: 768px) {
+  body.modal-open { position: fixed; }
+}
