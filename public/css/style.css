@@ -83,6 +83,10 @@ div.month_container {
     text-align : center;
     z-index : 10;
 }
+td.current_day_cell {
+  background: #5C4282;
+  color : white;
+}
 td.weekend_cell {
     background : #F8F8F8;
 }
