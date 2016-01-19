@@ -124,6 +124,37 @@ describe('CRUD for leave types', function(){
         });
     })
 
+
+    // Check that it is possible to update Limits
+    .then(function(data){
+       return submit_form_func({
+        driver      : data.driver,
+        form_params : [{
+          selector : leave_type_edit_form_id+' input[name="limit__0"]',
+          value    : '0',
+        },{
+          selector : leave_type_edit_form_id+' input[name="limit__1"]',
+          value    : '5',
+        }],
+        submit_button_selector : leave_type_edit_form_id+' button[type="submit"]',
+        should_be_successful : true,
+        message : /Changes to leave types were saved/,
+      });
+    })
+
+    // Make sure that Limit cannot be negative
+    .then(function(data){
+       return submit_form_func({
+        driver      : data.driver,
+        form_params : [{
+          selector : leave_type_edit_form_id+' input[name="limit__0"]',
+          value    : '-1',
+        }],
+        submit_button_selector : leave_type_edit_form_id+' button[type="submit"]',
+        message : /New limit for .* should be positive number or 0/,
+      });
+    })
+
     // Add new leave type
     .then(function(data){
       return data.driver.findElement(By.css('#add_new_leave_type_btn'))
