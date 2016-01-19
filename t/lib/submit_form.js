@@ -26,6 +26,10 @@ module.exports = Promise.promisify( function(args, callback){
       // Indicates whether form submission is going to be successful
       should_be_successful = args.should_be_successful || false,
 
+      // Indicate if message to be searched through all messages shown,
+      // bu defaul it looks into firts message only
+      multi_line_message = args.multi_line_message || false,
+
       // CSS selecetor for form submition button
       submit_button_selector = args.submit_button_selector ||'button[type="submit"]';
 
@@ -84,14 +88,17 @@ module.exports = Promise.promisify( function(args, callback){
     }
 
     // Check that message is as expected
-    driver
-        .findElement( By.css('div.alert') )
-        .then(function(el){
-            return el.getText();
-        })
+    if (multi_line_message) {
+      driver.findElements( By.css('div.alert') )
+        .then(function(els){
 
-        .then(function(text){
-            expect(text).to.match(message);
+          return Promise.all(
+            _.map(els, function(el){ return el.getText(); })
+          )
+          .then(function(texts){
+            expect(
+              _.any(texts, function(text){ return message.test(text); })
+            ).to.be.equal(true);
 
             // "export" current driver
             result_callback(
@@ -100,6 +107,28 @@ module.exports = Promise.promisify( function(args, callback){
                     driver : driver,
                 }
             );
+          });
         });
+
+    } else {
+
+      driver
+        .findElement( By.css('div.alert') )
+        .then(function(el){
+            return el.getText();
+        })
+
+        .then(function(text){
+          expect(text).to.match(message);
+
+          // "export" current driver
+          result_callback(
+            null,
+            {
+              driver : driver,
+            }
+          );
+        });
+    }
 });
 
