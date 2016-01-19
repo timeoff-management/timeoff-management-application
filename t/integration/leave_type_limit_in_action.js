@@ -8,7 +8,6 @@ var test             = require('selenium-webdriver/testing'),
     _                = require('underscore'),
     Promise          = require("bluebird"),
     moment           = require('moment'),
-    until            = require('selenium-webdriver').until,
     login_user_func        = require('../lib/login_with_user'),
     register_new_user_func = require('../lib/register_new_user'),
     logout_user_func       = require('../lib/logout_user'),
@@ -173,8 +172,6 @@ describe('Leave type limits in actoion', function(){
           });
         });
     })
-
-
 
     .then(function(){ done(); });
 
