@@ -1,5 +1,4 @@
 
-
 'use strict';
 
 
@@ -13,7 +12,6 @@ var test                 = require('selenium-webdriver/testing'),
   login_user_func        = require('../lib/login_with_user'),
   open_page_func         = require('../lib/open_page'),
   submit_form_func       = require('../lib/submit_form'),
-  check_elements_func    = require('../lib/check_elements'),
   add_new_user_func      = require('../lib/add_new_user'),
   logout_user_func       = require('../lib/logout_user'),
   new_department_form_id = '#add_new_department_form',
@@ -56,10 +54,9 @@ var test                 = require('selenium-webdriver/testing'),
     })
     .then(function(data){
         return data.driver
-            .findElements(By.css( 'table.team-view-users tr' ))
+            .findElements(By.css( 'tr.teamview-user-list-row > td' ))
             .then(function(elements){
-                // We have 2 rows for users and 1 for header
-                expect(elements.length).to.be.equal( emails.length + 1 );
+                expect(elements.length).to.be.equal( emails.length );
 
                 return Promise.resolve(data);
             });

@@ -41,7 +41,7 @@
 
       </td></tr>
     {{# each users_and_leaves}}
-      <tr><td>{{#with this.user }}{{ this.full_name }}{{/with}}</td></tr>
+      <tr class="teamview-user-list-row"><td>{{# if ../logged_user.admin}} {{#with this.user }}<a href="/users/edit/{{this.id}}/">{{ this.full_name }}</a>{{/with}}  {{else}}{{#with this.user }}<span>{{ this.full_name }}</span>{{/with}}{{/if}}</td></tr>
     {{/each}}
     </table>
   </div>
