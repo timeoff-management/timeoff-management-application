@@ -47,55 +47,54 @@ var test                 = require('selenium-webdriver/testing'),
 
     test.it('Go...', function( done ){
 
-        var user_A, user_B;
+      var user_A, user_B;
 
-        // Performing registration process
-        register_new_user_func({
-            application_host : application_host,
-        })
+      // Performing registration process
+      register_new_user_func({
+        application_host : application_host,
+      })
 
+      // Create new user B
+      .then(function(data){
 
-        // Create new user B
-        .then(function(data){
+        user_A = data.email;
 
-            user_A = data.email;
-
-            return add_new_user_func({
-                application_host : application_host,
-                driver           : data.driver,
-            });
-        })
-        .then(function(data){
-            user_B = data.new_user_email;
-            return Promise.resolve(data);
-        })
-
-        // Make sure that both users are shown on Team view page
-        .then(function(data){ return check_teamview(data, [user_A, user_B], true) })
-
-        // Logout from A account
-        .then(function(data){
-            return logout_user_func({
-                application_host : application_host,
-                driver           : data.driver,
-            });
-        })
-        // Login as user B
-        .then(function(data){
-            return login_user_func({
-                application_host : application_host,
-                user_email       : user_B,
-                driver           : data.driver,
-            });
-        })
-
-        // and make sure that only user A and B are presented
-        .then(function(data){ return check_teamview(data, [user_A, user_B], false) })
-
-        // Close the browser
-        .then(function(data){
-            data.driver.quit().then(function(){ done(); });
+        return add_new_user_func({
+          application_host : application_host,
+          driver           : data.driver,
         });
+      })
+      .then(function(data){
+        user_B = data.new_user_email;
+        return Promise.resolve(data);
+      })
+
+      // Make sure that both users are shown on Team view page
+      .then(function(data){ return check_teamview(data, [user_A, user_B], true) })
+
+      // Logout from A account
+      .then(function(data){
+        return logout_user_func({
+          application_host : application_host,
+          driver           : data.driver,
+        });
+      })
+      // Login as user B
+      .then(function(data){
+        return login_user_func({
+          application_host : application_host,
+          user_email       : user_B,
+          driver           : data.driver,
+        });
+      })
+
+      // and make sure that only user A and B are presented
+      .then(function(data){ return check_teamview(data, [user_A, user_B], false) })
+
+      // Close the browser
+      .then(function(data){
+        data.driver.quit().then(function(){ done(); });
+      });
 
     });
 
