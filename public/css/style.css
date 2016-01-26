@@ -110,23 +110,7 @@ body > div.container {
   position: relative;
 }
 
-/* styling requests.hbs and users.hbs*/
-
-.row-header {
-  font-size: 15px;
-  padding-top: 10px;
-  border-radius: 2px;
-  border: 1px solid #e5e5e5;
-  background-color: #F8F8F8;
-  height: 40px;
-  padding-left: 5px;
-}
-
-.content-rows {
-  padding-bottom: 20px;
-}
-
-.main-row_header {
+.main-row_header {  /* TODO refactore */
   border: none;
   font-weight: normal;
   color: #5ba4e5;
@@ -138,68 +122,9 @@ body > div.container {
   padding-bottom: 30px;
 }
 
-.row-requests {
-  margin-right: -5px;
-  margin-left: -15px;
-  padding-left: 5px;
-}
-
-h1 {
-  text-align: left;
-  font:"Open Sans",sans-serif;
-  font-size: 2.8rem;
-  line-height: 30px;
-  color: #333333;
-  padding: 0px;
-}
-
-.p#departments {
-  font-size: 20px;
-}
-
-ul {
- list-style-type: none;
- text-align: left;
- padding-left: 5px;
-}
-
-p.specific {
-  font-size: 15px;
-  padding-top: 10px;
-  border-radius: 2px;
-  border: 1px solid #e5e5e5;
-  background-color: #F5F5F5;
-  height: 40px;
-  padding-left: 5px;
-}
-
-a {
-  color: #5ba4e5;
-}
-
-.content {
-  font-size: 15px;
-}
-
-.container-requests {
-  padding-bottom: 5px;
-}
-
-/* styling users in users.hsb*/
-
-.subtitle-row {
-  text-align: left;
-  font:"Open Sans",sans-serif;
-  font-size: 14px;
-  color: #333333;
-  padding: 0px;;
-}
-
-.row-users {
-  padding-left: 5px;
-}
 
 
+/* Feeds */
 .feed-calendar-big {
   font-size: 450px;
   color: #F8F8F8;
@@ -222,7 +147,7 @@ div.feeds-holder .well {
   background-color: #F5F5F5;
 }
 
-
+/* Calendars */
 .top-leave-type-statistics {
   text-align: center;
 }

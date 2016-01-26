@@ -20,7 +20,7 @@
           <th>Dates</th>
           <th>Approved by</th>
           <th></th>
-          <th>Status</th>
+          <th><span class="pull-right">Status</span></th>
         </tr>
       </thead>
 
@@ -42,7 +42,7 @@
           {{/unless}}
           {{/if}}
         </td>
-        <td>{{#if this.is_new_leave }}Pending{{else}}{{#if this.is_approved_leave}}Approved{{else}}Rejected{{/if}}{{/if}}</td>
+        <td><span class="pull-right">{{#if this.is_new_leave }}Pending{{else}}{{#if this.is_approved_leave}}Approved{{else}}Rejected{{/if}}{{/if}}</span></td>
       </tr>
 
       {{/ each }}

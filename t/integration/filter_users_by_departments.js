@@ -110,7 +110,7 @@ describe('Check filtering on "users" page', function(){
             return data.driver
                 // Departments are ordered by names so we are sure that first item
                 // after general link "All" is going to be "IT"
-                .findElement( By.css('ul.all-departments li:nth-child(2) a') )
+                .findElement( By.css('table.all-departments tbody tr:nth-child(2) a') )
                 .then(function(element){
                     element.click();
                     data.driver.wait(until.elementLocated(By.css('h1')), 1000);
@@ -136,7 +136,7 @@ describe('Check filtering on "users" page', function(){
             return data.driver
                 // Departments are ordered by names so we are sure that second item
                 // after general link "All" is going to be "Sales"
-                .findElement( By.css('ul.all-departments li:nth-child(3) a') )
+                .findElement( By.css('table.all-departments tbody tr:nth-child(3) a') )
                 .then(function(element){
                     element.click();
                     data.driver.wait(until.elementLocated(By.css('h1')), 1000);
@@ -159,7 +159,7 @@ describe('Check filtering on "users" page', function(){
         // Click on "All" filter and make sure that both users are presenyed
         .then(function(data){
             return data.driver
-                .findElement( By.css('ul.all-departments li:nth-child(1) a') )
+                .findElement( By.css('table.all-departments tbody tr:nth-child(1) a') )
                 .then(function(element){
                     element.click();
                     data.driver.wait(until.elementLocated(By.css('h1')), 1000);
