@@ -17,50 +17,47 @@
 <div class="row">&nbsp;</div>
 
 <div class="row">
-    <div class="content">
-        <div class="col-md-3">
-          <table class="table table-hover all-departments">
-            <thead>
-              <tr>
-                <th>Departments</th>
-              </tr>
-            </thead>
-            <tbody>
-                <tr><td><a href="/users/">All</a></td></tr>
-                {{#each company.departments}}
-                <tr><td><a href="/users/?department={{this.id}}">{{this.name}}</a></td></tr>
-                {{/each}}
-            </tbody>
-          </table>
-        </div>
-
-        <div class="col-md-9">
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Department</th>
-                <th>Is Administrator?</th>
-                <th>Days used</th>
-              </tr>
-            </thead>
-            <tbody>
-              {{# each users}}
-              <tr>
-                <td class="user-link-cell"><a href="/users/edit/{{this.id}}/">{{this.full_name}}</a></td>
-                <td class="user_department">{{this.department.name}}</td>
-                <td>{{# if this.admin }}Yes{{else}}{{/if}}</td>
-                <td>{{this.calculate_number_of_days_taken_from_allowence}}</td>
-              </tr>
-              {{/each}}
-            </tbody>
-          </table>
-        </div>
-
+  <div class="content">
+    <div class="col-md-3">
+      <table class="table table-hover all-departments">
+        <thead>
+          <tr>
+            <th>Departments</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><a href="/users/">All</a></td></tr>
+          {{#each company.departments}}
+          <tr><td><a href="/users/?department={{this.id}}">{{this.name}}</a></td></tr>
+          {{/each}}
+        </tbody>
+      </table>
     </div>
+
+    <div class="col-md-9">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Is Administrator?</th>
+            <th>Days used</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{# each users}}
+          <tr>
+            <td class="user-link-cell"><a href="/users/edit/{{this.id}}/">{{this.full_name}}</a></td>
+            <td class="user_department">{{this.department.name}}</td>
+            <td>{{# if this.admin }}Yes{{else}}{{/if}}</td>
+            <td>{{this.calculate_number_of_days_taken_from_allowence}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
-
-
 
 <div class="row">&nbsp;</div>
 

@@ -1,7 +1,6 @@
 body {
   font: 14px "Open Sans", Helvetica, Arial, sans-serif;
   color: #61686b;
-/*  color: #7d878a; */
 }
 
 a {
@@ -26,10 +25,9 @@ body {
 /* Custom page footer */
 
 .footer {
-    margin-top: 20px;
-    padding-top: 20px;
-    color: #777;
-    border-top: 1px solid #e5e5e5;
+  margin-top  : 20px;
+  padding-top : 20px;
+  border-top  : 1px solid #e5e5e5;
 }
 
 .header, .marketing, .footer {
@@ -38,13 +36,6 @@ body {
 }
 
 
-/* Remove the padding we set earlier */
-.header,
-.marketing,
-.footer {
-  padding-right: 0;
-  padding-left: 0;
-}
 /* Space out the masthead */
 .header {
   margin-bottom: 30px;
@@ -105,10 +96,6 @@ td.team-view-header {
     height: 43px;
 }
 
-body > div.container {
-  min-height: 700px;
-  position: relative;
-}
 
 .main-row_header {  /* TODO refactore */
   border: none;
