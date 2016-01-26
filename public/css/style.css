@@ -82,7 +82,7 @@ td.current_day_cell {
   color : #ffffff;
 }
 td.weekend_cell {
-    background: #E3EDF2;
+    background: #F5F7F8;
 }
 td.bank_holiday_cell {
     background : #31B0D5;
@@ -93,8 +93,8 @@ td.leave_cell {
     color : #ffffff;
 }
 td.leave_cell_pended {
-    background: #FFCBA4;
-    color: black;
+  background: #FFCBA4;
+  color: #61686b;
 }
 .modal-dialog {
     max-width : 450px;
@@ -142,7 +142,6 @@ div.feeds-holder {
 }
 
 div.feeds-holder .well {
-  background-color: #F5F5F5;
 }
 
 /* Calendars */
