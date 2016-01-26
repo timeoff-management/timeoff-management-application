@@ -164,7 +164,7 @@ describe('CRUD for users', function(){
       console.log('Check that system has 4 users (one currently logged in and 3 added)');
 
       return data.driver
-        .findElements(By.css( 'div.user_department' ))
+        .findElements(By.css( 'td.user_department' ))
         .then(function(elements){
           expect(elements.length).to.be.equal(4);
           return Promise.resolve(data);
@@ -197,7 +197,7 @@ describe('CRUD for users', function(){
       console.log('Check that system has 3 users (one currently logged in and 2 added)');
 
       return data.driver
-        .findElements(By.css( 'div.user_department' ))
+        .findElements(By.css( 'td.user_department' ))
         .then(function(elements){
           expect(elements.length).to.be.equal(3);
           return Promise.resolve(data);
@@ -239,7 +239,7 @@ describe('CRUD for users', function(){
       console.log('Check that system still has 3 users (one currently logged in and 2 added)');
 
       return data.driver
-        .findElements(By.css( 'div.user_department' ))
+        .findElements(By.css( 'td.user_department' ))
         .then(function(elements){
           expect(elements.length).to.be.equal(3);
           return Promise.resolve(data);
@@ -302,7 +302,7 @@ describe('CRUD for users', function(){
       console.log('Check that system does not have ex-MANAGER');
 
       return data.driver
-        .findElements(By.css( 'div.user_department' ))
+        .findElements(By.css( 'td.user_department' ))
         .then(function(elements){
           // 1 that registered company and other is ADMIN
           expect(elements.length).to.be.equal(2);
@@ -357,7 +357,7 @@ describe('CRUD for users', function(){
       console.log('Check that system still has 2 users (one currently logged in and ADMIN)');
 
       return data.driver
-        .findElements(By.css( 'div.user_department' ))
+        .findElements(By.css( 'td.user_department' ))
         .then(function(elements){
           expect(elements.length).to.be.equal(2);
           return Promise.resolve(data);
@@ -429,7 +429,7 @@ describe('CRUD for users', function(){
       console.log('Check that system has only one - currently logged in user');
 
       return data.driver
-        .findElements(By.css( 'div.user_department' ))
+        .findElements(By.css( 'td.user_department' ))
         .then(function(elements){
           expect(elements.length).to.be.equal(1);
           return Promise.resolve(data);

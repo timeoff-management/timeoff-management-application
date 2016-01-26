@@ -1,10 +1,11 @@
 body {
   font: 14px "Open Sans", Helvetica, Arial, sans-serif;
-  color:#333333;
+  color: #61686b;
+/*  color: #7d878a; */
 }
 
 a {
-  color: #00B7FF;
+  color: #5ba4e5;
 }
 
 /* Space out content a bit */
@@ -13,15 +14,6 @@ body {
   padding-bottom: 20px;
 }
 
-/* Custom page header */
-.header {
-  background-color: #eeeeee;
-  border-radius: 2px;
-
-  padding-right: 15px;
-  padding-left: 15px;
-  /*border-bottom: 1px solid #e5e5e5;*/
-}
 
 /* Make the masthead heading the same height as the navigation */
 .header h3 {
@@ -84,19 +76,19 @@ div.month_container {
     z-index : 10;
 }
 td.current_day_cell {
-  background: #5C4282;
-  color : white;
+  background: #e25440;
+  color : #ffffff;
 }
 td.weekend_cell {
-    background : #F8F8F8;
+    background: #E3EDF2;
 }
 td.bank_holiday_cell {
     background : #31B0D5;
-    color : white;
+    color : #ffffff;
 }
 td.leave_cell {
-    background : #449D44;
-    color : white;
+    background : #9fbb58;
+    color : #ffffff;
 }
 td.leave_cell_pended {
     background: #FFCBA4;
@@ -176,7 +168,7 @@ p.specific {
   padding-top: 10px;
   border-radius: 2px;
   border: 1px solid #e5e5e5;
-  background-color: #f8f8f8;
+  background-color: #F5F5F5;
   height: 40px;
   padding-left: 5px;
 }
@@ -227,7 +219,7 @@ div.feeds-holder {
 }
 
 div.feeds-holder .well {
-  background-color: #f8f8f8;
+  background-color: #F5F5F5;
 }
 
 

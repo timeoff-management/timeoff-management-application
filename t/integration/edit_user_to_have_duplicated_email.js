@@ -57,7 +57,7 @@ describe('CRUD for users', function(){
     // test user names are derived from epoch)
     .then(function(data){
       return data.driver
-        .findElements(By.css( 'div.row-users a' ))
+        .findElements(By.css( 'td.user-link-cell a' ))
         .then(function(elements){
           expect(elements.length).to.be.equal(2);
           // click on second user link

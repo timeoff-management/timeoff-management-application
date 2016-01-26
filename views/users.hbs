@@ -29,22 +29,26 @@
         </div>
 
         <div class="col-md-9">
-            <div class="row-header">
-                <div class="row">
-                    <div class="col-md-5">Name</div>
-                    <div class="col-md-4">Department</div>
-                    <div class="col-md-2 pull-right">Days used</div>
-                </div>
-            </div>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Is Administrator?</th>
+                <th><span>Days used</span></th>
+              </tr>
+            </thead>
+            <tbody>
     {{# each users}}
-                <div class="row">&nbsp;</div>
-                <div class="row row-users">
-                    <div class="col-md-5"><a href="/users/edit/{{this.id}}/">{{this.full_name}}</a></div>
-                    <div class="col-md-4 user_department">{{this.department.name}}</div>
-                    <div class="col-md-2 pull-right">{{this.calculate_number_of_days_taken_from_allowence}}</div>
-                </div>
+              <tr>
+                <td class="user-link-cell"><a href="/users/edit/{{this.id}}/">{{this.full_name}}</a></td>
+                <td class="user_department">{{this.department.name}}</td>
+                <td>{{# if this.admin }}Yes{{else}}{{/if}}</td>
+                <td><span>{{this.calculate_number_of_days_taken_from_allowence}}</span></td>
+              </tr>
     {{/each}}
-            </div>
+            </tbody>
+          </table>
         </div>
 
     </div>

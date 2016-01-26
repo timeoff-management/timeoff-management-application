@@ -98,7 +98,7 @@ describe('Check filtering on "users" page', function(){
         // Make sure that both users are shown
         .then(function(data){
             return data.driver
-                .findElements(By.css( 'div.user_department' ))
+                .findElements(By.css( 'td.user_department' ))
                 .then(function(elements){
                     expect(elements.length).to.be.equal(2);
                     return Promise.resolve(data);
@@ -119,7 +119,7 @@ describe('Check filtering on "users" page', function(){
         })
         .then(function(data){
             return data.driver
-                .findElements(By.css( 'div.user_department' ))
+                .findElements(By.css( 'td.user_department' ))
                 .then(function(elements){
                     expect(elements.length).to.be.equal(1);
                     return elements[0].getText();
@@ -136,7 +136,7 @@ describe('Check filtering on "users" page', function(){
             return data.driver
                 // Departments are ordered by names so we are sure that second item
                 // after general link "All" is going to be "Sales"
-                .findElement( By.css('ul.all-departments li:nth-child(3) a') ) 
+                .findElement( By.css('ul.all-departments li:nth-child(3) a') )
                 .then(function(element){
                     element.click();
                     data.driver.wait(until.elementLocated(By.css('h1')), 1000);
@@ -145,13 +145,13 @@ describe('Check filtering on "users" page', function(){
         })
         .then(function(data){
             return data.driver
-                .findElements(By.css( 'div.user_department' ))
+                .findElements(By.css( 'td.user_department' ))
                 .then(function(elements){
                     expect(elements.length).to.be.equal(1);
                     return elements[0].getText();
                 })
                 .then(function(text){
-                    expect(text).to.be.equal('Sales'); 
+                    expect(text).to.be.equal('Sales');
                     return Promise.resolve(data);
                 });
         })
@@ -159,7 +159,7 @@ describe('Check filtering on "users" page', function(){
         // Click on "All" filter and make sure that both users are presenyed
         .then(function(data){
             return data.driver
-                .findElement( By.css('ul.all-departments li:nth-child(1) a') ) 
+                .findElement( By.css('ul.all-departments li:nth-child(1) a') )
                 .then(function(element){
                     element.click();
                     data.driver.wait(until.elementLocated(By.css('h1')), 1000);
@@ -168,7 +168,7 @@ describe('Check filtering on "users" page', function(){
         })
         .then(function(data){
             return data.driver
-                .findElements(By.css( 'div.user_department' ))
+                .findElements(By.css( 'td.user_department' ))
                 .then(function(elements){
                     expect(elements.length).to.be.equal(2);
                     return Promise.resolve(data);
