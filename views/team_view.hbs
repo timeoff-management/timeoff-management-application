@@ -1,25 +1,29 @@
 
 {{> header }}
 
-<h1>{{logged_user.name}} {{logged_user.lastname}}'s team</h1>
+<h1>Team View</h1>
 
 <div class="row">
-    <div class="col-md-3 lead">Team view <a href="/calendar/feeds/"><span class="fa fa-rss"></span></a></div>
+    <div class="col-md-6 lead">{{logged_user.name}} {{logged_user.lastname}}'s team <a href="/calendar/feeds/" data-toggle="tooltip" data-placement="right" title="Export Team View to external calendars"><span class="fa fa-rss"></span></a></div>
 </div>
-
-<div class="row">&nbsp;</div>
 
 {{> show_flash_messages }}
 
-<nav>
-  <ul class="pager">
-    <li class="previous"><a href="/calendar/teamview/?{{> team_view_url_parameters base_date = prev_date }}"><span aria-hidden="true" class="fa fa-chevron-left"></span> {{#with prev_date}}{{ this.format 'MMM' }}{{/with}}</a></li>
-    <span><b>{{#with base_date}}{{ this.format 'MMMM, YYYY' }}{{/with}}</b></span>
+<div class="row">&nbsp;</div>
 
-    <li class="next"><a href="/calendar/teamview/?{{> team_view_url_parameters base_date = next_date }}">{{#with next_date}}{{this.format 'MMM'}}{{/with}} <span aria-hidden="true" class="fa fa-chevron-right"></span></a></li>
-  </ul>
+<nav>
+  <div class="row">
+    <div class="col-md-2">
+      <a class="btn btn-default" href="/calendar/teamview/?{{> team_view_url_parameters base_date = prev_date }}"><span aria-hidden="true" class="fa fa-chevron-left"></span> {{#with prev_date}}{{ this.format 'MMM' }}{{/with}}</a>
+    </div>
+
+    <div class="col-md-8 calendar-section-caption"><b>{{#with base_date}}{{ this.format 'MMMM, YYYY' }}{{/with}}</b></div>
+
+    <div class="col-md-2"><a class="btn btn-default pull-right" href="/calendar/teamview/?{{> team_view_url_parameters base_date = next_date }}">{{#with next_date}}{{this.format 'MMM'}}{{/with}} <span aria-hidden="true" class="fa fa-chevron-right"></span></a></div>
+  </div>
 </nav>
 
+<div class="row">&nbsp;</div>
 
 <div class="row clearfix">
   <div class="col-md-2">

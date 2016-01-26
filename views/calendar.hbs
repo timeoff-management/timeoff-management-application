@@ -1,18 +1,18 @@
 
 {{> header }}
 
-<h1>{{logged_user.name}} {{logged_user.lastname}}'s calendar</h1>
+<h1>Employee calendar</h1>
 
 <div class="row">
-    <div class="col-md-4 lead">Employee calendar for {{this_year}}</div>
-    <div class="col-md-4 col-md-offset-4">
+    <div class="col-md-6 lead">{{logged_user.name}} {{logged_user.lastname}}'s calendar for {{this_year}}</div>
+    <div class="col-md-6">
       <span class="pull-right">Allowance: {{#with current_user }}<span class="label label-info bigger">{{ this.calculate_number_of_days_available_in_allowence ../this_year }} out of {{this.calculate_total_number_of_days_n_allowence ../this_year}}{{/with}} days</span></span>
     </div>
 </div>
 
-<div class="row">&nbsp;</div>
-
 {{> show_flash_messages }}
+
+<div class="row">&nbsp;</div>
 
 <div class="row main-row_header hidden-xs">
   <div class="col-md-12">Statistics of used leaves</div>
@@ -66,19 +66,23 @@
   <div class="col-md-12">Calendar <a href="/calendar/feeds/"><span class="fa fa-rss"></span></a></div>
 </div>
 
-
-<div>
-  <ul class="pager">
+<div class="row">
+  <div class="col-md-2">
     {{#if show_full_year}}
-    <li class="previous"><a href="/calendar/?year={{previous_year}}{{#if show_full_year}}&show_full_year=1{{/if}}"><span aria-hidden="true" class="fa fa-chevron-left"></span> {{previous_year}} </a></li>
+    <a class="btn btn-default" href="/calendar/?year={{previous_year}}{{#if show_full_year}}&show_full_year=1{{/if}}"><span aria-hidden="true" class="fa fa-chevron-left"></span> {{previous_year}} </a>
     {{/if}}
-    <span><strong>{{#if show_full_year}}January - December {{current_year}}{{else}}Upcoming Months{{/if}}</strong></span>
-
+  </div>
+  <div class="col-md-8 calendar-section-caption">
+    <strong>{{#if show_full_year}}January - December {{current_year}}{{else}}Upcoming Months{{/if}}</strong>
+  </div>
+  <div class="col-md-2">
     {{#if show_full_year}}
-    <li class="next"><a href="/calendar/?year={{next_year}}{{#if show_full_year}}&show_full_year=1{{/if}}">{{next_year}} <span aria-hidden="true" class="fa fa-chevron-right"></span></a></li>
+    <a class="btn btn-default pull-right" href="/calendar/?year={{next_year}}{{#if show_full_year}}&show_full_year=1{{/if}}">{{next_year}} <span aria-hidden="true" class="fa fa-chevron-right"></span></a>
     {{/if}}
-  </ul>
+  </div>
 </div>
+
+<div class="row">&nbsp;</div>
 
 <div class="row clearfix">
 

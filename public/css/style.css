@@ -1,3 +1,14 @@
+
+/*
+ *  Before we introduce sass lets just list main colors and other properties here:
+ *
+ *    * Font color for main text is #61686b
+ *    * link color #5ba4e5
+ *    * borders color is #e5e5e5
+ *
+ *
+ * */
+
 body {
   font: 14px "Open Sans", Helvetica, Arial, sans-serif;
   color: #61686b;
@@ -149,6 +160,7 @@ div.feeds-holder .well {
 
 .calendar-section-caption {
   text-align: center;
+  font-size: 1.2em;
 }
 
 .setting-general-2nd-column {
