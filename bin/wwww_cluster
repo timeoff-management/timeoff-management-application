@@ -2,7 +2,6 @@
 
 var debug = require('debug')('vacation-tracker');
 var app   = require('../app');
-var model = require("../lib/model/db");
 
 var cluster = require('cluster');
 
@@ -20,7 +19,7 @@ if (cluster.isMaster ) {
 } else {
   app.set('port', process.env.PORT || 3000);
 
-  model.sequelize.sync().then(function () {
+  app.get('db_model').sequelize.sync().then(function () {
     var server = app.listen(app.get('port'), function() {
       console.log('Started to listen on port ' + server.address().port);
     });
