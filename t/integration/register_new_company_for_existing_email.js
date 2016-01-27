@@ -70,17 +70,17 @@ describe('Reuse email from existing acount when creating new company', function(
 
   });
 
-  after(function() {
-    if (this.currentTest.state == 'failed') {
-      driver.takeScreenshot().then(function(image, err) {
-        return require('fs').writeFile('out.png', image, 'base64', function(err) {
-            console.log(err);
-        });
-      })
-      .close();
-
-
-    }
-  });
+//  after(function() {
+//    if (this.currentTest.state == 'failed') {
+//      driver.takeScreenshot().then(function(image, err) {
+//        return require('fs').writeFile('out.png', image, 'base64', function(err) {
+//            console.log(err);
+//        });
+//      })
+//      .close();
+//
+//
+//    }
+//  });
 
 });
