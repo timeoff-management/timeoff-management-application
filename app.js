@@ -34,6 +34,10 @@ var handlebars = require('express-handlebars')
 app.engine('.hbs', handlebars.engine);
 app.set('view engine', '.hbs');
 
+// Add single reference to the model into application object
+// and reuse it whenever an access to DB is needed
+app.set('db_model', require('./lib/model/db'));
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
@@ -50,13 +54,12 @@ var passport = require('./lib/passport')();
 var session = require('express-session');
 // initalize sequelize with session store
 var SequelizeStore = require('connect-session-sequelize')(session.Store);
-var model = require('./lib/model/db');
 app.use(session({
     secret            : 'my dirty secret ;khjsdkjahsdajhasdam,nnsnad,',
     resave            : false,
     saveUninitialized : false,
     store: new SequelizeStore({
-      db: model.sequelize
+      db: app.get('db_model').sequelize
     }),
 }))
 app.use(passport.initialize());
