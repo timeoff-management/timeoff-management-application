@@ -1,114 +1,91 @@
-
-/*
- *  Before we introduce sass lets just list main colors and other properties here:
- *
- *    * Font color for main text is #61686b
- *    * link color #5ba4e5
- *    * borders color is #e5e5e5
- *
- *
- * */
-
 body {
   font: 14px "Open Sans", Helvetica, Arial, sans-serif;
-  color: #61686b;
-}
+  color: #61686b; }
 
 a {
-  color: #5ba4e5;
-}
+  color: #5ba4e5; }
 
 /* Space out content a bit */
 body {
   padding-top: 20px;
-  padding-bottom: 20px;
-}
-
+  padding-bottom: 20px; }
 
 /* Make the masthead heading the same height as the navigation */
 .header h3 {
   padding-bottom: 19px;
   margin-top: 0;
   margin-bottom: 0;
-  line-height: 40px;
-}
+  line-height: 40px; }
 
 /* Custom page footer */
-
 .footer {
-  margin-top  : 20px;
-  padding-top : 20px;
-  border-top  : 1px solid #e5e5e5;
-}
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e5e5; }
 
 .header, .marketing, .footer {
-    padding-right: 0;
-    padding-left: 0;
-}
-
+  padding-right: 0;
+  padding-left: 0; }
 
 /* Space out the masthead */
 .header {
-  margin-bottom: 30px;
-}
+  margin-bottom: 30px; }
 
 /* styling calendar*/
-
 div.month_container {
-    height : 250px;
-}
+  height: 250px; }
+
 .calendar_month {
-    width : 100%;
-}
+  width: 100%; }
+
 .calendar_month td {
-    width          : 15px !important;
-    min-width      : 15px !important;
-    max-width      : 15px !important;
-    position       : relative;
-    text-align     : center;
-    padding-top    : 5px;
-    padding-bottom : 5px;
-}
+  width: 15px !important;
+  min-width: 15px !important;
+  max-width: 15px !important;
+  position: relative;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px; }
+
 .calendar_month td span {
-    position   : relative;
-    left       : 10px;
-    top        : -1px;
-    display    : block;
-    text-align : center;
-    z-index : 10;
-}
+  position: relative;
+  left: 10px;
+  top: -1px;
+  display: block;
+  text-align: center;
+  z-index: 10; }
+
 td.current_day_cell {
   background: #e25440;
-  color : #ffffff;
-}
+  color: #ffffff; }
+
 td.weekend_cell {
-    background: #F5F7F8;
-}
+  background: #F5F7F8; }
+
 td.bank_holiday_cell {
-    background : #31B0D5;
-    color : #ffffff;
-}
+  background: #31B0D5;
+  color: #ffffff; }
+
 td.leave_cell {
-    background : #9fbb58;
-    color : #ffffff;
-}
+  background: #9fbb58;
+  color: #ffffff; }
+
 td.leave_cell_pended {
   background: #FFCBA4;
-  color: #61686b;
-}
+  color: #61686b; }
+
 .modal-dialog {
-    max-width : 450px;
-}
+  max-width: 450px; }
+
 .team-view-users td {
-    padding-top    : 5px;
-    padding-bottom : 5px;
-}
+  padding-top: 5px;
+  padding-bottom: 5px; }
+
 td.team-view-header {
-    height: 43px;
-}
+  height: 43px; }
 
-
-.main-row_header {  /* TODO refactore */
+.main-row_header {
+  /* TODO refactore */
   border: none;
   font-weight: normal;
   color: #5ba4e5;
@@ -117,60 +94,46 @@ td.team-view-header {
   line-height: 1.15em;
   text-align: left;
   padding-top: 30px;
-  padding-bottom: 30px;
-}
-
-
+  padding-bottom: 30px; }
 
 /* Feeds */
 .feed-calendar-big {
   font-size: 450px;
-  color: #F8F8F8;
-}
+  color: #F8F8F8; }
 
 .feed-calendar-big-picture-holder {
-  text-align: center;
-}
+  text-align: center; }
 
 p.description-paragraph {
   padding-top: 20px;
-  padding-left: 15px;
-}
+  padding-left: 15px; }
 
 div.feeds-holder {
-  margin-top: 20px;
-}
-
-div.feeds-holder .well {
-}
+  margin-top: 20px; }
 
 /* Calendars */
 .top-leave-type-statistics {
-  text-align: center;
-}
+  text-align: center; }
+
 .top-leave-type-statistics dt {
   font-size: 75px;
   color: #5E5E5E;
-  font-weight: 100;
-}
+  font-weight: 100; }
+
 .top-leave-type-statistics dd {
-  font-size: 20px;
-}
+  font-size: 20px; }
 
 .calendar-section-caption {
   text-align: center;
-  font-size: 1.2em;
-}
+  font-size: 1.2em; }
 
 .setting-general-2nd-column {
-  padding-left: 30px;
-}
+  padding-left: 30px; }
 
 .label.bigger {
-  font-size: large;
-}
+  font-size: large; }
 
 /* Fix for issue with modal scrollings on mobiles */
 @media (max-width: 768px) {
-  body.modal-open { position: fixed; }
-}
+  body.modal-open {
+    position: fixed; } }
