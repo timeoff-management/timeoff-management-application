@@ -1,3 +1,8 @@
+/*
+  SYNOPSIS:
+    (from witin project rooot directory)
+      sassc scss/main.scss public/css/style.css
+*/
 body {
   font: 14px "Open Sans", Helvetica, Arial, sans-serif;
   color: #61686b; }
@@ -117,11 +122,26 @@ div.feeds-holder {
 
 .top-leave-type-statistics dt {
   font-size: 75px;
-  color: #5E5E5E;
-  font-weight: 100; }
+  color: #61686b;
+  font-weight: 100;
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 20px; }
 
 .top-leave-type-statistics dd {
-  font-size: 20px; }
+  font-size: 16px; }
+
+.secondary-leave-type-statistics {
+  font-size: 16px; }
+
+.secondary-leave-type-statistics dt {
+  text-align: center;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #e5e5e5; }
+
+.secondary-leave-type-statistics dd {
+  padding-left: 10px;
+  padding-right: 10px; }
 
 .calendar-section-caption {
   text-align: center;

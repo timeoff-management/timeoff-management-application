@@ -8,8 +8,13 @@ $primary-font-color : #61686b;
 $border-color : #e5e5e5;
 $link-color : #5ba4e5;
 
+$font-size-primary : 14px;
+$font-size-bigger : 16px;
+
+// 5E5E5E
+
 body {
-  font: 14px "Open Sans", Helvetica, Arial, sans-serif;
+  font: $font-size-primary "Open Sans", Helvetica, Arial, sans-serif;
   color: $primary-font-color;
 }
 
@@ -140,8 +145,6 @@ div.feeds-holder {
   margin-top: 20px;
 }
 
-div.feeds-holder .well {
-}
 
 /* Calendars */
 .top-leave-type-statistics {
@@ -149,17 +152,36 @@ div.feeds-holder .well {
 }
 .top-leave-type-statistics dt {
   font-size: 75px;
-  color: #5E5E5E;
+  color: $primary-font-color;
   font-weight: 100;
+  border-bottom  : 1px solid $border-color;
+  margin-bottom : 20px;
 }
 .top-leave-type-statistics dd {
-  font-size: 20px;
+  font-size: $font-size-bigger;
 }
+
+
+.secondary-leave-type-statistics {
+  font-size : $font-size-bigger;
+}
+.secondary-leave-type-statistics dt {
+  text-align: center;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+  border-bottom  : 1px solid $border-color;
+}
+.secondary-leave-type-statistics dd {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 
 .calendar-section-caption {
   text-align: center;
   font-size: 1.2em;
 }
+
 
 .setting-general-2nd-column {
   padding-left: 30px;

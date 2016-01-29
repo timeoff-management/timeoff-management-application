@@ -6,7 +6,6 @@
 <div class="row">
     <div class="col-md-6 lead">{{logged_user.name}} {{logged_user.lastname}}'s calendar for {{this_year}}</div>
     <div class="col-md-6">
-      <span class="pull-right">Allowance: {{#with current_user }}<span class="label label-info bigger">{{ this.calculate_number_of_days_available_in_allowence ../this_year }} out of {{this.calculate_total_number_of_days_n_allowence ../this_year}}{{/with}} days</span></span>
     </div>
 </div>
 
@@ -15,51 +14,59 @@
 <div class="row">&nbsp;</div>
 
 <div class="row main-row_header hidden-xs">
-  <div class="col-md-12">Statistics of used leaves</div>
+  <div class="col-md-12">Statistics</div>
 </div>
 
 <div class="row hidden-xs">
 
-  {{# if leave_type_statistics }}
-
-    {{# each leave_type_statistics }}
-
-      <div class="col-md-3 top-leave-type-statistics">
-        <dl>
-          <dt>{{this.days_taken}}</dt>
-          <dd>{{this.leave_type.name}}</dd>
-        </dl>
-      </div>
-
-    {{/each}}
-
-  {{else}}
-
-    <div class="col-md-3 text-muted">
-      There are no leave requests yet.
-    </div>
-
-  {{/if}}
-
-
-</div>
-
-<div class="row hidden-xs">
-  {{# if leave_type_statistics }}
-  <div class="col-md-5"><hr class="hidden-xs"/></div>
-  <div class="col-md-2 calendar-section-caption">
-    {{# unless show_full_leave_type_statistic}}
-    <a class="btn btn-default" href="/calendar/?show_full_leave_type_statistic=1">More statistics <span class="fa fa-chevron-down"></span></a>
-    {{else}}
-    <a class="btn btn-default" href="/calendar/">Less statistics <span class="fa fa-chevron-up"></span></a>
-    {{/unless}}
+  <div class="col-md-3 top-leave-type-statistics">
+    <dl>
+      {{#with current_user }}
+      <dt>{{ this.calculate_number_of_days_available_in_allowence ../this_year }}</dt>
+      <dd>Days remaining</dd>
+      <dd>out of {{this.calculate_total_number_of_days_n_allowence ../this_year}} in Allowance</dd>
+      {{/with}}
+    </dl>
   </div>
-  <div class="col-md-5"><hr class="hidden-xs"/></div>
-  {{else}}
-    <div class="col-md-12"><hr class="hidden-xs"/></div>
-  {{/if}}
+
+
+  <div class="col-md-3 secondary-leave-type-statistics">
+    <dl>
+      <dt>Used so far</dt>
+
+      {{# if leave_type_statistics }}
+        {{# each leave_type_statistics }}
+          <dd><em>{{this.leave_type.name}}:</em> <span class="pull-right">{{this.days_taken}}{{# if this.limit}} out of {{this.limit}}{{/if}}</span></dd>
+        {{/each}}
+      {{else}}
+
+        <dd class="text-muted">No approved requests so far.</dd>
+      {{/if}}
+    </dl>
+  </div>
+
+  <div class="col-md-3 secondary-leave-type-statistics">
+    <dl>
+      <dt>Available types</dt>
+        {{~# each full_leave_type_statistics ~}}
+          <dd>{{this.leave_type.name ~}}{{~# if this.limit }} (up to {{this.limit}} days){{~/if}} </dd>
+        {{~/ each}}
+    </dl>
+  </div>
+
+  <div class="col-md-3 secondary-leave-type-statistics">
+    <dl>
+      <dt>Details</dt>
+      <dd><em>Superviser:</em><span class="pull-right"><a href="mailto:{{superviser.email}}">{{# with superviser }}{{ this.full_name }}{{/with}}</a></span></dd>
+      <dd><em>Department:</em> <span class="pull-right"><a href="/calendar/teamview/?department={{ current_user.department.id }}">{{ current_user.department.name }}</a></span></dd>
+      <dd><em>Allowance in {{this_year}}:</em><span class="pull-right"> {{#with current_user}}{{ this.calculate_total_number_of_days_n_allowence ../this_year }}{{/with}} days</span><dd>
+    </dl>
+  </div>
+
 </div>
 
+<div class="row">
+</div>
 
 
 <div class="row main-row_header">
@@ -73,7 +80,17 @@
     {{/if}}
   </div>
   <div class="col-md-8 calendar-section-caption">
+
     <strong>{{#if show_full_year}}January - December {{current_year}}{{else}}Upcoming Months{{/if}}</strong>
+    &nbsp;
+
+    {{# unless show_full_year}}
+    <a class="btn btn-default" href="/calendar/?show_full_year=1">More... &nbsp;<span class="fa fa-plus"></span></a>
+    {{else}}
+    <a class="btn btn-default" href="/calendar/">Less... &nbsp;<span class="fa fa-minus"></span></a>
+    {{/unless}}
+
+
   </div>
   <div class="col-md-2">
     {{#if show_full_year}}
@@ -116,20 +133,6 @@
     </div>
     {{/each}}
 
-</div>
-
-
-
-<div class="row">
-  <div class="col-md-5"><hr class="hidden-xs"/></div>
-  <div class="col-md-2 calendar-section-caption">
-    {{# unless show_full_year}}
-    <a class="btn btn-default" href="/calendar/?show_full_year=1">Show full {{current_year}} year <span class="fa fa-chevron-down"></span></a>
-    {{else}}
-    <a class="btn btn-default" href="/calendar/">Show nearest future <span class="fa fa-chevron-up"></span></a>
-    {{/unless}}
-  </div>
-  <div class="col-md-5"><hr class="hidden-xs"/></div>
 </div>
 
 
