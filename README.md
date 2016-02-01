@@ -47,6 +47,14 @@ Admin user can download the entire company data as a single JSON file.
 
 And then restore the account at different installation by simply uploading the JSON.
 
+**Works on mibile phones**
+
+The most used customer paths are mobile friendly:
+
+* employee is able to request new leave from mobile device
+
+* supervisor is able to record decision from the mobile as well.
+
 **Lots of other little things that would make life easier**
 
 Manually adjust employees allowance
