@@ -15,6 +15,8 @@ Calendar view, Team view, or Just plain list.
 
 Add custom absence types: Sickness, Maternity, Working from home, Birthday etc. Define if each uses vacation allowance.
 
+Optionally limit the amount of days employee can take for each Leave type. E.g. no more than 10 days of Sick days per year.
+
 Setup public holidays as well as company specific days off.
 
 Group employees by departments: bring your organisation structure into, set the supervisor for every department.
@@ -22,6 +24,8 @@ Group employees by departments: bring your organisation structure into, set the 
 **3d Parties Calendar Integration**
 
 Broadcast employees whereabout into external calendar providers: MS Outlook, Google Calendar, and iCal.
+
+Create calendar feeds for individual, departments or entire company.
 
 **Three Steps Workflow**
 
@@ -31,9 +35,17 @@ Supervisor get email notification and decide about upcoming employee absence.
 
 Absence is accounted. Peers are informed via team view or calendar feeds.
 
-**Accesss control** 
+**Accesss control**
 
 There are following types of users: employees, supervisors, and administrators.
+
+**Seamless data migration betweeen different installations**
+
+User friendly and simple work-flow for data migration between different TimeOff.Management installations.
+
+Admin user can download the entire company data as a single JSON file.
+
+And then restore the account at different installation by simply uploading the JSON.
 
 **Lots of other little things that would make life easier**
 
@@ -46,6 +58,7 @@ Users of three types: admins, supervisors, and employees.
 
 Email notification to all involved parties.
 
+Optionally allow employees to see the time off information of entire company regardless the department structure.
 
 ## Installation
 
@@ -53,13 +66,13 @@ Email notification to all involved parties.
 
 Visit http://timeoff.management/
 
-Create company account and use cloud based version (BETA).
+Create company account and use cloud based version.
 
 ### Self hosting
 
-Install TimeOff Manager within your infrastructure:
+Install TimeOff.Management application within your infrastructure:
 
-(make sure you have Node.js installed)
+(make sure you have Node.js and SQLite installed)
 
 ```bash
 git clone git@github.com:timeoff-management/application.git
@@ -71,10 +84,16 @@ Open http://localhost:3000/ in your browser.
 
 ## Run tests
 
+We have quite a wide test coverage, to make sure that the main user paths work as expected.
+
+Please run them frequently while developing the project.
+
 ```bash
 node node_modules/mocha/bin/mocha --recursive t/*
 ```
 
+Any bugfixes or enhancements should have good test coverage to get them into "master" branch.
+
 ## Feedback
 
-Please report any issues or feedback to <a href="https://twitter.com/FreeTimeOffApp">twitter</a>.
+Please report any issues or feedback to <a href="https://twitter.com/FreeTimeOffApp">twitter</a> or Email: pavlo at timeoff.management
