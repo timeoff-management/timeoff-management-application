@@ -1,5 +1,5 @@
 
-# TimeOff manager
+# TimeOff.Management
 
 Web application for managing employees absence.
 
