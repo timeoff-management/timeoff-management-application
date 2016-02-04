@@ -20,13 +20,7 @@
           <li><a href="/calendar/">Calendar</a></li>
           <li class="hidden-xs"><a href="/calendar/teamview/">Team View</a></li>
           {{# if logged_user.admin }}
-          <li class="dropdown hidden-xs">
-            <a id="supervision_menu" href="#" data-toggle="dropdown" role="button" aria-expanded="false">Supervision <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-              <li class="disabled"><a href="#/requested-leaves/">Incoming Leave Requests</a></li>
-              <li><a href="/users/">Employees</a></li>
-            </ul>
-          </li>
+            <li class="hidden-xs"><a href="/users/">Employees</a></li>
           {{/if}}
           <li class="navbar-form navbar-left">
             <div class="form-group">

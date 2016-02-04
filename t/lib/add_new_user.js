@@ -32,11 +32,7 @@ module.exports = Promise.promisify(function(args, callback){
   // Open front page
   driver.get( application_host );
 
-  driver.findElement( By.css('a#supervision_menu') )
-    .then(function(el){ return el.click(); })
-    .then(function(){
-      return driver.findElement( By.css('a[href="/users/"]') );
-    })
+  driver.findElement( By.css('a[href="/users/"]') )
     .then(function(el){
       return el.getText();
     })
