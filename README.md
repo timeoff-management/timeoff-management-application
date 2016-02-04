@@ -5,9 +5,6 @@ Web application for managing employees absence.
 
 <a href="https://travis-ci.org/timeoff-management/application"><img align="right" src="https://travis-ci.org/timeoff-management/application.svg?branch=master" alt="Build status" /></a>
 
-
-![TimeOff.Management Screenshot](https://raw.githubusercontent.com/timeoff-management/application/master/public/img/readme_screenshot.png)
-
 ## Features
 
 **Multiple views of staff absence**
@@ -70,6 +67,10 @@ Users of three types: admins, supervisors, and employees.
 Email notification to all involved parties.
 
 Optionally allow employees to see the time off information of entire company regardless the department structure.
+
+## Screenshots
+
+![TimeOff.Management Screenshot](https://raw.githubusercontent.com/timeoff-management/application/master/public/img/readme_screenshot.png)
 
 ## Installation
 
