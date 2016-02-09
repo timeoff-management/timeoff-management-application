@@ -90,7 +90,7 @@ Install TimeOff.Management application within your infrastructure:
 git clone git@github.com:timeoff-management/application.git
 cd timeoff-management
 npm install
-node bin/wwww
+npm start
 ```
 Open http://localhost:3000/ in your browser.
 
