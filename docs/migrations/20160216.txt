@@ -1,0 +1,3 @@
+Normalize all emails to be lowcase.
+
+UPDATE users SET email = lower(email);
