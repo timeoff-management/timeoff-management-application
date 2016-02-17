@@ -1,125 +1,70 @@
 
 'use strict';
 
-var test                 = require('selenium-webdriver/testing'),
-  By                     = require('selenium-webdriver').By,
-  expect                 = require('chai').expect,
-  _                      = require('underscore'),
-  moment                 = require('moment'),
-  Promise                = require("bluebird"),
-  until                  = require('selenium-webdriver').until,
-  register_new_user_func = require('../lib/register_new_user'),
-  login_user_func        = require('../lib/login_with_user'),
-  open_page_func         = require('../lib/open_page'),
-  submit_form_func       = require('../lib/submit_form'),
-  add_new_user_func      = require('../lib/add_new_user'),
-  logout_user_func       = require('../lib/logout_user'),
-  check_booking_func     = require('../lib/check_booking_on_calendar'),
-  check_elements_func    = require('../lib/check_elements'),
-  application_host       = 'http://localhost:3000/';
+var test             = require('selenium-webdriver/testing'),
+    application_host = 'http://localhost:3000/',
+    By               = require('selenium-webdriver').By,
+    expect           = require('chai').expect,
+    _                = require('underscore'),
+    Promise          = require("bluebird"),
+    moment           = require('moment'),
+    until            = require('selenium-webdriver').until,
+    login_user_func        = require('../lib/login_with_user'),
+    register_new_user_func = require('../lib/register_new_user'),
+    logout_user_func       = require('../lib/logout_user'),
+    open_page_func         = require('../lib/open_page'),
+    submit_form_func       = require('../lib/submit_form'),
+    check_elements_func    = require('../lib/check_elements'),
+    check_booking_func     = require('../lib/check_booking_on_calendar'),
+    add_new_user_func      = require('../lib/add_new_user');
+
 
 /*
  *  Scenario to check:
- *    * Add MANAGER_A
- *    * Add MANAGER_B
  *    * Add EMPLOYEE
- *    * Make sure department has MANAGER_A as a supervisor
  *    * Login as a EMPLOYEE
  *    * Book a leave request
- *    * Login as MANAGER_A and approve leave request
- *    * Login as ADMIN and change supervisor to be MANAGER_B
- *    * Login as an EMPLOYEE and revoke leave request
- *
- *    * Login as a MANAGER_B and make sure that there is
- *      a revoke request to process
+ *    * Login as MANAGER and approve leave request
+ *    * Revoke recently added leave request
  *    * Approve revoke request and make sure that EMPLOYEE
  *    does not have leave any more
  *
  * */
 
-describe('Revoke leave request', function(){
+describe('Revoke leave request by Admin', function(){
 
   this.timeout(90000);
 
   test.it('Go...', function(done){
     var email_admin   , admin_user_id,
-        email_manager_a, manager_a_user_id,
-        email_manager_b, manager_b_user_id,
         email_employee, employee_user_id;
 
     // Create new company
     return register_new_user_func({
-        application_host : application_host,
-    })
-
-    // Create MANAGER_A-to-be user
-    .then(function(data){
-        email_admin = data.email;
-        console.log('  Create MANAGER_A-to-be user');
-        return add_new_user_func({
-            application_host : application_host,
-            driver           : data.driver,
-        });
-    })
-    // Create MANAGER_A-to-be user
-    .then(function(data){
-
-        email_manager_a = data.new_user_email;
-
-        console.log('  Create MANAGER_B-to-be user');
-        return add_new_user_func({
-            application_host : application_host,
-            driver           : data.driver,
-        });
+      application_host : application_host,
     })
 
     // Create EMPLOYEE-to-be user
     .then(function(data){
+      email_admin = data.email;
 
-        email_manager_b = data.new_user_email;
-
-        console.log('  Create EMPLOYEE-to-be user');
-        return add_new_user_func({
-            application_host : application_host,
-            driver           : data.driver,
-        });
+      console.log('  Create EMPLOYEE-to-be user');
+      return add_new_user_func({
+        application_host : application_host,
+        driver           : data.driver,
+      });
     })
 
-
-    // Open department management page
-    .then(function(data){
-        email_employee = data.new_user_email;
-        console.log('    Update department to be supervised by MANAGER_A');
-        return open_page_func({
-            url    : application_host + 'settings/departments/',
-            driver : data.driver,
-        });
-    })
-    .then(function(data){
-         return submit_form_func({
-            driver      : data.driver,
-            form_params : [{
-                selector : 'input[name="name__0"]',
-                // Just to make sure it is always first in the lists
-                value : 'AAAAA',
-            },{
-                selector        : 'select[name="allowence__0"]',
-                option_selector : 'option[value="15"]',
-                value : '15',
-            },{
-                selector        : 'select[name="boss_id__0"]',
-                option_selector : 'select[name="boss_id__0"] option:nth-child(2)',
-            }],
-            message : /Changes to departments were saved/,
-        });
-    })
     // Logout from admin account
     .then(function(data){
+      email_employee = data.new_user_email;
+
       return logout_user_func({
         application_host : application_host,
         driver           : data.driver,
       });
     })
+
     // Login as EMPLOYEE user
     .then(function(data){
       console.log('Login as an EMPLOYEE');
@@ -198,12 +143,12 @@ describe('Revoke leave request', function(){
         driver           : data.driver,
       });
     })
-    // Login as MANAGER_A user
+    // Login as an ADMIN user
     .then(function(data){
-      console.log('Login as a MANAGER_A');
+      console.log('Login as an ADMIN');
       return login_user_func({
         application_host : application_host,
-        user_email       : email_manager_a,
+        user_email       : email_admin,
         driver           : data.driver,
       });
     })
@@ -239,77 +184,40 @@ describe('Revoke leave request', function(){
       .then(function(){ return Promise.resolve(data); });
     })
 
-    // Logout from MANAGER_A account
-    .then(function(data){
-      console.log('Logout from MANAGER_A account');
-      return logout_user_func({
-        application_host : application_host,
-        driver           : data.driver,
-      });
-    })
-    // Login as ADMIN user
-    .then(function(data){
-      console.log('Login as ADMIN');
-      return login_user_func({
-        application_host : application_host,
-        user_email       : email_admin,
-        driver           : data.driver,
-      });
-    })
 
-    // Open department management page
+    // Obtain employee ID from department managment page
     .then(function(data){
-      console.log('    Update department to be supervised by MANAGER_B');
+      console.log('    Fetch employee user ID');
       return open_page_func({
         url    : application_host + 'settings/departments/',
         driver : data.driver,
       });
     })
     .then(function(data){
-       return submit_form_func({
-        driver      : data.driver,
-        form_params : [{
-          selector : 'input[name="name__0"]',
-          // Just to make sure it is always first in the lists
-          value : 'AAAAA',
-        },{
-          selector        : 'select[name="allowence__0"]',
-          option_selector : 'option[value="15"]',
-          value : '15',
-        },{
-          selector        : 'select[name="boss_id__0"]',
-          option_selector : 'select[name="boss_id__0"] option:nth-child(3)',
-        }],
-        message : /Changes to departments were saved/,
-      });
-    })
-    // Logout from admin account
-    .then(function(data){
-      console.log('Logout from ADMIN account');
-      return logout_user_func({
-        application_host : application_host,
-        driver           : data.driver,
-      });
-    })
-    // Login as EMPLOYEE user
-    .then(function(data){
-      console.log('Login as an EMPLOYEE');
-      return login_user_func({
-        application_host : application_host,
-        user_email       : email_employee,
-        driver           : data.driver,
+      return data.driver.findElement(
+        By.css('select[name="boss_id__new"] option:nth-child(2)')
+      )
+      .then(function(el){
+        return el.getAttribute('value');
+      })
+      .then(function(value){
+        employee_user_id = value;
+
+        expect( employee_user_id ).to.match(/^\d+$/);
+        return Promise.resolve(data);
       });
     })
 
 
-    // Open requests page
+    // Open user editing page for Employee
     .then(function(data){
-      console.log('Open requests page');
       return open_page_func({
-        url    : application_host + 'requests/',
+        url    : application_host + 'users/edit/'+employee_user_id+'/',
         driver : data.driver,
       });
     })
+
+    // And revoke her time off
     .then(function(data){
       console.log('Revoke request');
       return data.driver.findElement(By.css(
@@ -323,23 +231,6 @@ describe('Revoke leave request', function(){
       .then(function(){ return Promise.resolve(data); });
     })
 
-    // Logout from EMPLOYEE account
-    .then(function(data){
-      console.log('Logout from EMPLOYEE account');
-      return logout_user_func({
-        application_host : application_host,
-        driver           : data.driver,
-      });
-    })
-    // Login as MANAGER_B user
-    .then(function(data){
-      console.log('Login as MANAGER_B');
-      return login_user_func({
-        application_host : application_host,
-        user_email       : email_manager_b,
-        driver           : data.driver,
-      });
-    })
     // Open requests page
     .then(function(data){
       return open_page_func({
@@ -360,6 +251,7 @@ describe('Revoke leave request', function(){
     })
     // Approve revoke request
     .then(function(data){
+
       console.log('Approve revoke request');
       return data.driver.findElement(By.css(
         'tr[vpp="pending_for__'+email_employee+'"] .btn-success'
