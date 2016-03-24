@@ -1,0 +1,5 @@
+
+
+ALTER TABLE Companies ADD COLUMN ldap_auth_enabled TINYINT(1) NOT NULL DEFAULT 0;
+
+ALTER TABLE Companies ADD COLUMN ldap_auth_config VARCHAR(255);
