@@ -1,0 +1,11 @@
+
+There is a new feature of LDAP authentication.
+
+The setting for LDAP is configured per company, hence two more fields in Company table:
+ldap_auth_config - to store configuration JSON
+ldap_auth_enabled - flag indicating if the LDAP is enabled
+
+
+ALTER TABLE Companies ADD COLUMN ldap_auth_enabled TINYINT(1) NOT NULL DEFAULT 0;
+
+ALTER TABLE Companies ADD COLUMN ldap_auth_config VARCHAR(255);
