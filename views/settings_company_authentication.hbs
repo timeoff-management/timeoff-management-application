@@ -43,7 +43,7 @@
             type="checkbox"
             {{# if company.ldap_auth_enabled }} checked="checked" {{/if}}
             name="ldap_auth_enabled"
-           />
+           />&nbsp;
            Enable LDAP authentication
           </label>
         </div>
@@ -69,8 +69,9 @@
       <div class="form-group">
         <label for="ldap_password" class="col-md-3 control-label">Bind Credentials</label>
         <div class="col-md-5">
-          <input class="form-control" id="ldap_password" placeholder="" name="bindcredentials" value="{{ ldap_config.bindcredentials }}" type="password">
+          <input class="form-control" id="ldap_password" placeholder="" name="bindcredentials" value="{{ ldap_config.bindcredentials }}" type="password" aria-describedby="ldap_password_help">
         </div>
+        <span id="ldap_password_help" class="help-block">Password used for dealing with LDAP queries</span>
       </div>
 
       <div class="form-group">
