@@ -65,14 +65,17 @@
   <div class="form-group">
     <label for="password_inp" class="col-md-2 control-label">Password</label>
     <div class="col-md-6 date">
-      <input class="form-control" id="password_inp" type="password" name="password" value="">
+      <input class="form-control" id="password_inp" type="password" name="password" value="" aria-describedby="password_inp_help" {{# if company.ldap_auth_enabled}}readonly{{/if}}>
     </div>
+    {{# if company.ldap_auth_enabled }}
+      <span id="password_inp_help" class="help-block"><a href="/settings/company/authentication/">LDAP authentication</a> is enabled, so that password does not matter.</span>
+    {{/ if}}
   </div>
 
   <div class="form-group">
     <label for="password_inp" class="col-md-2 control-label">Confirm password</label>
     <div class="col-md-6 date">
-      <input class="form-control" id="confirm_password_inp" type="password" name="password_confirm" value="">
+      <input class="form-control" id="confirm_password_inp" type="password" name="password_confirm" value="" {{# if company.ldap_auth_enabled}}readonly{{/if}}>
     </div>
   </div>
 
