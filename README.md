@@ -39,6 +39,8 @@ Absence is accounted. Peers are informed via team view or calendar feeds.
 
 There are following types of users: employees, supervisors, and administrators.
 
+Optional LDAP authentification: configure applicationto use your LDAP server for user authentication.
+
 **Seamless data migration betweeen different installations**
 
 User friendly and simple work-flow for data migration between different TimeOff.Management installations.
