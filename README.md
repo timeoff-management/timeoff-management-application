@@ -49,7 +49,7 @@ Admin user can download the entire company data as a single JSON file.
 
 And then restore the account at different installation by simply uploading the JSON.
 
-**Works on mibile phones**
+**Works on mobile phones**
 
 The most used customer paths are mobile friendly:
 
