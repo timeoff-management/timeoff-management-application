@@ -11,6 +11,7 @@ var test                 = require('selenium-webdriver/testing'),
   open_page_func         = require('../lib/open_page'),
   add_new_user_func      = require('../lib/add_new_user'),
   logout_user_func       = require('../lib/logout_user'),
+  check_teamview_func    = require('../lib/teamview_check_user'),
   application_host       = 'http://localhost:3000/';
 
 /*
@@ -23,22 +24,6 @@ var test                 = require('selenium-webdriver/testing'),
  *    * Open Team view and make sure that it shows both users as plain text
  *
  * */
-
-  function check_teamview(data, emails, is_link){
-    return open_page_func({
-      url    : application_host + 'calendar/teamview/',
-      driver : data.driver,
-    })
-    .then(function(data){
-      return data.driver
-        .findElements(By.css( 'tr.teamview-user-list-row > td > ' + (is_link ? 'a' : 'span') ))
-        .then(function(elements){
-          expect(elements.length).to.be.equal( emails.length );
-          return Promise.resolve(data);
-        });
-    });
-  };
-
 
   describe('Cross linking on Teamview page', function(){
     var driver;
@@ -70,7 +55,13 @@ var test                 = require('selenium-webdriver/testing'),
       })
 
       // Make sure that both users are shown on Team view page
-      .then(function(data){ return check_teamview(data, [user_A, user_B], true) })
+      .then(function(data){
+        return check_teamview_func({
+          driver: data.driver,
+          emails: [user_A, user_B],
+          is_link : true
+        });
+      })
 
       // Logout from A account
       .then(function(data){
@@ -89,7 +80,13 @@ var test                 = require('selenium-webdriver/testing'),
       })
 
       // and make sure that only user A and B are presented
-      .then(function(data){ return check_teamview(data, [user_A, user_B], false) })
+      .then(function(data){
+        return check_teamview_func({
+          driver: data.driver,
+          emails: [user_A, user_B],
+          is_link: false
+        });
+      })
 
       // Close the browser
       .then(function(data){
