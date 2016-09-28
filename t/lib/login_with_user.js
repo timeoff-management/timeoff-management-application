@@ -15,6 +15,7 @@ module.exports = Promise.promisify(function(args, callback){
   var application_host = args.application_host,
       user_email       = args.user_email,
       result_callback  = callback,
+      should_fail      = args.should_fail || false,
 
   // Create new instance of driver
   driver = args.driver || new webdriver.Builder()
@@ -84,24 +85,39 @@ module.exports = Promise.promisify(function(args, callback){
       el.click();
     });
 
-  driver.wait(until.elementLocated(By.css('div.alert-success')), 1000);
+  if (should_fail) {
 
-  // Make sure login was successful, check that we landed on user account page
-  driver.getTitle()
-    .then(function(title){
-        expect(title).to.be.equal('Calendar');
-    });
+    driver
+      .findElement(
+        By.css('div.alert-danger')
+      )
+      .then(function(el){
+        return el.getText();
+      })
+      .then(function(text){
+        expect(text).to.match(/Incorrect credentials/);
+      });
 
-  driver
-    .findElement(
-      By.css('div.alert-success')
-    )
-    .then(function(el){
-      return el.getText();
-    })
-    .then(function(text){
-      expect(text).to.match(/Welcome back/);
-    });
+  } else {
+    driver.wait(until.elementLocated(By.css('div.alert-success')), 1000);
+
+    // Make sure login was successful, check that we landed on user account page
+    driver.getTitle()
+      .then(function(title){
+          expect(title).to.be.equal('Calendar');
+      });
+
+    driver
+      .findElement(
+        By.css('div.alert-success')
+      )
+      .then(function(el){
+        return el.getText();
+      })
+      .then(function(text){
+        expect(text).to.match(/Welcome back/);
+      });
+  }
 
 
   // Go back to the front page and pass data to the caller
