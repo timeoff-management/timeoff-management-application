@@ -1,6 +1,6 @@
 
 /*
- * Exporst function that checks if given emails of users are shown excusively
+ * Exporst function that checks if given emails of users are shown
  * on the Teamview page. And if so how they are rendered: as text or link
  *
  * */
@@ -40,12 +40,12 @@ module.exports = bluebird.promisify( function(args, callback){
       });
   })
 
-  .then(function(){
+  .then(function(data){
     // "export" current driver
     result_callback(
       null,
       {
-        driver : driver,
+        driver : data.driver,
       }
     );
   });
