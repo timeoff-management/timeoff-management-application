@@ -19,92 +19,109 @@
 <form class="form-horizontal" method="POST" action="/users/edit/{{employee.id}}/">
 
   <div class="form-group">
-    <label for="name_inp" class="col-md-2 control-label">First Name</label>
-    <div class="col-md-6">
+    <label for="name_inp" class="col-md-3 control-label">First Name</label>
+    <div class="col-md-3">
       <input class="form-control" id="name_inp" name="name" value="{{employee.name}}">
     </div>
   </div>
 
   <div class="form-group">
-    <label for="lastname_inp" class="col-md-2 control-label">Last Name</label>
-    <div class="col-md-6">
+    <label for="lastname_inp" class="col-md-3 control-label">Last Name</label>
+    <div class="col-md-3">
       <input class="form-control" id="lastname_inp" name="lastname" value="{{employee.lastname}}">
     </div>
   </div>
 
   <div class="form-group">
-    <label for="email_inp" class="col-md-2 control-label">Email Address</label>
-    <div class="col-md-6">
-      <input class="form-control" id="email_inp" type="email" name="email" value="{{employee.email}}">
+    <label for="email_inp" class="col-md-3 control-label">Email Address</label>
+    <div class="col-md-3">
+      <input class="form-control" id="email_inp" type="email" name="email" value="{{employee.email}}" aria-describedby="email_help">
     </div>
+    <span id="email_help" class="help-block col-md-6">Email address used by this user</span>
   </div>
 
   <div class="form-group">
-    <label for="select_inp" class="col-md-2 control-label">Department</label>
-    <div class="col-md-6">
-      <select class="form-control" id="select_inp" name="department">
+    <label for="select_inp" class="col-md-3 control-label">Department</label>
+    <div class="col-md-3">
+      <select class="form-control" id="select_inp" name="department" aria-describedby="department_help">
         {{#each company.departments}}
             <option value="{{@index}}" {{#if_equal ../employee.DepartmentId this.id}} selected="selected"{{/if_equal}}>{{this.name}} (approver {{this.boss.name}} {{this.boss.lastname}})</option>
         {{/each}}
       </select>
     </div>
+    <span id="department_help" class="help-block col-md-6">Department current user is part of</span>
   </div>
 
   <div class="form-group">
-    <label for="admin_inp" class="col-md-2 control-label">Is administrator user</label>
-    <div class="col-md-6">
-      <input class="" id="admin_inp" name="admin" type="checkbox" {{# if employee.admin}} checked="checked"  {{/if}} >
+    <div class="col-md-3 col-md-offset-3">
+      <label for="admin_inp" class="_col-md-2 control-label">
+        <input class="" id="admin_inp" name="admin" type="checkbox" {{# if employee.admin}} checked="checked"  {{/if}} >
+        Is administrator user
+      </label>
     </div>
   </div>
 
   <div class="form-group">
-    <label for="start_date_inp" class="col-md-2 control-label">Started on</label>
-    <div class="col-md-6 date">
-      <input class="form-control" id="start_date_inp" type="text" name="start_date" data-date-autoclose="1" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="{{as_date employee.start_date}}">
+    <label for="start_date_inp" class="col-md-3 control-label">Started on</label>
+    <div class="col-md-3 date">
+      <input class="form-control" id="start_date_inp" type="text" name="start_date" data-date-autoclose="1" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="{{as_date employee.start_date}}" aria-describedby="start_date_help">
     </div>
+    <span id="start_date_help" class="help-block col-md-6">Date when employee started (inclusive)</span>
   </div>
 
   <div class="form-group">
-    <label for="end_date_inp" class="col-md-2 control-label">Ended on</label>
-    <div class="col-md-6 date">
-      <input class="form-control" id="end_date_inp" type="text" name="end_date" data-date-autoclose="1" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="{{as_date employee.end_date}}">
+    <label for="end_date_inp" class="col-md-3 control-label">Ended on</label>
+    <div class="col-md-3 date">
+      <input class="form-control" id="end_date_inp" type="text" name="end_date" data-date-autoclose="1" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="{{as_date employee.end_date}}" aria-describedby="end_date_help">
     </div>
+    <span id="end_date_help" class="help-block col-md-6"><div>Date when user quits the {{ company.name }}.</div><div>After this date user is not able to access the company.</div><div>This is a way of deactivating user accounts.</div></span>
   </div>
 
   <div class="form-group">
-    <label for="password_inp" class="col-md-2 control-label">Password</label>
-    <div class="col-md-6 date">
+    <label for="password_inp" class="col-md-3 control-label">Password</label>
+    <div class="col-md-3 date">
       <input class="form-control" id="password_inp" type="password" name="password" value="" {{#if company.ldap_auth_enabled}} readonly {{/if}} aria-describedby="password_inp_help">
     </div>
-    {{# if company.ldap_auth_enabled }}
-      <span id="password_inp_help" class="help-block"><a href="/settings/company/authentication/">LDAP authentication</a> is enabled, so that password does not matter.</span>
-    {{/ if}}
+    <span id="password_inp_help" class="help-block col-md-6">
+      {{# if company.ldap_auth_enabled }}
+        <a href="/settings/company/authentication/">LDAP authentication</a> is enabled, so that password does not matter.
+      {{else}}
+        It is possible to update password for given account.
+      {{/ if}}
+    </span>
   </div>
 
   <div class="form-group">
-    <label for="password_inp" class="col-md-2 control-label">Confirm password</label>
-    <div class="col-md-6 date">
+    <label for="password_inp" class="col-md-3 control-label">Confirm password</label>
+    <div class="col-md-3">
       <input class="form-control" id="confirm_password_inp" type="password" name="password_confirm" value="" {{# if company.ldap_auth_enabled}}readonly{{/if}}>
-    </div> 
-  </div>
-
-  <div class="form-group">
-    <label for="adjustment_inp" class="col-md-2 control-label">Allowance adjustment</label>
-    <div class="col-md-6 date">
-      <input class="form-control" id="adjustment_inp" type="number" step="0.5" name="adjustment" value="{{employee.adjustment}}">
     </div>
   </div>
 
   <div class="form-group">
-    <label for="days_remaining_inp" class="col-md-2 control-label">Days remaining</label>
-    <div class="col-md-6 date">
+    <label for="adjustment_inp" class="col-md-3 control-label">Allowance adjustment</label>
+    <div class="col-md-2">
+    <div class="input-group">
+      <input class="form-control" id="adjustment_inp" type="number" step="0.5" name="adjustment" value="{{employee.adjustment}}" aria-describedby="adjustment_help">
+      <span class="input-group-addon">working days</span>
+    </div>
+    </div>
+    <div id="adjustment_help" class="help-block col-md-5 col-md-offset-1">
+      <div>Tune allowance for this user</div>
+      <div>Could be negative as well.</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="days_remaining_inp" class="col-md-3 control-label">Days remaining</label>
+    <div class="col-md-3 date">
       <input class="form-control" id="days_remaining_inp" type="text" readonly value="{{#with employee}}{{ this.calculate_number_of_days_available_in_allowence}} out of {{this.calculate_total_number_of_days_n_allowence }}{{/with}}">
     </div>
   </div>
 
   <div class="form-group">
-    <div class="col-md-offset-2 col-md-6">
-      <button id="save_changes_btn" type="submit" class="btn btn-success">Save changes</button>
+    <div class="col-md-offset-3 col-md-3">
+      <button id="save_changes_btn" type="submit" class="btn btn-success pull-right">Save changes</button>
     </div>
   </div>
 
