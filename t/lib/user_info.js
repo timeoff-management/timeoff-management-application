@@ -66,7 +66,7 @@ module.exports = bluebird.promisify( function(args, callback){
       });
 
     return driver.call(function(){
-      return Promise.resolve(user);
+      return bluebird.resolve(user);
     });
   })
 
