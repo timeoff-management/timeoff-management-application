@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/timeoff-management/application.png?label=ready&title=Ready)](https://waffle.io/timeoff-management/application)
 
 # TimeOff.Management
 
