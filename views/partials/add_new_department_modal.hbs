@@ -40,7 +40,7 @@
           <label for="department_superwiser_new" class="control-label">Supervisor</label>
           <select class="form-control" id="department_allowence_new" name="boss_id__new">
             {{#each company.users}}
-              <option value="{{this.id}}">{{this.name}}</option>
+              <option value="{{this.id}}">{{this.full_name}}</option>
             {{/each}}
           </select>
         </div>
