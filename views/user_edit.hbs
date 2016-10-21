@@ -100,13 +100,13 @@
 
   <div class="form-group">
     <label for="adjustment_inp" class="col-md-3 control-label">Allowance adjustment</label>
-    <div class="col-md-2">
+    <div class="col-md-3">
     <div class="input-group">
-      <input class="form-control" id="adjustment_inp" type="number" step="0.5" name="adjustment" value="{{employee.adjustment}}" aria-describedby="adjustment_help">
+      <input class="form-control" id="adjustment_inp" type="number" step="0.5" name="adjustment" value="{{#if employee.adjustment }}{{employee.adjustment}}{{else}}0{{/if}}" aria-describedby="adjustment_help">
       <span class="input-group-addon">working days</span>
     </div>
     </div>
-    <div id="adjustment_help" class="help-block col-md-5 col-md-offset-1">
+    <div id="adjustment_help" class="help-block col-md-5">
       <div>Tune allowance for this user</div>
       <div>Could be negative as well.</div>
     </div>
@@ -116,6 +116,14 @@
     <label for="days_remaining_inp" class="col-md-3 control-label">Days remaining</label>
     <div class="col-md-3 date">
       <input class="form-control" id="days_remaining_inp" type="text" readonly value="{{#with employee}}{{ this.calculate_number_of_days_available_in_allowence}} out of {{this.calculate_total_number_of_days_n_allowence }}{{/with}}">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-9 col-md-offset-3">
+      <label for="link_to_email_audit" class="control-label">
+        <a href="/audit/email/?user_id={{employee.id}}">Emails ever sent to {{#with employee}}{{this.full_name}}{{/with}}</a>
+      </label>
     </div>
   </div>
 

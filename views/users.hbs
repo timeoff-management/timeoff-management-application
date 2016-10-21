@@ -6,12 +6,10 @@
 {{> show_flash_messages }}
 
 <div class="row">
-    <div class="col-md-3 lead">{{company.name}}'s staff</div>
-    <form id="add_new_user_frm" method="get" action="/users/add/">
-        <div class="col-md-3 col-md-offset-6">
-        <button type="submit" class="pull-right btn btn-info" id="add_new_department_btn">Add user</button>
-        </div>
-    </form>
+  <div class="col-md-3 lead">{{company.name}}'s staff</div>
+  <div class="col-md-3 col-md-offset-6">
+    <a href="/users/add/" class="btn btn-info pull-right" id="add_new_department">Add user</a>
+  </div>
 </div>
 
 <div class="row">&nbsp;</div>
