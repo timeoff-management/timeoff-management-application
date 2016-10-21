@@ -45,9 +45,9 @@ module.exports = Promise.promisify(function(args, callback){
       return el.click();
     });
 
-  driver.wait(until.elementLocated(By.css('#add_new_department_btn')), 1000);
+  driver.wait(until.elementLocated(By.css('#add_new_department')), 1000);
 
-  driver.findElement( By.css('#add_new_department_btn') )
+  driver.findElement( By.css('#add_new_department') )
     .then(function(el){
       return el.click();
     })

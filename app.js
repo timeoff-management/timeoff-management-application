@@ -105,31 +105,36 @@ app.use(
 );
 
 app.use(
-    '/',
-    require('./lib/route/login')(passport),
+  '/',
+  require('./lib/route/login')(passport),
 
-    // All rotes bellow are only for authenticated users
-    require('./lib/route/dashboard.js')
+  // All rotes bellow are only for authenticated users
+  require('./lib/route/dashboard.js')
 );
 
 app.use(
-    '/calendar/',
-    require('./lib/route/calendar.js')
+  '/calendar/',
+  require('./lib/route/calendar.js')
 );
 
 app.use(
-    '/settings/',
-    require('./lib/route/settings.js')
+  '/settings/',
+  require('./lib/route/settings.js')
 );
 
 app.use(
-    '/users/',
-    require('./lib/route/users.js')
+  '/users/',
+  require('./lib/route/users.js')
 );
 
 app.use(
-    '/requests/',
-    require('./lib/route/requests.js')
+  '/requests/',
+  require('./lib/route/requests.js')
+);
+
+app.use(
+  '/audit/',
+  require('./lib/route/audit.js')
 );
 
 // catch 404 and forward to error handler
