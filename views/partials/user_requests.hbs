@@ -12,7 +12,7 @@
   <div class="col-md-12">
     <p class="visible-xs-block"><em class="text-muted">Scroll table horizontally</em></p>
     <div class="table-responsive">
-    <table class="table table-hover">
+    <table class="table table-hover user-requests-table">
       <thead>
         <tr>
           <th>Type</th>
@@ -31,7 +31,7 @@
         <td>{{ this.leave_type.name }}{{#if this.is_pended_revoke_leave}}<br>(pended revoke){{/if}}</td>
         <td>{{ this.get_deducted_days_number }}</td>
         <td>From {{#with this.get_start_leave_day}}{{as_date this.date}}{{/with}} to {{#with this.get_end_leave_day}}{{as_date this.date}}{{/with}}</td>
-        <td>{{#with this.approver}}{{this.full_name}}{{/with}}</td>
+        <td class="user-request-table-approver">{{#with this.approver}}{{this.full_name}}{{/with}}</td>
         <td>
           {{# if this.is_approved_leave }}
           {{# unless this.is_pended_revoke_leave}}

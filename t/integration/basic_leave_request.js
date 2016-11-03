@@ -200,7 +200,7 @@ describe('Basic leave request', function(){
             driver           : data.driver,
         });
     })
-    // Open calendar page
+    // Open calendar page (in full year mode)
     .then(function(data){
         return open_page_func({
             url    : application_host + 'calendar/?year=2015&show_full_year=1',
@@ -224,6 +224,27 @@ describe('Basic leave request', function(){
             type           : 'approved',
           });
         });
+    })
+
+    // Open calendar page (short version)
+    .then(function(data){
+      return open_page_func({
+        url    : application_host + 'requests/',
+        driver : data.driver,
+      });
+    })
+    // and make sure that requests have approver been populated
+    .then(function(data){
+      data.driver.findElement(
+          By.css('.user-requests-table td.user-request-table-approver')
+        )
+        .then(function(el){ return el.getText(); })
+        .then(function(text){
+          expect(text).to.be.not.empty;
+          return Promise.resolve(data);
+        });
+
+      return Promise.resolve(data);
     })
 
     .then(function(data){ return data.driver.quit(); })
