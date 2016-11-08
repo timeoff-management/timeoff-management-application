@@ -105,7 +105,7 @@ We have quite a wide test coverage, to make sure that the main user paths work a
 Please run them frequently while developing the project.
 
 ```bash
-node node_modules/mocha/bin/mocha --recursive t/*
+npm test
 ```
 
 Any bugfixes or enhancements should have good test coverage to get them into "master" branch.
