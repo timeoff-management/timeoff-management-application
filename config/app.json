@@ -10,5 +10,6 @@
       "pass" : "pass"
     }
   },
-  "crypto_secret" : "!2~`HswpPPLa22+=±§sdq qwe,appp qwwokDF_"
+  "crypto_secret" : "!2~`HswpPPLa22+=±§sdq qwe,appp qwwokDF_",
+  "domain": "http://timeoff.management"
 }
