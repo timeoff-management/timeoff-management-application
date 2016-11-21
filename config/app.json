@@ -1,4 +1,5 @@
 {
+  "allow_create_new_accounts" : true,
   "send_emails"              : false,
   "application_sender_email" : "email@test.com",
   "email_transporter" : {
