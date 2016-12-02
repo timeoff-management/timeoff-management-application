@@ -35,7 +35,7 @@
   <div class="form-group">
     <label for="email_inp" class="col-md-3 control-label">Email Address</label>
     <div class="col-md-3">
-      <input class="form-control" id="email_inp" type="email" name="email" value="{{employee.email}}" aria-describedby="email_help">
+      <input class="form-control" id="email_inp" type="email" name="email_address" value="{{employee.email}}" aria-describedby="email_help">
     </div>
     <span id="email_help" class="help-block col-md-6">Email address used by this user</span>
   </div>
@@ -80,7 +80,7 @@
   <div class="form-group">
     <label for="password_inp" class="col-md-3 control-label">Password</label>
     <div class="col-md-3 date">
-      <input class="form-control" id="password_inp" type="password" name="password" value="" {{#if company.ldap_auth_enabled}} readonly {{/if}} aria-describedby="password_inp_help">
+      <input class="form-control" id="password_inp" type="password" name="password_one" value="" {{#if company.ldap_auth_enabled}} readonly {{/if}} aria-describedby="password_inp_help">
     </div>
     <span id="password_inp_help" class="help-block col-md-6">
       {{# if company.ldap_auth_enabled }}

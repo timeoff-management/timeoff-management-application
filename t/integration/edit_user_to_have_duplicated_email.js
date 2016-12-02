@@ -73,7 +73,7 @@ describe('CRUD for users', function(){
       return submit_form_func({
         driver      : data.driver,
         form_params : [{
-            selector : 'input[name="email"]',
+            selector : 'input[name="email_address"]',
             value    : email_admin,
         }],
         submit_button_selector : 'button#save_changes_btn',
@@ -86,7 +86,7 @@ describe('CRUD for users', function(){
       return submit_form_func({
         driver      : data.driver,
         form_params : [{
-            selector : 'input[name="email"]',
+            selector : 'input[name="email_address"]',
             value    : 'foobar'+email_admin,
         }],
         submit_button_selector : 'button#save_changes_btn',

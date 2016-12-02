@@ -73,10 +73,10 @@ module.exports = Promise.promisify(function(args, callback){
               selector : add_new_user_form_id+' input[name="lastname"]',
               value    : 'lastname'+random_token,
           },{
-              selector : add_new_user_form_id+' input[name="email"]',
+              selector : add_new_user_form_id+' input[name="email_address"]',
               value    : new_user_email,
           },{
-              selector : add_new_user_form_id+' input[name="password"]',
+              selector : add_new_user_form_id+' input[name="password_one"]',
               value    : '123456',
           },{
               selector : add_new_user_form_id+' input[name="password_confirm"]',
