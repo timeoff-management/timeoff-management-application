@@ -41,7 +41,7 @@ module.exports = Promise.promisify( function(args, callback){
       return el.getText();
     })
     .then(function(text){
-      expect(text).to.match(/Create new account/i);
+      expect(text).to.match(/Register new company/i);
     });
 
 
@@ -60,7 +60,7 @@ module.exports = Promise.promisify( function(args, callback){
       return el.getText();
     })
     .then(function(ee){
-      expect(ee).to.be.equal('Register new user');
+      expect(ee).to.be.equal('New company');
     });
   // TODO check title when it is implemented
 //  driver.getTitle()
