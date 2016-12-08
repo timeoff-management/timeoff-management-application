@@ -40,7 +40,7 @@
                 </select>
               </div>
               <div class="col-md-7">
-                <input type="text" class="form-control" id="from" data-provide="datepicker" data-date-autoclose="1" data-date-format="yyyy-mm-dd" value="{{as_date booking_start}}" name="from_date">
+                <input type="text" class="form-control" id="from" data-provide="datepicker" data-date-autoclose="1" data-date-format="{{# with logged_user.company }}{{this.get_default_date_format_for_date_picker}}{{/with}}" value="{{as_date booking_start}}" name="from_date">
               </div>
             </div>
           </div>
@@ -56,7 +56,7 @@
                 </select>
               </div>
               <div class="col-md-7">
-                <input type="text" class="form-control" id="to" data-provide="datepicker" data-date-autoclose="1" data-date-format="yyyy-mm-dd" value="{{as_date booking_end}}" name="to_date">
+                <input type="text" class="form-control" id="to" data-provide="datepicker" data-date-autoclose="1" data-date-format="{{#with logged_user.company }}{{this.get_default_date_format_for_date_picker}}{{/with}}" value="{{as_date booking_end}}" name="to_date">
               </div>
             </div>
           </div>

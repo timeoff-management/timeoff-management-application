@@ -14,12 +14,12 @@
 <nav>
   <div class="row">
     <div class="col-md-2">
-      <a class="btn btn-default" href="/calendar/teamview/?{{> team_view_url_parameters base_date = prev_date }}"><span aria-hidden="true" class="fa fa-chevron-left"></span> {{#with prev_date}}{{ this.format 'MMM' }}{{/with}}</a>
+      <a class="btn btn-default" href="/calendar/teamview/?{{> team_view_url_parameters base_date = prev_date }}"><span aria-hidden="true" class="fa fa-chevron-left"></span> {{as_date_formatted prev_date 'MMM' }}</a>
     </div>
 
-    <div class="col-md-8 calendar-section-caption"><b>{{#with base_date}}{{ this.format 'MMMM, YYYY' }}{{/with}}</b></div>
+    <div class="col-md-8 calendar-section-caption"><b>{{as_date_formatted base_date 'MMMM, YYYY' }}</b></div>
 
-    <div class="col-md-2"><a class="btn btn-default pull-right" href="/calendar/teamview/?{{> team_view_url_parameters base_date = next_date }}">{{#with next_date}}{{this.format 'MMM'}}{{/with}} <span aria-hidden="true" class="fa fa-chevron-right"></span></a></div>
+    <div class="col-md-2"><a class="btn btn-default pull-right" href="/calendar/teamview/?{{> team_view_url_parameters base_date = next_date }}">{{as_date_formatted next_date 'MMM'}} <span aria-hidden="true" class="fa fa-chevron-right"></span></a></div>
   </div>
 </nav>
 
@@ -54,7 +54,7 @@
     <table class="calendar_month">
       <tr>
       {{# each users_and_leaves.0.days }}
-        <td colspan="2" class="team-view-header"><b>{{# with this.moment }}{{this.format 'dd' }}{{/with}}</b></td>
+        <td colspan="2" class="team-view-header"><b>{{as_date_formatted this.moment 'dd'}}</b></td>
       {{/each}}
       </tr>
     {{# each users_and_leaves}}
