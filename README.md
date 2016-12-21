@@ -108,6 +108,8 @@ Please run them frequently while developing the project.
 npm test
 ```
 
+(make sure that application with default settings is up and running)
+
 Any bugfixes or enhancements should have good test coverage to get them into "master" branch.
 
 ## Feedback
