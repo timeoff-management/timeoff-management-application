@@ -14,7 +14,12 @@ describe('Check Email', function(){
 
     bluebird.resolve(email.promise_rendered_email_template({
       template_name : 'foobar',
-      context : {user : {name : 'FOO'}}
+      context : {
+        user : {
+          name : 'FOO',
+          reload_with_session_details : function(){ bluebird.resolve(1); },
+        },
+      },
     }))
     .then(function(email){
 
@@ -27,22 +32,3 @@ describe('Check Email', function(){
   });
 });
 
-
-//describe('TEMP', function(){
-//
-//
-//  it('foobar', function(done){
-//
-//    var email = new Email();
-//
-//    bluebird.resolve(email.promise_registration_email({
-//      user : { name : "pavlo"},
-//    }))
-//    .then(function(){
-//      console.log('done');
-//      done();
-//    });
-//
-//  });
-//
-//});
