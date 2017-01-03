@@ -38,6 +38,18 @@
                 </div>
               </div>
               <div class="form-group">
+                <label for="input_date_format" class="col-md-4 control-label">Date format</label>
+                <div class="col-md-8">
+                  <select class="form-control" id="input_date_format" name="date_format">
+                    {{#with company}}
+                    {{#each this.get_available_date_formats}}
+                    <option value="{{this}}" {{# if_equal this ../date_format }} selected="selected"{{/if_equal}}>{{this}}</option>
+                    {{/each}}
+                    {{/with}}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
                 <div class="col-md-offset-4 col-md-8">
                   <div class="checkbox">
                     <label for="share-all-absences">
