@@ -14,6 +14,6 @@ module.exports = {
   },
 
   down: function (queryInterface, Sequelize) {
-    queryInterface.removeColumn('Companies', 'date_format');
+    return queryInterface.removeColumn('Companies', 'date_format');
   }
 };
