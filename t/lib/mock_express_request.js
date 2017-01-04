@@ -11,7 +11,9 @@ module.exports = function(args){
 
     var req = {
         session : {},
-        user    : {},
+        user    : {
+          company : { get_default_date_format : function() {'YYYY-MM-DD'} },
+        },
         param   : function(key){
             return params[key];
         },

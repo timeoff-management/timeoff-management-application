@@ -112,6 +112,17 @@ npm test
 
 Any bugfixes or enhancements should have good test coverage to get them into "master" branch.
 
+## Updating existing instance with new code
+
+In case one needs to patch existing instance of TimeOff.Managenent application with new version:
+
+```bash
+git fetch
+git pull origin master
+npm run-script db-update
+npm start
+```
+
 ## Feedback
 
 Please report any issues or feedback to <a href="https://twitter.com/FreeTimeOffApp">twitter</a> or Email: pavlo at timeoff.management

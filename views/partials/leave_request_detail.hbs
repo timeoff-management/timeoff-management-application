@@ -1,11 +1,11 @@
 {{# with leave ~}}
   {{~# if this.get_leave_type_name ~}}{{~ this.get_leave_type_name }} {{/if~}}
   from {{# with this.get_start_leave_day ~}}
-    {{~ this.get_pretty_date ~}}
+    {{~ as_date this.date ~}}
     {{~# if this.is_morning_leave}} (morning){{/if~}}
     {{~# if this.is_afternoon_leave}} (afternoon){{/if~}}
   {{~/with}} to {{# with this.get_end_leave_day ~}}
-    {{~ this.get_pretty_date ~}}
+    {{~ as_date this.date ~}}
     {{~# if this.is_morning_leave}} (morning){{/if~}}
     {{~# if this.is_afternoon_leave}} (afternoon){{/if~}}
   {{~/with~}}

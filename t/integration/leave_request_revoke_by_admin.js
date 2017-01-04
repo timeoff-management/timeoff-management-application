@@ -115,10 +115,10 @@ describe('Revoke leave request by Admin', function(){
                 value           : "2",
             },{
                 selector : 'input#from',
-                value : '2016-06-15',
+                value : '2017-06-15',
             },{
                 selector : 'input#to',
-                value : '2016-06-16',
+                value : '2017-06-16',
             }],
             message : /New leave request was added/,
           });
@@ -129,8 +129,8 @@ describe('Revoke leave request by Admin', function(){
         .then(function(){
           return check_booking_func({
             driver         : driver,
-            full_days      : [moment('2016-06-16')],
-            halfs_1st_days : [moment('2016-06-15')],
+            full_days      : [moment('2017-06-16')],
+            halfs_1st_days : [moment('2017-06-15')],
             type           : 'pended',
           });
         });

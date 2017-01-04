@@ -1,5 +1,0 @@
-After the dependancies upgrade the Sessions table contains extra columns - expires.
-
-Following SQL adds it to the existing database:
-
-ALTER TABLE Sessions ADD COLUMN expires DATETIME;

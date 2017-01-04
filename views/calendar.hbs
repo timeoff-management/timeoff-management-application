@@ -108,7 +108,7 @@
         <table class="calendar_month month_{{ this.month }}">
         <thead>
         <tr>
-            <td colspan="14">{{#if ../show_full_year}}{{this.month}}{{else}}{{#with this.moment }}{{this.format 'MMMM, YYYY'}}{{/with}}{{/if}}</td>
+            <td colspan="14">{{#if ../show_full_year}}{{this.month}}{{else}}{{as_date_formatted this.moment 'MMMM, YYYY'}}{{/if}}</td>
         </tr>
         <tr>
             <td colspan="2">M</td>

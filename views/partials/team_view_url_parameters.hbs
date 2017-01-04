@@ -1,1 +1,1 @@
-{{# if current_department }}department={{current_department.id}}{{/if}}{{# if base_date }}&date={{#with base_date}}{{ this.format 'YYYY-MM' }}{{/with}}{{/if}}
+{{# if current_department }}department={{current_department.id}}{{/if}}{{# if base_date }}&date={{ as_date_formatted base_date 'YYYY-MM' }}{{/if}}
