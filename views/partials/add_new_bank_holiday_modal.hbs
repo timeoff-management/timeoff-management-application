@@ -24,7 +24,7 @@
 
         <div class="form-group">
           <label for="bank_holiday_date_new" class="control-label">Date:</label>
-          <input type="text" class="form-control" id="bank_holiday_date_new" name="date__new" data-provide="datepicker" data-date-autoclose="1" data-date-format="yyyy-mm-dd">
+          <input type="text" class="form-control" id="bank_holiday_date_new" name="date__new" data-provide="datepicker" data-date-autoclose="1" data-date-format="{{#with logged_user.company }}{{this.get_default_date_format_for_date_picker}}{{/with}}" data-date-week-start="1">
         </div>
 
       </div>

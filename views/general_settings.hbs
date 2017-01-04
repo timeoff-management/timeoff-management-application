@@ -123,7 +123,7 @@
 
           <div class="col-md-4">
             <div class="input-append date">
-            <input type="text" class="form-control" value="{{as_date date}}" name="date__{{@index}}" data-date-autoclose="1" data-provide="datepicker" data-date-format="{{#with ../logged_user.company}}{{this.get_default_date_format_for_date_picker}}{{/with}}">
+            <input type="text" class="form-control" value="{{as_date date}}" name="date__{{@index}}" data-date-autoclose="1" data-provide="datepicker" data-date-format="{{#with ../logged_user.company}}{{this.get_default_date_format_for_date_picker}}{{/with}}" data-date-week-start="1">
             <span class="add-on"><i class="icon-th"></i></span>
             </div>
           </div>
