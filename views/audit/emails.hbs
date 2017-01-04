@@ -25,13 +25,13 @@
             <form action="/audit/email/" method="GET">
               <div class="form-group">
                 <input type="text" name="start_date" class="form-control" id="start_date" placeholder="Start Date"
-                  data-provide="datepicker" data-date-autoclose="1" data-date-format="yyyy-mm-dd"
+                  data-provide="datepicker" data-date-autoclose="1" data-date-format="{{#with logged_user.company }}{{this.get_default_date_format_for_date_picker}}{{/with}}"
                   value="{{#if filter.start_date }}{{as_date filter.start_date }}{{/if}}"
                 >
               </div>
               <div class="form-group">
                 <input type="text" name="end_date" class="form-control" id="end_date" placeholder="End Date"
-                  data-provide="datepicker" data-date-autoclose="1" data-date-format="yyyy-mm-dd"
+                  data-provide="datepicker" data-date-autoclose="1" data-date-format="{{#with logged_user.company }}{{this.get_default_date_format_for_date_picker}}{{/with}}"
                   value="{{#if filter.end_date }}{{as_date filter.end_date }}{{/if}}"
                 >
               </div>
