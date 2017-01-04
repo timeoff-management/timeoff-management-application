@@ -8,7 +8,5 @@ cache:
     - node_modules
 env:
 before_install:
-#  - git clone https://github.com/timeoff-management/application.git ~/tom
-#  - cd ~/tom
 before_script:
   - node bin/wwww > /dev/null &
