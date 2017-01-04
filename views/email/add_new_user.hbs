@@ -6,5 +6,11 @@ Hello {{new_user.name}},
 
 Please contact {{admin_user.name}} about your new password and login at http://timeoff.management
 
+Alternatively follow link below to set new password:
+
+{{# with new_user ~}}
+http://app.timeoff.management/reset-password/?t={{this.get_reset_password_token}}
+{{/ with }}
+
 This message was sent by
 http://TimeOff.Management
