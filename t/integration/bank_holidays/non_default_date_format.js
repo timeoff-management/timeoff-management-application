@@ -8,6 +8,7 @@ var
   submit_form_func        = require('../../lib/submit_form'),
   expect                  = require('chai').expect,
   By                      = require('selenium-webdriver').By,
+  Promise                 = require("bluebird"),
   application_host        = 'http://localhost:3000/',
   bankholiday_form_id     = '#update_bankholiday_form',
   new_bankholiday_form_id = '#add_new_bank_holiday_form',
