@@ -11,15 +11,20 @@ var webdriver = require('selenium-webdriver'),
     _         = require('underscore'),
     uuid      = require('node-uuid'),
     Promise   = require("bluebird"),
+    open_page_func       = require('../lib/open_page'),
+    company_edit_form_id = '#company_edit_form',
+    submit_form_func     = require('../lib/submit_form'),
     driver;
 
 
 module.exports = Promise.promisify( function(args, callback){
 
-  var application_host = args.application_host,
-      failing_error_message = args.failing_error_message,
-      random_token =  (new Date()).getTime(),
-      new_user_email = args.user_email || random_token + '@test.com';
+  var
+    application_host      = args.application_host,
+    failing_error_message = args.failing_error_message,
+    default_date_format   = args.default_date_format,
+    random_token          = (new Date()).getTime(),
+    new_user_email        = args.user_email || random_token + '@test.com';
 
   // Instantiate new driver object
     driver = new webdriver.Builder()
@@ -148,6 +153,33 @@ module.exports = Promise.promisify( function(args, callback){
       .then(function(text){
         expect(text).to.be.equal('Registration is complete.');
       });
+  }
+
+  if (default_date_format) {
+
+    // open company general configuration page and set the default format to be as requested
+    driver.call(function(){
+      return open_page_func({
+        url    : application_host + 'settings/general/',
+        driver : driver,
+      })
+    });
+
+    // update company to use provided date format as a default
+    driver.call(function(){
+
+      return submit_form_func({
+        driver      : driver,
+        form_params : [{
+          selector : company_edit_form_id+' select[name="date_format"]',
+          option_selector : 'option[value="'+default_date_format+'"]',
+          value    : default_date_format,
+        }],
+        submit_button_selector : company_edit_form_id+' button[type="submit"]',
+        message : /successfully/i,
+        should_be_successful : true,
+      });
+    });
 
   }
 

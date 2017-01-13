@@ -2,11 +2,11 @@
 'use strict';
 
 var test                 = require('selenium-webdriver/testing'),
-  register_new_user_func = require('../lib/register_new_user'),
-  login_user_func        = require('../lib/login_with_user'),
-  open_page_func         = require('../lib/open_page'),
-  submit_form_func       = require('../lib/submit_form'),
-  check_elements_func    = require('../lib/check_elements'),
+  register_new_user_func = require('../../lib/register_new_user'),
+  login_user_func        = require('../../lib/login_with_user'),
+  open_page_func         = require('../../lib/open_page'),
+  submit_form_func       = require('../../lib/submit_form'),
+  check_elements_func    = require('../../lib/check_elements'),
   moment                 = require('moment'),
   By                     = require('selenium-webdriver').By,
   application_host       = 'http://localhost:3000/',
