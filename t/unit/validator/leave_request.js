@@ -10,7 +10,13 @@ var expect  = require('chai').expect,
 describe('Check validation for leave request', function(){
 
     it('No parameters provided', function(){
-        var req = new MockExpressReq({});
+        var req = new MockExpressReq({
+          user : {
+            company : {
+              normalise_date : function(date) { return date; }
+            },
+         }
+        });
 
         expect(function(){
             leave_request_validator({req : req})
@@ -21,7 +27,14 @@ describe('Check validation for leave request', function(){
 
 
     it('User index is invalid', function(){
-        var req = new MockExpressReq({params : {user : 'foo'}});
+        var req = new MockExpressReq({
+          params : {user : 'foo'},
+          user : {
+            company : {
+              normalise_date : function(date) { return date; }
+            },
+         }
+        });
 
         expect(function(){
             leave_request_validator({req : req})
@@ -81,7 +94,14 @@ describe('Check validation for leave request', function(){
     it('from_date has invalid value', function(){
         var params = _.clone(valid_params);
         params.from_date = "some horrible date";
-        var req = new MockExpressReq({params : params});
+        var req = new MockExpressReq({
+          params : params,
+          user : {
+            company : {
+              normalise_date : function(date) { return date; }
+            },
+         }
+        });
         expect(function(){
             leave_request_validator({req : req})
         }).to.throw('Got validation errors');

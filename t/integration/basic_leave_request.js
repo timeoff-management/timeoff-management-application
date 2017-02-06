@@ -253,3 +253,65 @@ describe('Basic leave request', function(){
   }); // End of test
 
 });
+
+describe("Use problematic date with non default date format", function(){
+
+  this.timeout(3 * 60 * 1000);
+
+  var driver;
+
+  it("Register new company with default date to be DD/MM/YY", function(done){
+    register_new_user_func({
+      application_host    : application_host,
+      default_date_format : 'DD/MM/YY',
+    })
+    .then(function(data){
+      driver = data.driver;
+      done();
+    });
+  });
+
+  it("Open calendar page", function(done){
+    open_page_func({
+      url    : application_host + 'calendar/?year=2017&show_full_year=1',
+      driver : driver,
+    })
+    .then(function(){ done(); })
+  });
+
+  it("Open Book new leave pop up", function(done){
+    driver.findElement(By.css('#book_time_off_btn'))
+      .then(function(el){
+        el.click().then(function(){ done() });
+      });
+  });
+
+  it("Make sure it is possible to place an leave request for date that was reported to be problematic", function(done){
+
+    // This is very important line when working with Bootstrap modals!
+    driver.sleep(1000);
+
+    submit_form_func({
+      driver      : driver,
+      // The order matters here as we need to populate dropdown prior date filds
+      form_params : [{
+          selector        : 'select[name="from_date_part"]',
+          option_selector : 'option[value="2"]',
+          value           : "2",
+      },{
+          selector : 'input#from',
+          value : '22/08/17',
+      },{
+          selector : 'input#to',
+          value : '23/08/17',
+      }],
+      message : /New leave request was added/,
+    })
+    .then(function(){ done(); });
+  });
+
+  after(function(done){
+    driver.quit().then(function(){ done(); });
+  });
+
+});

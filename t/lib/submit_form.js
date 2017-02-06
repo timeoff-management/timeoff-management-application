@@ -73,6 +73,7 @@ module.exports = Promise.promisify( function(args, callback){
             driver.wait(until.elementLocated(By.css('title')), 1000);
         });
 
+    // TODO this is not doing what it supposed to be doing
     if ( should_be_successful ) {
 
         Promise.resolve(

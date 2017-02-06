@@ -175,3 +175,64 @@ describe('Try to manage Bank holidays with non-default date format', function(){
   });
 
 });
+
+describe("Try to use DD/MM/YY and some missleading date", function(){
+
+  this.timeout(3 * 60 * 1000);
+
+  var driver;
+
+  it("Register new company with default date to be DD/MM/YY", function(done){
+    register_new_user_func({
+      application_host    : application_host,
+      default_date_format : 'DD/MM/YY',
+    })
+    .then(function(data){
+      driver = data.driver;
+      done();
+    });
+  });
+
+  it("Open general settings page", function(done){
+    driver.call(function(){
+      open_page_func({
+        url    : application_host + 'settings/general/',
+        driver : driver,
+      })
+      .then(function(){ done() });
+    });
+  });
+
+  it("Try to add new bank holiday with date that was reported to be problematic", function(done){
+
+    driver.findElement(By.css('#add_new_bank_holiday_btn'))
+      .then(function(el){ return el.click(); })
+      .then(function(){
+
+        // This is very important line when working with Bootstrap modals!
+        driver.sleep(1000);
+
+        return submit_form_func({
+          driver      : driver,
+          form_params : [{
+            selector : new_bankholiday_form_id+' input[name="name__new"]',
+            value    : 'Problematic date',
+          },{
+            selector : new_bankholiday_form_id+' input[name="date__new"]',
+            value    : '22/08/17',
+          }],
+          submit_button_selector : new_bankholiday_form_id+' button[type="submit"]',
+          message                : /Changes to bank holidays were saved/,
+        });
+      })
+      .then(function(){
+        done();
+      });
+
+  });
+
+  after(function(done){
+    driver.quit().then(function(){ done(); });
+  });
+
+});
