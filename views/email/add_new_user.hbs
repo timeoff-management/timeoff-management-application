@@ -4,13 +4,13 @@ Hello {{new_user.name}},
 
 {{#with admin_user}}{{this.full_name}}{{/with}} just registered new account for you as an employee of {{company.name}}.
 
-Please contact {{admin_user.name}} about your new password and login at http://timeoff.management
+Please contact {{admin_user.name}} about your new password and login at {{get_application_domain}}
 
 Alternatively follow link below to set new password:
 
 {{# with new_user ~}}
-http://app.timeoff.management/reset-password/?t={{this.get_reset_password_token}}
+{{get_application_domain}}/reset-password/?t={{this.get_reset_password_token}}
 {{/ with }}
 
 This message was sent by
-http://TimeOff.Management
+{{get_promotion_website_domain}}
