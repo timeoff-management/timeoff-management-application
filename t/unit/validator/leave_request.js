@@ -10,13 +10,7 @@ var expect  = require('chai').expect,
 describe('Check validation for leave request', function(){
 
     it('No parameters provided', function(){
-        var req = new MockExpressReq({
-          user : {
-            company : {
-              normalise_date : function(date) { return date; }
-            },
-         }
-        });
+        var req = new MockExpressReq();
 
         expect(function(){
             leave_request_validator({req : req})
@@ -29,11 +23,6 @@ describe('Check validation for leave request', function(){
     it('User index is invalid', function(){
         var req = new MockExpressReq({
           params : {user : 'foo'},
-          user : {
-            company : {
-              normalise_date : function(date) { return date; }
-            },
-         }
         });
 
         expect(function(){
@@ -63,7 +52,9 @@ describe('Check validation for leave request', function(){
 
     it('Successfull scenario', function(){
 
-        var req = new MockExpressReq({params : valid_params});
+        var req = new MockExpressReq({
+          params : valid_params,
+        });
 
         expect(
             leave_request_validator({req : req}).as_data_object()
@@ -71,6 +62,7 @@ describe('Check validation for leave request', function(){
 
         expect( req.session ).not.to.have.property( 'flash' );
     });
+
 
     it('from_date_part has invalid value', function(){
         var params = _.clone(valid_params);
@@ -96,11 +88,6 @@ describe('Check validation for leave request', function(){
         params.from_date = "some horrible date";
         var req = new MockExpressReq({
           params : params,
-          user : {
-            company : {
-              normalise_date : function(date) { return date; }
-            },
-         }
         });
         expect(function(){
             leave_request_validator({req : req})
@@ -112,21 +99,23 @@ describe('Check validation for leave request', function(){
                     return msg === 'From date should be a date';
                 })
         ).to.be.greaterThan( -1 );
-
-        expect( req.session.flash.errors.length ).to.be.equal( 2 );
     });
+
 
     it('start dates is greater than end one', function(){
         var params = _.clone(valid_params);
         params.from_date = '2015-04-12';
         params.to_date   = '2015-04-02';
-        var req = new MockExpressReq({params : params});
+        var req = new MockExpressReq({
+          params : params,
+        });
         expect(function(){
             leave_request_validator({req : req})
         }).to.throw('From date should be before To date');
 
         expect( req.session ).not.to.have.property( 'flash' );
     });
+
 
     it('inter_year leave request', function(){
         var params = _.clone(valid_params);
@@ -146,6 +135,7 @@ describe('Check validation for leave request', function(){
 
         expect( req.session.flash.errors.length ).to.be.equal( 1 );
     });
+
 
     it('Reason is optional', function(){
 
