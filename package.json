@@ -1,7 +1,8 @@
 {
-  "name": "jswebapp",
-  "version": "0.0.0",
-  "private": true,
+  "name": "TimeOff.Management",
+  "version": "0.4.0",
+  "private": false,
+  "description" : "Simple yet powerful absence management software for small and medium size business",
   "dependencies": {
     "bluebird": "^2.10.2",
     "body-parser": "^1.8.4",
