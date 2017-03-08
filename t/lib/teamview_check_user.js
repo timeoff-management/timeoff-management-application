@@ -12,7 +12,8 @@
 var
   By             = require('selenium-webdriver').By,
   expect         = require('chai').expect,
-  open_page_func = require('../lib/open_page'),
+  open_page_func = require('./open_page'),
+  config         = require('./config'),
   bluebird        = require("bluebird");
 
 module.exports = bluebird.promisify( function(args, callback){
@@ -22,7 +23,7 @@ module.exports = bluebird.promisify( function(args, callback){
     driver          = args.driver,
     emails          = args.emails || [],
     is_link         = args.is_link || false,
-    application_host = args.application_host || 'http://localhost:3000/';
+    application_host = args.application_host || config.get_application_host();
 
   if ( ! driver ) {
     throw "'driver' was not passed into the teamview_check_user!";
