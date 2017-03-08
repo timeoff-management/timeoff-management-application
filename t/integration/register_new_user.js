@@ -5,7 +5,8 @@ var test                 = require('selenium-webdriver/testing'),
   register_new_user_func = require('../lib/register_new_user'),
   login_user_func        = require('../lib/login_with_user'),
   logout_user_func       = require('../lib/logout_user'),
-  application_host       = 'http://localhost:3000/';
+  config                 = require('../lib/config'),
+  application_host       = config.get_application_host();
 
 
 describe('Register new user', function(){

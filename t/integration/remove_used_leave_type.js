@@ -2,7 +2,6 @@
 'use strict';
 
 var test             = require('selenium-webdriver/testing'),
-    application_host = 'http://localhost:3000/',
     By               = require('selenium-webdriver').By,
     expect           = require('chai').expect,
     _                = require('underscore'),
@@ -15,7 +14,9 @@ var test             = require('selenium-webdriver/testing'),
     check_elements_func    = require('../lib/check_elements'),
     check_booking_func     = require('../lib/check_booking_on_calendar'),
   leave_type_edit_form_id='#leave_type_edit_form',
-  leave_type_new_form_id ='#leave_type_new_form';
+  leave_type_new_form_id ='#leave_type_new_form',
+  config                 = require('../lib/config'),
+  application_host       = config.get_application_host();
 
 
 /*

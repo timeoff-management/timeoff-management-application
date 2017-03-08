@@ -4,7 +4,8 @@
 'use strict';
 
 var test             = require('selenium-webdriver/testing'),
-    application_host = 'http://localhost:3000/',
+    config           = require('../lib/config'),
+    application_host = config.get_application_host(),
     By               = require('selenium-webdriver').By,
     expect           = require('chai').expect,
     _                = require('underscore'),

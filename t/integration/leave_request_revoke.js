@@ -16,7 +16,8 @@ var test                 = require('selenium-webdriver/testing'),
   logout_user_func       = require('../lib/logout_user'),
   check_booking_func     = require('../lib/check_booking_on_calendar'),
   check_elements_func    = require('../lib/check_elements'),
-  application_host       = 'http://localhost:3000/';
+  config                 = require('../lib/config'),
+  application_host       = config.get_application_host();
 
 /*
  *  Scenario to check:

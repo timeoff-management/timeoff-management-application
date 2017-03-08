@@ -9,7 +9,8 @@ var
   expect                  = require('chai').expect,
   By                      = require('selenium-webdriver').By,
   Promise                 = require("bluebird"),
-  application_host        = 'http://localhost:3000/',
+  config                  = require('../../lib/config'),
+  application_host        = config.get_application_host(),
   bankholiday_form_id     = '#update_bankholiday_form',
   new_bankholiday_form_id = '#add_new_bank_holiday_form',
   company_edit_form_id    = '#company_edit_form';

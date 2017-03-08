@@ -2,14 +2,15 @@
 'use strict';
 
 var test             = require('selenium-webdriver/testing'),
-    application_host = 'http://localhost:3000/',
     By               = require('selenium-webdriver').By,
     expect           = require('chai').expect,
     _                = require('underscore'),
     Promise          = require("bluebird"),
     login_user_func        = require('../lib/login_with_user'),
     register_new_user_func = require('../lib/register_new_user'),
-    logout_user_func       = require('../lib/logout_user');
+    logout_user_func       = require('../lib/logout_user'),
+    config                 = require('../lib/config'),
+    application_host       = config.get_application_host();
 
 /*
   User emails are case insensitive.

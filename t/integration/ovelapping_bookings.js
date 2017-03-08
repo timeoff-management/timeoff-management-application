@@ -2,7 +2,6 @@
 'use strict';
 
 var test             = require('selenium-webdriver/testing'),
-    application_host = 'http://localhost:3000/',
     until            = require('selenium-webdriver').until,
     By               = require('selenium-webdriver').By,
     expect           = require('chai').expect,
@@ -16,7 +15,9 @@ var test             = require('selenium-webdriver/testing'),
     submit_form_func       = require('../lib/submit_form'),
     check_elements_func    = require('../lib/check_elements'),
     check_booking_func     = require('../lib/check_booking_on_calendar'),
-    add_new_user_func      = require('../lib/add_new_user');
+    add_new_user_func      = require('../lib/add_new_user'),
+    config                 = require('../lib/config'),
+    application_host       = config.get_application_host();
 
 /*
  *  Scenario to go in this test:

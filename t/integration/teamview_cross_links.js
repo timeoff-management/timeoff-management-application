@@ -12,7 +12,8 @@ var test                 = require('selenium-webdriver/testing'),
   add_new_user_func      = require('../lib/add_new_user'),
   logout_user_func       = require('../lib/logout_user'),
   check_teamview_func    = require('../lib/teamview_check_user'),
-  application_host       = 'http://localhost:3000/';
+  config           = require('../lib/config'),
+  application_host = config.get_application_host();
 
 /*
  *  Scenario to check in thus test.

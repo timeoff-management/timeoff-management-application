@@ -8,7 +8,8 @@ var test                 = require('selenium-webdriver/testing'),
   submit_form_func       = require('../lib/submit_form'),
   check_elements_func    = require('../lib/check_elements'),
   By                     = require('selenium-webdriver').By,
-  application_host       = 'http://localhost:3000/',
+  config                 = require('../lib/config'),
+  application_host       = config.get_application_host(),
   leave_type_edit_form_id='#leave_type_edit_form',
   leave_type_new_form_id ='#leave_type_new_form';
 

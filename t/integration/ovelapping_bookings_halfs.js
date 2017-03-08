@@ -2,13 +2,14 @@
 'use strict';
 
 var test             = require('selenium-webdriver/testing'),
-    application_host = 'http://localhost:3000/',
     until            = require('selenium-webdriver').until,
     By               = require('selenium-webdriver').By,
     expect           = require('chai').expect,
     _                = require('underscore'),
     Promise          = require("bluebird"),
     moment           = require('moment'),
+    config                 = require('../lib/config'),
+    application_host       = config.get_application_host(),
     login_user_func        = require('../lib/login_with_user'),
     register_new_user_func = require('../lib/register_new_user'),
     logout_user_func       = require('../lib/logout_user'),

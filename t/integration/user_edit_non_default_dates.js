@@ -11,7 +11,8 @@ var test                 = require('selenium-webdriver/testing'),
   open_page_func         = require('../lib/open_page'),
   submit_form_func       = require('../lib/submit_form'),
   add_new_user_func      = require('../lib/add_new_user'),
-  application_host       = 'http://localhost:3000/';
+  config                 = require('../lib/config'),
+  application_host       = config.get_application_host();
 
 describe("Try to use non defaul date formats for editing employee details", function(){
 

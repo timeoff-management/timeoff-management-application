@@ -6,7 +6,8 @@ var test                 = require('selenium-webdriver/testing'),
   login_user_func        = require('../lib/login_with_user'),
   open_page_func         = require('../lib/open_page'),
   submit_form_func       = require('../lib/submit_form'),
-  application_host       = 'http://localhost:3000/',
+  config                 = require('../lib/config'),
+  application_host       = config.get_application_host(),
   company_edit_form_id   ='#company_edit_form';
 
 

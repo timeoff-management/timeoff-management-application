@@ -15,7 +15,8 @@ var test                 = require('selenium-webdriver/testing'),
   add_new_user_func      = require('../lib/add_new_user'),
   By                     = require('selenium-webdriver').By,
   new_department_form_id = '#add_new_department_form',
-  application_host       = 'http://localhost:3000/';
+  config                 = require('../lib/config'),
+  application_host       = config.get_application_host();
 
 /*
  *  Scenario to check that filtering by department feature on users page.

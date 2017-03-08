@@ -14,8 +14,9 @@ var test                 = require('selenium-webdriver/testing'),
   submit_form_func       = require('../lib/submit_form'),
   add_new_user_func      = require('../lib/add_new_user'),
   logout_user_func       = require('../lib/logout_user'),
+  config                 = require('../lib/config'),
   new_department_form_id = '#add_new_department_form',
-  application_host       = 'http://localhost:3000/',
+  application_host       = config.get_application_host(),
   company_edit_form_id   ='#company_edit_form';
 
 /*
