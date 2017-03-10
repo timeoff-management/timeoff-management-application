@@ -29,7 +29,7 @@ var test             = require('selenium-webdriver/testing'),
 
 describe('Reuse email from existing acount when creating new company', function(){
 
-  this.timeout(90000);
+  this.timeout( config.get_execution_timeout() );
 
   test.it('Go', function(done){
 

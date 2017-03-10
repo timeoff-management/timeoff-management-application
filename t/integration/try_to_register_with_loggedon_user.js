@@ -23,7 +23,7 @@ var test             = require('selenium-webdriver/testing'),
 
 describe('Try to open registeration page with active user in a session', function(){
 
-  this.timeout(90000);
+  this.timeout( config.get_execution_timeout() );
 
   test.it('Go', function(done){
 

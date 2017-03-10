@@ -9,7 +9,7 @@ until          = require('selenium-webdriver').until,
 check_elements = require('./check_elements');
 
 
-module.exports = Promise.promisify( function(args, callback){
+var submit_form_func = Promise.promisify( function(args, callback){
 
   var driver          = args.driver,
       result_callback = callback,
@@ -34,34 +34,36 @@ module.exports = Promise.promisify( function(args, callback){
       submit_button_selector = args.submit_button_selector ||'button[type="submit"]';
 
 
-    // Enter form parameters
-    Promise.all([
-        _.map(
-            form_params,
-            function( test_case ){
+    driver.call(function(){
+      // Enter form parameters
+      Promise.all([
+          _.map(
+              form_params,
+              function( test_case ){
 
-                // Handle case when test case is empty
-                if (Object.keys(test_case).length === 0 ){
-                    return Promise.resolve(1);
-                }
+                  // Handle case when test case is empty
+                  if (Object.keys(test_case).length === 0 ){
+                      return Promise.resolve(1);
+                  }
 
-                driver
-                .findElement(By.css( test_case.selector ))
-                .then(function(el){
-                    if ( test_case.hasOwnProperty('option_selector') ) {
-                        el.click();
-                        return el.findElement(By.css( test_case.option_selector ))
-                          .then(function(el){ return el.click(); });
-                    } else if ( test_case.hasOwnProperty('tick')) {
-                        return el.click();
-                    } else {
-                        return el.clear().then(function(){
-                            el.sendKeys( test_case.value );
-                        });
-                    }
-                });
-            })
-    ]);
+                  driver
+                  .findElement(By.css( test_case.selector ))
+                  .then(function(el){
+                      if ( test_case.hasOwnProperty('option_selector') ) {
+                          el.click();
+                          return el.findElement(By.css( test_case.option_selector ))
+                            .then(function(el){ return el.click(); });
+                      } else if ( test_case.hasOwnProperty('tick')) {
+                          return el.click();
+                      } else {
+                          return el.clear().then(function(){
+                              el.sendKeys( test_case.value );
+                          });
+                      }
+                  });
+              })
+      ]);
+    });
 
 
     // Submit the form
@@ -76,6 +78,7 @@ module.exports = Promise.promisify( function(args, callback){
     // TODO this is not doing what it supposed to be doing
     if ( should_be_successful ) {
 
+      driver.call(function(){
         Promise.resolve(
             check_elements({
                 driver : driver,
@@ -85,6 +88,7 @@ module.exports = Promise.promisify( function(args, callback){
                 driver = data.driver;
             })
         );
+      });
 
     }
 
@@ -133,3 +137,7 @@ module.exports = Promise.promisify( function(args, callback){
     }
 });
 
+
+module.exports = function(args){
+  return args.driver.call(function(){return submit_form_func(args)});
+}

@@ -40,7 +40,7 @@ var next_year = moment().add(1, 'y').format('YYYY');
 
 describe('Leave type limits for next year: ' + next_year, function(){
 
-  this.timeout(90000);
+  this.timeout( config.get_execution_timeout() );
 
   test.it('Run', function(done){
     var admin_user_email, non_admin_user_email;

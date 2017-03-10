@@ -18,12 +18,9 @@ var test           = require('selenium-webdriver/testing'),
 
 describe('Try to access private pages with guest user', function(){
 
-    // The app is really slow and does not manage to handle request in
-    // default 2 seconds, so be more patient.
-    this.timeout(90000);
+    this.timeout( config.get_execution_timeout() );
 
     test.it('Check pages', function(done) {
-
 
         Promise.all(_.map(
           // Add more URLs to check into the array below
@@ -66,7 +63,8 @@ describe('Try to access private pages with guest user', function(){
 
 
 describe('Try to access admin pages with non-admin user', function(){
-  this.timeout(90000);
+
+  this.timeout( config.get_execution_timeout() );
 
   test.it('Check pages', function(done) {
 

@@ -17,9 +17,7 @@ var test                 = require('selenium-webdriver/testing'),
 describe('CRUD for departments', function(){
   var driver;
 
-  // The app is really slow and does not manage to handle request in
-  // default 2 seconds, so be more patient.
-  this.timeout(60000);
+  this.timeout( config.get_execution_timeout() );
 
   test.it('Check in one go', function(done){
 

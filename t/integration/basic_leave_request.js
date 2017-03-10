@@ -35,229 +35,232 @@ var test             = require('selenium-webdriver/testing'),
 
 describe('Basic leave request', function(){
 
-  // The app is really slow and does not manage to handle request in
-  // default 2 seconds, so be more patient.
-  this.timeout(90000);
+  this.timeout( config.get_execution_timeout() );
 
-  test.it('Run', function(done){
+  var non_admin_user_email, new_user_email, driver;
 
-    var non_admin_user_email, new_user_email;
-
-    // Create new company
-    return register_new_user_func({
-        application_host : application_host,
+  it('Create new company', function(done){
+    register_new_user_func({
+      application_host : application_host,
     })
-    // Create new non-admin user
     .then(function(data){
-        new_user_email = data.email;
+      new_user_email = data.email;
+      driver = data.driver;
+      done();
+    });
+  });
 
-        return add_new_user_func({
-            application_host : application_host,
-            driver           : data.driver,
-        });
+  it("Create new non-admin user", function(done){
+    add_new_user_func({
+      application_host : application_host,
+      driver           : driver,
     })
-    // Logout from admin account
     .then(function(data){
+      non_admin_user_email = data.new_user_email;
+      done();
+    });
+  });
 
-        non_admin_user_email = data.new_user_email;
-
-        return logout_user_func({
-            application_host : application_host,
-            driver           : data.driver,
-        });
+  it("Logout from admin account", function(done){
+    logout_user_func({
+      application_host : application_host,
+      driver           : driver,
     })
-    // Login as non-admin user
-    .then(function(data){
-        return login_user_func({
-            application_host : application_host,
-            user_email       : non_admin_user_email,
-            driver           : data.driver,
-        });
-    })
-    // Open calendar page
-    .then(function(data){
-        return open_page_func({
-            url    : application_host + 'calendar/?year=2015&show_full_year=1',
-            driver : data.driver,
-        });
-    })
-    // And make sure that it is calendar indeed
-    .then(function(data){
-      data.driver.getTitle()
-        .then(function(title){
-            expect(title).to.be.equal('Calendar');
-        });
-      return Promise.resolve(data);
-    })
-    // Request new leave
-    .then(function(data){
-      var driver = data.driver;
+    .then(function(){done()});
+  });
 
-      return driver.findElement(By.css('#book_time_off_btn'))
-        .then(function(el){
-          return el.click();
-        })
-
-        // Following code is to ensure that non admin user can request leave only for
-        // herself
-        .then(function(){
-          return driver.isElementPresent(By.css('select#employee'))
-            .then(function(is_present){
-              expect(is_present).to.be.equal(false);
-            });
-        })
-
-        // Create new leave request
-        .then(function(){
-
-          // This is very important line when working with Bootstrap modals!
-          driver.sleep(1000);
-
-          return submit_form_func({
-            driver      : driver,
-            // The order matters here as we need to populate dropdown prior date filds
-            form_params : [{
-                selector        : 'select[name="from_date_part"]',
-                option_selector : 'option[value="2"]',
-                value           : "2",
-            },{
-                selector : 'input#from',
-                value : '2015-06-15',
-            },{
-                selector : 'input#to',
-                value : '2015-06-16',
-            }],
-            message : /New leave request was added/,
-          });
-
-        })
-
-        // Check that all days are marked as pended
-        .then(function(){
-          return check_booking_func({
-            driver         : driver,
-            full_days      : [moment('2015-06-16')],
-            halfs_1st_days : [moment('2015-06-15')],
-            type           : 'pended',
-          });
-        });
+  it("Login as non-admin user", function(done){
+    login_user_func({
+      application_host : application_host,
+      user_email       : non_admin_user_email,
+      driver           : driver,
     })
-    // Logout from non-admin acount
-    .then(function(data){
-        return logout_user_func({
-            application_host : application_host,
-            driver           : data.driver,
-        });
+    .then(function(){done()});
+  });
+
+  it("Open calendar page", function(done){
+    open_page_func({
+      url    : application_host + 'calendar/?year=2015&show_full_year=1',
+      driver : driver,
     })
-    // Login as admin user
-    .then(function(data){
-        return login_user_func({
-            application_host : application_host,
-            user_email       : new_user_email,
-            driver           : data.driver,
-        });
-    })
-    // Open requests page
-    .then(function(data){
-        return open_page_func({
-            url    : application_host + 'requests/',
-            driver : data.driver,
-        });
-    })
-    // Make sure newly created request is shown for approval
-    .then(function(data){
-      return check_elements_func({
-        driver : data.driver,
-        elements_to_check : [{
-          selector : 'tr[vpp="pending_for__'+non_admin_user_email+'"] .btn-warning',
-          value    : "Reject",
-        }],
+    .then(function(){done()});
+  });
+
+  it("And make sure that it is calendar indeed", function(done){
+    driver.getTitle()
+      .then(function(title){
+          expect(title).to.be.equal('Calendar');
+          done();
       });
-    })
-    // Approve newly added leave request
-    .then(function(data){
-      return data.driver.findElement(By.css(
-        'tr[vpp="pending_for__'+non_admin_user_email+'"] .btn-success'
-      ))
-      .then(function(el){ return el.click(); })
-      .then(function(){
-        // Wait until page properly is reloaded
-        data.driver.wait(until.elementLocated(By.css('h1')), 1000);
+  });
+
+  it("Open Book leave popup window", function(done){
+    driver.findElement(By.css('#book_time_off_btn'))
+      .then(function(el){ return el.click() })
+      .then(function(el){
+        // This is very important line when working with Bootstrap modals!
+        return driver.sleep(1000);
       })
-      .then(function(){ return Promise.resolve(data); });
-    })
-    // Logout from admin acount
-    .then(function(data){
-        return logout_user_func({
-            application_host : application_host,
-            driver           : data.driver,
-        });
-    })
-    // Login as non-admin user
-    .then(function(data){
-        return login_user_func({
-            application_host : application_host,
-            user_email       : non_admin_user_email,
-            driver           : data.driver,
-        });
-    })
-    // Open calendar page (in full year mode)
-    .then(function(data){
-        return open_page_func({
-            url    : application_host + 'calendar/?year=2015&show_full_year=1',
-            driver : data.driver,
-        });
-    })
-    // And make sure that it is calendar indeed
-    .then(function(data){
-      return data.driver.getTitle()
+      .then(function(){ done() });
+  });
 
-        .then(function(title){
-            expect(title).to.be.equal('Calendar');
-        })
-
-        // Check that all days are marked as pended
-        .then(function(){
-          return check_booking_func({
-            driver         : data.driver,
-            full_days      : [moment('2015-06-16')],
-            halfs_1st_days : [moment('2015-06-15')],
-            type           : 'approved',
-          });
-        });
-    })
-
-    // Open calendar page (short version)
-    .then(function(data){
-      return open_page_func({
-        url    : application_host + 'requests/',
-        driver : data.driver,
+  it("Following code is to ensure that non admin user can request leave only for herself", function(done){
+    driver.isElementPresent(By.css('select#employee'))
+      .then(function(is_present){
+        expect(is_present).to.be.equal(false);
+        done();
       });
+  });
+
+  it("Submit new leave request", function(done){
+    submit_form_func({
+      driver      : driver,
+      // The order matters here as we need to populate dropdown prior date filds
+      form_params : [{
+          selector        : 'select[name="from_date_part"]',
+          option_selector : 'option[value="2"]',
+          value           : "2",
+      },{
+          selector : 'input#from',
+          value : '2015-06-15',
+      },{
+          selector : 'input#to',
+          value : '2015-06-16',
+      }],
+      message : /New leave request was added/,
     })
-    // and make sure that requests have approver been populated
-    .then(function(data){
-      data.driver.findElement(
-          By.css('.user-requests-table td.user-request-table-approver')
-        )
-        .then(function(el){ return el.getText(); })
-        .then(function(text){
-          expect(text).to.be.not.empty;
-          return Promise.resolve(data);
-        });
+    .then(function(){done()});
+  });
 
-      return Promise.resolve(data);
+  it("Check that all days are marked as pended", function(done){
+    check_booking_func({
+      driver         : driver,
+      full_days      : [moment('2015-06-16')],
+      halfs_1st_days : [moment('2015-06-15')],
+      type           : 'pended',
     })
+    .then(function(){done()});
+  });
 
-    .then(function(data){ return data.driver.quit(); })
-    .then(function(){ done(); });
+  it("Logout from non-admin acount", function(done){
+    logout_user_func({
+      application_host : application_host,
+      driver           : driver,
+    })
+    .then(function(){done()});
+  });
 
-  }); // End of test
+  it("Login as admin user", function(done){
+    login_user_func({
+      application_host : application_host,
+      user_email       : new_user_email,
+      driver           : driver,
+    })
+    .then(function(){done()});
+  });
+
+  it("Open requests page", function(done){
+    open_page_func({
+      url    : application_host + 'requests/',
+      driver : driver,
+    })
+    .then(function(){done()});
+  });
+
+  it("Make sure newly created request is shown for approval", function(done){
+    check_elements_func({
+      driver : driver,
+      elements_to_check : [{
+        selector : 'tr[vpp="pending_for__'+non_admin_user_email+'"] .btn-warning',
+        value    : "Reject",
+      }],
+    })
+    .then(function(){done()});
+  });
+
+  it("Approve newly added leave request", function(done){
+    driver.findElement(By.css(
+      'tr[vpp="pending_for__'+non_admin_user_email+'"] .btn-success'
+    ))
+    .then(function(el){ return el.click(); })
+    .then(function(){
+      // Wait until page properly is reloaded
+      return driver.wait(until.elementLocated(By.css('h1')), 1000);
+    })
+    .then(function(){done()});
+  });
+
+  it("Logout from admin acount", function(done){
+    logout_user_func({
+      application_host : application_host,
+      driver           : driver,
+    })
+    .then(function(){done()});
+  })
+
+  it("Login as non-admin user", function(done){
+    login_user_func({
+      application_host : application_host,
+      user_email       : non_admin_user_email,
+      driver           : driver,
+    })
+    .then(function(){done()});
+  });
+
+  it("Open calendar page (in full year mode)", function(done){
+    open_page_func({
+      url    : application_host + 'calendar/?year=2015&show_full_year=1',
+      driver : driver,
+    })
+    .then(function(){done()});
+  });
+
+  it("And make sure that it is calendar indeed", function(done){
+    driver.getTitle()
+      .then(function(title){
+        expect(title).to.be.equal('Calendar');
+        done();
+      });
+  });
+
+  it("Check that all days are marked as pended", function(done){
+    check_booking_func({
+      driver         : driver,
+      full_days      : [moment('2015-06-16')],
+      halfs_1st_days : [moment('2015-06-15')],
+      type           : 'approved',
+    })
+    .then(function(){done()});
+  });
+
+  it("Open calendar page (short version)", function(done){
+    open_page_func({
+      url    : application_host + 'requests/',
+      driver : driver,
+    })
+    .then(function(){done()});
+  });
+
+  it("Make sure that requests have approver been populated", function(done){
+    driver.findElement(
+        By.css('.user-requests-table td.user-request-table-approver')
+      )
+      .then(function(el){ return el.getText(); })
+      .then(function(text){
+        expect(text).to.be.not.empty;
+        done();
+      });
+  });
+
+  after(function(done){
+    driver.quit().then(function(){ done(); });
+  });
 
 });
 
 describe("Use problematic date with non default date format", function(){
 
-  this.timeout(3 * 60 * 1000);
+  this.timeout( config.get_execution_timeout() );
 
   var driver;
 
@@ -282,15 +285,13 @@ describe("Use problematic date with non default date format", function(){
 
   it("Open Book new leave pop up", function(done){
     driver.findElement(By.css('#book_time_off_btn'))
-      .then(function(el){
-        el.click().then(function(){ done() });
-      });
+      .then(function(el){ return el.click() })
+      // This is very important line when working with Bootstrap modals!
+      .then(function(){ return driver.sleep(1000) })
+      .then(function(){ done() });
   });
 
   it("Make sure it is possible to place an leave request for date that was reported to be problematic", function(done){
-
-    // This is very important line when working with Bootstrap modals!
-    driver.sleep(1000);
 
     submit_form_func({
       driver      : driver,

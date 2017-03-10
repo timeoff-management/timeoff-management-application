@@ -7,7 +7,7 @@ var webdriver = require('selenium-webdriver'),
     Promise   = require("bluebird");
 
 
-module.exports = Promise.promisify( function(args, callback){
+var logout_user_func = Promise.promisify( function(args, callback){
 
   var application_host = args.application_host,
       driver           = args.driver,
@@ -56,4 +56,9 @@ module.exports = Promise.promisify( function(args, callback){
     });
 
 });
+
+
+module.exports = function(args){
+  return args.driver.call(function(){return logout_user_func(args)});
+}
 

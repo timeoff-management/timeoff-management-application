@@ -6,7 +6,7 @@ var webdriver = require('selenium-webdriver'),
     expect    = require('chai').expect,
     Promise   = require("bluebird");
 
-module.exports = Promise.promisify( function(args, callback){
+var check_booking_func = Promise.promisify( function(args, callback){
 
   var driver          = args.driver,
       type            = args.type,
@@ -59,3 +59,6 @@ module.exports = Promise.promisify( function(args, callback){
 
 });
 
+module.exports = function(args){
+  return args.driver.call(function(){return check_booking_func(args)});
+}

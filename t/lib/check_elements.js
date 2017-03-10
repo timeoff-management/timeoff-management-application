@@ -7,7 +7,7 @@ var webdriver = require('selenium-webdriver'),
     Promise   = require("bluebird");
 
 
-module.exports = Promise.promisify( function(args, callback){
+var check_elements_func = Promise.promisify( function(args, callback){
 
   var driver            = args.driver,
       result_callback   = callback,
@@ -47,3 +47,6 @@ module.exports = Promise.promisify( function(args, callback){
     });
 });
 
+module.exports = function(args){
+  return args.driver.call(function(){return check_elements_func(args)});
+}

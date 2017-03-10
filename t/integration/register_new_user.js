@@ -12,9 +12,7 @@ var test                 = require('selenium-webdriver/testing'),
 describe('Register new user', function(){
   var driver;
 
-  // The app is really slow and does not manage to handle request in
-  // default 2 seconds, so be more patient.
-  this.timeout(50000);
+  this.timeout( config.get_execution_timeout() );
 
   test.it('Check default registration path', function(done){
 

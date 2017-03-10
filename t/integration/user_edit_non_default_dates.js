@@ -16,7 +16,7 @@ var test                 = require('selenium-webdriver/testing'),
 
 describe("Try to use non defaul date formats for editing employee details", function(){
 
-  this.timeout( 3 * 60 * 1000);
+  this.timeout( config.get_execution_timeout() );
 
   var driver;
 

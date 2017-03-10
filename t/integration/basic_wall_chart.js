@@ -90,7 +90,7 @@ var test                 = require('selenium-webdriver/testing'),
   describe('Check basic scenario for Team view page', function(){
     var driver;
 
-    this.timeout(60000);
+    this.timeout( config.get_execution_timeout() );
 
     test.it('Go...', function( done ){
 

@@ -24,7 +24,7 @@ var test             = require('selenium-webdriver/testing'),
 
 describe('Emails are case insensitive', function(){
 
-  this.timeout(90000);
+  this.timeout( config.get_execution_timeout() );
 
   test.it('Go', function(done){
 

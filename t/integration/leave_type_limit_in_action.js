@@ -35,7 +35,7 @@ var test             = require('selenium-webdriver/testing'),
 
 describe('Leave type limits in actoion', function(){
 
-  this.timeout(90000);
+  this.timeout( config.get_execution_timeout() );
 
   test.it('Run', function(done){
     var non_admin_user_email;

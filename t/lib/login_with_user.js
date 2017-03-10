@@ -10,7 +10,7 @@ var webdriver = require('selenium-webdriver'),
     driver;
 
 
-module.exports = Promise.promisify(function(args, callback){
+var login_with_user_func = Promise.promisify(function(args, callback){
 
   var application_host = args.application_host,
       user_email       = args.user_email,
@@ -133,4 +133,6 @@ module.exports = Promise.promisify(function(args, callback){
     });
 });
 
-
+module.exports = function(args){
+  return args.driver.call(function(){return login_with_user_func(args)});
+}

@@ -29,7 +29,7 @@ var test                 = require('selenium-webdriver/testing'),
   describe('Cross linking on Teamview page', function(){
     var driver;
 
-    this.timeout(60000);
+    this.timeout( config.get_execution_timeout() );
 
     test.it('Go...', function( done ){
 

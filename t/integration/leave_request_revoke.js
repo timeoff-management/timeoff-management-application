@@ -40,7 +40,7 @@ var test                 = require('selenium-webdriver/testing'),
 
 describe('Revoke leave request', function(){
 
-  this.timeout(90000);
+  this.timeout( config.get_execution_timeout() );
 
   test.it('Go...', function(done){
     var email_admin   , admin_user_id,

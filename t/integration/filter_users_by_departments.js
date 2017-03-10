@@ -34,7 +34,7 @@ var test                 = require('selenium-webdriver/testing'),
 describe('Check filtering on "users" page', function(){
     var driver;
 
-    this.timeout(60000);
+    this.timeout( config.get_execution_timeout() );
 
     test.it('Go', function(done){
 

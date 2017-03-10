@@ -38,9 +38,7 @@ var test             = require('selenium-webdriver/testing'),
 
 describe('Overlapping leaverequest (with halfs)', function(){
 
-  // The app is really slow and does not manage to handle request in
-  // default 2 seconds, so be more patient.
-  this.timeout(90000);
+  this.timeout( config.get_execution_timeout() );
 
   test.it('Run', function(done){
 

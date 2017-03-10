@@ -1,7 +1,6 @@
 
 'use strict';
 
-
 var test                 = require('selenium-webdriver/testing'),
   register_new_user_func = require('../lib/register_new_user'),
   login_user_func        = require('../lib/login_with_user'),
@@ -19,28 +18,32 @@ var test                 = require('selenium-webdriver/testing'),
 
 describe('Admin tries to add user with email used for other one', function(){
 
-  this.timeout(90000);
+  this.timeout( config.get_execution_timeout() );
 
-  test.it('Go...', function(done){
-    var new_user_email;
+  var new_user_email, driver;
 
-    // Create new company
-    return register_new_user_func({
-        application_host : application_host,
+  it('Create new company', function(done){
+    register_new_user_func({
+      application_host : application_host,
     })
-    // Create new non-admin user
     .then(function(data){
-        new_user_email = data.email;
-
-        return add_new_user_func({
-            application_host : application_host,
-            driver           : data.driver,
-            email            : new_user_email,
-            error_message    : 'Email is already in use',
-        });
-    })
-    .then(function(data){ return data.driver.quit(); })
-    .then(function(){ done(); });
+      driver = data.driver;
+      new_user_email = data.email;
+      done();
+    });
   });
 
+  it("Create new non-admin user", function(done){
+    add_new_user_func({
+      application_host : application_host,
+      driver           : driver,
+      email            : new_user_email,
+      error_message    : 'Email is already in use',
+    })
+    .then(function(){done()});
+  });
+
+  after(function(done){
+    driver.quit().then(function(){ done(); });
+  });
 });
