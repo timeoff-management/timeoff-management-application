@@ -39,7 +39,7 @@
   },
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha --recursive t/*",
-    "start": "node bin/wwww",
+    "start": "node server.js",
     "db-update" : "node node_modules/.bin/sequelize db:migrate --config=config/db.json --models-path=lib/model/db/"
   },
 "main": "server.js"
