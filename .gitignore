@@ -3,3 +3,7 @@
 *.swo
 node_modules/
 *.sqlite
+/node_modules
+npm-debug.log
+.DS_Store
+/*.env
