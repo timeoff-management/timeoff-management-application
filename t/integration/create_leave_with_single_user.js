@@ -29,77 +29,74 @@ var test             = require('selenium-webdriver/testing'),
  * */
 
 
-describe('Basic leave request', function(){
+describe('Leave request with singl user', function(){
 
   this.timeout( config.get_execution_timeout() );
 
-  test.it('Run', function(done){
+  var new_user_email, driver;
 
-    var new_user_email;
-
-    // Create new company
-    return register_new_user_func({
-        application_host : application_host,
+  it('Create new company', function(done){
+    register_new_user_func({
+      application_host : application_host,
     })
+    .then(function( data ){
+      driver = data.driver;
+      new_user_email = data.email;
+      done();
+    });
+  });
 
-
-    // Open calendar page
-    .then(function(data){
-        new_user_email = data.email;
-        return open_page_func({
-            url    : application_host + 'calendar/?show_full_year=1&year=2015',
-            driver : data.driver,
-        });
+  it("Open calendar page", function(done){
+    open_page_func({
+      url    : application_host + 'calendar/?show_full_year=1&year=2015',
+      driver : driver,
     })
-    // Request new leave
-    .then(function(data){
-      var driver = data.driver;
+    .then(function(){ done() });
+  });
 
-      return driver.findElement(By.css('#book_time_off_btn'))
-        .then(function(el){
-          return el.click();
-        })
+  it("Open page to create new leave", function(done){
+    driver.findElement(By.css('#book_time_off_btn'))
+      .then(function(el){
+        return el.click();
+      })
+      .then(function(){ done() });
+  });
 
-        // Create new leave request
-        .then(function(){
+  it("Create new leave request", function(done){
 
-          // This is very important line when working with Bootstrap modals!
-          driver.sleep(1000);
+    // This is very important line when working with Bootstrap modals!
+    driver.sleep(1000);
 
-          return submit_form_func({
-            driver      : driver,
-            // The order matters here as we need to populate dropdown prior date filds
-            form_params : [{
-                selector        : 'select[name="from_date_part"]',
-                option_selector : 'option[value="2"]',
-                value           : "2",
-            },{
-                selector : 'input#from',
-                value : '2015-06-15',
-            },{
-                selector : 'input#to',
-                value : '2015-06-16',
-            }],
-            message : /New leave request was added/,
-          });
-
-        })
-
-        // Check that all days are marked as pended
-        .then(function(){
-          return check_booking_func({
-            driver         : driver,
-            full_days      : [moment('2015-06-16')],
-            halfs_1st_days : [moment('2015-06-15')],
-            type           : 'pended',
-          });
-        });
-
+    submit_form_func({
+      driver      : driver,
+      // The order matters here as we need to populate dropdown prior date filds
+      form_params : [{
+          selector        : 'select[name="from_date_part"]',
+          option_selector : 'option[value="2"]',
+          value           : "2",
+      },{
+          selector : 'input#from',
+          value : '2015-06-15',
+      },{
+          selector : 'input#to',
+          value : '2015-06-16',
+      }],
+      message : /New leave request was added/,
     })
+    .then(function(){ done() });
+  });
 
-    .then(function(data){ return data.driver.quit(); })
-    .then(function(){ done(); });
+  it("Check that all days are marked as pended", function(done){
+    check_booking_func({
+      driver         : driver,
+      full_days      : [moment('2015-06-16')],
+      halfs_1st_days : [moment('2015-06-15')],
+      type           : 'pended',
+    })
+    .then(function(){ done() });
+  });
 
-  }); // End of test
-
+  after(function(done){
+    driver.quit().then(function(){ done(); });
+  });
 });
