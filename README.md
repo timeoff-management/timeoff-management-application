@@ -84,6 +84,12 @@ Visit http://timeoff.management/
 
 Create company account and use cloud based version.
 
+### Host on Heroku
+Click the following button to install TimeOff.Management on Heroku:
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
+
 ### Self hosting
 
 Install TimeOff.Management application within your infrastructure:
