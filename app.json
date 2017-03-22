@@ -2,5 +2,6 @@
   "name": "TimeOff.Management",
   "description": "Simple yet powerful absence management software for small and medium size business",
   "repository": "https://github.com/timeoff-management/application",
-  "keywords": ["holiday management", "absence", "holiday", "tool", "team", "time", "approval"]
+  "keywords": ["holiday management", "absence", "holiday", "tool", "team", "time", "approval"],
+  "addons": ["heroku-postgresql"]
 }
