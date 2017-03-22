@@ -2,7 +2,5 @@
   "name": "TimeOff.Management",
   "description": "Simple yet powerful absence management software for small and medium size business",
   "repository": "https://github.com/timeoff-management/application",
-  "logo": "",
-  "keywords": ["holiday management", "absence", "holiday", "tool", "team", "time", "approval"],
-  "image": ""
+  "keywords": ["holiday management", "absence", "holiday", "tool", "team", "time", "approval"]
 }
