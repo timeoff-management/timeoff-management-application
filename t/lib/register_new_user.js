@@ -13,11 +13,10 @@ var webdriver = require('selenium-webdriver'),
     Promise   = require("bluebird"),
     open_page_func       = require('../lib/open_page'),
     company_edit_form_id = '#company_edit_form',
-    submit_form_func     = require('../lib/submit_form'),
-    driver;
+    submit_form_func     = require('../lib/submit_form');
 
 
-module.exports = Promise.promisify( function(args, callback){
+var register_new_user_func = Promise.promisify( function(args, callback){
 
   var
     application_host      = args.application_host,
@@ -26,8 +25,8 @@ module.exports = Promise.promisify( function(args, callback){
     random_token          = (new Date()).getTime(),
     new_user_email        = args.user_email || random_token + '@test.com';
 
-  // Instantiate new driver object
-    driver = new webdriver.Builder()
+  // Instantiate new driver object if it not provided as paramater
+  var driver = args.driver || new webdriver.Builder()
       .withCapabilities(webdriver.Capabilities.phantomjs())
 //      .withCapabilities(webdriver.Capabilities.chrome())
       .build();
@@ -197,3 +196,10 @@ module.exports = Promise.promisify( function(args, callback){
 
 });
 
+module.exports = function(args){
+  if (args.hasOwnProperty('driver')) {
+    return args.driver.call(function(){return register_new_user_func(args)});
+  } else {
+    return register_new_user_func(args);
+  }
+}
