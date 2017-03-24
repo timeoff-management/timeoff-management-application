@@ -24,79 +24,80 @@ var test                 = require('selenium-webdriver/testing'),
  *
  * */
 
-
-describe('CRUD for users', function(){
+describe('Edit user to have duplicated email', function(){
 
   this.timeout( config.get_execution_timeout() );
 
-  test.it('Go...', function(done){
-    var email_admin;
+  var email_admin, driver;
 
-    // Create new company
-    return register_new_user_func({
+  it('Create new company', function(done){
+    register_new_user_func({
       application_host : application_host,
     })
-    // Create second user
     .then(function(data){
+      driver = data.driver;
       email_admin = data.email;
-      return add_new_user_func({
-        application_host : application_host,
-        driver           : data.driver,
-      });
-    })
+      done();
+    });
+  });
 
-    // Open 'users' page
-    .then(function(data){
-      return open_page_func({
-        url    : application_host + 'users/',
-        driver : data.driver,
-      });
+  it("Create second user", function(done){
+    add_new_user_func({
+      application_host : application_host,
+      driver           : driver,
     })
+    .then(function(){ done() });
+  });
 
-    // Make sure that both users are shown
-    // and click on latest user (assuming users are sorted alphabetichally and
-    // test user names are derived from epoch)
-    .then(function(data){
-      return data.driver
-        .findElements(By.css( 'td.user-link-cell a' ))
-        .then(function(elements){
-          expect(elements.length).to.be.equal(2);
-          // click on second user link
-          return elements[1].click()
-        })
-        .then(function(){
-          return Promise.resolve(data);
-        });
+  it("Open 'users' page", function(done){
+    open_page_func({
+      url    : application_host + 'users/',
+      driver : driver,
     })
+    .then(function(){ done() });
+  });
 
-    // Try to assign to second user the same email as ADMIN has
-    .then(function(data){
-      return submit_form_func({
-        driver      : data.driver,
-        form_params : [{
-            selector : 'input[name="email_address"]',
-            value    : email_admin,
-        }],
-        submit_button_selector : 'button#save_changes_btn',
-        message : /Email is already in use/,
+  it("Make sure that both users are shown " +
+    "and click on latest user (assuming users are sorted alphabetichally and " +
+    "test user names are derived from epoch)", function(done){
+    driver
+      .findElements(By.css( 'td.user-link-cell a' ))
+      .then(function(elements){
+        expect(elements.length).to.be.equal(2);
+        // click on second user link
+        return elements[1].click()
       })
-    })
+      .then(function(){ done() });
+  });
 
-    // Update email user with unique email address
-    .then(function(data){
-      return submit_form_func({
-        driver      : data.driver,
-        form_params : [{
-            selector : 'input[name="email_address"]',
-            value    : 'foobar'+email_admin,
-        }],
-        submit_button_selector : 'button#save_changes_btn',
-        message : /Details for .* were updated/,
-      })
+  it("Try to assign to second user the same email as ADMIN has", function(done){
+    submit_form_func({
+      driver      : driver,
+      form_params : [{
+        selector : 'input[name="email_address"]',
+        value    : email_admin,
+      }],
+      submit_button_selector : 'button#save_changes_btn',
+      message : /Email is already in use/,
     })
+    .then(function(){ done() });
+  });
 
-    .then(function(data){ return data.driver.quit(); })
-    .then(function(){ done(); });
+  it("Update email user with unique email address", function(done){
+    submit_form_func({
+      driver      : driver,
+      form_params : [{
+        selector : 'input[name="email_address"]',
+        value    : 'foobar'+email_admin,
+      }],
+      submit_button_selector : 'button#save_changes_btn',
+      message : /Details for .* were updated/,
+    })
+    .then(function(){ done() });
+  });
+
+  after(function(done){
+    driver.quit().then(function(){ done(); });
   });
 
 });
