@@ -2,6 +2,7 @@ language: node_js
 node_js:
   - "0.10"
   - "0.12"
+  - "v6.10.1"
 sudo: false
 cache:
   directories:
@@ -9,4 +10,4 @@ cache:
 env:
 before_install:
 before_script:
-  - node bin/wwww > /dev/null &
+  - node bin/wwww > /dev/null 2>&1 &
