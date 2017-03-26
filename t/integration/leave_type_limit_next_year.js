@@ -42,201 +42,198 @@ describe('Leave type limits for next year: ' + next_year, function(){
 
   this.timeout( config.get_execution_timeout() );
 
-  test.it('Run', function(done){
-    var admin_user_email, non_admin_user_email;
+  var admin_user_email, non_admin_user_email, driver;
 
-    // Create new company
-    return register_new_user_func({
+  it('Create new company', function(done){
+    register_new_user_func({
       application_host : application_host,
     })
-
-    // Open page with leave types
     .then(function(data){
-
+      driver = data.driver;
       admin_user_email = data.email;
+      done();
+    });
+  });
 
-      return open_page_func({
-        url    : application_host + 'settings/general/',
-        driver : data.driver,
-      });
+  it("Open page with leave types", function(done){
+    open_page_func({
+      url    : application_host + 'settings/general/',
+      driver : driver,
     })
+    .then(function(){ done() });
+  });
 
-    // Check that it is possible to update Limits
-    .then(function(data){
-       return submit_form_func({
-        driver      : data.driver,
-        form_params : [{
-          selector : leave_type_edit_form_id+' input[name="limit__0"]',
-          value    : '1',
-        }],
-        submit_button_selector : leave_type_edit_form_id+' button[type="submit"]',
-        should_be_successful : true,
-        message : /Changes to leave types were saved/,
-      });
+  it("Check that it is possible to update Limits", function(done){
+    submit_form_func({
+      driver      : driver,
+      form_params : [{
+        selector : leave_type_edit_form_id+' input[name="limit__0"]',
+        value    : '1',
+      }],
+      submit_button_selector : leave_type_edit_form_id+' button[type="submit"]',
+      should_be_successful : true,
+      message : /Changes to leave types were saved/,
     })
+    .then(function(){ done() });
+  });
 
-    // Create new non-admin user
-    .then(function(data){
-      return add_new_user_func({
-        application_host : application_host,
-        driver           : data.driver,
-      });
+  it("Create new non-admin user", function(done){
+    add_new_user_func({
+      application_host : application_host,
+      driver           : driver,
     })
-
-    // Logout from admin account
     .then(function(data){
-
       non_admin_user_email = data.new_user_email;
+      done();
+    });
+  });
 
-      return logout_user_func({
-        application_host : application_host,
-        driver           : data.driver,
-      });
+  it("Logout from admin account", function(done){
+    logout_user_func({
+      application_host : application_host,
+      driver           : driver,
     })
-    // Login as non-admin user
-    .then(function(data){
-      return login_user_func({
-        application_host : application_host,
-        user_email       : non_admin_user_email,
-        driver           : data.driver,
-      });
-    })
-    // Open calendar page
-    .then(function(data){
-      return open_page_func({
-        url    : application_host + 'calendar/?year='+next_year+'&show_full_year=1',
-        driver : data.driver,
-      });
-    })
-    // Add a request that fits under the limit
-    .then(function(data){
-      var driver = data.driver;
+    .then(function(){ done() });
+  });
 
-      return driver.findElement(By.css('#book_time_off_btn'))
-        .then(function(el){
-          return el.click();
+  it("Login as non-admin user", function(done){
+    login_user_func({
+      application_host : application_host,
+      user_email       : non_admin_user_email,
+      driver           : driver,
+    })
+    .then(function(){ done() });
+  });
+
+  it("Open calendar page", function(done){
+    open_page_func({
+      url    : application_host + 'calendar/?year='+next_year+'&show_full_year=1',
+      driver : driver,
+    })
+    .then(function(){ done() });
+  });
+
+  it("Add a request that fits under the limit", function(done){
+    driver
+      .findElement(By.css('#book_time_off_btn'))
+      .then(function(el){ return el.click() })
+      .then(function(){
+
+        // This is very important line when working with Bootstrap modals!
+        driver.sleep(1000);
+
+        submit_form_func({
+          driver      : driver,
+          form_params : [{
+            selector : 'input#from',
+            value : next_year + '-05-10',
+          },{
+            selector : 'input#to',
+            value : next_year + '-05-10',
+          }],
+          message : /New leave request was added/,
         })
-
+        // Check that all days are marked as pended
         .then(function(){
-
-          // This is very important line when working with Bootstrap modals!
-          driver.sleep(1000);
-
-          return submit_form_func({
-            driver      : driver,
-            form_params : [{
-                selector : 'input#from',
-                value : next_year + '-05-10',
-            },{
-                selector : 'input#to',
-                value : next_year + '-05-10',
-            }],
-            message : /New leave request was added/,
+          check_booking_func({
+            driver    : driver,
+            full_days : [moment(next_year + '-05-10')],
+            type      : 'pended',
           })
-          // Check that all days are marked as pended
-          .then(function(){
-            return check_booking_func({
-              driver    : driver,
-              full_days : [moment(next_year + '-05-10')],
-              type      : 'pended',
-            });
-          });
+          .then(function(){ done() });
         });
-    })
-
-    // Logout from regular user session
-    .then(function(data){
-      return logout_user_func({
-        application_host : application_host,
-        driver           : data.driver,
       });
-    })
-    // Login as Admin
-    .then(function(data){
-      return login_user_func({
-        application_host : application_host,
-        user_email       : admin_user_email,
-        driver           : data.driver,
-      });
-    })
+  });
 
-    // Open requests page
-    .then(function(data){
-        return open_page_func({
-            url    : application_host + 'requests/',
-            driver : data.driver,
-        });
+  it("Logout from regular user session", function(done){
+    logout_user_func({
+      application_host : application_host,
+      driver           : driver,
     })
-    // Approve newly added leave request
-    .then(function(data){
-      return data.driver.findElement(By.css(
+    .then(function(){ done() });
+  });
+
+  it("Login as Admin", function(done){
+    login_user_func({
+      application_host : application_host,
+      user_email       : admin_user_email,
+      driver           : driver,
+    })
+    .then(function(){ done() });
+  })
+
+  it("Open requests page", function(done){
+    open_page_func({
+      url    : application_host + 'requests/',
+      driver : driver,
+    })
+    .then(function(){ done() });
+  });
+
+  it("Approve newly added leave request", function(done){
+    driver
+      .findElement(By.css(
         'tr[vpp="pending_for__'+non_admin_user_email+'"] .btn-success'
       ))
       .then(function(el){ return el.click(); })
       .then(function(){
         // Wait until page properly is reloaded
-        data.driver.wait(until.elementLocated(By.css('h1')), 1000);
+        return driver.wait(until.elementLocated(By.css('h1')), 1000);
       })
-      .then(function(){ return Promise.resolve(data); });
+      .then(function(){ done() });
+  });
+
+  it("Logout from admin account", function(done){
+    logout_user_func({
+      application_host : application_host,
+      driver           : driver,
     })
+    .then(function(){ done() });
+  });
 
-
-
-
-
-    // Logout from admin account
-    .then(function(data){
-      return logout_user_func({
-        application_host : application_host,
-        driver           : data.driver,
-      });
+  it("Login as non-admin user", function(done){
+    login_user_func({
+      application_host : application_host,
+      user_email       : non_admin_user_email,
+      driver           : driver,
     })
-    // Login as non-admin user
-    .then(function(data){
-      return login_user_func({
-        application_host : application_host,
-        user_email       : non_admin_user_email,
-        driver           : data.driver,
-      });
-    })
-    // Open calendar page
-    .then(function(data){
-      return open_page_func({
-        url    : application_host + 'calendar/?year='+ next_year +'&show_full_year=1',
-        driver : data.driver,
-      });
-    })
-    // And try to request one more day of the type already 100% taken
-    .then(function(data){
-      var driver = data.driver;
+    .then(function(){ done() });
+  });
 
-      return driver.findElement(By.css('#book_time_off_btn'))
-        .then(function(el){
-          return el.click();
+  it("Open calendar page", function(done){
+    open_page_func({
+      url    : application_host + 'calendar/?year='+ next_year +'&show_full_year=1',
+      driver : driver,
+    })
+    .then(function(){ done() });
+  });
+
+  it("And try to request one more day of the type already 100% taken", function(done){
+    driver
+      .findElement(By.css('#book_time_off_btn'))
+      .then(function(el){ return el.click() })
+      .then(function(){
+
+        // This is very important line when working with Bootstrap modals!
+        driver.sleep(1000);
+
+        submit_form_func({
+          driver      : driver,
+          form_params : [{
+            selector : 'input#from',
+            value : next_year + '-05-11',
+          },{
+            selector : 'input#to',
+            value : next_year + '-05-11',
+          }],
+          message : /Failed to create a leave request/,
         })
+        .then(function(){ done() });
+      });
+  });
 
-        .then(function(){
-
-          // This is very important line when working with Bootstrap modals!
-          driver.sleep(1000);
-
-          return submit_form_func({
-            driver      : driver,
-            form_params : [{
-                selector : 'input#from',
-                value : next_year + '-05-11',
-            },{
-                selector : 'input#to',
-                value : next_year + '-05-11',
-            }],
-            message : /Failed to create a leave request/,
-          });
-        });
-    })
-
-
-    .then(function(){ done(); });
-
-  }); // End of test
+  after(function(done){
+    driver.quit().then(function(){ done(); });
+  });
 
 });

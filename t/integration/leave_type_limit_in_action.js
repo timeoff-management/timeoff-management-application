@@ -19,7 +19,6 @@ var test             = require('selenium-webdriver/testing'),
     config                 = require('../lib/config'),
     application_host       = config.get_application_host();
 
-
 /*
  *  Scenario to go in this test:
  *    - Create new company with admin user
@@ -37,145 +36,142 @@ describe('Leave type limits in actoion', function(){
 
   this.timeout( config.get_execution_timeout() );
 
-  test.it('Run', function(done){
-    var non_admin_user_email;
+  var non_admin_user_email, driver;
 
-    // Create new company
-    return register_new_user_func({
+  it('Create new company', function(done){
+    register_new_user_func({
       application_host : application_host,
     })
-
-    // Open page with leave types
     .then(function(data){
-      return open_page_func({
-        url    : application_host + 'settings/general/',
-        driver : data.driver,
-      });
+      driver = data.driver;
+      done();
+    });
+  });
+
+  it("Open page with leave types", function(done){
+    open_page_func({
+      url    : application_host + 'settings/general/',
+      driver : driver,
     })
+    .then(function(){ done() });
+  });
 
-    // Check that it is possible to update Limits
-    .then(function(data){
-       return submit_form_func({
-        driver      : data.driver,
-        form_params : [{
-          selector : leave_type_edit_form_id+' input[name="limit__0"]',
-          value    : '3',
-        }],
-        submit_button_selector : leave_type_edit_form_id+' button[type="submit"]',
-        should_be_successful : true,
-        message : /Changes to leave types were saved/,
-      });
+  it("Check that it is possible to update Limits", function(done){
+     submit_form_func({
+      driver      : driver,
+      form_params : [{
+        selector : leave_type_edit_form_id+' input[name="limit__0"]',
+        value    : '3',
+      }],
+      submit_button_selector : leave_type_edit_form_id+' button[type="submit"]',
+      should_be_successful : true,
+      message : /Changes to leave types were saved/,
     })
+   .then(function(){ done() });
+  });
 
-    // Create new non-admin user
-    .then(function(data){
-      return add_new_user_func({
-        application_host : application_host,
-        driver           : data.driver,
-      });
+  it("Create new non-admin user", function(done){
+    add_new_user_func({
+      application_host : application_host,
+      driver           : driver,
     })
-
-    // Logout from admin account
     .then(function(data){
-
       non_admin_user_email = data.new_user_email;
+      done();
+    });
+  });
 
-      return logout_user_func({
-        application_host : application_host,
-        driver           : data.driver,
-      });
+  it("Logout from admin account", function(done){
+    logout_user_func({
+      application_host : application_host,
+      driver           : driver,
     })
-    // Login as non-admin user
-    .then(function(data){
-      return login_user_func({
-        application_host : application_host,
-        user_email       : non_admin_user_email,
-        driver           : data.driver,
-      });
-    })
-    // Open calendar page
-    .then(function(data){
-      return open_page_func({
-        url    : application_host + 'calendar/?year=2015&show_full_year=1',
-        driver : data.driver,
-      });
-    })
-    // And make sure that it is calendar indeed
-    .then(function(data){
-      data.driver.getTitle()
-        .then(function(title){
-            expect(title).to.be.equal('Calendar');
-        });
-      return Promise.resolve(data);
-    })
+    .then(function(){ done() });
+  });
 
-    // Try to request new leave that exceed the limit
-    .then(function(data){
-      var driver = data.driver;
+  it("Login as non-admin user", function(done){
+    login_user_func({
+      application_host : application_host,
+      user_email       : non_admin_user_email,
+      driver           : driver,
+    })
+    .then(function(){ done() });
+  });
 
-      return driver.findElement(By.css('#book_time_off_btn'))
-        .then(function(el){
-          return el.click();
+  it("Open calendar page", function(done){
+    open_page_func({
+      url    : application_host + 'calendar/?year=2015&show_full_year=1',
+      driver : driver,
+    })
+    .then(function(){ done() });
+  });
+
+  it("And make sure that it is calendar indeed", function(done){
+    driver.getTitle()
+      .then(function(title){
+        expect(title).to.be.equal('Calendar');
+        done();
+      });
+  });
+
+  it("Try to request new leave that exceed the limit", function(done){
+    driver.findElement(By.css('#book_time_off_btn'))
+      .then(function(el){ return el.click() })
+      .then(function(){
+
+        // This is very important line when working with Bootstrap modals!
+        driver.sleep(1000);
+
+        submit_form_func({
+          driver      : driver,
+          form_params : [{
+            selector : 'input#from',
+            value : '2015-06-15',
+          },{
+            selector : 'input#to',
+            value : '2015-06-18',
+          }],
+          message : /Adding requested .* absense would exceed maximum allowed for such type by 1/,
+          multi_line_message : true,
         })
+        .then(function(){ done() });
+      });
+  });
 
-        .then(function(){
+  it("Add a request that fits under the limit", function(done){
+    driver
+      .findElement(By.css('#book_time_off_btn'))
+      .then(function(el){ return el.click() })
+      .then(function(){
 
-          // This is very important line when working with Bootstrap modals!
-          driver.sleep(1000);
+        // This is very important line when working with Bootstrap modals!
+        driver.sleep(1000);
 
-          return submit_form_func({
-            driver      : driver,
-            form_params : [{
-                selector : 'input#from',
-                value : '2015-06-15',
-            },{
-                selector : 'input#to',
-                value : '2015-06-18',
-            }],
-            message : /Adding requested .* absense would exceed maximum allowed for such type by 1/,
-            multi_line_message : true,
-          });
-        });
-    })
-
-    // Add a request that fits under the limit
-    .then(function(data){
-      var driver = data.driver;
-
-      return driver.findElement(By.css('#book_time_off_btn'))
-        .then(function(el){
-          return el.click();
+        submit_form_func({
+          driver      : driver,
+          form_params : [{
+            selector : 'input#from',
+            value : '2015-06-15',
+          },{
+            selector : 'input#to',
+            value : '2015-06-17',
+          }],
+          message : /New leave request was added/,
         })
-
+        // Check that all days are marked as pended
         .then(function(){
-
-          // This is very important line when working with Bootstrap modals!
-          driver.sleep(1000);
-
-          return submit_form_func({
-            driver      : driver,
-            form_params : [{
-                selector : 'input#from',
-                value : '2015-06-15',
-            },{
-                selector : 'input#to',
-                value : '2015-06-17',
-            }],
-            message : /New leave request was added/,
+          check_booking_func({
+            driver    : driver,
+            full_days : [moment('2015-06-16'),moment('2015-06-16'),moment('2015-06-17')],
+            type      : 'pended',
           })
-          // Check that all days are marked as pended
-          .then(function(){
-            return check_booking_func({
-              driver    : driver,
-              full_days : [moment('2015-06-16'),moment('2015-06-16'),moment('2015-06-17')],
-              type      : 'pended',
-            });
-          });
+          .then(function(){ done() });
         });
-    })
+      });
+  });
 
-    .then(function(){ done(); });
-
-  }); // End of test
+  after(function(done){
+    driver.quit().then(function(){ done(); });
+  });
 
 });

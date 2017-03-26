@@ -14,29 +14,28 @@ describe('Register new user', function(){
 
   this.timeout( config.get_execution_timeout() );
 
-  test.it('Check default registration path', function(done){
 
-    // Performing registration process
+  it("Performing registration process", function(done){
     register_new_user_func({
       application_host : application_host,
     })
-
     .then(function(data){
-
-      // Logout user
-      return logout_user_func({
-        application_host : application_host,
-        driver           : data.driver,
-      });
-
-    })
-
-    .then(function(data){
-
-      // Close browser;
-      data.driver.quit().then(function(){ done(); });
+      driver = data.driver;
+      done();
     });
-
   });
+
+  it("Logout user", function(done){
+    logout_user_func({
+      application_host : application_host,
+      driver           : driver,
+    })
+    .then(function(){ done() });
+  });
+
+  after(function(done){
+    driver.quit().then(function(){ done(); });
+  });
+
 });
 

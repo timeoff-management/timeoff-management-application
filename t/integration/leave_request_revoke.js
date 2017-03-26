@@ -42,340 +42,342 @@ describe('Revoke leave request', function(){
 
   this.timeout( config.get_execution_timeout() );
 
-  test.it('Go...', function(done){
-    var email_admin   , admin_user_id,
-        email_manager_a, manager_a_user_id,
-        email_manager_b, manager_b_user_id,
-        email_employee, employee_user_id;
+  var email_admin   , admin_user_id,
+      email_manager_a, manager_a_user_id,
+      email_manager_b, manager_b_user_id,
+      email_employee, employee_user_id,
+      driver;
 
-    // Create new company
-    return register_new_user_func({
-        application_host : application_host,
-    })
-
-    // Create MANAGER_A-to-be user
-    .then(function(data){
-        email_admin = data.email;
-        console.log('  Create MANAGER_A-to-be user');
-        return add_new_user_func({
-            application_host : application_host,
-            driver           : data.driver,
-        });
-    })
-    // Create MANAGER_A-to-be user
-    .then(function(data){
-
-        email_manager_a = data.new_user_email;
-
-        console.log('  Create MANAGER_B-to-be user');
-        return add_new_user_func({
-            application_host : application_host,
-            driver           : data.driver,
-        });
-    })
-
-    // Create EMPLOYEE-to-be user
-    .then(function(data){
-
-        email_manager_b = data.new_user_email;
-
-        console.log('  Create EMPLOYEE-to-be user');
-        return add_new_user_func({
-            application_host : application_host,
-            driver           : data.driver,
-        });
-    })
-
-
-    // Open department management page
-    .then(function(data){
-        email_employee = data.new_user_email;
-        console.log('    Update department to be supervised by MANAGER_A');
-        return open_page_func({
-            url    : application_host + 'settings/departments/',
-            driver : data.driver,
-        });
+  it('Create new company', function(done){
+    register_new_user_func({
+      application_host : application_host,
     })
     .then(function(data){
-         return submit_form_func({
-            driver      : data.driver,
-            form_params : [{
-                selector : 'input[name="name__0"]',
-                // Just to make sure it is always first in the lists
-                value : 'AAAAA',
-            },{
-                selector        : 'select[name="allowence__0"]',
-                option_selector : 'option[value="15"]',
-                value : '15',
-            },{
-                selector        : 'select[name="boss_id__0"]',
-                option_selector : 'select[name="boss_id__0"] option:nth-child(2)',
-            }],
-            message : /Changes to departments were saved/,
-        });
+      driver = data.driver;
+      email_admin = data.email;
+      done();
+    });
+  });
+
+  it("Create MANAGER_A-to-be user", function(done){
+    add_new_user_func({
+      application_host : application_host,
+      driver           : driver,
     })
-    // Logout from admin account
     .then(function(data){
-      return logout_user_func({
-        application_host : application_host,
-        driver           : data.driver,
+      email_manager_a = data.new_user_email;
+      done();
+    });
+  });
+
+  it("Create MANAGER_A-to-be user", function(done){
+    add_new_user_func({
+      application_host : application_host,
+      driver           : driver,
+    })
+    .then(function(data){
+      email_manager_b = data.new_user_email;
+      done();
+    });
+  });
+
+  it("Create EMPLOYEE-to-be user", function(done){
+    add_new_user_func({
+      application_host : application_host,
+      driver           : driver,
+    })
+    .then(function(data){
+      email_employee = data.new_user_email;
+      done();
+    });
+  });
+
+  it("Open department management page", function(done){
+    open_page_func({
+      url    : application_host + 'settings/departments/',
+      driver : driver,
+    })
+    .then(function(){ done() });
+  });
+
+  it('Update department to be supervised by MANAGER_A', function(done){
+    submit_form_func({
+      driver      : driver,
+      form_params : [{
+        selector : 'input[name="name__0"]',
+        // Just to make sure it is always first in the lists
+        value : 'AAAAA',
+      },{
+        selector        : 'select[name="allowence__0"]',
+        option_selector : 'option[value="15"]',
+        value : '15',
+      },{
+        selector        : 'select[name="boss_id__0"]',
+        option_selector : 'select[name="boss_id__0"] option:nth-child(2)',
+      }],
+      message : /Changes to departments were saved/,
+    })
+    .then(function(){ done() });
+  });
+
+  it("Logout from admin account", function(done){
+    logout_user_func({
+      application_host : application_host,
+      driver           : driver,
+    })
+    .then(function(){ done() });
+  });
+
+  it("Login as EMPLOYEE user", function(done){
+    login_user_func({
+      application_host : application_host,
+      user_email       : email_employee,
+      driver           : driver,
+    })
+    .then(function(){ done() });
+  });
+
+  it("Open calendar page", function(done){
+    open_page_func({
+      url    : application_host + 'calendar/?show_full_year=1',
+      driver : driver,
+    })
+    .then(function(){ done() });
+  });
+
+  it("And make sure that it is calendar indeed", function(done){
+    driver
+      .getTitle()
+      .then(function(title){
+        expect(title).to.be.equal('Calendar');
+        done();
       });
-    })
-    // Login as EMPLOYEE user
-    .then(function(data){
-      console.log('Login as an EMPLOYEE');
-      return login_user_func({
-        application_host : application_host,
-        user_email       : email_employee,
-        driver           : data.driver,
-      });
-    })
+  });
 
-    // Open calendar page
-    .then(function(data){
-      console.log('And book a holiday');
-      return open_page_func({
-        url    : application_host + 'calendar/?show_full_year=1',
-        driver : data.driver,
-      });
-    })
-    // And make sure that it is calendar indeed
-    .then(function(data){
-      data.driver.getTitle()
-        .then(function(title){
-          expect(title).to.be.equal('Calendar');
-        });
-      return Promise.resolve(data);
-    })
-    // Request new leave
-    .then(function(data){
-      var driver = data.driver;
+  it("Request new leave", function(done){
+    driver
+      .findElement(By.css('#book_time_off_btn'))
+      .then(function(el){
+        return el.click();
+      })
+      .then(function(){
 
-      return driver.findElement(By.css('#book_time_off_btn'))
-        .then(function(el){
-          return el.click();
+        // This is very important line when working with Bootstrap modals!
+        driver.sleep(1000);
+
+        submit_form_func({
+          driver      : driver,
+          // The order matters here as we need to populate dropdown prior date filds
+          form_params : [{
+            selector        : 'select[name="from_date_part"]',
+            option_selector : 'option[value="2"]',
+            value           : "2",
+          },{
+            selector : 'input#from',
+            value : '2017-06-15',
+          },{
+            selector : 'input#to',
+            value : '2017-06-16',
+          }],
+          message : /New leave request was added/,
         })
-
-        // Create new leave request
-        .then(function(){
-
-          // This is very important line when working with Bootstrap modals!
-          driver.sleep(1000);
-
-          return submit_form_func({
-            driver      : driver,
-            // The order matters here as we need to populate dropdown prior date filds
-            form_params : [{
-                selector        : 'select[name="from_date_part"]',
-                option_selector : 'option[value="2"]',
-                value           : "2",
-            },{
-                selector : 'input#from',
-                value : '2017-06-15',
-            },{
-                selector : 'input#to',
-                value : '2017-06-16',
-            }],
-            message : /New leave request was added/,
-          });
-
-        })
-
-        // Check that all days are marked as pended
-        .then(function(){
-          return check_booking_func({
-            driver         : driver,
-            full_days      : [moment('2017-06-16')],
-            halfs_1st_days : [moment('2017-06-15')],
-            type           : 'pended',
-          });
-        });
-    })
-    // Logout from EMPLOYEE account
-    .then(function(data){
-      console.log('Logout from EMPLOYEE account');
-      return logout_user_func({
-        application_host : application_host,
-        driver           : data.driver,
+        .then(function(){ done() });
       });
+  });
+
+  it("Check that all days are marked as pended", function(done){
+    check_booking_func({
+      driver         : driver,
+      full_days      : [moment('2017-06-16')],
+      halfs_1st_days : [moment('2017-06-15')],
+      type           : 'pended',
     })
-    // Login as MANAGER_A user
-    .then(function(data){
-      console.log('Login as a MANAGER_A');
-      return login_user_func({
-        application_host : application_host,
-        user_email       : email_manager_a,
-        driver           : data.driver,
-      });
+    .then(function(){ done() });
+  });
+
+  it("Logout from EMPLOYEE account", function(done){
+    logout_user_func({
+      application_host : application_host,
+      driver           : driver,
     })
-    // Open requests page
-    .then(function(data){
-      return open_page_func({
-        url    : application_host + 'requests/',
-        driver : data.driver,
-      });
+    .then(function(){ done() });
+  });
+
+  it("Login as MANAGER_A user", function(done){
+    login_user_func({
+      application_host : application_host,
+      user_email       : email_manager_a,
+      driver           : driver,
     })
-    // Make sure newly created request is shown for approval
-    .then(function(data){
-      console.log('Make sure that newly created request is waiting for approval');
-      return check_elements_func({
-        driver : data.driver,
-        elements_to_check : [{
-          selector : 'tr[vpp="pending_for__'+email_employee+'"] .btn-warning',
-          value    : "Reject",
-        }],
-      });
+    .then(function(){ done() });
+  });
+
+  it("Open requests page", function( done ){
+    open_page_func({
+      url    : application_host + 'requests/',
+      driver : driver,
     })
-    // Approve newly added leave request
-    .then(function(data){
-      console.log('Approve request');
-      return data.driver.findElement(By.css(
+    .then(function(){ done() });
+  });
+
+  it('Make sure that newly created request is waiting for approval', function(done){
+    check_elements_func({
+      driver : driver,
+      elements_to_check : [{
+        selector : 'tr[vpp="pending_for__'+email_employee+'"] .btn-warning',
+        value    : "Reject",
+      }],
+    })
+    .then(function(){ done() });
+  });
+
+  it("Approve newly added leave request", function(done){
+    driver
+      .findElement(By.css(
         'tr[vpp="pending_for__'+email_employee+'"] .btn-success'
       ))
       .then(function(el){ return el.click(); })
       .then(function(){
         // Wait until page properly is reloaded
-        data.driver.wait(until.elementLocated(By.css('h1')), 1000);
+        return driver.wait(until.elementLocated(By.css('h1')), 1000);
       })
-      .then(function(){ return Promise.resolve(data); });
-    })
+      .then(function(){ done() });
+  });
 
-    // Logout from MANAGER_A account
-    .then(function(data){
-      console.log('Logout from MANAGER_A account');
-      return logout_user_func({
-        application_host : application_host,
-        driver           : data.driver,
-      });
+  it(" Logout from MANAGER_A account", function(done){
+    logout_user_func({
+      application_host : application_host,
+      driver           : driver,
     })
-    // Login as ADMIN user
-    .then(function(data){
-      console.log('Login as ADMIN');
-      return login_user_func({
-        application_host : application_host,
-        user_email       : email_admin,
-        driver           : data.driver,
-      });
-    })
+    .then(function(){ done() });
+  });
 
-    // Open department management page
-    .then(function(data){
-      console.log('    Update department to be supervised by MANAGER_B');
-      return open_page_func({
-        url    : application_host + 'settings/departments/',
-        driver : data.driver,
-      });
+  it("Login as ADMIN user", function(done){
+    login_user_func({
+      application_host : application_host,
+      user_email       : email_admin,
+      driver           : driver,
     })
-    .then(function(data){
-       return submit_form_func({
-        driver      : data.driver,
-        form_params : [{
-          selector : 'input[name="name__0"]',
-          // Just to make sure it is always first in the lists
-          value : 'AAAAA',
-        },{
-          selector        : 'select[name="allowence__0"]',
-          option_selector : 'option[value="15"]',
-          value : '15',
-        },{
-          selector        : 'select[name="boss_id__0"]',
-          option_selector : 'select[name="boss_id__0"] option:nth-child(3)',
-        }],
-        message : /Changes to departments were saved/,
-      });
-    })
-    // Logout from admin account
-    .then(function(data){
-      console.log('Logout from ADMIN account');
-      return logout_user_func({
-        application_host : application_host,
-        driver           : data.driver,
-      });
-    })
-    // Login as EMPLOYEE user
-    .then(function(data){
-      console.log('Login as an EMPLOYEE');
-      return login_user_func({
-        application_host : application_host,
-        user_email       : email_employee,
-        driver           : data.driver,
-      });
-    })
+    .then(function(){ done() });
+  });
 
-
-    // Open requests page
-    .then(function(data){
-      console.log('Open requests page');
-      return open_page_func({
-        url    : application_host + 'requests/',
-        driver : data.driver,
-      });
+  it("Open department management page", function(done){
+    open_page_func({
+      url    : application_host + 'settings/departments/',
+      driver : driver,
     })
-    .then(function(data){
-      console.log('Revoke request');
-      return data.driver.findElement(By.css(
+    .then(function(){ done() });
+  });
+
+  it('Update department to be supervised by MANAGER_B', function(done){
+    submit_form_func({
+      driver      : driver,
+      form_params : [{
+        selector : 'input[name="name__0"]',
+        // Just to make sure it is always first in the lists
+        value : 'AAAAA',
+      },{
+        selector        : 'select[name="allowence__0"]',
+        option_selector : 'option[value="15"]',
+        value : '15',
+      },{
+        selector        : 'select[name="boss_id__0"]',
+        option_selector : 'select[name="boss_id__0"] option:nth-child(3)',
+      }],
+      message : /Changes to departments were saved/,
+    })
+    .then(function(){ done() });
+  });
+
+  it("Logout from admin account", function(done){
+    logout_user_func({
+      application_host : application_host,
+      driver           : driver,
+    })
+    .then(function(){ done() });
+  });
+
+  it("Login as EMPLOYEE user", function(done){
+    login_user_func({
+      application_host : application_host,
+      user_email       : email_employee,
+      driver           : driver,
+    })
+    .then(function(){ done() });
+  });
+
+  it("Open requests page", function(done){
+    open_page_func({
+      url    : application_host + 'requests/',
+      driver : driver,
+    })
+    .then(function(){ done() });
+  });
+
+  it('Revoke request', function(done){
+    driver
+      .findElement(By.css(
         'button.revoke-btn'
       ))
       .then(function(el){ return el.click(); })
       .then(function(){
         // Wait until page properly is reloaded
-        data.driver.wait(until.elementLocated(By.css('h1')), 1000);
+        return driver.wait(until.elementLocated(By.css('h1')), 1000);
       })
-      .then(function(){ return Promise.resolve(data); });
-    })
+      .then(function(){ done() });
+  });
 
-    // Logout from EMPLOYEE account
-    .then(function(data){
-      console.log('Logout from EMPLOYEE account');
-      return logout_user_func({
-        application_host : application_host,
-        driver           : data.driver,
-      });
+  it("Logout from EMPLOYEE account", function(done){
+    logout_user_func({
+      application_host : application_host,
+      driver           : driver,
     })
-    // Login as MANAGER_B user
-    .then(function(data){
-      console.log('Login as MANAGER_B');
-      return login_user_func({
-        application_host : application_host,
-        user_email       : email_manager_b,
-        driver           : data.driver,
-      });
+    .then(function(){ done() });
+  });
+
+  it("Login as MANAGER_B user", function(done){
+    login_user_func({
+      application_host : application_host,
+      user_email       : email_manager_b,
+      driver           : driver,
     })
-    // Open requests page
-    .then(function(data){
-      return open_page_func({
-        url    : application_host + 'requests/',
-        driver : data.driver,
-      });
+    .then(function(){ done() });
+  });
+
+  it("Open requests page", function(done){
+    open_page_func({
+      url    : application_host + 'requests/',
+      driver : driver,
     })
-    // Make sure newly revoked request is shown for approval
-    .then(function(data){
-      console.log('Make sure that request to be revoked is shown');
-      return check_elements_func({
-        driver : data.driver,
-        elements_to_check : [{
-          selector : 'tr[vpp="pending_for__'+email_employee+'"] .btn-warning',
-          value    : "Reject",
-        }],
-      });
+    .then(function(){ done() });
+  });
+
+  it("Make sure newly revoked request is shown for approval", function(done){
+    check_elements_func({
+      driver : driver,
+      elements_to_check : [{
+        selector : 'tr[vpp="pending_for__'+email_employee+'"] .btn-warning',
+        value    : "Reject",
+      }],
     })
-    // Approve revoke request
-    .then(function(data){
-      console.log('Approve revoke request');
-      return data.driver.findElement(By.css(
+    .then(function(){ done() });
+  });
+
+  it("Approve revoke request", function(done){
+    driver
+      .findElement(By.css(
         'tr[vpp="pending_for__'+email_employee+'"] .btn-success'
       ))
       .then(function(el){ return el.click(); })
       .then(function(){
         // Wait until page properly is reloaded
-        data.driver.wait(until.elementLocated(By.css('h1')), 1000);
+        return driver.wait(until.elementLocated(By.css('h1')), 1000);
       })
-      .then(function(){ return Promise.resolve(data); });
-    })
+      .then(function(){ done() });
+  });
 
-    .then(function(data){ return data.driver.quit(); })
-    .then(function(){ done(); });
-
+  after(function(done){
+    driver.quit().then(function(){ done(); });
   });
 
 });

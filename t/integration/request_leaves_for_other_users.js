@@ -1,6 +1,4 @@
 
-
-
 'use strict';
 
 var test             = require('selenium-webdriver/testing'),
@@ -18,7 +16,6 @@ var test             = require('selenium-webdriver/testing'),
     submit_form_func       = require('../lib/submit_form'),
     add_new_user_func      = require('../lib/add_new_user'),
     new_department_form_id = '#add_new_department_form';
-
 
 /*
  *  Scenario to go in this test:
@@ -38,296 +35,285 @@ var test             = require('selenium-webdriver/testing'),
  *
  * */
 
-describe('Basic leave request', function(){
+describe('Request leave for outher users', function(){
 
   this.timeout( config.get_execution_timeout() );
 
-  test.it('Run', function(done){
+  var ordenary_user_email, line_manager_email, admin_email,
+      ordenary_user_id, driver;
 
-    var ordenary_user_email, line_manager_email, admin_email,
-        ordenary_user_id;
+  it("Create new company", function(done){
+    register_new_user_func({
+      application_host : application_host,
+    })
+    .then(function(data){
+      driver = data.driver;
+      admin_email = data.email;
+      done();
+    });
+  });
 
-    // Create new company
-    return register_new_user_func({
+  it("Create new line manager user", function(done){
+    add_new_user_func({
         application_host : application_host,
+        driver           : driver,
     })
-    // Create new line manager user
     .then(function(data){
+      line_manager_email = data.new_user_email;
+      done()
+    });
+  });
 
-        admin_email = data.email;
-
-        console.log('    Login with newly created user');
-        console.log('    Create new line manager');
-
-        return add_new_user_func({
-            application_host : application_host,
-            driver           : data.driver,
-        });
+  it("Create new ordanry user", function(done){
+    add_new_user_func({
+      application_host : application_host,
+      driver           : driver,
     })
-    // Create new ordanry user
     .then(function(data){
+      ordenary_user_email = data.new_user_email;
+      done();
+    });
+  });
 
-        line_manager_email = data.new_user_email;
-
-        console.log('    Create new ordenary user');
-
-        return add_new_user_func({
-            application_host : application_host,
-            driver           : data.driver,
-        });
+  it("Open department management page", function(done){
+    open_page_func({
+      url    : application_host + 'settings/departments/',
+      driver : driver,
     })
-    // Open department management page
-    .then(function(data){
-        ordenary_user_email = data.new_user_email;
-        console.log('    Create new department');
-        return open_page_func({
-            url    : application_host + 'settings/departments/',
-            driver : data.driver,
-        });
-    })
-    // Save ID of ordenry user
-    .then(function(data){
+    .then(function(){ done() });
+  });
 
-      console.log('    And update its bose');
-
-      return data.driver.findElement(
+  it("Save ID of ordenry user", function(done){
+    driver
+      .findElement(
         By.css('select[name="boss_id__new"] option:nth-child(3)')
       )
-      .then(function(el){
-        return el.getAttribute('value');
-      })
+      .then(function(el){ return el.getAttribute('value') })
       .then(function(value){
         ordenary_user_id = value;
         expect( ordenary_user_id ).to.match(/^\d+$/);
-        return Promise.resolve(data);
+        done();
       });
-    })
-    // Add new department and make its approver to be newly added
-    // line manager (she is second in a list as users are ordered by AZ)
-    .then(function(data){
+  });
 
-      return data.driver.findElement(By.css('#add_new_department_btn'))
-        .then(function(el){
-          return el.click();
-        })
-        .then(function(){
+  it("Add new department and make its approver to be newly added " +
+    "line manager (she is second in a list as users are ordered by AZ)", function(done){
+    driver
+      .findElement(By.css('#add_new_department_btn'))
+      .then(function(el){ return el.click() })
+      .then(function(){
 
-           // This is very important line when working with Bootstrap modals!
-           data.driver.sleep(1000);
+        // This is very important line when working with Bootstrap modals!
+        driver.sleep(1000);
 
-           return submit_form_func({
-              driver      : data.driver,
-              form_params : [{
-                  selector : new_department_form_id+' input[name="name__new"]',
-                  // Just to make sure it is always first in the lists
-                  value : 'AAAAA',
-              },{
-                  selector        : new_department_form_id+' select[name="allowence__new"]',
-                  option_selector : 'option[value="15"]',
-                  value : '15',
-              },{
-                  selector        : new_department_form_id+' select[name="boss_id__new"]',
-                  option_selector : 'select[name="boss_id__new"] option:nth-child(2)',
-              }],
-              submit_button_selector : new_department_form_id+' button[type="submit"]',
-              message : /Changes to departments were saved/,
-          });
-        });
-    })
-    // Open user editing page for ordenry user
-    .then(function(data){
-
-        console.log('    Make sure ordenary user is part of newly added department. Open page...');
-        return open_page_func({
-            url    : application_host + 'users/edit/'+ordenary_user_id+'/',
-            driver : data.driver,
-        });
-    })
-    // And make sure it is part of the newly added department
-    .then(function(data){
-      console.log('      ... and save changes');
-
-      return submit_form_func({
-          submit_button_selector : 'button#save_changes_btn',
-          driver      : data.driver,
+        submit_form_func({
+          driver      : driver,
           form_params : [{
-              selector : 'select[name="department"]',
-              // Newly added department should be first in the list as it is
-              // sorted by AZ and department started with AA
-              option_selector : 'select[name="department"] option:nth-child(1)',
+            selector : new_department_form_id+' input[name="name__new"]',
+            // Just to make sure it is always first in the lists
+            value : 'AAAAA',
+          },{
+            selector        : new_department_form_id+' select[name="allowence__new"]',
+            option_selector : 'option[value="15"]',
+            value : '15',
+          },{
+            selector        : new_department_form_id+' select[name="boss_id__new"]',
+            option_selector : 'select[name="boss_id__new"] option:nth-child(2)',
           }],
-          message : /Details for .* were updated/,
+          submit_button_selector : new_department_form_id+' button[type="submit"]',
+          message : /Changes to departments were saved/,
+        })
+        .then(function(){ done() });
       });
+  });
+
+  it("Open user editing page for ordenry user", function(done){
+    open_page_func({
+      url    : application_host + 'users/edit/'+ordenary_user_id+'/',
+      driver : driver,
     })
+    .then(function(){ done() });
+  });
 
-    // Logout from admin acount
-    .then(function(data){
-        console.log('    Log out from admin user');
-
-        return logout_user_func({
-            application_host : application_host,
-            driver           : data.driver,
-        });
+  it("And make sure it is part of the newly added department", function(done){
+    submit_form_func({
+      submit_button_selector : 'button#save_changes_btn',
+      driver      : driver,
+      form_params : [{
+        selector : 'select[name="department"]',
+        // Newly added department should be first in the list as it is
+        // sorted by AZ and department started with AA
+        option_selector : 'select[name="department"] option:nth-child(1)',
+      }],
+      message : /Details for .* were updated/,
     })
-    // Login as ordenary user
-    .then(function(data){
-        return login_user_func({
-            application_host : application_host,
-            user_email       : ordenary_user_email,
-            driver           : data.driver,
-        });
+    .then(function(){ done() });
+  });
+
+  it("Logout from admin acount", function(done){
+    logout_user_func({
+      application_host : application_host,
+      driver           : driver,
     })
+    .then(function(){ done() });
+  })
 
-    // Open calendar page
-    .then(function(data){
-        return open_page_func({
-            url    : application_host + 'calendar/?show_full_year=1&year=2015',
-            driver : data.driver,
-        });
+  it("Login as ordenary user", function(done){
+    login_user_func({
+      application_host : application_host,
+      user_email       : ordenary_user_email,
+      driver           : driver,
     })
-    // And make sure that user cannot select other users when requesting new leave
-    .then(function(data){
-      var driver = data.driver;
+    .then(function(){ done() });
+  });
 
-      return driver.findElement(By.css('#book_time_off_btn'))
-        .then(function(el){
-          return el.click();
-        })
-        .then(function(){
-
-          // This is very important line when working with Bootstrap modals!
-          driver.sleep(1000);
-
-          return driver.isElementPresent(By.css('select#employee'))
-            .then(function(is_present){
-              expect(is_present).to.be.equal(false);
-            });
-        })
-        .then(function(){ return Promise.resolve(data); });
+  it("Open calendar page", function(done){
+    open_page_func({
+      url    : application_host + 'calendar/?show_full_year=1&year=2015',
+      driver : driver,
     })
-    // Logout from ordenary acount
-    .then(function(data){
-        return logout_user_func({
-            application_host : application_host,
-            driver           : data.driver,
-        });
+    .then(function(){ done() });
+  });
+
+  it("And make sure that user cannot select other users when requesting new leave", function(done){
+    driver
+      .findElement(By.css('#book_time_off_btn'))
+      .then(function(el){ return el.click() })
+      .then(function(){
+
+        // This is very important line when working with Bootstrap modals!
+        driver.sleep(1000);
+
+        driver
+          .isElementPresent(By.css('select#employee'))
+          .then(function(is_present){
+            expect(is_present).to.be.equal(false);
+            done();
+          });
+      });
+  });
+
+  it("Logout from ordenary acount", function(done){
+    logout_user_func({
+      application_host : application_host,
+      driver           : driver,
     })
+    .then(function(){ done() });
+  });
 
-    // Login as line manager user
-    .then(function(data){
-        return login_user_func({
-            application_host : application_host,
-            user_email       : line_manager_email,
-            driver           : data.driver,
-        });
+  it("Login as line manager user", function(done){
+    login_user_func({
+      application_host : application_host,
+      user_email       : line_manager_email,
+      driver           : driver,
     })
-    // Open calendar page
-    .then(function(data){
-        return open_page_func({
-            url    : application_host + 'calendar/?show_full_year=1&year=2015',
-            driver : data.driver,
-        });
+    .then(function(){ done() });
+  });
+
+  it("Open calendar page", function(done){
+    open_page_func({
+      url    : application_host + 'calendar/?show_full_year=1&year=2015',
+      driver : driver,
     })
-    // And make sure that user can select herself and ordenary user (because she
-    // belongs to the department managed by current line manager)
-    .then(function(data){
-      var driver = data.driver;
+    .then(function(){ done() });
+  });
 
-      return driver.findElement(By.css('#book_time_off_btn'))
-        .then(function(el){
-          return el.click();
-        })
-        .then(function(){
+  it("And make sure that user can select herself and ordenary user (because she "+
+    "belongs to the department managed by current line manager)", function(done){
+    driver
+      .findElement(By.css('#book_time_off_btn'))
+      .then(function(el){ return el.click() })
+      .then(function(){
 
-          // This is very important line when working with Bootstrap modals!
-          driver.sleep(1000);
+        // This is very important line when working with Bootstrap modals!
+        driver.sleep(1000);
 
-          // Make sure there is a drop down with users
-          return driver.isElementPresent(By.css('select#employee'))
-            .then(function(is_present){
-              expect(is_present).to.be.equal(true);
-            });
-        })
-        .then(function(){
+        // Make sure there is a drop down with users
+        driver
+          .isElementPresent(By.css('select#employee'))
+          .then(function(is_present){
+            expect(is_present).to.be.equal(true);
+            done();
+          });
+      });
+  });
 
-          // Make sure there are two records in it
-          return driver.findElements(By.css('select#employee option'))
-            .then(function(elements){
-              expect( elements.length ).to.be.equal(2);
-            });
-        })
-        .then(function(){
+  it("... make sure there are two records in it", function(done){
+    driver
+      .findElements(By.css('select#employee option'))
+      .then(function(elements){
+        expect( elements.length ).to.be.equal(2);
+        done();
+      });
+  });
 
-          // Make sure ordenary user is in that drop down list
-          return driver.findElement(
-              By.css('select#employee option:nth-child(2)')
-            )
-            .then(function(el){
-              return el.getInnerHtml();
-            })
-            .then(function(text){
-              expect( text ).to.match( new RegExp(
-                 ordenary_user_email.substring(0,ordenary_user_email.lastIndexOf('@'))
-               ));
-            });
-        })
-        .then(function(){ return Promise.resolve(data); });
+  it("Make sure ordenary user is in that drop down list", function(done){
+    driver
+      .findElement(
+        By.css('select#employee option:nth-child(2)')
+      )
+      .then(function(el){ return el.getInnerHtml() })
+      .then(function(text){
+        expect( text ).to.match( new RegExp(
+           ordenary_user_email.substring(0,ordenary_user_email.lastIndexOf('@'))
+         ));
+        done();
+      });
+  });
+
+  it("Logout from ordenary acount", function(done){
+    logout_user_func({
+      application_host : application_host,
+      driver           : driver,
     })
-    // Logout from ordenary acount
-    .then(function(data){
-        return logout_user_func({
-            application_host : application_host,
-            driver           : data.driver,
-        });
+    .then(function(){ done() });
+  });
+
+  it("Login as admin user", function(done){
+    login_user_func({
+      application_host : application_host,
+      user_email       : admin_email,
+      driver           : driver,
     })
+    .then(function(){ done() });
+  });
 
-    // Login as admin user
-    .then(function(data){
-        return login_user_func({
-            application_host : application_host,
-            user_email       : admin_email,
-            driver           : data.driver,
-        });
+  it("Open calendar page", function(done){
+    open_page_func({
+      url    : application_host + 'calendar/?show_full_year=1&year=2015',
+      driver : driver,
     })
-    // Open calendar page
-    .then(function(data){
-        return open_page_func({
-            url    : application_host + 'calendar/?show_full_year=1&year=2015',
-            driver : data.driver,
-        });
-    })
-    // And make sure that user can select all three users
-    .then(function(data){
-      var driver = data.driver;
+    .then(function(){ done() });
+  });
 
-      return driver.findElement(By.css('#book_time_off_btn'))
-        .then(function(el){
-          return el.click();
-        })
-        .then(function(){
+  it("And make sure that user can select all three users", function(done){
+    driver
+      .findElement(By.css('#book_time_off_btn'))
+      .then(function(el){ return el.click() })
+      .then(function(){
 
-          // This is very important line when working with Bootstrap modals!
-          driver.sleep(1000);
+        // This is very important line when working with Bootstrap modals!
+        driver.sleep(1000);
 
-          // Make sure there is a drop down with users
-          return driver.isElementPresent(By.css('select#employee'))
-            .then(function(is_present){
-              expect(is_present).to.be.equal(true);
-            });
-        })
-        .then(function(){
+        // Make sure there is a drop down with users
+        driver
+          .isElementPresent(By.css('select#employee'))
+          .then(function(is_present){
+            expect(is_present).to.be.equal(true);
+          });
 
-          // Make sure there are three records in it (all users for company)
-          return driver.findElements(By.css('select#employee option'))
-            .then(function(elements){
-              expect( elements.length ).to.be.equal(3);
-            });
-        })
-        .then(function(){ return Promise.resolve(data); });
-    })
+        // Make sure there are three records in it (all users for company)
+        driver
+          .findElements(By.css('select#employee option'))
+          .then(function(elements){
+            expect( elements.length ).to.be.equal(3);
+            done();
+          });
+      });
+  });
 
-    .then(function(data){ return data.driver.quit(); })
-    .then(function(){ done(); });
+  after(function(done){
+    driver.quit().then(function(){ done(); });
+  });
 
-  }); // End of test
 });

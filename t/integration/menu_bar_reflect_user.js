@@ -31,93 +31,103 @@ describe('Menu bar reflect permissions of logged in user', function(){
 
   this.timeout( config.get_execution_timeout() );
 
-  test.it('Go...', function(done){
+  var ordinary_user_email, driver;
 
-    var ordinary_user_email;
-
-    // Create new company
-    return register_new_user_func({
-        application_host : application_host,
+  it('Create new company', function(done){
+    register_new_user_func({
+      application_host : application_host,
     })
-
     .then(function(data){
-      var promises_to_check =  check_presense_promises({
-        driver    : data.driver,
-        presense  : true,
-        selectors : [
-          'li > a[href="/calendar/"]',
-          'li > a[href="/calendar/teamview/"]',
-          'li > a[href="/calendar/feeds/"]',
-          'li > a[href="/users/"]',
-          'li > a[href="/settings/general/"]',
-          'li > a[href="/settings/departments/"]',
-          'li > a[href="/requests/"]',
-          'li > a[href="/logout/"]',
-        ],
-      });
+      driver = data.driver;
+      done();
+    });
+  });
 
-      return bluebird.all( promises_to_check)
-        .then( function(){ return bluebird.resolve(data) });
-    })
+  it("Check that all necessary menus are shown", function(done){
+    var promises_to_check =  check_presense_promises({
+      driver    : driver,
+      presense  : true,
+      selectors : [
+        'li > a[href="/calendar/"]',
+        'li > a[href="/calendar/teamview/"]',
+        'li > a[href="/calendar/feeds/"]',
+        'li > a[href="/users/"]',
+        'li > a[href="/settings/general/"]',
+        'li > a[href="/settings/departments/"]',
+        'li > a[href="/requests/"]',
+        'li > a[href="/logout/"]',
+      ],
+    });
 
-    // Create non-admin user
-    .then(function(data){
-        return add_new_user_func({
-            application_host : application_host,
-            driver           : data.driver,
-        });
-    })
-    // Logout from admin acount
-    .then(function(data){
-        ordinary_user_email = data.new_user_email;
-        return logout_user_func({
-            application_host : application_host,
-            driver           : data.driver,
-        });
-    })
-    // Login as ordinary user
-    .then(function(data){
-        return login_user_func({
-            application_host : application_host,
-            user_email       : ordinary_user_email,
-            driver           : data.driver,
-        });
-    })
-    // Check that limited links are there
-    .then(function(data){
-      var promises_to_check =  check_presense_promises({
-        driver    : data.driver,
-        presense  : true,
-        selectors : [
-          'li > a[href="/calendar/"]',
-          'li > a[href="/calendar/teamview/"]',
-          'li > a[href="/calendar/feeds/"]',
-          'li > a[href="/requests/"]',
-          'li > a[href="/logout/"]',
-        ],
-      });
+    bluebird
+      .all( promises_to_check )
+      .then(function(){ done() });
+  });
 
-      return bluebird.all( promises_to_check)
-        .then( function(){ return bluebird.resolve(data) });
+  it("Create non-admin user", function(done){
+    add_new_user_func({
+      application_host : application_host,
+      driver           : driver,
     })
-    // Check that admin links are not shown
     .then(function(data){
-      var promises_to_check =  check_presense_promises({
-        driver    : data.driver,
-        presense  : false,
-        selectors : [
-          'li > a[href="/users/"]',
-          'li > a[href="/settings/general/"]',
-          'li > a[href="/settings/departments/"]',
-        ],
-      });
+      ordinary_user_email = data.new_user_email;
+      done();
+    });
+  });
 
-      return bluebird.all( promises_to_check)
-        .then( function(){ return bluebird.resolve(data) });
+  it("Logout from admin acount", function(done){
+    logout_user_func({
+      application_host : application_host,
+      driver           : driver,
     })
+    .then(function(){ done() });
+  });
 
-    .then(function(data){ return data.driver.quit(); })
-    .then(function(){ done(); });
+  it("Login as ordinary user", function(done){
+    login_user_func({
+      application_host : application_host,
+      user_email       : ordinary_user_email,
+      driver           : driver,
+    })
+    .then(function(){ done() });
+  });
+
+  it("Check that limited links are there", function(done){
+    var promises_to_check =  check_presense_promises({
+      driver    : driver,
+      presense  : true,
+      selectors : [
+        'li > a[href="/calendar/"]',
+        'li > a[href="/calendar/teamview/"]',
+        'li > a[href="/calendar/feeds/"]',
+        'li > a[href="/requests/"]',
+        'li > a[href="/logout/"]',
+      ],
+    });
+
+    bluebird
+      .all( promises_to_check)
+      .then( function(){ done() });
+  });
+
+  it("Check that admin links are not shown", function(done){
+    var promises_to_check =  check_presense_promises({
+      driver    : driver,
+      presense  : false,
+      selectors : [
+        'li > a[href="/users/"]',
+        'li > a[href="/settings/general/"]',
+        'li > a[href="/settings/departments/"]',
+      ],
+    });
+
+    bluebird
+      .all( promises_to_check)
+      .then( function(){ done() });
+  });
+
+  after(function(done){
+    driver.quit().then(function(){ done(); });
   });
 
 });
