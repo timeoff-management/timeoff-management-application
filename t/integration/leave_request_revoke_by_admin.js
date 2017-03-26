@@ -243,7 +243,7 @@ describe('Revoke leave request by Admin', function(){
     .then(function(){ done() });
   });
 
-  it("Approve revoke request", function(){
+  it("Approve revoke request", function(done){
     driver
       .findElement(By.css(
         'tr[vpp="pending_for__'+email_employee+'"] .btn-success'
