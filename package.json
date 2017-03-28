@@ -22,6 +22,7 @@
     "nconf": "^0.8.4",
     "node-uuid": "^1.4.7",
     "nodemailer": "^1.11.0",
+    "nodemailer-mailgun-transport": "^1.2.4",
     "nodemailer-smtp-transport": "^1.1.0",
     "optimist": "^0.6.1",
     "passport": "^0.3.2",
