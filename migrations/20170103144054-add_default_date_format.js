@@ -2,7 +2,7 @@
 
 module.exports = {
   up: function (queryInterface, Sequelize) {
-    /*return queryInterface.addColumn(
+    return queryInterface.addColumn(
       'Companies',
       'date_format',
       {
@@ -10,12 +10,10 @@ module.exports = {
         allowNull    : false,
         defaultValue : 'YYYY-MM-DD',
       }
-    );*/
-    return true;
+    );
   },
 
   down: function (queryInterface, Sequelize) {
-    //return queryInterface.removeColumn('Companies', 'date_format');
-    return true;
+    return queryInterface.removeColumn('Companies', 'date_format');
   }
 };
