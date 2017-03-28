@@ -5,11 +5,11 @@ module.exports = {
 
   // transports email via SMTP
   "email_smtp_transporter" : {
-    "host" : process.env.MAILGUN_SMTP_SERVER || "localhost",
-    "port" : process.env.MAILGUN_SMTP_PORT   || 25,
+    "host" : process.env.SMTP_SERVER || "localhost",
+    "port" : process.env.SMTP_PORT   || 25,
     "auth" : {
-      "user" : process.env.MAILGUN_SMTP_LOGIN    || "user",
-      "pass" : process.env.MAILGUN_SMTP_PASSWORD || "pass"
+      "user" : process.env.SMTP_LOGIN    || "user",
+      "pass" : process.env.SMTP_PASSWORD || "pass"
     }
   },
 
