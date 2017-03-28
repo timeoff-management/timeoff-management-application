@@ -17,8 +17,8 @@ module.exports = {
   // precedes email_smtp_transporter if api_key and domain are set
   "email_mailgun_transporter" : {
     auth: {
-      api_key: process.env.MAILGUN_API_KEY,
-      domain:  process.env.MAILGUN_DOMAIN
+      api_key: process.env.MAILGUN_API_KEY, // e.g. key-abc123xxx
+      domain:  process.env.MAILGUN_DOMAIN   // e.g. mydomain.com - one of your domain names listed at your https://mailgun.com/app/domains
     }
   },
   "crypto_secret" : process.env.CRYPTO_SECRET || "!2~`HswpPPLa22+=±§sdq qwe,appp qwwokDF_",
