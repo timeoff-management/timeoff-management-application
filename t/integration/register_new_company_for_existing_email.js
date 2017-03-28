@@ -31,44 +31,45 @@ describe('Reuse email from existing acount when creating new company', function(
 
   this.timeout( config.get_execution_timeout() );
 
-  test.it('Go', function(done){
+  var admin_email, driver;
 
-    var admin_email;
-
-    // Create new company
-    return register_new_user_func({
-        application_host : application_host,
+  it('Create new company', function(done){
+    register_new_user_func({
+      application_host : application_host,
     })
     .then(function(data){
-      console.log('    Logout from newly created account '+admin_email);
+      driver = data.driver;
       admin_email = data.email;
-
-      return logout_user_func({
-        application_host : application_host,
-        driver           : data.driver,
-      });
-    })
-    .then(function(data){
-        data.driver.quit().then(function(){ done(); });
-        return Promise.resolve(1);
-    })
-    .then(function(){
-        console.log('    Try to create another account with the same email '
-          + admin_email);
-
-        return register_new_user_func({
-          application_host      : application_host,
-          user_email            : admin_email,
-          failing_error_message : 'Failed to register user please contact customer service. Error: Email is already used',
-        });
-    })
-
-    // Close browser;
-    .then(function(data){
       done();
     });
+  });
 
+  it('Logout from newly created account', function(done){
+    logout_user_func({
+      application_host : application_host,
+      driver           : driver,
+    })
+    .then(function(){ done() });
+  });
 
+  it("Close the browser", function(done){
+    driver.quit().then(function(){ done() });
+  });
+
+  it('Try to create another account with the same email', function(done){
+    register_new_user_func({
+      application_host      : application_host,
+      user_email            : admin_email,
+      failing_error_message : 'Failed to register user please contact customer service. Error: Email is already used',
+    })
+    .then(function(data){
+      driver = data .driver;
+      done();
+    });
+  });
+
+  after(function(done){
+    driver.quit().then(function(){ done() });
   });
 
 //  after(function() {

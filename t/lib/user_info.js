@@ -33,7 +33,7 @@ var func_to_inject = function() {
 };
 
 
-module.exports = bluebird.promisify( function(args, callback){
+var user_info_func = bluebird.promisify( function(args, callback){
 
   var
     result_callback = callback,
@@ -83,3 +83,6 @@ module.exports = bluebird.promisify( function(args, callback){
 
 });
 
+module.exports = function(args){
+  return args.driver.call(function(){return user_info_func(args)});
+}

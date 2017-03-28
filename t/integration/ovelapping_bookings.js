@@ -31,129 +31,131 @@ var test             = require('selenium-webdriver/testing'),
  *
  * */
 
-describe('Basic leave request', function(){
+describe('Overlapping bookings', function(){
 
   this.timeout( config.get_execution_timeout() );
 
-  test.it('Run', function(done){
+  var non_admin_user_email, new_user_email, driver;
 
-    var non_admin_user_email, new_user_email;
+  it('Create new company', function(done){
+    register_new_user_func({
+      application_host : application_host,
+    })
+    .then(function(data){
+      new_user_email = data.email;
+      driver = data.driver;
+      done();
+    });
+  });
 
-    // Create new company
-    return register_new_user_func({
-        application_host : application_host,
+  it("Create new non-admin user", function(done){
+    add_new_user_func({
+      application_host : application_host,
+      driver           : driver,
     })
-    // Create new non-admin user
     .then(function(data){
-        new_user_email = data.email;
-        return add_new_user_func({
-            application_host : application_host,
-            driver           : data.driver,
-        });
-    })
-    // Logout from admin acount
-    .then(function(data){
+      non_admin_user_email = data.new_user_email;
+      done();
+    });
+  });
 
-        non_admin_user_email = data.new_user_email;
+  it("Logout from admin acount", function(done){
+    logout_user_func({
+      application_host : application_host,
+      driver           : driver,
+    })
+    .then(function(){ done() });
+  });
 
-        return logout_user_func({
-            application_host : application_host,
-            driver           : data.driver,
-        });
+  it("Login as non-admin user", function(done){
+    login_user_func({
+      application_host : application_host,
+      user_email       : non_admin_user_email,
+      driver           : driver,
     })
-    // Login as non-admin user
-    .then(function(data){
-        return login_user_func({
-            application_host : application_host,
-            user_email       : non_admin_user_email,
-            driver           : data.driver,
-        });
-    })
-    // Open calendar page
-    .then(function(data){
-        return open_page_func({
-            url    : application_host + 'calendar/?show_full_year=1&year=2015',
-            driver : data.driver,
-        });
-    })
-    // And make sure that it is calendar indeed
-    .then(function(data){
-      data.driver.getTitle()
-        .then(function(title){
-            expect(title).to.be.equal('Calendar');
-        });
-      return Promise.resolve(data);
-    })
-    // Request new leave
-    .then(function(data){
-      var driver = data.driver;
+    .then(function(){ done() });
+  });
 
-      return driver.findElement(By.css('#book_time_off_btn'))
-        .then(function(el){
-          return el.click();
+  it("Open calendar page", function(done){
+    open_page_func({
+      url    : application_host + 'calendar/?show_full_year=1&year=2015',
+      driver : driver,
+    })
+    .then(function(){ done() });
+  });
+
+  it("And make sure that it is calendar indeed", function(done){
+    driver
+      .getTitle()
+      .then(function(title){
+        expect(title).to.be.equal('Calendar');
+        done();
+      });
+  });
+
+  it("Request new leave", function(done){
+    driver
+      .findElement(By.css('#book_time_off_btn'))
+      .then(function(el){ return el.click() })
+
+      // Create new leave request
+      .then(function(){
+
+        // This is very important line when working with Bootstrap modals!
+        driver.sleep(1000);
+
+        submit_form_func({
+          driver      : driver,
+          form_params : [{
+            selector : 'input#from',
+            value : '2015-06-15',
+          },{
+            selector : 'input#to',
+            value : '2015-06-16',
+          }],
+          message : /New leave request was added/,
         })
+        .then(function(){ done() });
+      });
+  });
 
-        // Create new leave request
-        .then(function(){
-
-          // This is very important line when working with Bootstrap modals!
-          driver.sleep(1000);
-
-          return submit_form_func({
-            driver      : driver,
-            form_params : [{
-                selector : 'input#from',
-                value : '2015-06-15',
-            },{
-                selector : 'input#to',
-                value : '2015-06-16',
-            }],
-            message : /New leave request was added/,
-          });
-
-        })
-
-        // Check that all days are marked as pended
-        .then(function(){
-          return check_booking_func({
-            driver    : driver,
-            full_days : [moment('2015-06-15'), moment('2015-06-16')],
-            type      : 'pended',
-          });
-        });
+  it("Check that all days are marked as pended", function(done){
+    check_booking_func({
+      driver    : driver,
+      full_days : [moment('2015-06-15'), moment('2015-06-16')],
+      type      : 'pended',
     })
+    .then(function(){ done() });
+  });
 
-    // Try to request overlapping leave request
-    .then(function(data){
-      var driver = data.driver;
+  it("Try to request overlapping leave request", function(done){
+    driver
+      .findElement(By.css('#book_time_off_btn'))
+      .then(function(el){ return el.click() })
 
-      return driver.findElement(By.css('#book_time_off_btn'))
-        .then(function(el){
-          return el.click();
+      // Create new leave request
+      .then(function(){
+
+        // This is very important line when working with Bootstrap modals!
+        driver.sleep(1000);
+
+        submit_form_func({
+          driver      : driver,
+          form_params : [{
+            selector : 'input#from',
+            value : '2015-06-16',
+          },{
+            selector : 'input#to',
+            value : '2015-06-17',
+          }],
+          message : /Failed to create a leave request/,
         })
+        .then(function(){ done() });
+      });
+  });
 
-        // Create new leave request
-        .then(function(){
+  after(function(done){
+    driver.quit().then(function(){ done(); });
+  });
 
-          // This is very important line when working with Bootstrap modals!
-          driver.sleep(1000);
-
-          return submit_form_func({
-            driver      : driver,
-            form_params : [{
-                selector : 'input#from',
-                value : '2015-06-16',
-            },{
-                selector : 'input#to',
-                value : '2015-06-17',
-            }],
-            message : /Failed to create a leave request/,
-          });
-        });
-    })
-
-    .then(function(data){ return data.driver.quit(); })
-    .then(function(){ done(); });
-
-  }); // End of test.it
 });
