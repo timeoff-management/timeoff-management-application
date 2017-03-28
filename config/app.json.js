@@ -1,6 +1,6 @@
 module.exports = {
-  "allow_create_new_accounts" : true,
-  "send_emails"              : false,
+  "allow_create_new_accounts": (process.env.ALLOW_CREATE_NEW_ACCOUNTS === undefined) ? true : process.env.ALLOW_CREATE_NEW_ACCOUNTS,
+  "send_emails"              : (process.env.SEND_EMAILS === undefined) ? false : process.env.SEND_EMAILS,
   "application_sender_email" : process.env.SENDER_EMAIL || "email@test.com",
 
   // transports email via SMTP
