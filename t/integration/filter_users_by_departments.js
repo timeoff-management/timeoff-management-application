@@ -70,7 +70,7 @@ describe('Check filtering on "users" page', function(){
             selector : new_department_form_id+' input[name="name__new"]',
             value : 'IT',
           },{
-            selector        : new_department_form_id+' select[name="allowence__new"]',
+            selector        : new_department_form_id+' select[name="allowance__new"]',
             option_selector : 'option[value="10"]',
             value : '10',
           }],

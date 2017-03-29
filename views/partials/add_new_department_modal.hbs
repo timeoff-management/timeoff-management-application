@@ -10,7 +10,7 @@
 
       {{#each departments}}
         <input type="hidden" value="{{name}}" name="name__{{@index}}">
-        <input type="hidden" value="{{this.allowence}}" name="allowence__{{@index}}">
+        <input type="hidden" value="{{this.allowance}}" name="allowance__{{@index}}">
         <input type="hidden" name="include_public_holidays__{{@index}}" value="{{include_public_holidays}}">
         <input type="hidden" name="boss_id__{{@index}}" value="{{this.bossId}}">
       {{/each}}
@@ -23,9 +23,9 @@
         </div>
 
         <div class="form-group">
-          <label for="department_allowence_new" class="control-label">Allowance:</label>
-          <select class="form-control" id="department_allowence_new" name="allowence__new">
-            {{#each allowence_options}}
+          <label for="department_allowance_new" class="control-label">Allowance:</label>
+          <select class="form-control" id="department_allowance_new" name="allowance__new">
+            {{#each allowance_options}}
             <option value="{{value}}" >{{value}}</option>
             {{/each}}
           </select>
@@ -38,7 +38,7 @@
 
         <div class="form-group">
           <label for="department_superwiser_new" class="control-label">Supervisor</label>
-          <select class="form-control" id="department_allowence_new" name="boss_id__new">
+          <select class="form-control" id="department_allowance_new" name="boss_id__new">
             {{#each company.users}}
               <option value="{{this.id}}">{{this.full_name}}</option>
             {{/each}}
