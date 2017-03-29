@@ -108,7 +108,7 @@ describe('Revoke leave request', function(){
         // Just to make sure it is always first in the lists
         value : 'AAAAA',
       },{
-        selector        : 'select[name="allowence__0"]',
+        selector        : 'select[name="allowance__0"]',
         option_selector : 'option[value="15"]',
         value : '15',
       },{
@@ -277,7 +277,7 @@ describe('Revoke leave request', function(){
         // Just to make sure it is always first in the lists
         value : 'AAAAA',
       },{
-        selector        : 'select[name="allowence__0"]',
+        selector        : 'select[name="allowance__0"]',
         option_selector : 'option[value="15"]',
         value : '15',
       },{

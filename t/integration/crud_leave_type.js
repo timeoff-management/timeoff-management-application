@@ -79,7 +79,7 @@ describe('CRUD for leave types', function(){
 //        });
 //    })
 
-  it('Make sure that both leave types have "use allowence" tick boxes set', function(done){
+  it('Make sure that both leave types have "use allowance" tick boxes set', function(done){
     check_elements_func({
       driver : driver,
       elements_to_check : [{
@@ -95,7 +95,7 @@ describe('CRUD for leave types', function(){
     .then(function(){ done() });
   });
 
-  it('Check that updating "use allowence flag" works', function(done){
+  it('Check that updating "use allowance flag" works', function(done){
     submit_form_func({
       driver      : driver,
       form_params : [{
@@ -110,7 +110,7 @@ describe('CRUD for leave types', function(){
     .then(function(){ done() });
   });
 
-  it('Double check that "use allowence" tick boxes were updated correctly', function( done ){
+  it('Double check that "use allowance" tick boxes were updated correctly', function( done ){
     check_elements_func({
       driver : driver,
       elements_to_check : [{

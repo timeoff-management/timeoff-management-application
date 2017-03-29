@@ -25,7 +25,7 @@ describe('get_automatic_adjustment method', function(){
       end_date : moment('2016-04-01'),
     });
     employee.department = {
-      allowence : 20,
+      allowance : 20,
     };
 
     it('ajustment is made based on end date', function(){
@@ -40,7 +40,7 @@ describe('get_automatic_adjustment method', function(){
       end_date : moment('2017-04-01'),
     });
     employee.department = {
-      allowence : 20,
+      allowance : 20,
     };
 
     it('ajustment is made based on end date', function(){
@@ -54,7 +54,7 @@ describe('get_automatic_adjustment method', function(){
       start_date : moment('2017-04-01'),
     });
     employee.department = {
-      allowence : 20,
+      allowance : 20,
     };
 
     it('adjustment is made based on start date', function(){
@@ -70,7 +70,7 @@ describe('get_automatic_adjustment method', function(){
       end_date : moment('2016-10-01'),
     });
     employee.department = {
-      allowence : 20,
+      allowance : 20,
     };
 
     it('adjustment is made based on start and end dates', function(){
@@ -85,7 +85,7 @@ describe('get_automatic_adjustment method', function(){
       end_date : moment('2018-10-01'),
     });
     employee.department = {
-      allowence : 20,
+      allowance : 20,
     };
 
     it('adjustment is made based on start date', function(){
@@ -99,7 +99,7 @@ describe('get_automatic_adjustment method', function(){
       start_date : moment('2017-04-01'),
     });
     employee.department = {
-      allowence : 20,
+      allowance : 20,
     };
 
     it('No adjustment is needed', function(){
@@ -114,7 +114,7 @@ describe('get_automatic_adjustment method', function(){
       end_date : moment('2017-10-01'),
     });
     employee.department = {
-      allowence : 20,
+      allowance : 20,
     };
 
     it('No adjustment is needed', function(){

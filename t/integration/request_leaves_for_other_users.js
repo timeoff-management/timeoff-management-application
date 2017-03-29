@@ -113,7 +113,7 @@ describe('Request leave for outher users', function(){
             // Just to make sure it is always first in the lists
             value : 'AAAAA',
           },{
-            selector        : new_department_form_id+' select[name="allowence__new"]',
+            selector        : new_department_form_id+' select[name="allowance__new"]',
             option_selector : 'option[value="15"]',
             value : '15',
           },{

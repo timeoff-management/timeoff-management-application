@@ -34,7 +34,7 @@ To have nice visualisation of database schema use this tool http://ondras.zarovi
 		<type label="Year" length="0" sql="YEAR" quote=""/>
 		<type label="Timestamp" length="0" sql="TIMESTAMP" quote="'"/>
 	</group>
-	
+
 	<group label="Miscellaneous" color="rgb(200,200,255)">
 		<type label="ENUM" length="1" sql="ENUM" quote=""/>
 		<type label="SET" length="1" sql="SET" quote=""/>
@@ -102,7 +102,7 @@ To have nice visualisation of database schema use this tool http://ondras.zarovi
 <row name="name" null="0" autoincrement="0">
 <datatype>VARCHAR</datatype>
 <default>'NULL'</default></row>
-<row name="allowence" null="0" autoincrement="0">
+<row name="allowance" null="0" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <row name="include_public_holidays" null="0" autoincrement="0">

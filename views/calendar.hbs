@@ -22,9 +22,9 @@
   <div class="col-md-3 top-leave-type-statistics">
     <dl>
       {{#with current_user }}
-      <dt>{{ this.calculate_number_of_days_available_in_allowence ../this_year }}</dt>
+      <dt>{{ this.calculate_number_of_days_available_in_allowance ../this_year }}</dt>
       <dd>Days remaining</dd>
-      <dd>out of {{this.calculate_total_number_of_days_n_allowence ../this_year}} in Allowance</dd>
+      <dd>out of {{this.calculate_total_number_of_days_n_allowance ../this_year}} in Allowance</dd>
       {{/with}}
     </dl>
   </div>
@@ -59,7 +59,7 @@
       <dt>Details</dt>
       <dd><em>Superviser:</em><span class="pull-right"><a href="mailto:{{superviser.email}}">{{# with superviser }}{{ this.full_name }}{{/with}}</a></span></dd>
       <dd><em>Department:</em> <span class="pull-right"><a href="/calendar/teamview/?department={{ current_user.department.id }}">{{ current_user.department.name }}</a></span></dd>
-      <dd><em>Allowance in {{this_year}}:</em><span class="pull-right"> {{#with current_user}}{{ this.calculate_total_number_of_days_n_allowence ../this_year }}{{/with}} days</span><dd>
+      <dd><em>Allowance in {{this_year}}:</em><span class="pull-right"> {{#with current_user}}{{ this.calculate_total_number_of_days_n_allowance ../this_year }}{{/with}} days</span><dd>
     </dl>
   </div>
 

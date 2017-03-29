@@ -55,7 +55,7 @@ describe('CRUD for departments', function(){
      submit_form_func({
       driver      : driver,
       form_params : [{
-        selector        : 'select[name="allowence__0"]',
+        selector        : 'select[name="allowance__0"]',
         option_selector : 'option[value="50"]',
         value : '50',
       },{
@@ -99,7 +99,7 @@ describe('CRUD for departments', function(){
              selector : new_department_form_id+' input[name="name__new"]',
              value : 'Marketing',
            },{
-             selector        : new_department_form_id+' select[name="allowence__new"]',
+             selector        : new_department_form_id+' select[name="allowance__new"]',
              option_selector : 'option[value="10"]',
              value : '10',
            }],
@@ -126,7 +126,7 @@ describe('CRUD for departments', function(){
             selector : new_department_form_id+' input[name="name__new"]',
             value : 'Engineering',
           },{
-            selector        : new_department_form_id+' select[name="allowence__new"]',
+            selector        : new_department_form_id+' select[name="allowance__new"]',
             option_selector : 'option[value="15"]',
             value : '15',
           }],
