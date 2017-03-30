@@ -17,7 +17,7 @@
   <div class="col-md-12">Statistics</div>
 </div>
 
-<div class="row hidden-xs">
+<div class="row">
 
   <div class="col-md-3 top-leave-type-statistics">
     <dl>
@@ -30,7 +30,7 @@
   </div>
 
 
-  <div class="col-md-3 secondary-leave-type-statistics">
+  <div class="col-md-3 secondary-leave-type-statistics hidden-xs">
     <dl>
       <dt>Used so far</dt>
 
@@ -45,7 +45,7 @@
     </dl>
   </div>
 
-  <div class="col-md-3 secondary-leave-type-statistics">
+  <div class="col-md-3 secondary-leave-type-statistics hidden-xs">
     <dl>
       <dt>Available types</dt>
         {{~# each full_leave_type_statistics ~}}
@@ -54,7 +54,7 @@
     </dl>
   </div>
 
-  <div class="col-md-3 secondary-leave-type-statistics">
+  <div class="col-md-3 secondary-leave-type-statistics hidden-xs">
     <dl>
       <dt>Details</dt>
       <dd><em>Superviser:</em><span class="pull-right"><a href="mailto:{{superviser.email}}">{{# with superviser }}{{ this.full_name }}{{/with}}</a></span></dd>
