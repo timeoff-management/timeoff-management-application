@@ -39,18 +39,6 @@ describe('CRUD for departments', function(){
     .then(function(){ done() });
   });
 
-  it("Try to submit form with incorrect department name", function(done){
-    submit_form_func({
-      driver      : driver,
-      form_params : [{
-        selector : 'input[name="name__0"]',
-        value    : '<script>Test companu ltd',
-      }],
-      message : /New name of \w+ should contain only letters and numbers/,
-    })
-    .then(function(){ done() });
-  });
-
   it("Check that updating department allowance and Use allowance flag works", function(done){
      submit_form_func({
       driver      : driver,

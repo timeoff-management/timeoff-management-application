@@ -34,19 +34,6 @@ describe('Edit company details', function(){
     .then(function(){ done() });
   });
 
-  it("Try to submit form with incorrect company name", function(done){
-    submit_form_func({
-      driver      : driver,
-      form_params : [{
-        selector : company_edit_form_id+' input[name="name"]',
-        value    : '<script>Test companu ltd',
-      }],
-      submit_button_selector : company_edit_form_id+' button[type="submit"]',
-      message : /Name should contain only letters and numbers/,
-    })
-    .then(function(){ done() });
-  })
-
   it("Check that company is been updated if valid values are submitted", function(done){
     submit_form_func({
       driver      : driver,

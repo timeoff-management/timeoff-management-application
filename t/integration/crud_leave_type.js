@@ -51,19 +51,6 @@ describe('CRUD for leave types', function(){
     .then(function(){ done() });
   });
 
-  it("Try to submit form with incorrect leave type name", function(done){
-    submit_form_func({
-      driver      : driver,
-      form_params : [{
-        selector : leave_type_edit_form_id+' input[name="name__0"]',
-        value    : '<script>Test name',
-      }],
-      submit_button_selector : leave_type_edit_form_id+' button[type="submit"]',
-      message : /New name of \w+ should contain only letters and numbers/,
-    })
-    .then(function(){ done() });
-  });
-
 
 // TODO un comment that step when we resurect editing colors
 //    // Try to submit form with incorrect color code

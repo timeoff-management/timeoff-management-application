@@ -54,19 +54,6 @@ describe('CRUD for bank holidays', function(){
     .then(function(){done()});
   });
 
-  it("Try to submit form with incorrect bank holiday name", function(done){
-    submit_form_func({
-      driver      : driver,
-      form_params : [{
-        selector : bankholiday_form_id+' input[name="name__0"]',
-        value    : '<script>Test name',
-      }],
-      submit_button_selector : bankholiday_form_id+' button[type="submit"]',
-      message : /New name of .+ should contain only letters and numbers/,
-    })
-    .then(function(){done()});
-  });
-
   it("Try to submit form with incorrect date", function(done){
     submit_form_func({
       driver      : driver,
