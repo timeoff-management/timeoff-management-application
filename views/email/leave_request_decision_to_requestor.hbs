@@ -1,8 +1,7 @@
 Leave request was decided
 =====
-Hello {{#with requester}}{{this.full_name}}{{/with}},
+<p>Hello <strong>{{#with requester}}{{this.full_name}}{{/with}}</strong>,</p>
 
-{{#with approver }}{{this.full_name}}{{/with}} decided to {{action}} your {{#if was_pended_revoke}}cancellation of {{/if}}leave request {{>leave_request_detail leave=leave }}.
+<p>{{#with approver }}{{this.full_name}}{{/with}} decided to <strong>{{action}}</strong> your {{#if was_pended_revoke}}cancellation of {{/if}}leave request <strong>{{>leave_request_detail leave=leave }}</strong>.</p>
 
-This message was sent by
-{{get_promotion_website_domain}}
+<p>Thanks</p>

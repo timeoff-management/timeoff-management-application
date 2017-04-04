@@ -2,7 +2,7 @@
   "name": "TimeOff.Management",
   "version": "0.4.2",
   "private": false,
-  "description" : "Simple yet powerful absence management software for small and medium size business",
+  "description": "Simple yet powerful absence management software for small and medium size business",
   "dependencies": {
     "bluebird": "^2.10.2",
     "body-parser": "^1.8.4",
@@ -13,6 +13,7 @@
     "express-handlebars": "^3.0.0",
     "express-session": "^1.13.0",
     "formidable": "~1.0.17",
+    "html-to-text": "^3.2.0",
     "ical-generator": "^0.2.7",
     "ldapauth-fork": "^2.5.2",
     "moment": "^2.11.2",
@@ -40,6 +41,6 @@
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha --recursive t/*",
     "start": "node bin/wwww",
-    "db-update" : "node node_modules/.bin/sequelize db:migrate --config=config/db.json --models-path=lib/model/db/"
+    "db-update": "node node_modules/.bin/sequelize db:migrate --config=config/db.json --models-path=lib/model/db/"
   }
 }

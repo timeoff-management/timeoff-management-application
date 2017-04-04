@@ -1,8 +1,7 @@
 Registration completed
 =====
-Hello {{user.name}},
+<p>Hello <strong>{{user.name}}</strong>,</p>
 
-Thank you for registering new account on {{get_application_domain}}
+<p>Thank you for registering new account on {{> email/link href=(get_application_domain) text="TimeOff.Management" }}</p>
 
-This message was sent by
-{{get_promotion_website_domain}}
+<p>Thanks</p>
