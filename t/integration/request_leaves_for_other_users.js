@@ -32,7 +32,6 @@ var test             = require('selenium-webdriver/testing'),
  *    - Login as a admin user and make sure she can create leave
  *      request for all users
  *
- *
  * */
 
 describe('Request leave for outher users', function(){

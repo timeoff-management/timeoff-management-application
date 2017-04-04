@@ -1,7 +1,6 @@
 
 'use strict';
 
-
 var test                 = require('selenium-webdriver/testing'),
   By                     = require('selenium-webdriver').By,
   expect                 = require('chai').expect,
@@ -26,74 +25,72 @@ var test                 = require('selenium-webdriver/testing'),
  *
  * */
 
-  describe('Cross linking on Teamview page', function(){
-    var driver;
+describe('Cross linking on Teamview page', function(){
 
-    this.timeout( config.get_execution_timeout() );
+  this.timeout( config.get_execution_timeout() );
 
-    test.it('Go...', function( done ){
+  var driver, user_A, user_B;
 
-      var user_A, user_B;
+  it('Create new company', function( done ){
 
-      // Performing registration process
-      register_new_user_func({
-        application_host : application_host,
-      })
-
-      // Create new user B
-      .then(function(data){
-
-        user_A = data.email;
-
-        return add_new_user_func({
-          application_host : application_host,
-          driver           : data.driver,
-        });
-      })
-      .then(function(data){
-        user_B = data.new_user_email;
-        return Promise.resolve(data);
-      })
-
-      // Make sure that both users are shown on Team view page
-      .then(function(data){
-        return check_teamview_func({
-          driver: data.driver,
-          emails: [user_A, user_B],
-          is_link : true
-        });
-      })
-
-      // Logout from A account
-      .then(function(data){
-        return logout_user_func({
-          application_host : application_host,
-          driver           : data.driver,
-        });
-      })
-      // Login as user B
-      .then(function(data){
-        return login_user_func({
-          application_host : application_host,
-          user_email       : user_B,
-          driver           : data.driver,
-        });
-      })
-
-      // and make sure that only user A and B are presented
-      .then(function(data){
-        return check_teamview_func({
-          driver: data.driver,
-          emails: [user_A, user_B],
-          is_link: false
-        });
-      })
-
-      // Close the browser
-      .then(function(data){
-        data.driver.quit().then(function(){ done(); });
-      });
-
+    // Performing registration process
+    register_new_user_func({
+      application_host : application_host,
+    })
+    .then(function(data){
+      driver = data.driver;
+      user_A = data.email;
+      done();
     });
-
   });
+
+  it("Create new user B", function(done){
+    add_new_user_func({
+      application_host : application_host,
+      driver           : driver,
+    })
+    .then(function(data){
+      user_B = data.new_user_email;
+      done();
+    });
+  });
+
+  it("Make sure that both users are shown on Team view page", function(done){
+    check_teamview_func({
+      driver: driver,
+      emails: [user_A, user_B],
+      is_link : true
+    })
+    .then(function(){ done() });
+  });
+
+  it("Logout from A account", function(done){
+    logout_user_func({
+      application_host : application_host,
+      driver           : driver,
+    })
+    .then(function(){ done() });
+  });
+
+  it("Login as user B", function(done){
+    login_user_func({
+      application_host : application_host,
+      user_email       : user_B,
+      driver           : driver,
+    })
+    .then(function(){ done() });
+  });
+
+  it("Make sure that only user A and B are presented", function(done){
+    check_teamview_func({
+      driver: driver,
+      emails: [user_A, user_B],
+      is_link: false
+    })
+    .then(function(){ done() });
+  });
+
+  after(function(done){
+    driver.quit().then(function(){ done(); });
+  });
+});
