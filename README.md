@@ -119,6 +119,7 @@ In case one needs to patch existing instance of TimeOff.Managenent application w
 ```bash
 git fetch
 git pull origin master
+npm install
 npm run-script db-update
 npm start
 ```
