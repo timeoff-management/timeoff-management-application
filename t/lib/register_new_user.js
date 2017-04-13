@@ -25,11 +25,15 @@ var register_new_user_func = Promise.promisify( function(args, callback){
     random_token          = (new Date()).getTime(),
     new_user_email        = args.user_email || random_token + '@test.com';
 
+  var capabilities = process.env.USE_CHROME ? 'chrome' : 'phantomjs';
+
   // Instantiate new driver object if it not provided as paramater
   var driver = args.driver || new webdriver.Builder()
-      .withCapabilities(webdriver.Capabilities.phantomjs())
-//      .withCapabilities(webdriver.Capabilities.chrome())
+      .withCapabilities(webdriver.Capabilities[capabilities]())
       .build();
+
+//  driver.manage().timeouts().pageLoadTimeout(10*1000);
+//  driver.manage().timeouts().implicitlyWait(10*1000);
 
   // Make sure we are in desktop version
   driver.manage().window().setSize(1024, 768);

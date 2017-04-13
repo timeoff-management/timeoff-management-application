@@ -48,7 +48,7 @@ describe('CRUD for users', function(){
 
   it('Create new company', function(done){
     register_new_user_func({
-        application_host : application_host,
+      application_host : application_host,
     })
     .then(function(data){
       driver = data.driver;
