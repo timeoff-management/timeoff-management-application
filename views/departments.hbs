@@ -40,7 +40,7 @@
     <div class="col-md-1">
         <select class="form-control" name="allowance__{{@index}}">
             {{#each ../allowance_options}}
-            <option value="{{value}}" {{#if_equal this.value ../allowance}} selected="selected"{{/if_equal}}>{{value}}</option>
+            <option value="{{value}}" {{#if_equal this.value ../allowance}} selected="selected"{{/if_equal}}>{{caption}}</option>
             {{/each}}
         </select>
     </div>

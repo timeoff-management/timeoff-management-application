@@ -26,7 +26,7 @@
           <label for="department_allowance_new" class="control-label">Allowance:</label>
           <select class="form-control" id="department_allowance_new" name="allowance__new">
             {{#each allowance_options}}
-            <option value="{{value}}" >{{value}}</option>
+            <option value="{{value}}" {{#if_equal this.value 20}} selected="selected"{{/if_equal}}>{{caption}}</option>
             {{/each}}
           </select>
         </div>
