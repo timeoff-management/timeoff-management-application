@@ -72,17 +72,49 @@
           <div class="col-md-offset-1 col-md-5">
             <form class="form-horizontal" method="POST" action="/settings/company/export/" id="company_export_form">
               <div class="form-group">
-                <label for="input_country" class="col-md-6 control-label">Export company data</label>
+                <label for="export_company_btn" class="col-md-6 control-label">Export company data</label>
                 <div class="col-md-6">
-                  <button type="submit" class="btn btn-success">Download</button>
+                  <button type="submit" id="export_company_btn" class="btn btn-success">Download</button>
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-md-offset-2">
-                  <em>Download company dump file that could be used to restore account on another TimeOff.Management installation</em>
+                  <em>Download company dump file that could be used to restore account on another TimeOff.Management installation.</em>
                 </div>
               </div>
             </form>
+
+
+            <form class="form-horizontal" method="POST" action="/settings/company/schedule" id="company_schedule_form">
+            <div class="form-group">
+              <label for="" class="col-md-6 control-label">Company week schedule</label>
+            </div>
+            <div class="form-group">
+              <div class="col-md-offset-2">
+                <div class="btn-group" data-toggle="buttons">
+                  <label class="btn btn-default active"><input name="schedule_mon" type="checkbox" autocomplete="off" checked>Mon</label>
+                  <label class="btn btn-default active"><input name="schedule_tue" type="checkbox" autocomplete="off" checked>Tue</label>
+                  <label class="btn btn-default active"><input name="schedule_wed" type="checkbox" autocomplete="off" checked>Wed</label>
+                  <label class="btn btn-default active"><input name="schedule_thu" type="checkbox" autocomplete="off" checked>Thu</label>
+                  <label class="btn btn-default active"><input name="schedule_fri" type="checkbox" autocomplete="off" checked>Fri</label>
+                  <label class="btn btn-default"><input name="schedule_sat" type="checkbox" autocomplete="off">Sat</label>
+                  <label class="btn btn-default"><input name="schedule_sun" type="checkbox" autocomplete="off">Sun</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-offset-2">
+                <em>Define company wide weekly schedule. Press correspondent button to toggle working/non-working day.</em>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-offset-2 col-md-11">
+                <button type="submit" class="btn btn-success pull-right">Save schedule</button>
+              </div>
+            </div>
+            </form>
+
+
           </div>
         </div>
       </div>
