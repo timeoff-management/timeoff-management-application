@@ -85,20 +85,25 @@
             </form>
 
 
-            <form class="form-horizontal" method="POST" action="/settings/company/schedule" id="company_schedule_form">
+            <div class="form-group">&nbsp;</div>
+
+            <form class="form-horizontal" method="POST" action="/settings/schedule" id="company_schedule_form">
             <div class="form-group">
               <label for="" class="col-md-6 control-label">Company week schedule</label>
             </div>
             <div class="form-group">
               <div class="col-md-offset-2">
                 <div class="btn-group" data-toggle="buttons">
-                  <label class="btn btn-default active"><input name="schedule_mon" type="checkbox" autocomplete="off" checked>Mon</label>
-                  <label class="btn btn-default active"><input name="schedule_tue" type="checkbox" autocomplete="off" checked>Tue</label>
-                  <label class="btn btn-default active"><input name="schedule_wed" type="checkbox" autocomplete="off" checked>Wed</label>
-                  <label class="btn btn-default active"><input name="schedule_thu" type="checkbox" autocomplete="off" checked>Thu</label>
-                  <label class="btn btn-default active"><input name="schedule_fri" type="checkbox" autocomplete="off" checked>Fri</label>
-                  <label class="btn btn-default"><input name="schedule_sat" type="checkbox" autocomplete="off">Sat</label>
-                  <label class="btn btn-default"><input name="schedule_sun" type="checkbox" autocomplete="off">Sun</label>
+                  <input type="hidden" name="company_wide" value="1">
+                  {{#with schedule}}
+                  <label class="btn btn-default {{# if (works_monday   ) }} active{{/if }} "><input name="monday"    type="checkbox" autocomplete="off" {{# if (works_monday   ) }} checked {{/if }} >Mon</label>
+                  <label class="btn btn-default {{# if (works_tuesday  ) }} active{{/if }} "><input name="tuesday"   type="checkbox" autocomplete="off" {{# if (works_tuesday  ) }} checked {{/if }} >Tue</label>
+                  <label class="btn btn-default {{# if (works_wednesday) }} active{{/if }} "><input name="wednesday" type="checkbox" autocomplete="off" {{# if (works_wednesday) }} checked {{/if }} >Wed</label>
+                  <label class="btn btn-default {{# if (works_thursday ) }} active{{/if }} "><input name="thursday"  type="checkbox" autocomplete="off" {{# if (works_thursday ) }} checked {{/if }} >Thu</label>
+                  <label class="btn btn-default {{# if (works_friday   ) }} active{{/if }} "><input name="friday"    type="checkbox" autocomplete="off" {{# if (works_friday   ) }} checked {{/if }} >Fri</label>
+                  <label class="btn btn-default {{# if (works_saturday ) }} active{{/if }} "><input name="saturday"  type="checkbox" autocomplete="off" {{# if (works_saturday ) }} checked {{/if }} >Sat</label>
+                  <label class="btn btn-default {{# if (works_sunday   ) }} active{{/if }} "><input name="sunday"    type="checkbox" autocomplete="off" {{# if (works_sunday   ) }} checked {{/if }} >Sun</label>
+                  {{/ with }}
                 </div>
               </div>
             </div>
