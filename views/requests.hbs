@@ -38,7 +38,7 @@
           <td>{{as_date this.createdAt}}</td>
           <td>From {{#with this.get_start_leave_day}}{{as_date this.date}}{{/with}} to {{#with this.get_end_leave_day}}{{as_date this.date}}{{/with}}</td>
           <td>{{#if this.is_pended_revoke_leave}}REVOKE {{/if}}{{this.leave_type.name}}</td>
-          <td>{{ this.get_deducted_days_number }}</td>
+          <td data-vpp="days_used">{{ this.get_deducted_days_number }}</td>
           <td>
             <form action="/requests/reject/" method="POST">
             <input class="btn btn-warning" type="submit" value="Reject">
