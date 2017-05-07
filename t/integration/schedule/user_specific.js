@@ -3,6 +3,7 @@
 
 var test                 = require('selenium-webdriver/testing'),
   By                     = require('selenium-webdriver').By,
+  Promise                = require("bluebird"),
   expect                 = require('chai').expect,
   add_new_user_func      = require('../../lib/add_new_user'),
   check_elements_func    = require('../../lib/check_elements'),
