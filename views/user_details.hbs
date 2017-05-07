@@ -1,0 +1,41 @@
+
+{{> header }}
+
+<h1>{{employee.name}} {{employee.lastname}}'s details</h1>
+
+<div class="row">
+    <div class="col-md-3 lead">Employee details</div>
+    <form id="add_new_user_frm" method="post" action="/users/delete/{{employee.id}}/">
+        <div class="col-md-1 col-md-offset-8">
+        <button id="remove_btn" type="submit" class="pull-right btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Remove employee"><i class="fa fa-trash"></i></button>
+        </div>
+    </form>
+</div>
+
+<div class="row">&nbsp;</div>
+
+{{> show_flash_messages }}
+
+<div class="col-md-3 list-group">
+  <a href="/users/edit/{{employee.id}}/" class="list-group-item{{# if show_main_tab }} selected-item{{/if}}">General details</a>
+  <a href="/users/edit/{{employee.id}}/schedule/" class="list-group-item {{# if show_schedule_tab }} selected-item{{/if}}">Schedule</a>
+  <a href="/users/edit/{{employee.id}}/absences/" class="list-group-item{{# if show_absence_tab }} selected-item{{/if}}">Absences</a>
+</div>
+
+{{# if show_absence_tab }}
+
+  {{> user_details/absences }}
+
+{{else if show_schedule_tab}}
+
+  {{> user_details/schedule }}
+
+{{else}}
+
+  {{> user_details/general }}
+
+{{/ if}}
+
+<div class="row">&nbsp;</div>
+
+{{> footer }}

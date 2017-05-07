@@ -36,7 +36,7 @@
     <div class="col-md-3">
       <select class="form-control" id="select_inp" name="department" aria-describedby="department_help">
         {{#each company.departments}}
-            <option value="{{@index}}">{{this.name}}</option>
+            <option value="{{this.id}}" data-vpp="{{@index}}">{{this.name}}</option>
         {{/each}}
       </select>
     </div>

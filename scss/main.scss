@@ -11,6 +11,8 @@ $link-color : #5ba4e5;
 $font-size-primary : 14px;
 $font-size-bigger : 16px;
 
+$selected-item-background : #F5F7F8;
+
 // 5E5E5E
 
 body {
@@ -86,7 +88,7 @@ td.current_day_cell {
   color : #ffffff;
 }
 td.weekend_cell {
-    background: #F5F7F8;
+    background: $selected-item-background;
 }
 td.bank_holiday_cell {
     background : #31B0D5;
@@ -194,4 +196,10 @@ div.feeds-holder {
 /* Fix for issue with modal scrollings on mobiles */
 @media (max-width: 768px) {
   body.modal-open { position: fixed; }
+}
+
+/* To be used for selected items in lists */
+.selected-item {
+  background : $selected-item-background;
+  font-weight: bolder;
 }

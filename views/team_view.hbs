@@ -58,7 +58,7 @@
       {{/each}}
       </tr>
     {{# each users_and_leaves}}
-      <tr>
+      <tr data-vpp="{{user.id}}">
         {{# each this.days}}
           {{> calendar_cell day = this}}
         {{/each}}
