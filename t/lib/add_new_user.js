@@ -60,7 +60,7 @@ module.exports = Promise.promisify(function(args, callback){
 
         select_department = {
             selector        : 'select[name="department"]',
-            option_selector : 'option[value="'+department_index+'"]',
+            option_selector : 'option[data-vpp="'+department_index+'"]',
         };
       }
 

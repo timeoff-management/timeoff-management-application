@@ -205,7 +205,7 @@ describe('Revoke leave request by Admin', function(){
 
   it("Open user editing page for Employee", function(done){
     open_page_func({
-      url    : application_host + 'users/edit/'+employee_user_id+'/',
+      url    : application_host + 'users/edit/'+employee_user_id+'/absences/',
       driver : driver,
     })
     .then(function(){ done() });

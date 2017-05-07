@@ -72,17 +72,54 @@
           <div class="col-md-offset-1 col-md-5">
             <form class="form-horizontal" method="POST" action="/settings/company/export/" id="company_export_form">
               <div class="form-group">
-                <label for="input_country" class="col-md-6 control-label">Export company data</label>
+                <label for="export_company_btn" class="col-md-6 control-label">Export company data</label>
                 <div class="col-md-6">
-                  <button type="submit" class="btn btn-success">Download</button>
+                  <button type="submit" id="export_company_btn" class="btn btn-success">Download</button>
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-md-offset-2">
-                  <em>Download company dump file that could be used to restore account on another TimeOff.Management installation</em>
+                  <em>Download company dump file that could be used to restore account on another TimeOff.Management installation.</em>
                 </div>
               </div>
             </form>
+
+
+            <div class="form-group">&nbsp;</div>
+
+            <form class="form-horizontal" method="POST" action="/settings/schedule" id="company_schedule_form">
+            <input type="hidden" name="company_wide" value="1">
+            <div class="form-group">
+              <label for="" class="col-md-6 control-label">Company week schedule</label>
+            </div>
+            <div class="form-group">
+              <div class="col-md-offset-2">
+                <div class="btn-group" data-toggle="buttons">
+                  {{#with schedule}}
+                  <label class="btn btn-default {{# if (works_monday   ) }} active{{/if }} " id="schedule_item_monday">    <input name ="monday"    type="checkbox" autocomplete="off" {{# if (works_monday   ) }} checked {{/if }} >Mon</label>
+                  <label class="btn btn-default {{# if (works_tuesday  ) }} active{{/if }} " id="schedule_item_tuesday">   <input name ="tuesday"   type="checkbox" autocomplete="off" {{# if (works_tuesday  ) }} checked {{/if }} >Tue</label>
+                  <label class="btn btn-default {{# if (works_wednesday) }} active{{/if }} " id="schedule_item_wednesday"> <input name ="wednesday" type="checkbox" autocomplete="off" {{# if (works_wednesday) }} checked {{/if }} >Wed</label>
+                  <label class="btn btn-default {{# if (works_thursday ) }} active{{/if }} " id="schedule_item_thursday">  <input name ="thursday"  type="checkbox" autocomplete="off" {{# if (works_thursday ) }} checked {{/if }} >Thu</label>
+                  <label class="btn btn-default {{# if (works_friday   ) }} active{{/if }} " id="schedule_item_friday">    <input name ="friday"    type="checkbox" autocomplete="off" {{# if (works_friday   ) }} checked {{/if }} >Fri</label>
+                  <label class="btn btn-default {{# if (works_saturday ) }} active{{/if }} " id="schedule_item_saturday">  <input name ="saturday"  type="checkbox" autocomplete="off" {{# if (works_saturday ) }} checked {{/if }} >Sat</label>
+                  <label class="btn btn-default {{# if (works_sunday   ) }} active{{/if }} " id="schedule_item_sunday">    <input name ="sunday"    type="checkbox" autocomplete="off" {{# if (works_sunday   ) }} checked {{/if }} >Sun</label>
+                  {{/ with }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-offset-2">
+                <em>Define company wide weekly schedule. Press correspondent button to toggle working/non-working day.</em>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-offset-2 col-md-11">
+                <button type="submit" class="btn btn-success pull-right">Save schedule</button>
+              </div>
+            </div>
+            </form>
+
+
           </div>
         </div>
       </div>

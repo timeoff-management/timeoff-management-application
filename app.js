@@ -70,7 +70,7 @@ app.use(function(req,res,next){
 app.use(function(req,res,next){
     res.locals.custom_java_script = [
       '/js/bootstrap-datepicker.js',
-      '/js/book_leave_request.js'
+      '/js/global.js'
     ];
     res.locals.custom_css = [
       '/css/bootstrap-datepicker3.standalone.css'

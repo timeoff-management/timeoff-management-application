@@ -338,9 +338,9 @@ describe('CRUD for users', function(){
       });
   });
 
-  it("Open ADMIN user details page", function(done){
+  it("Open ADMIN user details page (absences)", function(done){
     open_page_func({
-      url    : application_host + 'users/edit/'+admin_user_id+'/',
+      url    : application_host + 'users/edit/'+admin_user_id+'/absences/',
       driver : driver,
     })
     .then(function(){ done() });
@@ -369,6 +369,14 @@ describe('CRUD for users', function(){
       submit_button_selector : 'button#save_changes_btn',
       should_be_successful : true,
       message : /Details for .+ were updated/,
+    })
+    .then(function(){ done() });
+  });
+
+  it("Open ADMIN user details page (general)", function(done){
+    open_page_func({
+      url    : application_host + 'users/edit/'+admin_user_id+'/',
+      driver : driver,
     })
     .then(function(){ done() });
   });

@@ -157,3 +157,7 @@ div.feeds-holder {
 @media (max-width: 768px) {
   body.modal-open {
     position: fixed; } }
+
+.selected-item {
+  background: #F5F7F8;
+  font-weight: bolder; }
