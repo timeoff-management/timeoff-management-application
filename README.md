@@ -23,6 +23,8 @@ Setup public holidays as well as company specific days off.
 
 Group employees by departments: bring your organisation structure into, set the supervisor for every department.
 
+Customisable working schedule for company and individuals.
+
 **Third Party Calendar Integration**
 
 Broadcast employees whereabout into external calendar providers: MS Outlook, Google Calendar, and iCal.
