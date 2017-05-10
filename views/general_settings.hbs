@@ -94,17 +94,7 @@
             </div>
             <div class="form-group">
               <div class="col-md-offset-2">
-                <div class="btn-group" data-toggle="buttons">
-                  {{#with schedule}}
-                  <label class="btn btn-default {{# if (works_monday   ) }} active{{/if }} " id="schedule_item_monday">    <input name ="monday"    type="checkbox" autocomplete="off" {{# if (works_monday   ) }} checked {{/if }} >Mon</label>
-                  <label class="btn btn-default {{# if (works_tuesday  ) }} active{{/if }} " id="schedule_item_tuesday">   <input name ="tuesday"   type="checkbox" autocomplete="off" {{# if (works_tuesday  ) }} checked {{/if }} >Tue</label>
-                  <label class="btn btn-default {{# if (works_wednesday) }} active{{/if }} " id="schedule_item_wednesday"> <input name ="wednesday" type="checkbox" autocomplete="off" {{# if (works_wednesday) }} checked {{/if }} >Wed</label>
-                  <label class="btn btn-default {{# if (works_thursday ) }} active{{/if }} " id="schedule_item_thursday">  <input name ="thursday"  type="checkbox" autocomplete="off" {{# if (works_thursday ) }} checked {{/if }} >Thu</label>
-                  <label class="btn btn-default {{# if (works_friday   ) }} active{{/if }} " id="schedule_item_friday">    <input name ="friday"    type="checkbox" autocomplete="off" {{# if (works_friday   ) }} checked {{/if }} >Fri</label>
-                  <label class="btn btn-default {{# if (works_saturday ) }} active{{/if }} " id="schedule_item_saturday">  <input name ="saturday"  type="checkbox" autocomplete="off" {{# if (works_saturday ) }} checked {{/if }} >Sat</label>
-                  <label class="btn btn-default {{# if (works_sunday   ) }} active{{/if }} " id="schedule_item_sunday">    <input name ="sunday"    type="checkbox" autocomplete="off" {{# if (works_sunday   ) }} checked {{/if }} >Sun</label>
-                  {{/ with }}
-                </div>
+                {{> schedule_widget}}
               </div>
             </div>
             <div class="form-group">

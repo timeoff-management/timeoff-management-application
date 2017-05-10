@@ -650,12 +650,244 @@ describe('Basic user specific schedule', function(){
 
 /*
  *  Scenario 2: Populate company wide schedule before using user specific one
+ *    (the main point of this test is to ensure that having explicite company schedule
+ *    does not break things)
  *
- *    * Create company
- *    * Populate company schedule with something other than default
- *    * Go and update user specific schedule to be different
- *    * Open Calendar page and make sure user specific schedule dominates
- *
- *
+ *    * Create company with User A and User B
+ *    * Populate company schedule with something other than default: Thu, Fri, Sat, Sun
+ *    * Go and update user B to have specific schedule: Fri, Sat, Sun
+ *    * Open Teamview page and make sure users A and B have correct non-working days
  *
  * */
+
+describe('Populate company wide schedule before using user specific one', function(){
+
+  this.timeout( config.get_execution_timeout() );
+
+  var driver, email_A, email_B, user_id_A, user_id_B;
+
+  it("Register new company", function(done){
+    register_new_user_func({
+      application_host : application_host,
+    })
+    .then(function(data){
+      driver  = data.driver;
+      email_A = data.email;
+      done();
+    });
+  });
+
+  it("Create second user B", function(done){
+    add_new_user_func({
+      application_host : application_host,
+      driver           : driver,
+    })
+    .then(function(data){
+      email_B = data.new_user_email;
+      done();
+    });
+  });
+
+  it("Obtain information about user A", function(done){
+    user_info_func({
+      driver : driver,
+      email  : email_A,
+    })
+    .then(function(data){
+      user_id_A = data.user.id;
+      done();
+    });
+  });
+
+  it("Obtain information about user B", function(done){
+    user_info_func({
+      driver : driver,
+      email  : email_B,
+    })
+    .then(function(data){
+      user_id_B = data.user.id;
+      done();
+    });
+  });
+
+  it("Open company details page", function(done){
+    open_page_func({
+      url    : application_host + 'settings/general/',
+      driver : driver,
+    })
+    .then(function(){ done() });
+  });
+
+  it('Make Thu and Fri to be non-working day', function(done){
+    submit_form_func({
+      driver      : driver,
+      form_params : [{
+        selector : schedule_form_id + ' #schedule_item_thursday',
+        tick     : true,
+      },{
+        selector : schedule_form_id + ' #schedule_item_friday',
+        tick     : true,
+      }],
+      submit_button_selector : schedule_form_id+' button[type="submit"]',
+      message : /Schedule for company was saved/,
+    })
+    .then(function(){ done() });
+  });
+
+  it('And make sure that it was indeed marked so', function(done){
+    check_elements_func({
+      driver            : driver,
+      elements_to_check : [{
+        selector : schedule_form_id + ' input[name="monday"]',
+        tick     : true,
+        value    : 'on',
+      },{
+        selector : schedule_form_id + ' input[name="tuesday"]',
+        tick     : true,
+        value    : 'on',
+      },{
+        selector : schedule_form_id + ' input[name="wednesday"]',
+        tick     : true,
+        value    : 'on',
+      },{
+        selector : schedule_form_id + ' input[name="thursday"]',
+        tick     : true,
+        value    : 'off',
+      },{
+        selector : schedule_form_id + ' input[name="friday"]',
+        tick     : true,
+        value    : 'off',
+      },{
+        selector : schedule_form_id + ' input[name="saturday"]',
+        tick     : true,
+        value    : 'off',
+      },{
+        selector : schedule_form_id + ' input[name="sunday"]',
+        tick     : true,
+        value    : 'off',
+      }],
+    })
+    .then(function(){ done() });
+  });
+
+  it('Open user B schedule', function(done){
+    open_page_func({
+      url    : application_host + 'users/edit/'+user_id_B+'/schedule/',
+      driver : driver,
+    })
+    .then(function(){ done() });
+  });
+
+  it('Update user B to have Fri to be non-working day (by toggling off Thu)', function(done){
+    submit_form_func({
+      driver      : driver,
+      form_params : [{
+        selector : '#schedule_item_thursday',
+        tick     : true,
+      }],
+      submit_button_selector : 'button[name="save_user_specific_schedule"]',
+      message : /Schedule for user was saved/,
+    })
+    .then(function(){ done() });
+  });
+
+  it('Ensure that User B details shows new schedule', function(done){
+    check_elements_func({
+      driver            : driver,
+      elements_to_check : [{
+        selector : 'input[name="monday"]',
+        tick     : true,
+        value    : 'on',
+      },{
+        selector : 'input[name="tuesday"]',
+        tick     : true,
+        value    : 'on',
+      },{
+        selector : 'input[name="wednesday"]',
+        tick     : true,
+        value    : 'on',
+      },{
+        selector : 'input[name="thursday"]',
+        tick     : true,
+        value    : 'on',
+      },{
+        selector : 'input[name="friday"]',
+        tick     : true,
+        value    : 'off',
+      },{
+        selector : 'input[name="saturday"]',
+        tick     : true,
+        value    : 'off',
+      },{
+        selector : 'input[name="sunday"]',
+        tick     : true,
+        value    : 'off',
+      }],
+    })
+    .then(function(){ done() });
+  });
+
+  it('Open Team view page', function(done){
+    open_page_func({
+      url    : application_host + 'calendar/teamview/?&date=2015-01',
+      driver : driver,
+    })
+    .then(function(){done()});
+  });
+
+  it('Ensure team view shows user A has Mon, Tue, Wed as working days', function(done){
+    Promise.map([5,6,7], function(day_number){
+      return driver
+        .findElement(By.css('table.calendar_month tr[data-vpp="'+user_id_A+'"] td.day_'+day_number))
+        .then(function(el){ return el.getAttribute('class'); })
+        .then(function(css){
+          expect(css).to.not.match(/\bweekend_cell\b/);
+          return Promise.resolve(1);
+        })
+    })
+    .then(function(){ done() });
+  });
+
+  it('Ensure team view shows user A has Thu, Fri, Sat, Sun as non-working days', function(done){
+    Promise.map([8,9,10,11], function(day_number){
+      return driver
+        .findElement(By.css('table.calendar_month tr[data-vpp="'+user_id_A+'"] td.day_'+day_number))
+        .then(function(el){ return el.getAttribute('class'); })
+        .then(function(css){
+          expect(css).to.match(/\bweekend_cell\b/);
+          return Promise.resolve(1);
+        })
+    })
+    .then(function(){ done() });
+  });
+
+  it('Ensure team view shows user B has Mon, Tue, Wed, Thu as working days', function(done){
+    Promise.map([5,6,7,8], function(day_number){
+      return driver
+        .findElement(By.css('table.calendar_month tr[data-vpp="'+user_id_B+'"] td.day_'+day_number))
+        .then(function(el){ return el.getAttribute('class'); })
+        .then(function(css){
+          expect(css).to.not.match(/\bweekend_cell\b/);
+          return Promise.resolve(1);
+        })
+    })
+    .then(function(){ done() });
+  });
+
+  it('Ensure team view shows user B has Fri, Sat, Sun as non-working days', function(done){
+    Promise.map([9,10,11], function(day_number){
+      return driver
+        .findElement(By.css('table.calendar_month tr[data-vpp="'+user_id_B+'"] td.day_'+day_number))
+        .then(function(el){ return el.getAttribute('class'); })
+        .then(function(css){
+          expect(css).to.match(/\bweekend_cell\b/);
+          return Promise.resolve(1);
+        })
+    })
+    .then(function(){ done() });
+  });
+
+  after(function(done){
+    driver.quit().then(function(){ done(); });
+  });
+});
