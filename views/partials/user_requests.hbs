@@ -43,6 +43,11 @@
             <button type="submit" class="pull-right btn btn-default btn-xs revoke-btn" title="Revoke leave request"><i class="fa fa-trash"></i></button>
           </form>
           {{/unless}}
+          {{else}}
+          <form method="post" action='/requests/cancel/'>
+            <input type="hidden" value="{{this.id}}" name="request">
+            <button type="submit" class="pull-right btn btn-default btn-xs revoke-btn" title="Cancel leave request"><i class="fa fa-trash"></i></button>
+          </form>
           {{/if}}
         </td>
         <td><span class="pull-right">{{#if this.is_new_leave }}Pending{{else}}{{#if this.is_approved_leave}}Approved{{else}}Rejected{{/if}}{{/if}}</span></td>
