@@ -8,16 +8,16 @@ var test             = require('selenium-webdriver/testing'),
     _                = require('underscore'),
     Promise          = require("bluebird"),
     moment           = require('moment'),
-    config                 = require('../lib/config'),
+    config                 = require('../../lib/config'),
     application_host       = config.get_application_host(),
-    login_user_func        = require('../lib/login_with_user'),
-    register_new_user_func = require('../lib/register_new_user'),
-    logout_user_func       = require('../lib/logout_user'),
-    open_page_func         = require('../lib/open_page'),
-    submit_form_func       = require('../lib/submit_form'),
-    check_elements_func    = require('../lib/check_elements'),
-    check_booking_func     = require('../lib/check_booking_on_calendar'),
-    add_new_user_func      = require('../lib/add_new_user');
+    login_user_func        = require('../../lib/login_with_user'),
+    register_new_user_func = require('../../lib/register_new_user'),
+    logout_user_func       = require('../../lib/logout_user'),
+    open_page_func         = require('../../lib/open_page'),
+    submit_form_func       = require('../../lib/submit_form'),
+    check_elements_func    = require('../../lib/check_elements'),
+    check_booking_func     = require('../../lib/check_booking_on_calendar'),
+    add_new_user_func      = require('../../lib/add_new_user');
 
 /*
  *  Scenario to go in this test:
