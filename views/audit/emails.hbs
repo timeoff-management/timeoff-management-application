@@ -65,7 +65,7 @@
         </thead>
         <tbody>
           {{# each audit_emails }}
-          <tr id="heading_{{ this.id }}">
+          <tr id="heading_{{ this.id }}" class="vpp-email-audit-entry-header">
             <td class="user-link-cell">
               <a href="/audit/email/?user_id={{ this.user_id}}">{{# with this.user }}{{this.full_name}}{{/with}}</a>
             </td>

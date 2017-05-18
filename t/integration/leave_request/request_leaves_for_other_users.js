@@ -2,19 +2,19 @@
 'use strict';
 
 var test             = require('selenium-webdriver/testing'),
-    config           = require('../lib/config'),
+    config           = require('../../lib/config'),
     application_host = config.get_application_host(),
     By               = require('selenium-webdriver').By,
     expect           = require('chai').expect,
     _                = require('underscore'),
     Promise          = require("bluebird"),
     until            = require('selenium-webdriver').until,
-    login_user_func        = require('../lib/login_with_user'),
-    register_new_user_func = require('../lib/register_new_user'),
-    logout_user_func       = require('../lib/logout_user'),
-    open_page_func         = require('../lib/open_page'),
-    submit_form_func       = require('../lib/submit_form'),
-    add_new_user_func      = require('../lib/add_new_user'),
+    login_user_func        = require('../../lib/login_with_user'),
+    register_new_user_func = require('../../lib/register_new_user'),
+    logout_user_func       = require('../../lib/logout_user'),
+    open_page_func         = require('../../lib/open_page'),
+    submit_form_func       = require('../../lib/submit_form'),
+    add_new_user_func      = require('../../lib/add_new_user'),
     new_department_form_id = '#add_new_department_form';
 
 /*
