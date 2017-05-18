@@ -337,3 +337,159 @@ describe('Leave request cancelation', function(){
     driver.quit().then(function(){ done(); });
   });
 });
+
+/*
+ *  Scenario:
+ *    * Create a company with admin user A and regular employee B
+ *    * Login as employee B and submit leave request
+ *    * Ensure that Cancel button is visible for user B
+ *    * Login as admin user A
+ *    * Go to user B details, ensure new reuest is there but no Cancel button
+ * */
+describe('Check only requestor can see the Cancel button', function(){
+
+  this.timeout( config.get_execution_timeout() );
+
+  var driver, email_A, email_B, user_id_A, user_id_B;
+
+  it("Register new company", function(done){
+    register_new_user_func({
+      application_host : application_host,
+    })
+    .then(function(data){
+      driver  = data.driver;
+      email_A = data.email;
+      done();
+    });
+  });
+
+  it("Create second user B", function(done){
+    add_new_user_func({
+      application_host : application_host,
+      driver           : driver,
+    })
+    .then(function(data){
+      email_B = data.new_user_email;
+      done();
+    });
+  });
+
+  it("Obtain information about admin user A", function(done){
+    user_info_func({
+      driver : driver,
+      email  : email_A,
+    })
+    .then(function(data){
+      user_id_A = data.user.id;
+      done();
+    });
+  });
+
+  it("Obtain information about user B", function(done){
+    user_info_func({
+      driver : driver,
+      email  : email_B,
+    })
+    .then(function(data){
+      user_id_B = data.user.id;
+      done();
+    });
+  });
+
+  it("Logout from user A (admin)", function(done){
+    logout_user_func({
+      application_host : application_host,
+      driver           : driver,
+    })
+    .then(function(){ done() });
+  });
+
+  it("Login as user B", function(done){
+    login_user_func({
+      application_host : application_host,
+      user_email       : email_B,
+      driver           : driver,
+    })
+    .then(function(){ done() });
+  });
+
+  it("Open Book leave popup window", function(done){
+    driver.findElement(By.css('#book_time_off_btn'))
+      .then(function(el){ return el.click() })
+      .then(function(el){
+        // This is very important line when working with Bootstrap modals!
+        return driver.sleep(1000);
+      })
+      .then(function(){ done() });
+  });
+
+  it("Submit new leave requesti from user B for one weekday", function(done){
+    submit_form_func({
+      driver      : driver,
+      form_params : [{
+        selector : 'input#from',
+        value    : some_weekday_date,
+      },{
+        selector : 'input#to',
+        value    : some_weekday_date,
+      }],
+      message : /New leave request was added/,
+    })
+    .then(function(){done()});
+  });
+
+  it("Open requests page", function( done ){
+    open_page_func({
+      url    : application_host + 'requests/',
+      driver : driver,
+    })
+    .then(function(){ done() });
+  });
+
+  it("Ensure Cancel button is visible for user B", function(done){
+    driver
+      .findElement(By.css(
+        'tr.leave-request-row form[action="/requests/cancel/"] button[type="submit"]'
+      ))
+      .then(function(cancel_btn){
+        expect( cancel_btn ).to.be.ok;
+        done();
+      });
+  });
+
+  it("Logout from user A (admin)", function(done){
+    logout_user_func({
+      application_host : application_host,
+      driver           : driver,
+    })
+    .then(function(){ done() });
+  });
+
+  it("Login as admin user A", function(done){
+    login_user_func({
+      application_host : application_host,
+      user_email       : email_A,
+      driver           : driver,
+    })
+    .then(function(){ done() });
+  });
+
+  it('Open user B absences section', function(done){
+    open_page_func({
+      url    : application_host + 'users/edit/'+user_id_B+'/absences/',
+      driver : driver,
+    })
+    .then(function(){ done() });
+  });
+
+  it("Ensure new reuest is there but no Cancel button", function(done){
+    driver
+      .findElements(By.css(
+        'form[action="/requests/cancel/"]'
+      ))
+      .then(function(cancel_btns){
+        expect( cancel_btns.length ).to.be.eq(0);
+        done();
+      });
+  });
+});
