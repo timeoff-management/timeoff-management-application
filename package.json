@@ -1,6 +1,6 @@
 {
   "name": "TimeOff.Management",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "private": false,
   "description": "Simple yet powerful absence management software for small and medium size business",
   "dependencies": {
