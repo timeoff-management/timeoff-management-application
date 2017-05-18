@@ -30,7 +30,7 @@
       <tbody>
       {{# each leaves }}
 
-      <tr>
+      <tr class="leave-request-row">
         <td>{{ this.leave_type.name }}{{#if this.is_pended_revoke_leave}}<br>(pended revoke){{/if}}</td>
         <td>{{ this.get_deducted_days_number }}</td>
         <td>From {{#with this.get_start_leave_day}}{{as_date this.date}}{{/with}} to {{#with this.get_end_leave_day}}{{as_date this.date}}{{/with}}</td>
@@ -46,11 +46,11 @@
           {{else}}
           <form method="post" action='/requests/cancel/'>
             <input type="hidden" value="{{this.id}}" name="request">
-            <button type="submit" class="pull-right btn btn-default btn-xs revoke-btn" title="Cancel leave request"><i class="fa fa-trash"></i></button>
+            <button type="submit" class="pull-right btn btn-link btn-xs revoke-btn" title="Cancel leave request" value="cancel"><i class="fa fa-trash"> Cancel</i></button>
           </form>
           {{/if}}
         </td>
-        <td><span class="pull-right">{{#if this.is_new_leave }}Pending{{else}}{{#if this.is_approved_leave}}Approved{{else}}Rejected{{/if}}{{/if}}</span></td>
+        <td><span class="pull-right leave-request-row-status">{{#if this.is_new_leave }}Pending{{else}}{{#if this.is_approved_leave}}Approved{{else}}Rejected{{/if}}{{/if}}</span></td>
       </tr>
 
       {{/ each }}
