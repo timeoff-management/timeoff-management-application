@@ -132,7 +132,7 @@ describe('CRUD for users', function(){
     });
   });
 
-  it("And update its bose to be MANAGER", function(done){
+  it("And update its boss to be MANAGER", function(done){
      submit_form_func({
       driver      : driver,
       form_params : [{

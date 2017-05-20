@@ -34,12 +34,12 @@
     </thead>
     <tbody>
       {{# each users}}
-      <tr>
+      <tr data-vpp-user-row="{{this.id}}">
         <td class="user-link-cell"><a href="/users/edit/{{this.id}}/">{{this.full_name}}</a></td>
         <td class="user_department">{{this.department.name}}</td>
         <td>{{# if this.admin }}Yes{{else}}{{/if}}</td>
-        <td>{{ this.calculate_number_of_days_available_in_allowance}}</td>
-        <td>{{this.calculate_number_of_days_taken_from_allowance}}</td>
+        <td class="vpp-days-remaining">{{ this.calculate_number_of_days_available_in_allowance}}</td>
+        <td class="vpp-days-used">{{this.calculate_number_of_days_taken_from_allowance}}</td>
       </tr>
       {{/each}}
     </tbody>

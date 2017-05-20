@@ -423,7 +423,7 @@ describe('Check only requestor can see the Cancel button', function(){
       .then(function(){ done() });
   });
 
-  it("Submit new leave requesti from user B for one weekday", function(done){
+  it("Submit new leave requesti from user B", function(done){
     submit_form_func({
       driver      : driver,
       form_params : [{
@@ -492,4 +492,9 @@ describe('Check only requestor can see the Cancel button', function(){
         done();
       });
   });
+
+  after(function(done){
+    driver.quit().then(function(){ done(); });
+  });
+
 });
