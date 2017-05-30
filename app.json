@@ -1,0 +1,33 @@
+{
+  "name": "TimeOff.Management",
+  "description": "Simple yet powerful absence management software for small and medium size business",
+  "repository": "https://github.com/timeoff-management/application",
+  "keywords": ["holiday management", "absence", "holiday", "tool", "team", "time", "approval"],
+  "addons": ["heroku-postgresql", "mailgun"],
+  "env": {
+    "ALLOW_CREATE_NEW_ACCOUNTS": {
+      "description": "Allow to create new user accounts",
+      "value": "true"
+    },
+    "SEND_EMAILS": {
+      "description": "Send email notifications?",
+      "value": "false"
+    },    
+    "CRYPTO_SECRET": {
+      "description": "Secret needed for hashifying the password",
+      "generator": "secret"
+    },
+    "APPLICATION_DOMAIN": {
+      "description": "Public domain of your application (will be used for links in email notifications)",
+      "value": "http://app.timeoff.management"
+    },
+    "PROMOTION_WEBSITE_DOMAIN": {
+      "description": "Link to landing page of the app",
+      "value": "http://timeoff.management"
+    },
+    "SENDER_EMAIL": {
+      "description": "Email address of the sender of notification mails",
+      "value": "mail@test.com"
+    }
+  }
+}

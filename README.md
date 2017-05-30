@@ -86,6 +86,14 @@ Visit http://timeoff.management/
 
 Create company account and use cloud based version.
 
+### Host on Heroku
+Click the following button to install TimeOff.Management on Heroku:
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
+Configure the application during setup by filling the according form fields.
+The default setup will automatically provision a free PostgreSQL and Mailgun addon. Instead of using Mailgun API for sending mails you can also send mails via SMPT by adding the environment variables `SMTP_SERVER`, `SMTP_PORT`, `SMTP_LOGIN` and `SMTP_PASSWORD`.
+
 ### Self hosting
 
 Install TimeOff.Management application within your infrastructure:
