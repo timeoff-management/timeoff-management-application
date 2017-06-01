@@ -127,8 +127,8 @@ describe('Revoke leave request by Admin', function(){
   it("Check that all days are marked as pended", function(done){
     check_booking_func({
       driver         : driver,
-      full_days      : [moment('2017-06-16')],
-      halfs_1st_days : [moment('2017-06-15')],
+      full_days      : [moment.utc('2017-06-16')],
+      halfs_1st_days : [moment.utc('2017-06-15')],
       type           : 'pended',
     })
     .then(function(){ done() });

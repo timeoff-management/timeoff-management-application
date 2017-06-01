@@ -194,7 +194,7 @@ describe('Dealing with inactive users', function(){
       driver      : driver,
       form_params : [{
         selector : 'input#end_date_inp',
-        value    : moment().subtract(1, 'days').format('YYYY-MM-DD'),
+        value    : moment.utc().subtract(1, 'days').format('YYYY-MM-DD'),
       }],
       submit_button_selector : 'button#save_changes_btn',
       message : /Details for .+ were updated/,

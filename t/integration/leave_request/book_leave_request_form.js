@@ -56,10 +56,10 @@ describe("Check the client side logic to facilitate filling new absence form", f
       driver : driver,
       elements_to_check : [{
         selector : 'input.book-leave-from-input',
-        value : moment().format('YYYY-MM-DD'),
+        value : moment.utc().format('YYYY-MM-DD'),
       },{
         selector : 'input.book-leave-to-input',
-        value : moment().format('YYYY-MM-DD'),
+        value : moment.utc().format('YYYY-MM-DD'),
       }],
     })
     .then(function(){ done() });
@@ -68,7 +68,7 @@ describe("Check the client side logic to facilitate filling new absence form", f
   it("Update FROM to be in future and make sure TO is automatically addusted to the same date", function(done){
 
     var inp_from,
-      tomorrow_str = moment().add(1, 'days').format('YYYY-MM-DD');
+      tomorrow_str = moment.utc().add(1, 'days').format('YYYY-MM-DD');
 
     driver
       .findElement(By.css('input.book-leave-from-input'))
@@ -95,8 +95,8 @@ describe("Check the client side logic to facilitate filling new absence form", f
   it("Update FROM to be in past and make sure TO is stays unchanged", function(done){
 
     var inp_from,
-      tomorrow_str = moment().add(1, 'days').format('YYYY-MM-DD'),
-      yesterday_str = moment().subtract(1, 'days').format('YYYY-MM-DD');
+      tomorrow_str = moment.utc().add(1, 'days').format('YYYY-MM-DD'),
+      yesterday_str = moment.utc().subtract(1, 'days').format('YYYY-MM-DD');
 
     driver
       .findElement(By.css('input.book-leave-from-input'))

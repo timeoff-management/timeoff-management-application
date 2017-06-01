@@ -21,7 +21,7 @@ var test             = require('selenium-webdriver/testing'),
     config                 = require('../lib/config'),
     application_host       = config.get_application_host();
 
-var next_year = moment().add(1, 'y').format('YYYY');
+var next_year = moment.utc().add(1, 'y').format('YYYY');
 
 /*
  *  Scenario to go in this test:
@@ -137,7 +137,7 @@ describe('Leave type limits for next year: ' + next_year, function(){
         .then(function(){
           check_booking_func({
             driver    : driver,
-            full_days : [moment(next_year + '-05-10')],
+            full_days : [moment.utc(next_year + '-05-10')],
             type      : 'pended',
           })
           .then(function(){ done() });

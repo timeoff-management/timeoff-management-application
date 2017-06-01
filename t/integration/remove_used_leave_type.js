@@ -122,8 +122,8 @@ describe('Try to remove used leave type', function(){
   it("Check that all days are marked as pended", function(done){
     check_booking_func({
       driver         : driver,
-      full_days      : [moment('2015-06-16')],
-      halfs_1st_days : [moment('2015-06-15')],
+      full_days      : [moment.utc('2015-06-16')],
+      halfs_1st_days : [moment.utc('2015-06-15')],
       type           : 'pended',
     })
     .then(function(){ done() });
