@@ -75,7 +75,7 @@ describe('CRUD for bank holidays', function(){
         value    : 'Early May bank holiday',
       },{
         selector : bankholiday_form_id+' input[name="date__0"]',
-        value    : moment().format('YYYY-MM-DD'),
+        value    : moment.utc().format('YYYY-MM-DD'),
       }],
     })
     .then(function(){done()});

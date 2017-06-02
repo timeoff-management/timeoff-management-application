@@ -77,7 +77,7 @@ describe('Deactivate and activate user', function(){
         driver      : driver,
         form_params : [{
           selector : 'input#end_date_inp',
-          value    : moment().subtract(1, 'days').format('YYYY-MM-DD'),
+          value    : moment.utc().subtract(1, 'days').format('YYYY-MM-DD'),
         }],
         submit_button_selector : 'button#save_changes_btn',
         message : /Details for .+ were updated/,
@@ -134,7 +134,7 @@ describe('Deactivate and activate user', function(){
       driver      : driver,
       form_params : [{
         selector : 'input#end_date_inp',
-        value    : moment().add(1, 'days').format('YYYY-MM-DD'),
+        value    : moment.utc().add(1, 'days').format('YYYY-MM-DD'),
       }],
       submit_button_selector : 'button#save_changes_btn',
       message : /There is an active account with similar email somewhere within system/,
@@ -160,7 +160,7 @@ describe('Deactivate and activate user', function(){
       driver      : driver,
       form_params : [{
         selector : 'input#end_date_inp',
-        value    : moment().subtract(3, 'days').format('YYYY-MM-DD'),
+        value    : moment.utc().subtract(3, 'days').format('YYYY-MM-DD'),
       }],
       submit_button_selector : 'button#save_changes_btn',
       message : /Details for .+ were updated/,

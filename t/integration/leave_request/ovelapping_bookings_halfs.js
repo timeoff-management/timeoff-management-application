@@ -131,8 +131,8 @@ describe('Overlapping leaverequest (with halfs)', function(){
   it("Check that all days are marked as pended", function(done){
     check_booking_func({
       driver         : driver,
-      full_days      : [moment('2015-06-17')],
-      halfs_1st_days : [moment('2015-06-16')],
+      full_days      : [moment.utc('2015-06-17')],
+      halfs_1st_days : [moment.utc('2015-06-16')],
       type           : 'pended',
     })
     .then(function(){ done() });
@@ -258,7 +258,7 @@ describe('Overlapping leaverequest (with halfs)', function(){
   it("Check that all days are marked as pended", function(done){
     check_booking_func({
       driver    : driver,
-      full_days : [moment('2015-06-15'),moment('2015-06-16'),moment('2015-06-17')],
+      full_days : [moment.utc('2015-06-15'),moment.utc('2015-06-16'),moment.utc('2015-06-17')],
       type      : 'pended',
     })
     .then(function(){ done() });

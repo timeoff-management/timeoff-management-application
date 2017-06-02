@@ -162,7 +162,7 @@ describe('Leave type limits in actoion', function(){
         .then(function(){
           check_booking_func({
             driver    : driver,
-            full_days : [moment('2015-06-16'),moment('2015-06-16'),moment('2015-06-17')],
+            full_days : [moment.utc('2015-06-16'),moment.utc('2015-06-16'),moment.utc('2015-06-17')],
             type      : 'pended',
           })
           .then(function(){ done() });
