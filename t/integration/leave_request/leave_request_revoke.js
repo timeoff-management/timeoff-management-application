@@ -244,7 +244,7 @@ describe('Revoke leave request', function(){
       .then(function(){ done() });
   });
 
-  it(" Logout from MANAGER_A account", function(done){
+  it("Logout from MANAGER_A account", function(done){
     logout_user_func({
       application_host : application_host,
       driver           : driver,

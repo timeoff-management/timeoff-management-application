@@ -5,51 +5,58 @@ var models = require('../lib/model/db');
 module.exports = {
   up: function (queryInterface, Sequelize) {
 
-    if ('sqlite' === queryInterface.sequelize.getDialect()) {
+    queryInterface.describeTable('Departments').then(function(attributes){
 
-      console.log('Going into SQLIite case');
+      if (attributes.hasOwnProperty('allowance')) {
+        return 1;
+      }
 
-      return queryInterface
-        // Create Temp Departments based on current model definitiom
-        .createTable('Departments_backup', models.Department.attributes)
+      if ('sqlite' === queryInterface.sequelize.getDialect()) {
 
-        .then(function(){
-          return queryInterface.sequelize.query('PRAGMA foreign_keys=off;');
-        })
+        console.log('Going into SQLIite case');
 
-        // Copy data form original Departments into new Temp one
-        .then(function(){
-          return queryInterface.sequelize.query(
-            'INSERT INTO `Departments_backup` (id, name, include_public_holidays, createdAt, updatedAt, companyId, bossId, allowance) SELECT id, name, include_public_holidays, createdAt, updatedAt, companyId, bossId, allowence FROM `'+ models.Department.tableName +'`');
-        })
+        return queryInterface
+          // Create Temp Departments based on current model definitiom
+          .createTable('Departments_backup', models.Department.attributes)
 
-        .then(function(){
-          return queryInterface.dropTable( models.Department.tableName );
-        })
+          .then(function(){
+            return queryInterface.sequelize.query('PRAGMA foreign_keys=off;');
+          })
 
-        .then(function(){
-          return queryInterface.renameTable('Departments_backup', models.Department.tableName);
-        })
+          // Copy data form original Departments into new Temp one
+          .then(function(){
+            return queryInterface.sequelize.query(
+              'INSERT INTO `Departments_backup` (id, name, include_public_holidays, createdAt, updatedAt, companyId, bossId, allowance) SELECT id, name, include_public_holidays, createdAt, updatedAt, companyId, bossId, allowence FROM `'+ models.Department.tableName +'`');
+          })
 
-        .then(function(){
-          return queryInterface.sequelize.query('PRAGMA foreign_keys=on;');
-        })
+          .then(function(){
+            return queryInterface.dropTable( models.Department.tableName );
+          })
 
-        .then(function(){
-          queryInterface.addIndex(models.Department.tableName, ['companyId']);
-        })
+          .then(function(){
+            return queryInterface.renameTable('Departments_backup', models.Department.tableName);
+          })
 
-        .then(function(){
-          queryInterface.addIndex(models.Department.tableName, ['id']);
-        });
+          .then(function(){
+            return queryInterface.sequelize.query('PRAGMA foreign_keys=on;');
+          })
 
-    } else {
+          .then(function(){
+            queryInterface.addIndex(models.Department.tableName, ['companyId']);
+          })
 
-      console.log('Generic option');
+          .then(function(){
+            queryInterface.addIndex(models.Department.tableName, ['id']);
+          });
 
-      return queryInterface.renameColumn('Departments', 'allowence', 'allowance')
-        .then(function(d){ console.dir(d) });
-    }
+      } else {
+
+        console.log('Generic option');
+
+        return queryInterface.renameColumn('Departments', 'allowence', 'allowance')
+          .then(function(d){ console.dir(d) });
+      }
+    });
   },
 
   down: function (queryInterface, Sequelize) {

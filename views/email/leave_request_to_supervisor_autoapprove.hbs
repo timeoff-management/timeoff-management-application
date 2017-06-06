@@ -1,0 +1,9 @@
+New leave was added and auto approved.
+=====
+<p>Hello <strong>{{#with approver }}{{this.full_name}}{{/with}}</strong>,</p>
+
+<p><strong>{{#with requester}}{{this.full_name}}{{/with}}</strong> added new leave <strong>{{>leave_request_detail leave=leave }}</strong>.</p>
+
+<p>There is no need to approve/reject leaves from {{#with requester}}{{this.full_name}}{{/with}}.</p>
+
+<p>Thanks</p>

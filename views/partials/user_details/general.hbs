@@ -38,6 +38,14 @@
     </div>
 
     <div class="form-group">
+        <label for="auto_approve_inp" class="control-label">
+          <input class="" id="auto_approve_inp" name="auto_approve" type="checkbox" {{# if employee.auto_approve}} checked="checked"  {{/if}} >
+          Auto approve leave requests
+        </label>
+        <span class="help-block">Set the flag ON to streamline leave requests from {{#with employee}}{{this.full_name}}{{/with}} directly into <strong>Approved</strong> state.</span>
+    </div>
+
+    <div class="form-group">
       <label for="start_date_inp" class="control-label">Started on</label>
       <div class="input-group col-md-4">
         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>

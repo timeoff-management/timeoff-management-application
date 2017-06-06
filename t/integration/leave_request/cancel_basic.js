@@ -5,6 +5,7 @@ var test                 = require('selenium-webdriver/testing'),
   By                     = require('selenium-webdriver').By,
   until                  = require('selenium-webdriver').until,
   Promise                = require("bluebird"),
+  moment                 = require('moment'),
   expect                 = require('chai').expect,
   add_new_user_func      = require('../../lib/add_new_user'),
   check_elements_func    = require('../../lib/check_elements'),
@@ -16,7 +17,7 @@ var test                 = require('selenium-webdriver/testing'),
   submit_form_func       = require('../../lib/submit_form'),
   user_info_func         = require('../../lib/user_info'),
   application_host       = config.get_application_host(),
-  some_weekday_date      = '2015-06-17';
+  some_weekday_date      = '2017-06-01';
 
 /*
  *  Scenario:
@@ -40,6 +41,10 @@ describe('Leave request cancelation', function(){
   this.timeout( config.get_execution_timeout() );
 
   var driver, email_A, email_B, user_id_A, user_id_B;
+
+  it('Check precondition', function(){
+    expect(moment().format('YYYY')).to.be.eq(moment(some_weekday_date).format('YYYY'));
+  });
 
   it("Register new company", function(done){
     register_new_user_func({
@@ -482,7 +487,7 @@ describe('Check only requestor can see the Cancel button', function(){
     .then(function(){ done() });
   });
 
-  it("Ensure new reuest is there but no Cancel button", function(done){
+  it("Ensure new request is there but no Cancel button", function(done){
     driver
       .findElements(By.css(
         'form[action="/requests/cancel/"]'
