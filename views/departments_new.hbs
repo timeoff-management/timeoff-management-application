@@ -1,0 +1,71 @@
+
+{{> header }}
+
+<h1>Departments</h1>
+
+<div class="row">
+    <div class="col-md-3 lead">Departments settings</div>
+</div>
+
+{{> show_flash_messages }}
+
+<div class="row">&nbsp;</div>
+
+
+{{# unless departments.length }}
+<div class="row">
+    <div class="col-md-4">No department records</div>
+</div>
+{{/unless}}
+
+<div class="row">
+
+  <div class="col-md-12">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Allowance</th>
+          <th>Does include public holidays?</th>
+          <th>Manager</th>
+          <th>Number Employees</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each departments}}
+        <tr>
+          <td class="user-link-cell"><a href="/users/edit/{{this.id}}/">{{this.name}}</a></td>
+          <td class="user_department">
+            {{#each ../allowance_options}}{{#if_equal this.value ../allowance}}{{caption}}{{/if_equal}}{{/each}}
+          </td>
+          <td>{{# if this.include_public_holidays }}Yes{{/if}}</td>
+          <td class="vpp-days-remaining">{{ this.boss.name}}</td>
+          <td class="vpp-days-used"><a href="/users/?department={{ this.id }}">{{this.users.length}}</a></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<form method="post" action="/settings/departments/" id="edit_department_form">
+
+<div class="row">
+  <div class="col-md-offset-9 col-md-3">
+    <button type="submit" class="btn btn-success pull-right">Save changes</button>
+    <span class="pull-right">&nbsp;&nbsp;&nbsp;</span>
+    <button class="btn btn-default pull-right" data-toggle="modal" data-target="#add_new_department_modal" type="button" id="add_new_department_btn">Add new</button>
+  </div>
+</div>
+
+</form>
+
+<div class="row">&nbsp;</div>
+
+{{> add_new_department_modal
+  container_id='add_new_department_modal'
+  form_action='/settings/departments/'
+}}
+
+{{> footer }}
