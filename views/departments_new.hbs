@@ -6,10 +6,10 @@
 {{> show_flash_messages }}
 
 <div class="row">
-  <div class="col-md-3 lead">Departments settings</div>
-  <div class="col-md-4 col-md-offset-5">
+  <div class="col-md-4 lead">Departments settings overview</div>
+  <div class="col-md-4 col-md-offset-4">
     <button class="btn btn-info pull-right" data-toggle="modal" data-target="#add_new_department_modal" type="button" id="add_new_department_btn">Add new department</button>
-<button type="submit" class="btn btn-link pull-right">Bulk update</button>
+    <a href='/settings/departments/'class="btn btn-link pull-right">Bulk update</a>
   </div>
 </div>
 
@@ -34,7 +34,18 @@
           <th>Deputy</th>
           <th>Allowance</th>
           <th>Number Employees</th>
-          <th>Does include public holidays?</th>
+          <th>Public Holidays
+            <button type="button"
+              class="btn btn-xs btn-link"
+              data-content="If set YES, employees from department have Bank Holidays added in addition to allowance"
+              data-placement="top"
+              data-toggle="popover"
+              data-trigger="focus hover"
+            >
+              <span class="fa fa-question-circle"> </span>
+            </button>
+          </th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -48,6 +59,7 @@
           </td>
           <td><a href="/users/?department={{ this.id }}">{{this.users.length}}</a></td>
           <td>{{# if this.include_public_holidays }}Yes{{/if}}</td>
+          <td><a href="/settings/departments/edit/{{this.id}}/" class="btn btn-link btn-xs pull-right"><span class="fa fa-pencil"></span></a></td>
         </tr>
         {{/each}}
       </tbody>
@@ -55,10 +67,6 @@
   </div>
 
 </div>
-
-
-
-
 
 {{> add_new_department_modal
   container_id='add_new_department_modal'

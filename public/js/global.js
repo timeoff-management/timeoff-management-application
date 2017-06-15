@@ -55,3 +55,12 @@ $(document).ready(function(){
     format      : "dd/mm/yyyy"
   }
 }(jQuery);
+
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})
