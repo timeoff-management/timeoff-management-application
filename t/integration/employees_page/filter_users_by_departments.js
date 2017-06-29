@@ -48,7 +48,7 @@ describe('Check filtering on "users" page', function(){
 
   it('Create new department "IT": open page', function(done){
     open_page_func({
-      url    : application_host + 'settings/departments/',
+      url    : application_host + 'settings/departments-bulk-update/',
       driver : driver,
     })
     .then(function(){ done() });

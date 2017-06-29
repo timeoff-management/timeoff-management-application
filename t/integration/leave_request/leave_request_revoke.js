@@ -94,7 +94,7 @@ describe('Revoke leave request', function(){
 
   it("Open department management page", function(done){
     open_page_func({
-      url    : application_host + 'settings/departments/',
+      url    : application_host + 'settings/departments-bulk-update/',
       driver : driver,
     })
     .then(function(){ done() });
@@ -263,7 +263,7 @@ describe('Revoke leave request', function(){
 
   it("Open department management page", function(done){
     open_page_func({
-      url    : application_host + 'settings/departments/',
+      url    : application_host + 'settings/departments-bulk-update/',
       driver : driver,
     })
     .then(function(){ done() });

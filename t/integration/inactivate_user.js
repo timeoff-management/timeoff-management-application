@@ -83,7 +83,7 @@ describe('Dealing with inactive users', function(){
 
   it("Open department management page", function(done){
     open_page_func({
-      url    : application_host + 'settings/departments/',
+      url    : application_host + 'settings/departments-bulk-update/',
       driver : driver,
     })
     .then(function(){ done() });
@@ -120,7 +120,7 @@ describe('Dealing with inactive users', function(){
 
   it("Open departments management page", function(done){
     open_page_func({
-      url    : application_host + 'settings/departments/',
+      url    : application_host + 'settings/departments-bulk-update/',
       driver : driver,
     })
     .then(function(){ done() });
@@ -230,7 +230,7 @@ describe('Dealing with inactive users', function(){
 
   it("Open department settings page", function(done){
     open_page_func({
-      url    : application_host + 'settings/departments/',
+      url    : application_host + 'settings/departments-bulk-update/',
       driver : driver,
     })
     .then(function(){ done() });

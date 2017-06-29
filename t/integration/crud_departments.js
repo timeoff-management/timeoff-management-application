@@ -31,15 +31,15 @@ describe('CRUD for departments', function(){
     });
   });
 
-  it("Open page for editing company details", function(done){
+  it("Open page for departments bulk editing", function(done){
     open_page_func({
-      url    : application_host + 'settings/departments/',
+      url    : application_host + 'settings/departments-bulk-update/',
       driver : driver,
     })
     .then(function(){ done() });
   });
 
-  it("Check that updating department allowance and Use allowance flag works", function(done){
+  it("Update department allowance and Use allowance flag", function(done){
      submit_form_func({
       driver      : driver,
       form_params : [{
@@ -51,8 +51,29 @@ describe('CRUD for departments', function(){
         tick     : true,
         value    : 'off',
       }],
-      should_be_successful : true,
       message : /Changes to departments were saved/,
+    })
+    .then(function(){ done() });
+  });
+
+  it('... and ensure that changes were saved indeed', function(done){
+    open_page_func({
+      url    : application_host + 'settings/departments-bulk-update/',
+      driver : driver,
+    })
+    .then(function(){
+      return check_elements_func({
+        driver            : driver,
+        elements_to_check : [{
+          selector        : 'select[name="allowance__0"]',
+          option_selector : 'option[value="50"]',
+          value : '50',
+        },{
+          selector : 'input[name="include_public_holidays__0"]',
+          tick     : true,
+          value    : 'off',
+        }],
+      });
     })
     .then(function(){ done() });
   });
@@ -65,11 +86,27 @@ describe('CRUD for departments', function(){
         tick     : true,
         value    : 'on',
       }],
-      should_be_successful : true,
       message : /Changes to departments were saved/,
+    })
+    .then(function(){
+      return open_page_func({
+        url    : application_host + 'settings/departments-bulk-update/',
+        driver : driver,
+      });
+    })
+    .then(function(){
+      return check_elements_func({
+        driver            : driver,
+        elements_to_check : [{
+          selector : 'input[name="include_public_holidays__0"]',
+          tick     : true,
+          value    : 'on',
+        }],
+      });
     })
     .then(function(){ done() });
   });
+
 
   it('Add mew "Marketing" department', function(done){
     driver.findElement(By.css('#add_new_department_btn'))
@@ -126,18 +163,24 @@ describe('CRUD for departments', function(){
   });
 
   it("Check the order of departments on the page: should be by ID", function(done){
-    check_elements_func({
+    open_page_func({
+      url    : application_host + 'settings/departments-bulk-update/',
       driver : driver,
-      elements_to_check : [{
-        selector : 'input[name="name__0"]',
-        value    : 'Engineering',
-      },{
-        selector : 'input[name="name__1"]',
-        value    : 'Marketing',
-      },{
-        selector : 'input[name="name__2"]',
-        value    : 'Sales',
-      }],
+    })
+    .then(function(){
+      return check_elements_func({
+        driver : driver,
+        elements_to_check : [{
+          selector : 'input[name="name__0"]',
+          value    : 'Engineering',
+        },{
+          selector : 'input[name="name__1"]',
+          value    : 'Marketing',
+        },{
+          selector : 'input[name="name__2"]',
+          value    : 'Sales',
+        }],
+      })
     })
     .then(function(){ done() });
   });
@@ -149,12 +192,22 @@ describe('CRUD for departments', function(){
         selector : 'input[name="name__1"]',
         value : 'The Marketing',
       }],
-      elements_to_check : [{
-        selector : 'input[name="name__2"]',
-        value : 'The Marketing',
-      }],
-      should_be_successful : true,
       message : /Changes to departments were saved/,
+    })
+    .then(function(){
+      return open_page_func({
+        url    : application_host + 'settings/departments-bulk-update/',
+        driver : driver,
+      });
+    })
+    .then(function(){
+      return check_elements_func({
+        driver : driver,
+        elements_to_check : [{
+          selector : 'input[name="name__2"]',
+          value : 'The Marketing',
+        }],
+      });
     })
     .then(function(){ done() });
   });
@@ -164,6 +217,12 @@ describe('CRUD for departments', function(){
       driver                 : driver,
       submit_button_selector : 'button[value="1"]',
       message : /Cannot remove department Sales as it still has 1 users/,
+    })
+    .then(function(){
+      return open_page_func({
+        url    : application_host + 'settings/departments-bulk-update/',
+        driver : driver,
+      });
     })
     .then(function(){ done() });
   });
@@ -188,15 +247,26 @@ describe('CRUD for departments', function(){
   it("Remove empty department", function(done){
     submit_form_func({
       driver : driver,
-      elements_to_check : [{
-        selector : 'input[name="name__0"]',
-        value    : 'Sales',
-      },{
-        selector : 'input[name="name__1"]',
-        value    : 'The Marketing',
-      }],
       submit_button_selector : 'button[value="0"]',
       message : /Department was successfully removed/,
+    })
+    .then(function(){
+      return open_page_func({
+        url    : application_host + 'settings/departments-bulk-update/',
+        driver : driver,
+      });
+    })
+    .then(function(){
+      return check_elements_func({
+        driver : driver,
+        elements_to_check : [{
+          selector : 'input[name="name__0"]',
+          value    : 'Sales',
+        },{
+          selector : 'input[name="name__1"]',
+          value    : 'The Marketing',
+        }],
+      });
     })
     .then(function(){ done() });
   });
