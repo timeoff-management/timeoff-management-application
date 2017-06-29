@@ -57,7 +57,7 @@
 
     <div class="col-md-3">
         <select class="form-control" name="boss_id__{{@index}}">
-        {{#each ../company.activeUsers}}
+        {{#each ../company.users}}
             <option value="{{this.id}}" {{#if_equal this.id ../bossId}} selected="selected"{{/if_equal}}>{{this.full_name}}</option>
         {{/each}}
         </select>
