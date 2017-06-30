@@ -96,32 +96,38 @@ app.use(
   require('./lib/route/login')(passport),
 
   // All rotes bellow are only for authenticated users
-  require('./lib/route/dashboard.js')
+  require('./lib/route/dashboard')
 );
 
 app.use(
   '/calendar/',
-  require('./lib/route/calendar.js')
+  require('./lib/route/calendar')
 );
 
 app.use(
   '/settings/',
-  require('./lib/route/settings.js')
+  require('./lib/route/settings')
+);
+
+// '/settings/' path is quite big hence there are two modules providng handlers for it
+app.use(
+  '/settings/',
+  require('./lib/route/departments')
 );
 
 app.use(
   '/users/',
-  require('./lib/route/users.js')
+  require('./lib/route/users')
 );
 
 app.use(
   '/requests/',
-  require('./lib/route/requests.js')
+  require('./lib/route/requests')
 );
 
 app.use(
   '/audit/',
-  require('./lib/route/audit.js')
+  require('./lib/route/audit')
 );
 
 // catch 404 and forward to error handler
