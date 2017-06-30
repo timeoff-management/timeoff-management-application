@@ -215,7 +215,7 @@ describe('CRUD for departments', function(){
   it("Try to remove department that still has users (should fail)", function(done){
     submit_form_func({
       driver                 : driver,
-      submit_button_selector : 'button[value="1"]',
+      submit_button_selector : 'button[data-vpp="1"]',
       message : /Cannot remove department Sales as it still has 1 users/,
     })
     .then(function(){
@@ -247,7 +247,7 @@ describe('CRUD for departments', function(){
   it("Remove empty department", function(done){
     submit_form_func({
       driver : driver,
-      submit_button_selector : 'button[value="0"]',
+      submit_button_selector : 'button[data-vpp="0"]',
       message : /Department was successfully removed/,
     })
     .then(function(){
