@@ -28,7 +28,7 @@
           <option value="{{this.id}}" {{#if_equal ../employee.DepartmentId this.id}} selected="selected"{{/if_equal}}>{{this.name}} (approver {{this.boss.name}} {{this.boss.lastname}})</option>
       {{/each}}
     </select>
-    <span id="department_help" class="help-block">Department current user is part of</span>
+    <span id="department_help" class="help-block">Department current user is part of. <a href="/settings/departments/edit/{{employee.DepartmentId}}">More details.</a></span>
   </div>
 
   <div class="form-group">

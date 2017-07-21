@@ -64,3 +64,28 @@ $(function () {
 $(function () {
   $('[data-toggle="popover"]').popover()
 })
+
+/*
+ * This is handler for invocation of "add secondary supervisors" modal
+ *
+ * */
+
+$('#add_secondary_supervisers_modal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget),
+      department_name = button.data('department_name'),
+      department_id = button.data('department_id');
+
+  var modal = $(this);
+
+  modal.find('.modal-title strong').text(department_name);
+
+  // Make modal window to be no hiegher then window and its content
+  // scrollable
+  $('.modal .modal-body').css('overflow-y', 'auto');
+  $('.modal .modal-body').css('max-height', $(window).height() * 0.7);
+
+  $(this).find(".modal-body")
+    // Show "loading" icon while content of modal is loaded
+    .html('<p class="text-center"><i class="fa fa-refresh fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span></p>')
+    .load('/settings/departments/available-supervisors/'+department_id+'/');
+});

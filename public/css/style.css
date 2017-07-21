@@ -10,6 +10,24 @@ body {
 a {
   color: #5ba4e5; }
 
+/*
+  Add special class to remove default buttom space
+*/
+.no-bottom-space {
+  margin-bottom: 0px; }
+
+/*
+  Increase space between form groups so they are more prominent
+*/
+.form-group {
+  margin-bottom: 20px; }
+
+/*
+  Make help blocks in forms to be more distinguishable
+ */
+.form-group .help-block {
+  font-style: italic; }
+
 /* Space out content a bit */
 body {
   padding-top: 20px;
@@ -158,6 +176,7 @@ div.feeds-holder {
   body.modal-open {
     position: fixed; } }
 
+/* To be used for selected items in lists */
 .selected-item {
   background: #F5F7F8;
   font-weight: bolder; }

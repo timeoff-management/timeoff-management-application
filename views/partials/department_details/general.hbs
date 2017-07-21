@@ -8,30 +8,42 @@
     <input class="form-control" id="name" name="name" required value="{{department.name}}">
   </div>
 
-  <div class="form-group">
-    <label for="select_inp" class="control-label">Manager</label>
 
-    <select class="form-control" name="boss_id">
+  <div class="form-group">
+    <label for="manager_id" class="control-label">Manager</label>
+    <select class="form-control" name="boss_id" id="manager_id">
     {{#each company.users}}
       <option value="{{this.id}}" {{#if_equal ../department.bossId this.id }} selected="selected"{{/if_equal}}>{{this.full_name}}</option>
     {{/each}}
     </select>
-
-    <span id="boss_id_help" class="help-block">Head of {{department.name}} department. Main manager.</span>
+    <span class="help-block">Head of {{department.name}} department. Main manager. <a href="/users/edit/{{department.bossId}}/">More details <i class="fa fa-angle-double-right"></i></a></span>
   </div>
 
   <div class="form-group">
     <label class="control-label">Secondary supervisors</label>
-
-    <div class="list-group">
-      <div class="list-group-item">
-        <p>Pavlo Vodopyan <span class="pull-right"><i class="btn btn-link fa fa-trash"></i></span></p>
-      </div>
-      <div class="list-group-item">
-        <p>Kateryna Vodopian <span class="pull-right"><i class="btn btn-link fa fa-trash"></i></span></p>
-      </div>
-    </div>
+    <ul class="list-group no-bottom-space">
+      <li class="list-group-item">
+        <span><a href='/users/edit//'>Kateryna Vodopian</a> <a class="pull-right btn btn-link btn-xs"><i class="fa fa-trash"></i> Remove</a><span>
+      </li>
+      <li class="list-group-item">
+        <span>Kateryna Vodopian <a class="pull-right btn btn-link btn-xs"><i class="fa fa-trash"></i> Remove</a><span>
+      </li>
+      <li class="list-group-item">
+        <span>&nbsp;
+        <a class="pull-right btn btn-link btn-xs"
+          data-toggle="modal"
+          data-target="#add_secondary_supervisers_modal"
+          data-department_id="{{department.id}}"
+          data-department_name="{{department.name}}"
+        >
+          <i class="fa fa-plus"></i> Add new secondary supervisor
+        </a>
+        <span>
+      </li>
+    </ul>
+    <span class="help-block">List of users who also could decide on leave requests from {{department.name}} department's employees.</span>
   </div>
+
 
   <div class="form-group">
     <label for="allowance_select">Allowance</label>
@@ -54,9 +66,30 @@
 
 <div class="row">
   <div class="col-md-12">
-    <button id="save_changes_btn" type="submit" class="btn btn-success pull-right">Save changes</button>
+    <button id="save_changes_btn" type="submit" class="btn btn-success pull-right">Save changes to department</button>
     <a class="btn btn-link pull-right" href="/settings/departments/">Cancel</a>
   </div>
 </div>
 
 </form>
+
+
+
+<div class="modal fade" id="add_secondary_supervisers_modal" tabindex="-1" role="dialog" aria-labelledby="add_secondary_supervisers_modal_la">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modal_confirmation_reject_la">Add supervisors to <strong></strong> department</h4>
+      </div>
+      <div class="modal-body">
+        <p>Marking SEPA batch as <strong>rejected</strong> does not affect related orders.<p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
