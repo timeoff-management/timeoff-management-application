@@ -1,96 +1,98 @@
 
+<form method="POST" action="/users/edit/{{employee.id}}/">
+
 <div class="col-md-7">
-  <form method="POST" action="/users/edit/{{employee.id}}/">
 
-    <input type="hidden" name="adjustment" value="{{#if employee.adjustment }}{{employee.adjustment}}{{else}}0{{/if}}">
+  <input type="hidden" name="adjustment" value="{{#if employee.adjustment }}{{employee.adjustment}}{{else}}0{{/if}}">
 
-    <div class="form-group">
-      <label for="name_inp" class="control-label">First Name</label>
-      <input class="form-control" id="name_inp" name="name" required value="{{employee.name}}">
-    </div>
+  <div class="form-group">
+    <label for="name_inp" class="control-label">First Name</label>
+    <input class="form-control" id="name_inp" name="name" required value="{{employee.name}}">
+  </div>
 
-    <div class="form-group">
-      <label for="lastname_inp" class="control-label">Last Name</label>
-      <input class="form-control" id="lastname_inp" name="lastname" required value="{{employee.lastname}}">
-    </div>
+  <div class="form-group">
+    <label for="lastname_inp" class="control-label">Last Name</label>
+    <input class="form-control" id="lastname_inp" name="lastname" required value="{{employee.lastname}}">
+  </div>
 
-    <div class="form-group">
-      <label for="email_inp" class="control-label">Email Address</label>
-      <input class="form-control" id="email_inp" type="email" name="email_address" required value="{{employee.email}}" aria-describedby="email_help">
-      <span id="email_help" class="help-block">Email address used by this user</span>
-    </div>
+  <div class="form-group">
+    <label for="email_inp" class="control-label">Email Address</label>
+    <input class="form-control" id="email_inp" type="email" name="email_address" required value="{{employee.email}}" aria-describedby="email_help">
+    <span id="email_help" class="help-block">Email address used by this user</span>
+  </div>
 
-    <div class="form-group">
-      <label for="select_inp" class="control-label">Department</label>
-      <select class="form-control" id="select_inp" name="department" aria-describedby="department_help">
-        {{#each company.departments}}
-            <option value="{{this.id}}" {{#if_equal ../employee.DepartmentId this.id}} selected="selected"{{/if_equal}}>{{this.name}} (approver {{this.boss.name}} {{this.boss.lastname}})</option>
-        {{/each}}
-      </select>
-      <span id="department_help" class="help-block">Department current user is part of</span>
-    </div>
+  <div class="form-group">
+    <label for="select_inp" class="control-label">Department</label>
+    <select class="form-control" id="select_inp" name="department" aria-describedby="department_help">
+      {{#each company.departments}}
+          <option value="{{this.id}}" {{#if_equal ../employee.DepartmentId this.id}} selected="selected"{{/if_equal}}>{{this.name}} (approver {{this.boss.name}} {{this.boss.lastname}})</option>
+      {{/each}}
+    </select>
+    <span id="department_help" class="help-block">Department current user is part of</span>
+  </div>
 
-    <div class="form-group">
-        <label for="admin_inp" class="control-label">
-          <input class="" id="admin_inp" name="admin" type="checkbox" {{# if employee.admin}} checked="checked"  {{/if}} >
-          Is administrator user
-        </label>
-    </div>
-
-    <div class="form-group">
-        <label for="auto_approve_inp" class="control-label">
-          <input class="" id="auto_approve_inp" name="auto_approve" type="checkbox" {{# if employee.auto_approve}} checked="checked"  {{/if}} >
-          Auto approve leave requests
-        </label>
-        <span class="help-block">Set the flag ON to streamline leave requests from {{#with employee}}{{this.full_name}}{{/with}} directly into <strong>Approved</strong> state.</span>
-    </div>
-
-    <div class="form-group">
-      <label for="start_date_inp" class="control-label">Started on</label>
-      <div class="input-group col-md-4">
-        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-        <input class="form-control" id="start_date_inp" type="text" name="start_date" required data-date-autoclose="1" data-provide="datepicker" data-date-format="{{#with logged_user.company }}{{this.get_default_date_format_for_date_picker}}{{/with}}" data-date-week-start="1" value="{{as_date employee.start_date}}" aria-describedby="start_date_help">
-      </div>
-      <span id="start_date_help" class="help-block">Date when employee started (inclusive)</span>
-    </div>
-
-    <div class="form-group">
-      <label for="end_date_inp" class="control-label">Ended on</label>
-      <div class="input-group col-md-4">
-        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-        <input class="form-control" id="end_date_inp" type="text" name="end_date" data-date-autoclose="1" data-provide="datepicker" data-date-format="{{#with logged_user.company }}{{this.get_default_date_format_for_date_picker}}{{/with}}" data-date-week-start="1" value="{{as_date employee.end_date}}" aria-describedby="end_date_help">
-      </div>
-      <span id="end_date_help" class="help-block"><div>Date when user quits the {{ company.name }}.</div><div>After this date user is not able to access the company.</div><div>This is a way of deactivating user accounts.</div></span>
-    </div>
-
-    <div class="form-group">
-      <label for="password_inp" class="control-label">Password</label>
-      <input class="form-control" id="password_inp" type="password" name="password_one" value="" {{#if company.ldap_auth_enabled}} readonly {{/if}} aria-describedby="password_inp_help">
-      <span id="password_inp_help" class="help-block">
-        {{# if company.ldap_auth_enabled }}
-          <a href="/settings/company/authentication/">LDAP authentication</a> is enabled, so that password does not matter.
-        {{else}}
-          It is possible to update password for given account.
-        {{/ if}}
-      </span>
-    </div>
-
-    <div class="form-group">
-      <label for="password_inp" class="control-label">Confirm password</label>
-      <input class="form-control" id="confirm_password_inp" type="password" name="password_confirm" value="" {{# if company.ldap_auth_enabled}}readonly{{/if}}>
-    </div>
-
-    <div class="form-group">
-      <label for="link_to_email_audit" class="control-label">
-        <a href="/audit/email/?user_id={{employee.id}}">Emails ever sent to {{#with employee}}{{this.full_name}}{{/with}}</a>
+  <div class="form-group">
+      <label for="admin_inp" class="control-label">
+        <input class="" id="admin_inp" name="admin" type="checkbox" {{# if employee.admin}} checked="checked"  {{/if}} >
+        Is administrator user
       </label>
-    </div>
+  </div>
 
-    <div class="form-group">
-      <div class="col-md-12">
-        <button id="save_changes_btn" type="submit" class="btn btn-success pull-right">Save changes</button>
-      </div>
-    </div>
+  <div class="form-group">
+      <label for="auto_approve_inp" class="control-label">
+        <input class="" id="auto_approve_inp" name="auto_approve" type="checkbox" {{# if employee.auto_approve}} checked="checked"  {{/if}} >
+        Auto approve leave requests
+      </label>
+      <span class="help-block">Set the flag ON to streamline leave requests from {{#with employee}}{{this.full_name}}{{/with}} directly into <strong>Approved</strong> state.</span>
+  </div>
 
-  </form>
+  <div class="form-group">
+    <label for="start_date_inp" class="control-label">Started on</label>
+    <div class="input-group col-md-4">
+      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+      <input class="form-control" id="start_date_inp" type="text" name="start_date" required data-date-autoclose="1" data-provide="datepicker" data-date-format="{{#with logged_user.company }}{{this.get_default_date_format_for_date_picker}}{{/with}}" data-date-week-start="1" value="{{as_date employee.start_date}}" aria-describedby="start_date_help">
+    </div>
+    <span id="start_date_help" class="help-block">Date when employee started (inclusive)</span>
+  </div>
+
+  <div class="form-group">
+    <label for="end_date_inp" class="control-label">Ended on</label>
+    <div class="input-group col-md-4">
+      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+      <input class="form-control" id="end_date_inp" type="text" name="end_date" data-date-autoclose="1" data-provide="datepicker" data-date-format="{{#with logged_user.company }}{{this.get_default_date_format_for_date_picker}}{{/with}}" data-date-week-start="1" value="{{as_date employee.end_date}}" aria-describedby="end_date_help">
+    </div>
+    <span id="end_date_help" class="help-block"><div>Date when user quits the {{ company.name }}.</div><div>After this date user is not able to access the company.</div><div>This is a way of deactivating user accounts.</div></span>
+  </div>
+
+  <div class="form-group">
+    <label for="password_inp" class="control-label">Password</label>
+    <input class="form-control" id="password_inp" type="password" name="password_one" value="" {{#if company.ldap_auth_enabled}} readonly {{/if}} aria-describedby="password_inp_help">
+    <span id="password_inp_help" class="help-block">
+      {{# if company.ldap_auth_enabled }}
+        <a href="/settings/company/authentication/">LDAP authentication</a> is enabled, so that password does not matter.
+      {{else}}
+        It is possible to update password for given account.
+      {{/ if}}
+    </span>
+  </div>
+
+  <div class="form-group">
+    <label for="password_inp" class="control-label">Confirm password</label>
+    <input class="form-control" id="confirm_password_inp" type="password" name="password_confirm" value="" {{# if company.ldap_auth_enabled}}readonly{{/if}}>
+  </div>
+
+  <div class="form-group">
+    <label for="link_to_email_audit" class="control-label">
+      <a href="/audit/email/?user_id={{employee.id}}">Emails ever sent to {{#with employee}}{{this.full_name}}{{/with}}</a>
+    </label>
+  </div>
 </div>
+
+<div class="row">
+  <div class="col-md-12">
+    <button id="save_changes_btn" type="submit" class="btn btn-success pull-right">Save changes</button>
+    <a class="btn btn-link pull-right" href="/users/">Cancel</a>
+  </div>
+</div>
+
+</form>

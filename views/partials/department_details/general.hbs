@@ -1,0 +1,62 @@
+
+<form method="POST" action="/users/edit/{{employee.id}}/">
+
+<div class="col-md-7">
+
+  <div class="form-group">
+    <label for="name" class="control-label">Name</label>
+    <input class="form-control" id="name" name="name" required value="{{department.name}}">
+  </div>
+
+  <div class="form-group">
+    <label for="select_inp" class="control-label">Manager</label>
+
+    <select class="form-control" name="boss_id">
+    {{#each company.users}}
+      <option value="{{this.id}}" {{#if_equal ../department.bossId this.id }} selected="selected"{{/if_equal}}>{{this.full_name}}</option>
+    {{/each}}
+    </select>
+
+    <span id="boss_id_help" class="help-block">Head of {{department.name}} department. Main manager.</span>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">Secondary supervisors</label>
+
+    <div class="list-group">
+      <div class="list-group-item">
+        <p>Pavlo Vodopyan <span class="pull-right"><i class="btn btn-link fa fa-trash"></i></span></p>
+      </div>
+      <div class="list-group-item">
+        <p>Kateryna Vodopian <span class="pull-right"><i class="btn btn-link fa fa-trash"></i></span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="allowance_select">Allowance</label>
+
+    <select class="form-control" name="allowance" id="allowance_select">
+        {{#each allowance_options}}
+        <option value="{{value}}" {{#if_equal this.value ../department.allowance}} selected="selected"{{/if_equal}}>{{caption}}</option>
+        {{/each}}
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="use_bank_holidays_inp" class="control-label">
+      <input class="" id="use_bank_holidays_inp" name="include_public_holidays" type="checkbox" {{# if employee.include_public_holidays}} checked="checked"  {{/if}} >
+      Include public holidays
+    </label>
+    <span class="help-block">Determine if employees from {{department.name}} have <a href="/settings/general"/>bank holidays</a> in addition to their allowance</span>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <button id="save_changes_btn" type="submit" class="btn btn-success pull-right">Save changes</button>
+    <a class="btn btn-link pull-right" href="/settings/departments/">Cancel</a>
+  </div>
+</div>
+
+</form>
