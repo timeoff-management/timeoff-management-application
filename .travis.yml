@@ -3,6 +3,7 @@ node_js:
   - "0.10"
   - "0.12"
   - "v6.10.1"
+  - "v6.11.0"
 sudo: false
 cache:
   directories:
