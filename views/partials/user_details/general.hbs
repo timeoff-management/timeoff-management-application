@@ -5,6 +5,8 @@
 
   <input type="hidden" name="adjustment" value="{{#if employee.adjustment }}{{employee.adjustment}}{{else}}0{{/if}}">
 
+  {{> user_details/breadcrumb employee=employee }}
+
   <div class="form-group">
     <label for="name_inp" class="control-label">First Name</label>
     <input class="form-control" id="name_inp" name="name" required value="{{employee.name}}">
@@ -28,7 +30,7 @@
           <option value="{{this.id}}" {{#if_equal ../employee.DepartmentId this.id}} selected="selected"{{/if_equal}}>{{this.name}} (approver {{this.boss.name}} {{this.boss.lastname}})</option>
       {{/each}}
     </select>
-    <span id="department_help" class="help-block">Department current user is part of. <a href="/settings/departments/edit/{{employee.DepartmentId}}">More details.</a></span>
+    <span id="department_help" class="help-block">Department current user is part of. <a href="/settings/departments/edit/{{employee.DepartmentId}}">More details <i class="fa fa-angle-double-right"></i></a></span>
   </div>
 
   <div class="form-group">

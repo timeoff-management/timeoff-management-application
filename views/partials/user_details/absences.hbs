@@ -11,6 +11,7 @@
   <input type="hidden" name="start_date" value="{{as_date employee.start_date}}">
   <input type="hidden" name="end_date" value="{{as_date employee.end_date}}">
 
+  {{> user_details/breadcrumb employee=employee }}
 
   <div class="form-group">
     <label for="days_remaining_inp" class="control-label">Days remaining</label>

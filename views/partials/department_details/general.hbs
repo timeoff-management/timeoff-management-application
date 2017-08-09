@@ -3,6 +3,11 @@
 
 <div class="col-md-7">
 
+  <ol class="breadcrumb">
+    <li><a href="/settings/departments/">All departments</a></li>
+    <li class="active">{{ department.name }}</li>
+  </ol>
+
   <div class="form-group">
     <label for="name" class="control-label">Name</label>
     <input class="form-control" id="name" name="name" required value="{{department.name}}">
