@@ -62,7 +62,7 @@
 
   <div class="form-group">
     <label for="use_bank_holidays_inp" class="control-label">
-      <input class="" id="use_bank_holidays_inp" name="include_public_holidays" type="checkbox" {{# if employee.include_public_holidays}} checked="checked"  {{/if}} >
+      <input class="" id="use_bank_holidays_inp" name="include_public_holidays" type="checkbox" {{# if department.include_public_holidays}} checked="checked"  {{/if}} >
       Include public holidays
     </label>
     <span class="help-block">Determine if employees from {{department.name}} have <a href="/settings/general"/>bank holidays</a> in addition to their allowance</span>
@@ -78,24 +78,4 @@
 
 </form>
 
-
-
-<div class="modal fade" id="add_secondary_supervisers_modal" tabindex="-1" role="dialog" aria-labelledby="add_secondary_supervisers_modal_la">
-  <div class="modal-dialog" role="document">
-    <form action="/settings/departments/edit/{{ department.id }}/" method="post">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="modal_confirmation_reject_la">Add supervisors to <strong></strong> department</h4>
-      </div>
-      <div class="modal-body">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-success">Add selected employees</button>
-      </div>
-    </div>
-    </form>
-  </div>
-</div>
-
+{{> department_details/supervisers_modal department=department }}
