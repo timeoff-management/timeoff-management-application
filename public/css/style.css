@@ -33,6 +33,9 @@ body {
   padding-top: 20px;
   padding-bottom: 20px; }
 
+label.label-plain {
+  font-weight: normal; }
+
 /* Make the masthead heading the same height as the navigation */
 .header h3 {
   padding-bottom: 19px;

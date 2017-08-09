@@ -1,5 +1,5 @@
 
-<form method="POST" action="/users/edit/{{employee.id}}/">
+<form method="POST" action="/settings/departments/edit/{{ department.id }}/">
 
 <div class="col-md-7">
 
@@ -77,19 +77,20 @@
 
 <div class="modal fade" id="add_secondary_supervisers_modal" tabindex="-1" role="dialog" aria-labelledby="add_secondary_supervisers_modal_la">
   <div class="modal-dialog" role="document">
+    <form action="/settings/departments/edit/{{ department.id }}/" method="post">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="modal_confirmation_reject_la">Add supervisors to <strong></strong> department</h4>
       </div>
       <div class="modal-body">
-        <p>Marking SEPA batch as <strong>rejected</strong> does not affect related orders.<p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-success">Save changes</button>
+        <button type="submit" class="btn btn-success">Add selected employees</button>
       </div>
     </div>
+    </form>
   </div>
 </div>
 

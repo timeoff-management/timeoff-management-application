@@ -1,5 +1,6 @@
 <div class="list-group">
+  <input type="hidden" name="department_id" value="{{ department.id }}">
   {{#each users}}
-  <label class="list-group-item"><input type="checkbox"> {{ this.full_name }}</label>
+  <label class="list-group-item label-plain"><input type="checkbox" name="supervisor__{{ this.id }}"> {{ this.full_name }}</label>
   {{/each}}
 </div>
