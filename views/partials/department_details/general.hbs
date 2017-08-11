@@ -27,12 +27,13 @@
   <div class="form-group">
     <label class="control-label">Secondary supervisors</label>
     <ul class="list-group no-bottom-space">
+      {{# each department.supervisors }}
+
       <li class="list-group-item">
-        <span><a href='/users/edit//'>Kateryna Vodopian</a> <a class="pull-right btn btn-link btn-xs"><i class="fa fa-trash"></i> Remove</a><span>
+        <span><a href='/users/edit/{{ this.id }}/'>{{ this.full_name }}</a> <button type="submit" name="remove_supervisor_id" value="{{this.id}}" class="pull-right btn btn-link btn-xs"><i class="fa fa-trash"></i> Remove</button><span>
       </li>
-      <li class="list-group-item">
-        <span>Kateryna Vodopian <a class="pull-right btn btn-link btn-xs"><i class="fa fa-trash"></i> Remove</a><span>
-      </li>
+      {{/ each }}
+
       <li class="list-group-item">
         <span>&nbsp;
         <a class="pull-right btn btn-link btn-xs"
