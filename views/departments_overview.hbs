@@ -31,7 +31,6 @@
         <tr>
           <th>Name</th>
           <th>Manager</th>
-          <th>Deputy</th>
           <th>Allowance</th>
           <th>Number Employees</th>
           <th>Public Holidays
@@ -50,10 +49,9 @@
       </thead>
       <tbody>
         {{#each departments}}
-        <tr>
+        <tr data-vpp-department-list-mode="readonly">
           <td><a href="/settings/departments/edit/{{this.id}}/">{{this.name}}</a></td>
           <td><a href="/users/edit/{{this.boss.id}}/">{{# with this.boss }}{{this.full_name }}{{/with}}</a></td>
-          <td></td>
           <td>
             {{#each ../allowance_options}}{{#if_equal this.value ../allowance}}{{caption}}{{/if_equal}}{{/each}}
           </td>

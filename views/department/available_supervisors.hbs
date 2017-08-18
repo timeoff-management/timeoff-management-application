@@ -1,5 +1,10 @@
 <div class="list-group">
-  {{#each users}}
-  <label class="list-group-item label-plain"><input type="checkbox" name="supervisor_id" value="{{ this.id }}" {{#if this._marked }} checked=checked {{/if}}> {{ this.full_name }}</label>
-  {{/each}}
+  {{# if users }}
+    {{#each users}}
+    <label class="list-group-item label-plain"><input type="checkbox" name="supervisor_id" value="{{ this.id }}" {{#if this._marked }} checked=checked {{/if}}> {{ this.full_name }}</label>
+    {{/each}}
+  {{else}}
+    <p>No employees available to be added as secondary supervisors.</p>
+    <p> <a href="/users/add/">Add new employee <i class="fa fa-angle-double-right"></i></p>
+  {{/if}}
 </div>

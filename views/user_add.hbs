@@ -1,9 +1,9 @@
 
 {{> header }}
 
-<h1>New user</h1>
+<h1>New employee</h1>
 
-<p class="lead">Adding new user account</p>
+<p class="lead">Adding new employee account</p>
 
 {{> show_flash_messages }}
 
@@ -28,7 +28,7 @@
     <div class="col-md-3">
       <input class="form-control" id="email_inp" type="email" name="email_address" required value="{{employee.email}}" aria-describedby="email_help">
     </div>
-    <span id="email_help" class="help-block col-md-6">Email address used by user</span>
+    <span id="email_help" class="help-block col-md-6">Email address used by employee</span>
   </div>
 
   <div class="form-group">
@@ -40,7 +40,7 @@
         {{/each}}
       </select>
     </div>
-    <span id="department_help" class="help-block col-md-6">Department user belongs to</span>
+    <span id="department_help" class="help-block col-md-6">Department employee belongs to</span>
   </div>
 
   <div class="form-group">
@@ -87,7 +87,7 @@
       {{# if company.ldap_auth_enabled }}
         <a href="/settings/company/authentication/">LDAP authentication</a> is enabled, so that password does not matter.
       {{else}}
-        Define user's password.
+        Define employee's password.
       {{/ if}}
     </span>
   </div>
@@ -101,7 +101,7 @@
 
   <div class="form-group">
     <div class="col-md-offset-3 col-md-3">
-      <button type="submit" class="btn btn-success pull-right">Save changes</button>
+      <button type="submit" class="btn btn-success pull-right">Add new employee</button>
     </div>
   </div>
 </form>
