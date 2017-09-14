@@ -13,9 +13,9 @@
 
 <div class="row">
   <div class="col-md-8 col-md-offset-1">
-    <p>TimeOff.Management supports LDAP authentication for customers that want to integrate application with the rest of infrastructure. The obvious reason is to allow employees reuse their Active directory credentials in TimeOff.Management..</p>
+    <p>TimeOff.Management supports LDAP authentication for customers that want to integrate application with the rest of their infrastructure. The obvious reason is to allow employees reuse their Active directory credentials in TimeOff.Management..</p>
 
-    <p>This page allows to setup the TimeOff.Management to communicate with custom LDAP server.</p>
+    <p>This page allows you to setup the TimeOff.Management to communicate with a custom LDAP server.</p>
 
     <p>Please note that employees have to use their <strong>LDAP email</strong> with <strong>LDAP password</strong> (rather than username). This is due to multi-tenant nature of TimeOff.Management application that allows hosting more than one company within single installation.</p>
 
@@ -83,7 +83,7 @@
 
       <hr/>
 
-      <p class="col-md-offset-2">In order to prevent situation when company account is locked out, current administrator (<strong>{{# with logged_user}}{{this.full_name}}{{/with}}</strong>) has to enter the password associated with her/his email on the LDAP server.</p>
+      <p class="col-md-offset-2">In order to prevent situation when a company account is locked out, current administrator (<strong>{{# with logged_user}}{{this.full_name}}{{/with}}</strong>) has to enter the password associated with her/his email on the LDAP server.</p>
       <p class="col-md-offset-2"> This is just to make sure <strong>{{# with logged_user}}{{this.full_name}}{{/with}}</strong> can login into TimeOff.Management with new LDAP settings.</p>
 
       <hr/>
