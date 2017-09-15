@@ -159,6 +159,39 @@
           "date" : "2016-12-26"
         }
       ]
+    },
+    "CZ" : {
+      "name" : "Czech Republic",
+      "bank_holidays" : [
+        {
+          "name" : "Den české státnosti",
+          "date" : "2017-09-28"
+        },
+        {
+          "name" : "Vznik samostatného československého státu",
+          "date" : "2017-10-28"
+        },
+        {
+          "name" : "Den boje za svobodu a demokracii",
+          "date" : "2017-11-17"
+        },
+        {
+          "name" : "Štědrý den",
+          "date" : "2017-12-24"
+        },
+        {
+          "name" : "Štědrý den",
+          "date" : "2017-12-24"
+        },
+        {
+          "name" : "1. svátek vánoční",
+          "date" : "2017-12-25"
+        },
+        {
+          "name" : "2. svátek vánoční",
+          "date" : "2017-12-26"
+        }
+      ]
     }
   }
 }
