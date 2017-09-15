@@ -159,6 +159,87 @@
           "date" : "2016-12-26"
         }
       ]
+    },
+    "CZ" : {
+      "name" : "Czech Republic",
+      "bank_holidays" : [
+        {
+          "name" : "Czech Statehood Day",
+          "date" : "2017-09-28"
+        },
+        {
+          "name" : "Czechoslovak Republic Independence Day",
+          "date" : "2017-10-28"
+        },
+        {
+          "name" : "Freedom and Democracy Day",
+          "date" : "2017-11-17"
+        },
+        {
+          "name" : "Christmas Eve",
+          "date" : "2017-12-24"
+        },
+        {
+          "name" : "Christmas Day",
+          "date" : "2017-12-25"
+        },
+        {
+          "name" : "Boxing Day",
+          "date" : "2017-12-26"
+        },
+        {
+          "name" : "Czech Republic Independence Day",
+          "date" : "2018-01-01"
+        },
+        {
+          "name" : "Good Friday",
+          "date" : "2018-03-30"
+        },
+        {
+          "name" : "Easter Monday",
+          "date" : "2018-04-02"
+        },
+        {
+          "name" : "May Day",
+          "date" : "2018-05-01"
+        },
+        {
+          "name" : "Victory Day",
+          "date" : "2018-05-08"
+        },
+        {
+          "name" : "St. Cyril and St. Methodius Day",
+          "date" : "2018-07-05"
+        },
+        {
+          "name" : "Jan Hus Day",
+          "date" : "2018-07-06"
+        },
+        {
+          "name" : "Czech Statehood Day",
+          "date" : "2018-09-28"
+        },
+        {
+          "name" : "Czechoslovak Republic Independence Day",
+          "date" : "2018-10-28"
+        },
+        {
+          "name" : "Freedom and Democracy Day",
+          "date" : "2018-11-17"
+        },
+        {
+          "name" : "Christmas Eve",
+          "date" : "2018-12-24"
+        },
+        {
+          "name" : "Christmas Day",
+          "date" : "2018-12-25"
+        },
+        {
+          "name" : "Boxing Day",
+          "date" : "2018-12-26"
+        }
+      ]
     }
   }
 }
