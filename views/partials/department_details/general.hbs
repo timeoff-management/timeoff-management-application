@@ -1,10 +1,10 @@
 
-<form method="POST" action="/settings/departments/edit/{{ department.id }}/">
+<form method="POST" action="/settings/departments/edit/{{ department.id }}/" id="department_edit_form">
 
 <div class="col-md-7">
 
   <ol class="breadcrumb">
-    <li><a href="/settings/departments/">All departments</a></li>
+    <li><a href="/settings/departments/" data-vpp-all-departments-link="1">All departments</a></li>
     <li class="active">{{ department.name }}</li>
   </ol>
 
@@ -37,6 +37,7 @@
       <li class="list-group-item">
         <span>&nbsp;
         <a class="pull-right btn btn-link btn-xs"
+          data-vpp-add-new-secondary-supervisor="1"
           data-toggle="modal"
           data-target="#add_secondary_supervisers_modal"
           data-department_id="{{department.id}}"

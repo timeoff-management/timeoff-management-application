@@ -6,7 +6,7 @@
 {{> show_flash_messages }}
 
 <div class="row">
-  <div class="col-md-4 lead">Departments settings overview</div>
+  <div class="col-md-4 lead">All departments</div>
   <div class="col-md-4 col-md-offset-4">
     <button class="btn btn-info pull-right" data-toggle="modal" data-target="#add_new_department_modal" type="button" id="add_new_department_btn">Add new department</button>
     <a href='/settings/departments-bulk-update/'class="btn btn-link pull-right">Bulk update</a>
@@ -50,7 +50,7 @@
       <tbody>
         {{#each departments}}
         <tr data-vpp-department-list-mode="readonly">
-          <td><a href="/settings/departments/edit/{{this.id}}/">{{this.name}}</a></td>
+          <td><a href="/settings/departments/edit/{{this.id}}/" data-vpp-department-name=1>{{this.name}}</a></td>
           <td><a href="/users/edit/{{this.boss.id}}/">{{# with this.boss }}{{this.full_name }}{{/with}}</a></td>
           <td>
             {{#each ../allowance_options}}{{#if_equal this.value ../allowance}}{{caption}}{{/if_equal}}{{/each}}
