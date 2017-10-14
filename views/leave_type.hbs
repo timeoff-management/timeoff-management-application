@@ -1,0 +1,40 @@
+{{> header }}
+<h1>Leave Type</h1>
+
+{{> show_flash_messages }}
+
+<div class="row">
+  <div class="col-md-3 lead">{{company.name}} Leave Type</div>
+  <div class="col-md-3 col-md-offset-6">
+    <a href="/leave_types/add/" class="btn btn-info pull-right" id="add_new_department">Add leave type</a>
+  </div>
+</div>
+
+<div class="row">&nbsp;</div>
+
+<div class="col-md-3 list-group all-departments">
+  Wing Placeholder
+</div>
+
+<div class="col-md-9">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Leave Type Name</th>
+        <th>Color</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{# each leave_types}}
+      <tr data-vpp-user-row="{{this.id}}">
+        <td class="user-link-cell"><a href="/users/edit/{{this.id}}/">{{this.name}}</a></td>
+        <td class="user_department">{{this.color}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
+<div class="row">&nbsp;</div>
+
+{{> footer }}
