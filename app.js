@@ -68,6 +68,7 @@ app.use(function(req,res,next){
 });
 
 app.use(function(req,res,next){
+    // custom middleware for custom_java_script and custom_css in response
     res.locals.custom_java_script = [
       '/js/bootstrap-datepicker.js',
       '/js/global.js'
@@ -98,10 +99,15 @@ app.use(
   // All rotes bellow are only for authenticated users
   require('./lib/route/dashboard.js')
 );
-
+// wing to be continued
 app.use(
   '/calendar/',
   require('./lib/route/calendar.js')
+);
+
+app.use(
+  '/leave_types/',
+  require('./lib/route/leaveTypes.js')
 );
 
 app.use(

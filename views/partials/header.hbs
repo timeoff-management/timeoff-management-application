@@ -22,6 +22,9 @@
           {{# if logged_user.admin }}
             <li class="hidden-xs"><a href="/users/">Employees</a></li>
           {{/if}}
+          {{# if logged_user.admin }}
+            <li class="hidden-xs"><a href="/leave_types/">Leave Type</a></li>
+          {{/if}}
           <li class="navbar-form navbar-left">
             <div class="form-group">
               <button type="button" class="btn btn-info" data-toggle="modal" data-target="#book_leave_modal" id="book_time_off_btn">New absence</button>
@@ -63,5 +66,3 @@
 </nav>
 
 </div>
-
-
