@@ -1,5 +1,30 @@
 {
   "countries" : {
+    "CA" : {
+      "name" : "Canada",
+      "bank_holidays" : [
+        {
+          "name" : "New Year Day",
+          "date" : "2017-01-01"
+        },
+        {
+          "name" : "Victoria Day",
+          "date" : "2017-05-22"
+        },
+        {
+          "name" : "Canada Day",
+          "date" : "2017-07-01"
+        },
+        {
+          "name" : "Labour Day",
+          "date" : "2017-09-04"
+        },
+        {
+          "name" : "Christmas Day",
+          "date" : "2017-12-25"
+        }
+      ]
+    },
     "DE" : {
       "name" : "Germany",
       "bank_holidays" : [
