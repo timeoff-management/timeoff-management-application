@@ -90,7 +90,7 @@ Create company account and use cloud based version.
 
 Install TimeOff.Management application within your infrastructure:
 
-(make sure you have Node.js and SQLite installed)
+(make sure you have Node.js (>=4.0.0) and SQLite installed)
 
 ```bash
 git clone https://github.com/timeoff-management/application.git timeoff-management

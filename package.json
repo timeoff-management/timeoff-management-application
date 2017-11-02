@@ -1,8 +1,11 @@
 {
   "name": "TimeOff.Management",
-  "version": "0.6.2",
+  "version": "0.7.0",
   "private": false,
   "description": "Simple yet powerful absence management software for small and medium size business",
+  "engines": {
+    "node": ">=4.0.0"
+  },
   "dependencies": {
     "bluebird": "^2.10.2",
     "body-parser": "^1.8.4",
