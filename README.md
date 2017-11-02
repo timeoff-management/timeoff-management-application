@@ -106,6 +106,8 @@ We have quite a wide test coverage, to make sure that the main user paths work a
 
 Please run them frequently while developing the project.
 
+(make sure you have [PhantomJS](http://phantomjs.org/download.html) installed in path)
+
 ```bash
 npm test
 ```
