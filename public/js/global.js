@@ -55,3 +55,7 @@ $(document).ready(function(){
     format      : "dd/mm/yyyy"
   }
 }(jQuery);
+
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})

@@ -15,17 +15,33 @@
   <div class="form-group">
     <label class="control-label">Overview</label>
     <div class="progress">
-      <div class="progress-bar progress-bar-success" style="width: {{ leave_statistics.used_so_far_percent }}%">
+      <div
+        class="progress-bar progress-bar-success"
+        style="width: {{ leave_statistics.used_so_far_percent }}%"
+        data-content="{{# with employee }}{{this.full_name }}{{/with}} in current year used {{ leave_statistics.used_so_far }} days from allowance"
+        data-placement="top"
+        data-toggle="popover"
+        data-trigger="focus hover"
+      >
         {{ leave_statistics.used_so_far }} days used so far
       </div>
-      <div class="progress-bar progress-bar-warning" style="width: {{ leave_statistics.remaining_percent }}%">
+      <div
+        class="progress-bar progress-bar-warning"
+        style="width: {{ leave_statistics.remaining_percent }}%"
+        data-content="{{# with employee }}{{this.full_name }}{{/with}} in current year has {{ leave_statistics.remaining }} remaining days in allowance"
+        data-placement="top"
+        data-toggle="popover"
+        data-trigger="focus hover"
+      >
         {{ leave_statistics.remaining  }} days remaining in current year
       </div>
     </div>
 
   </div>
 
-  
+
+
+
   <div class="form-group">
     <label class="control-label">Days remaining for {{ employee.name }} to take this year</label>
 
