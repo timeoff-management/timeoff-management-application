@@ -36,16 +36,12 @@
         {{ leave_statistics.remaining  }} days remaining in current year
       </div>
     </div>
-
   </div>
-
-
-
 
   <div class="form-group">
     <label class="control-label">Days remaining for {{ employee.name }} to take this year</label>
-
     <p>{{ leave_statistics.remaining }} out of {{  leave_statistics.total_for_current_year }}</p>
+    <input id="days_remaining_inp" type="hidden" value="{{ leave_statistics.remaining }} out of {{  leave_statistics.total_for_current_year }}">
   </div>
 
   <div class="row">
@@ -60,7 +56,6 @@
       {{/if}}
     </dl>
   </div>
-
 
   <div class="form-group">
     <label for="adjustment_inp" class="control-label">Allowance adjustment</label>
