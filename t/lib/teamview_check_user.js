@@ -36,7 +36,7 @@ module.exports = bluebird.promisify( function(args, callback){
 
   .then(function(data){
     return data.driver
-      .findElements(By.css( 'tr.teamview-user-list-row > td > ' + (is_link ? 'a' : 'span') ))
+      .findElements(By.css( 'table:not(#summary-popover-table) tr.teamview-user-list-row > td:first-child > ' + (is_link ? 'a' : 'span') ))
       .then(function(elements){
         expect(elements.length).to.be.equal( emails.length );
         return bluebird.resolve(data);
