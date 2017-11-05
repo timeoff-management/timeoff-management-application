@@ -60,7 +60,7 @@
           {{/if}}
         </td>
           <td class="team-view-users-absence-summary">
-            <a href="#" data-toggle="popover-hover" data-triger="hover" title="{{#with this.user }}{{ this.full_name }}{{/with}} leaves" data-content="
+            <a class="team-view-absence-summary-number" href="#" data-toggle="popover-hover" data-triger="hover" title="{{#with this.user }}{{ this.full_name }}{{/with}} leaves" data-content="
               <table class='team-view-popup-leave-types'>
                 {{# each this.leave_summary}}
                   <tr><td>{{this.name}}:</td><td class='team-view-users-absence-summary'>{{this.count}}</td></tr>

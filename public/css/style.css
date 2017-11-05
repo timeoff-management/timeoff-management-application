@@ -101,11 +101,15 @@ td.team-view-header {
 .team-view-popup-leave-types {
   width: 135px; }
 
+.team-view-absence-summary-number {
+  width: 25px;
+  display: inline-block; }
+
 .team-view-btn-summary {
   margin-top: 15px; }
 
 .main-row_header {
-  /* TODO refactore */
+  /* TODO refactor */
   border: none;
   font-weight: normal;
   color: #5ba4e5;
