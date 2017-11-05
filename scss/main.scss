@@ -105,6 +105,11 @@ td.leave_cell_pended {
 .modal-dialog {
     max-width : 450px;
 }
+
+.team-view-users {
+    width: 100%;
+}
+
 .team-view-users td {
     padding-top    : 5px;
     padding-bottom : 5px;
@@ -113,8 +118,27 @@ td.team-view-header {
     height: 43px;
 }
 
+.team-view-users-absence-summary {
+  width          : 30px !important;
+  min-width      : 30px !important;
+  max-width      : 30px !important;
+  text-align     : center;
+}
 
-.main-row_header {  /* TODO refactore */
+.team-view-popup-leave-types {
+  width: 135px;
+}
+
+.team-view-absence-summary-number {
+  width: 25px;
+  display: inline-block;
+}
+
+.team-view-btn-summary {
+  margin-top: 15px;
+}
+
+.main-row_header {  /* TODO refactor */
   border: none;
   font-weight: normal;
   color: $link-color;

@@ -43,9 +43,34 @@
           </ul>
         </div>
 
-      </td></tr>
+      </td>
+
+      <td class="team-view-users-absence-summary">
+        <b><a href="#" data-toggle="tooltip" data-html="true" title="Total absence for this month">A</a></b>
+      </td>
+
+    </tr>
     {{# each users_and_leaves}}
-      <tr class="teamview-user-list-row"><td>{{# if ../logged_user.admin}} {{#with this.user }}<a href="/users/edit/{{this.id}}/">{{ this.full_name }}</a>{{/with}}  {{else}}{{#with this.user }}<span>{{ this.full_name }}</span>{{/with}}{{/if}}</td></tr>
+      <tr class="teamview-user-list-row">
+        <td>
+          {{# if ../logged_user.admin}}
+            {{#with this.user }}<a href="/users/edit/{{this.id}}/">{{ this.full_name }}</a>{{/with}}
+          {{else}}
+            {{#with this.user }}<span>{{ this.full_name }}</span>{{/with}}
+          {{/if}}
+        </td>
+          <td class="team-view-users-absence-summary">
+            <a class="team-view-absence-summary-number" href="#" data-toggle="popover-hover" data-triger="hover" title="{{#with this.user }}{{ this.full_name }}{{/with}} leaves" data-content="
+              <table class='team-view-popup-leave-types'>
+                {{# each this.leave_summary}}
+                  <tr><td>{{this.name}}:</td><td class='team-view-users-absence-summary'>{{this.count}}</td></tr>
+                {{/each}}
+              <table>
+            ">
+              <b>{{this.total_leave}}</b>
+            </a>
+          </td>
+      </tr>
     {{/each}}
     </table>
   </div>
@@ -68,7 +93,36 @@
   </div>
 </div>
 
+<button type="button" class="btn btn-default team-view-btn-summary" data-toggle="popover-summary" html="true" title="Leave summary for {{as_date_formatted base_date 'MMMM, YYYY' }}">Display leave summary</button>
+
 <div class="row clearfix">&nbsp;</div>
+
+<table id="summary-popover-table" style="display: none" class="team-view-users">
+  <tr>
+    <td class="team-view-header">
+      {{# if current_department }}{{current_department.name}}{{else}}All departments{{/if}}
+    </td>
+      {{# each logged_user.company.leave_types}}
+        <td class="team-view-users-absence-summary">
+          <b><a href="#" data-toggle="tooltip" title="{{this.name}}">{{get_first_letter_of_every_word this.name}}</a></b>
+        </td>
+      {{/each}}
+  </tr>
+    {{# each users_and_leaves}}
+      <tr class="teamview-user-list-row">
+        <td>
+          {{# if ../logged_user.admin}}
+            {{#with this.user }}<a href="/users/edit/{{this.id}}/">{{ this.full_name }}</a>{{/with}}
+          {{else}}
+            {{#with this.user }}<span>{{ this.full_name }}</span>{{/with}}
+          {{/if}}
+        </td>
+        {{# each this.leave_summary}}
+          <td class="team-view-users-absence-summary"><b>{{this.count}}</b></td>
+        {{/each}}
+      </tr>
+    {{/each}}
+</table>
 
 {{> book_leave_modal container_id='book_leave_modal' leave_modal_form_action='/calendar/bookleave/' redirect_back_to='/calendar/teamview/'}}
 
