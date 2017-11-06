@@ -28,7 +28,7 @@
 <div class="row clearfix">
   <div class="col-md-2">
     <table class="team-view-users">
-      <tr><td class="team-view-header">
+      <tr><td class="team-view-header" colspan="2">
 
         <div class="dropdown">
           <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -45,7 +45,10 @@
 
       </td></tr>
     {{# each users_and_leaves}}
-      <tr class="teamview-user-list-row"><td>{{# if ../logged_user.admin}} {{#with this.user }}<a href="/users/edit/{{this.id}}/">{{ this.full_name }}</a>{{/with}}  {{else}}{{#with this.user }}<span>{{ this.full_name }}</span>{{/with}}{{/if}}</td></tr>
+      <tr class="teamview-user-list-row">
+        <td class="teamview user-name-cell">{{# if ../logged_user.admin}} {{#with this.user }}<a href="/users/edit/{{this.id}}/">{{ this.full_name }}</a>{{/with}}  {{else}}{{#with this.user }}<span>{{ this.full_name }}</span>{{/with}}{{/if}}</td>
+        <td></td>
+      </tr>
     {{/each}}
     </table>
   </div>

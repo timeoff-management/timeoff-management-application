@@ -106,8 +106,17 @@ td.leave_cell_pended {
     max-width : 450px;
 }
 .team-view-users td {
-    padding-top    : 5px;
-    padding-bottom : 5px;
+  padding-top    : 5px;
+  padding-bottom : 5px;
+
+}
+.team-view-users .user-name-cell {
+  text-overflow: ellipsis;
+  /* Cannot avoid specifying width with pixels... */
+  width: 165px;
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
 }
 td.team-view-header {
     height: 43px;
