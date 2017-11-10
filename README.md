@@ -39,7 +39,7 @@ Supervisor gets email notification and decides about upcoming employee absence.
 
 Absence is accounted. Peers are informed via team view or calendar feeds.
 
-**Accesss control**
+**Access control**
 
 There are following types of users: employees, supervisors, and administrators.
 
