@@ -2,30 +2,7 @@
 'use strict';
 
 /*
- *  Scenario 1:
- *
- *    Check that values for new columns are shown only for employess
- *    currently login user can supervise.
- *
- *    The reason for this sceanrio is because in UK for instance it is illegal to share
- *    details for employees who are not supervisers. Peers should not know how many days
- *    their coleagues were off sick for instance.
- *
- *    * create account by admin user A
- *    * add user B
- *    * add user C
- *    * ensure company has "Share absences between all employees" flag ON
- *    * make user B to be superviser of user C
- *    * login as user A and ensure team view shows deducted values for all three users
- *    * login as user B and ensure she sees deducted days only for user B (self) and user C
- *      but not for user A
- *    * login as user C and ensure she sees only values for her account
- *
- * */
-
-
-/*
- *  Scenario 2:
+ *  Scenario:
  *
  *  Case when holidays spans through more then one month and is devided by bank holiday.
  *
@@ -324,7 +301,7 @@ describe('Case when holidays spans through more then one month and is devided by
       .then(() => done());
   });
 
-  it('As user B cretae a holiday request from 24 Aug to 24 Aug 2016', function(done){
+  it('As user B cretae a holiday request from 24 Aug to 24 Aug 2016 (but not approved)', function(done){
     submit_form_func({
       driver      : driver,
       form_params : [{
@@ -337,6 +314,23 @@ describe('Case when holidays spans through more then one month and is devided by
       message : /New leave request was added/,
     })
     .then(function(){done()});
+  });
+
+  it("Logout from user B", function(done){
+    logout_user_func({
+      application_host : application_host,
+      driver           : driver,
+    })
+    .then(() => done());
+  });
+
+  it("Login as user A (admin)", function(done){
+    login_user_func({
+      application_host : application_host,
+      user_email       : email_A,
+      driver           : driver,
+    })
+    .then(() => done());
   });
 
   it('Navigate to team view and ensure that it shows 9 days were deducted for Aug 2016', function(done){
