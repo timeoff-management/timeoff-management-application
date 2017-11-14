@@ -1,6 +1,6 @@
 
 /*
- * Exporst function that checks if given emails of users are shown
+ * Exports function that checks if given emails of users are shown
  * on the Teamview page. And if so how they are rendered: as text or link.
  *
  * It does not check exact emails, just count numbers.
