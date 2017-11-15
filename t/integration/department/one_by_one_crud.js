@@ -33,7 +33,6 @@ var test                 = require('selenium-webdriver/testing'),
  *
  * */
 
-/*
 describe('Check departments list page', function(){
   var driver;
 
@@ -179,7 +178,6 @@ describe('Check departments list page', function(){
     driver.quit().then(function(){ done(); });
   });
 });
-*/
 
 /*
  *  Scenario:
@@ -197,7 +195,6 @@ describe('Check departments list page', function(){
  *
  * */
 
-/*
 describe("Edit individual department via department details page", function(){
   var driver, email_A, email_B, user_id_A, user_id_B, department_edit_page_url,
     new_department_id;
@@ -491,7 +488,6 @@ describe("Edit individual department via department details page", function(){
     driver.quit().then(function(){ done(); });
   });
 });
-*/
 
 /*
  *  Scenario (edditing secondary supervisers)
@@ -505,7 +501,6 @@ describe("Edit individual department via department details page", function(){
  *    has only user B and C in the list
  *  * tick user B and save changes
  *  * observe that user B appeares on the list of secondary supervisers
- *
  *  * open "add supervisors" pop up again and ensure that user B has tick
  *    next to it and user C does not have it
  *  * tick user C and un-tick user B and save changes
@@ -678,7 +673,7 @@ describe('CRUD for department secondary supervisers', function(){
     submit_form_func({
       driver      : driver,
       form_params : [{
-        selector        : 'input[name="supervisor_id"][value="'+user_id_B+'"]',
+        selector : 'input[name="supervisor_id"][value="'+user_id_B+'"]',
         tick     : true,
         value    : 'on',
       }],
@@ -686,7 +681,6 @@ describe('CRUD for department secondary supervisers', function(){
       message : /Supervisors were added to department/,
     })
     .then(function(){ done() });
-
   });
 
   it('Observe that user B appeares on the list of secondary supervisers', function(done){
@@ -702,27 +696,74 @@ describe('CRUD for department secondary supervisers', function(){
       });
   });
 
-  it('open "add supervisors" pop up again and ensure that user B has tick', function(done){
+  it('Open "add supervisors" pop up again and ensure that user B has tick next to it and user C does not have it', function(done){
     driver
       .findElement(By.css('a[data-vpp-add-new-secondary-supervisor="1"]'))
-      .then(function(btn){ return btn.click() })
-      .then(function(){
-        driver.sleep(1000);
-
-        return check_elements_func({
+      .then( btn => btn.click() )
+      .then( () => driver.sleep(1000) )
+      .then( () => check_elements_func({
           driver : driver,
           elements_to_check : [{
-            selector : 'input[name="supervisor_id"][value="'+user_id_B+'"]',
+            selector : `input[name="supervisor_id"][value="${ user_id_B }"]`,
             tick     : true,
             value    : 'on',
           }],
         })
-      .then(function(vals){ done() });
-    });
+      )
+      .then( () => check_elements_func({
+          driver : driver,
+          elements_to_check : [{
+            selector : `input[name="supervisor_id"][value="${ user_id_C }"]`,
+            tick     : true,
+            value    : 'off',
+          }],
+        })
+      )
+      .then(() => done());
+  });
+
+  it('Tick user C and un-tick user B and save changes', function(done){
+    submit_form_func({
+      driver      : driver,
+      form_params : [{
+        selector : 'input[name="supervisor_id"][value="'+user_id_B+'"]',
+        tick     : true,
+      },{
+        selector : 'input[name="supervisor_id"][value="'+user_id_C+'"]',
+        tick     : true,
+      }],
+      submit_button_selector : 'button[name="do_add_supervisors"]',
+      message : /Supervisors were added to department/,
+    })
+    .then(() => done());
+  });
+
+  it('Observe that "secondary spervisors" section now contains only user C', function(done) {
+    driver
+      .findElements(By.css('button[name="remove_supervisor_id"]'))
+      .then(els => {
+        expect(els.length).to.be.eql(1, 'No remove buttons for supervisers as there are not any');
+        return els[0].getAttribute('value');
+      })
+      .then(val => {
+        expect(val).to.be.eql(String(user_id_C), 'It is indeed user C');
+        done();
+      });
+  });
+
+  it('Click on "Remove" button next to user C and observe that it disappeares from "secondary supervisors" section after page is reloaded', function(done){
+    driver
+      .findElement(By.css(`button[name="remove_supervisor_id"][value="${ user_id_C }"]`))
+      .then(el => el.click())
+      .then(() => driver.findElements(By.css('button[name="remove_supervisor_id"]')))
+      .then(els => {
+        expect(els.length, 'There is no users in secondary supervisers section').to.be.eql(0);
+        done();
+      });
   });
 
   after(function(done){
-    driver.quit().then(function(){ done(); });
+    driver.quit().then(() => done());
   });
 
 });
