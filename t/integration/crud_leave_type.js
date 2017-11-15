@@ -76,7 +76,7 @@ describe('CRUD for leave types', function(){
       },{
         selector : leave_type_edit_form_id+' input[name="use_allowance__1"]',
         tick     : true,
-        value    : 'on',
+        value    : 'off',
       }],
     })
     .then(function(){ done() });
@@ -88,7 +88,7 @@ describe('CRUD for leave types', function(){
       form_params : [{
         selector : leave_type_edit_form_id+' input[name="use_allowance__1"]',
         tick     : true,
-        value    : 'off',
+        value    : 'on',
       }],
       should_be_successful : true,
       submit_button_selector : leave_type_edit_form_id+' button[type="submit"]',
@@ -106,7 +106,7 @@ describe('CRUD for leave types', function(){
         tick     : true,
       },{
         selector : leave_type_edit_form_id+' input[name="use_allowance__1"]',
-        value    : 'off',
+        value    : 'on',
         tick     : true,
       }],
     })

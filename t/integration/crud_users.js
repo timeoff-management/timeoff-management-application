@@ -373,6 +373,20 @@ describe('CRUD for users', function(){
     .then(function(){ done() });
   });
 
+  it('If the adjustment is with half and is negative, it is OK', function(done){
+    submit_form_func({
+      driver      : driver,
+      form_params : [{
+        selector : 'input[name="adjustment"]',
+        value    : '-1.5',
+      }],
+      submit_button_selector : 'button#save_changes_btn',
+      should_be_successful : true,
+      message : /Details for .+ were updated/,
+    })
+    .then(function(){ done() });
+  });
+
   it("Open ADMIN user details page (general)", function(done){
     open_page_func({
       url    : application_host + 'users/edit/'+admin_user_id+'/',

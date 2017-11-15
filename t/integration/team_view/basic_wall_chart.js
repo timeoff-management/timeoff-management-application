@@ -8,13 +8,13 @@ var test                 = require('selenium-webdriver/testing'),
   Promise                = require("bluebird"),
   until                  = require('selenium-webdriver').until,
   _                      = require('underscore'),
-  register_new_user_func = require('../lib/register_new_user'),
-  login_user_func        = require('../lib/login_with_user'),
-  open_page_func         = require('../lib/open_page'),
-  submit_form_func       = require('../lib/submit_form'),
-  add_new_user_func      = require('../lib/add_new_user'),
-  logout_user_func       = require('../lib/logout_user'),
-  config                 = require('../lib/config'),
+  register_new_user_func = require('../../lib/register_new_user'),
+  login_user_func        = require('../../lib/login_with_user'),
+  open_page_func         = require('../../lib/open_page'),
+  submit_form_func       = require('../../lib/submit_form'),
+  add_new_user_func      = require('../../lib/add_new_user'),
+  logout_user_func       = require('../../lib/logout_user'),
+  config                 = require('../../lib/config'),
   new_department_form_id = '#add_new_department_form',
   application_host       = config.get_application_host(),
   company_edit_form_id   ='#company_edit_form';
@@ -54,7 +54,7 @@ function check_teamview(data, emails){
   })
   .then(function(data){
     var promise_to_check = data.driver
-      .findElements(By.css( 'tr.teamview-user-list-row > td' ))
+      .findElements(By.css( 'tr.teamview-user-list-row > td.user-name-cell' ))
 
       // Make sure that number of users is as expected
       .then(function(elements){

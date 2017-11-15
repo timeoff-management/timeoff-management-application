@@ -113,6 +113,14 @@ td.leave_cell_pended {
   padding-top: 5px;
   padding-bottom: 5px; }
 
+.team-view-users .user-name-cell {
+  text-overflow: ellipsis;
+  /* Cannot avoid specifying width with pixels... */
+  width: 165px;
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block; }
+
 td.team-view-header {
   height: 43px; }
 
