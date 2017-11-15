@@ -718,6 +718,7 @@ describe('CRUD for department secondary supervisers', function(){
           }],
         })
       .then(function(vals){ done() });
+    });
   });
 
   after(function(done){
