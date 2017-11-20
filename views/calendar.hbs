@@ -57,7 +57,12 @@
   <div class="col-md-3 secondary-leave-type-statistics hidden-xs">
     <dl>
       <dt>Details</dt>
-      <dd><em>Superviser:</em><span class="pull-right"><a href="mailto:{{superviser.email}}">{{# with superviser }}{{ this.full_name }}{{/with}}</a></span></dd>
+      {{~# each supervisors  ~}}
+      <dd>
+        <em>{{# if  @first }} Supervisor: {{ else   }}  &nbsp;   {{/ if  }}</em>
+        <span class="pull-right"><a href="mailto:{{this.email}}">{{ this.full_name }}</a></span>
+      </dd>
+      {{~/ each ~}}
       <dd><em>Department:</em> <span class="pull-right"><a href="/calendar/teamview/?department={{ current_user.department.id }}">{{ current_user.department.name }}</a></span></dd>
       <dd><em>Allowance in {{this_year}}:</em><span class="pull-right"> {{#with current_user}}{{ this.calculate_total_number_of_days_n_allowance ../this_year }}{{/with}} days</span><dd>
     </dl>
