@@ -1,0 +1,74 @@
+
+{{> header }}
+
+<h1>Departments</h1>
+
+{{> show_flash_messages }}
+
+<div class="row">
+  <div class="col-md-4 lead">All departments</div>
+  <div class="col-md-4 col-md-offset-4">
+    <button class="btn btn-info pull-right" data-toggle="modal" data-target="#add_new_department_modal" type="button" id="add_new_department_btn">Add new department</button>
+    <a href='/settings/departments-bulk-update/'class="btn btn-link pull-right">Bulk update</a>
+  </div>
+</div>
+
+
+<div class="row">&nbsp;</div>
+
+
+{{# unless departments.length }}
+<div class="row">
+    <div class="col-md-4">No department records</div>
+</div>
+{{/unless}}
+
+<div class="row">
+
+  <div class="col-md-12">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Manager</th>
+          <th>Allowance</th>
+          <th>Number Employees</th>
+          <th>Public Holidays
+            <button type="button"
+              class="btn btn-xs btn-link"
+              data-content="If set YES, employees from department have Bank Holidays added on top of allowance"
+              data-placement="top"
+              data-toggle="popover"
+              data-trigger="focus hover"
+            >
+              <span class="fa fa-question-circle"> </span>
+            </button>
+          </th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each departments}}
+        <tr data-vpp-department-list-mode="readonly">
+          <td><a href="/settings/departments/edit/{{this.id}}/" data-vpp-department-name=1>{{this.name}}</a></td>
+          <td><a href="/users/edit/{{this.boss.id}}/">{{# with this.boss }}{{this.full_name }}{{/with}}</a></td>
+          <td>
+            {{#each ../allowance_options}}{{#if_equal this.value ../allowance}}{{caption}}{{/if_equal}}{{/each}}
+          </td>
+          <td><a href="/users/?department={{ this.id }}">{{this.users.length}}</a></td>
+          <td>{{# if this.include_public_holidays }}Yes{{/if}}</td>
+          <td><a href="/settings/departments/edit/{{this.id}}/" class="btn btn-link btn-xs pull-right"><span class="fa fa-pencil"></span></a></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+{{> add_new_department_modal
+  container_id='add_new_department_modal'
+  form_action='/settings/departments-bulk-update/'
+}}
+
+{{> footer }}

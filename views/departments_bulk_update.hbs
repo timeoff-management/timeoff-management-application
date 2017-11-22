@@ -3,11 +3,16 @@
 
 <h1>Departments</h1>
 
+{{> show_flash_messages }}
+
 <div class="row">
-    <div class="col-md-3 lead">Departments settings</div>
+  <div class="col-md-4 lead">Departments settings bulk edit</div>
+  <div class="col-md-4 col-md-offset-4">
+    <button class="btn btn-info pull-right" data-toggle="modal" data-target="#add_new_department_modal" type="button" id="add_new_department_btn">Add new department</button>
+    <a href='/settings/departments/'class="btn btn-link pull-right">Overview</a>
+  </div>
 </div>
 
-{{> show_flash_messages }}
 
 <div class="row">&nbsp;</div>
 
@@ -22,7 +27,7 @@
 
 <form id="delete_form" method="post" action="/settings/departments/delete/"></form>
 
-<form method="post" action="/settings/departments/" id="edit_department_form">
+<form method="post" action="/settings/departments-bulk-update/" id="edit_department_form">
 
 {{# unless departments.length }}
 <div class="row">
@@ -62,7 +67,7 @@
     <div class="col-md-1"><a class="" href="/users/?department={{ this.id }}">{{this.users.length}}</a></div>
 
     <div class="col-md-1">
-        <button type="button" class="btn btn-default pull-right departments-remove-btn" value="{{@index}}"><span class="fa fa-remove"></span></button>
+        <button type="button" class="btn btn-default pull-right departments-remove-btn" data-vpp="{{ @index }}" value="{{ this.id }}"><span class="fa fa-remove"></span></button>
     </div>
 </div>
 
@@ -74,7 +79,7 @@
   <div class="col-md-offset-9 col-md-3">
     <button type="submit" class="btn btn-success pull-right">Save changes</button>
     <span class="pull-right">&nbsp;&nbsp;&nbsp;</span>
-    <button class="btn btn-default pull-right" data-toggle="modal" data-target="#add_new_department_modal" type="button" id="add_new_department_btn">Add new</button>
+    <a href='/settings/departments-bulk-update/' class="btn btn-link pull-right">Cancel</a>
   </div>
 </div>
 
@@ -84,7 +89,7 @@
 
 {{> add_new_department_modal
   container_id='add_new_department_modal'
-  form_action='/settings/departments/'
+  form_action='/settings/departments-bulk-update/'
 }}
 
 {{> footer }}

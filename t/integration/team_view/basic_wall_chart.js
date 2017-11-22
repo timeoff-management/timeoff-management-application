@@ -124,7 +124,7 @@ describe('Check basic scenario for Team view page', function(){
 
   it('Create new department: "IT"', function(done){
     open_page_func({
-      url    : application_host + 'settings/departments/',
+      url    : application_host + 'settings/departments-bulk-update/',
       driver : driver,
     })
     .then(function(){ done() });
@@ -174,7 +174,7 @@ describe('Check basic scenario for Team view page', function(){
 
   it("Make sure user C is superviser of IT department", function(done){
     open_page_func({
-      url    : application_host + 'settings/departments/',
+      url    : application_host + 'settings/departments-bulk-update/',
       driver : driver,
     })
     .then(function(){
@@ -238,7 +238,7 @@ describe('Check basic scenario for Team view page', function(){
 
   it("Update IT department to be supervised by user B", function(done){
     open_page_func({
-      url    : application_host + 'settings/departments/',
+      url    : application_host + 'settings/departments-bulk-update/',
       driver : driver,
     })
     .then(function(){

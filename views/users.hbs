@@ -8,7 +8,7 @@
 <div class="row">
   <div class="col-md-3 lead">{{company.name}}'s staff</div>
   <div class="col-md-3 col-md-offset-6">
-    <a href="/users/add/" class="btn btn-info pull-right" id="add_new_department">Add user</a>
+    <a href="/users/add/" class="btn btn-info pull-right" id="add_new_department">Add new employee</a>
   </div>
 </div>
 
@@ -36,7 +36,7 @@
       {{# each users}}
       <tr data-vpp-user-row="{{this.id}}">
         <td class="user-link-cell"><a href="/users/edit/{{this.id}}/">{{this.full_name}}</a></td>
-        <td class="user_department">{{this.department.name}}</td>
+        <td class="user_department"><a href="/settings/departments/edit/{{ this.department.id }}/">{{this.department.name}}</a></td>
         <td>{{# if this.admin }}Yes{{else}}{{/if}}</td>
         <td class="vpp-days-remaining">{{ this.calculate_number_of_days_available_in_allowance}}</td>
         <td class="vpp-days-used">{{this.calculate_number_of_days_taken_from_allowance}}</td>

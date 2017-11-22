@@ -1,0 +1,83 @@
+
+<form method="POST" action="/settings/departments/edit/{{ department.id }}/" id="department_edit_form">
+
+<div class="col-md-7">
+
+  <ol class="breadcrumb">
+    <li><a href="/settings/departments/" data-vpp-all-departments-link="1">All departments</a></li>
+    <li class="active">{{ department.name }}</li>
+  </ol>
+
+  <div class="form-group">
+    <label for="name" class="control-label">Name</label>
+    <input class="form-control" id="name" name="name" required value="{{department.name}}">
+  </div>
+
+
+  <div class="form-group">
+    <label for="manager_id" class="control-label">Manager</label>
+    <select class="form-control" name="boss_id" id="manager_id">
+    {{#each company.users}}
+      <option value="{{this.id}}" {{#if_equal ../department.bossId this.id }} selected="selected"{{/if_equal}}>{{this.full_name}}</option>
+    {{/each}}
+    </select>
+    <span class="help-block">Head of {{department.name}} department. Main manager. <a href="/users/edit/{{department.bossId}}/">More details <i class="fa fa-angle-double-right"></i></a></span>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">Secondary supervisors (BETA)</label>
+    <ul class="list-group no-bottom-space">
+      {{# each department.supervisors }}
+
+      <li class="list-group-item">
+        <span><a href='/users/edit/{{ this.id }}/'>{{ this.full_name }}</a> <button type="submit" name="remove_supervisor_id" value="{{this.id}}" class="pull-right btn btn-link btn-xs"><i class="fa fa-trash"></i> Remove</button><span>
+      </li>
+      {{/ each }}
+
+      <li class="list-group-item">
+        <span>&nbsp;
+        <a class="pull-right btn btn-link btn-xs"
+          data-vpp-add-new-secondary-supervisor="1"
+          data-toggle="modal"
+          data-target="#add_secondary_supervisers_modal"
+          data-department_id="{{department.id}}"
+          data-department_name="{{department.name}}"
+        >
+          <i class="fa fa-plus"></i> Add new secondary supervisor
+        </a>
+        <span>
+      </li>
+    </ul>
+    <span class="help-block">List of users who also could decide on leave requests from {{department.name}} department's employees.</span>
+  </div>
+
+
+  <div class="form-group">
+    <label for="allowance_select">Allowance</label>
+
+    <select class="form-control" name="allowance" id="allowance_select">
+        {{#each allowance_options}}
+        <option value="{{value}}" {{#if_equal this.value ../department.allowance}} selected="selected"{{/if_equal}}>{{caption}}</option>
+        {{/each}}
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="use_bank_holidays_inp" class="control-label">
+      <input class="" id="use_bank_holidays_inp" name="include_public_holidays" type="checkbox" {{# if department.include_public_holidays}} checked="checked"  {{/if}} >
+      Include public holidays
+    </label>
+    <span class="help-block">Determine if employees from {{department.name}} have <a href="/settings/general"/>bank holidays</a> in addition to their allowance</span>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <button id="save_changes_btn" type="submit" class="btn btn-success pull-right">Save changes to department</button>
+    <a class="btn btn-link pull-right" href="/settings/departments/">Cancel</a>
+  </div>
+</div>
+
+</form>
+
+{{> department_details/supervisers_modal department=department }}
