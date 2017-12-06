@@ -277,7 +277,7 @@ describe("Use problematic date with non default date format", function(){
 
   it("Open calendar page", function(done){
     open_page_func({
-      url    : application_host + 'calendar/?year=2017&show_full_year=1',
+      url    : application_host + 'calendar/?year=2016&show_full_year=1',
       driver : driver,
     })
     .then(function(){ done(); })
@@ -302,10 +302,10 @@ describe("Use problematic date with non default date format", function(){
           value           : "2",
       },{
           selector : 'input#from',
-          value : '22/08/17',
+          value : '24/08/16',
       },{
           selector : 'input#to',
-          value : '23/08/17',
+          value : '25/08/16',
       }],
       message : /New leave request was added/,
     })

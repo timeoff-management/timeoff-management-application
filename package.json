@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "chai": "^2.2.0",
-    "mocha": "^2.2.4",
+    "mocha": "^3.5.3",
     "node-sass": "^4.5.3",
     "selenium-webdriver": "2.45.1"
   },
