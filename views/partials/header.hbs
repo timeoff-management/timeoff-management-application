@@ -62,6 +62,12 @@
   </div><!-- /.container-fluid -->
 </nav>
 
+{{# if logged_user }}
+  {{# if logged_user.company.company_wide_message  }}
+    <div class="alert alert-danger" role="alert">{{ logged_user.company.company_wide_message }}</div>
+  {{/if}}
+{{/if}}
+
 </div>
 
 
