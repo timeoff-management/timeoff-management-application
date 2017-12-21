@@ -24,7 +24,7 @@
       {{#with current_user }}
       <dt>{{ ../number_of_days_available_in_allowance }}</dt>
       <dd>Days remaining</dd>
-      <dd>out of {{this.calculate_total_number_of_days_n_allowance ../this_year}} in Allowance</dd>
+      <dd>out of {{ ../total_number_of_days_in_allowance }} in Allowance</dd>
       {{/with}}
     </dl>
   </div>
@@ -64,7 +64,7 @@
       </dd>
       {{~/ each ~}}
       <dd><em>Department:</em> <span class="pull-right"><a href="/calendar/teamview/?department={{ current_user.department.id }}">{{ current_user.department.name }}</a></span></dd>
-      <dd><em>Allowance in {{this_year}}:</em><span class="pull-right"> {{#with current_user}}{{ this.calculate_total_number_of_days_n_allowance ../this_year }}{{/with}} days</span><dd>
+      <dd><em>Allowance in {{this_year}}:</em><span class="pull-right"> {{ total_number_of_days_in_allowance }} days</span><dd>
     </dl>
   </div>
 
