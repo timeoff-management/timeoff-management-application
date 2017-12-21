@@ -61,7 +61,7 @@
   <div class="form-group">
     <label for="adjustment_inp" class="control-label">Allowance adjustment</label>
     <div class="input-group col-md-4">
-      <input class="form-control" id="adjustment_inp" type="number" step="0.5" name="adjustment" value="{{#if employee.adjustment }}{{employee.adjustment}}{{else}}0{{/if}}" aria-describedby="adjustment_help">
+      <input class="form-control" id="adjustment_inp" type="number" step="0.5" name="adjustment" value="{{#if employee_adjustment }}{{employee_adjustment}}{{else}}0{{/if}}" aria-describedby="adjustment_help">
       <span class="input-group-addon">working days</span>
     </div>
     <div id="adjustment_help" class="help-block">
