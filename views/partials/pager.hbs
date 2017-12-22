@@ -20,24 +20,28 @@
   <li {{# unless pager.page_prev }} class="disabled" {{/unless}}>
       <span>
         {{#if pager.page_prev}}
-        <a href="?{{#each pager.filter }}{{@key}}={{this}}&{{/each}}page={{pager.page_prev}}">&laquo;</a>
+        <a href="?{{#each pager.filter }}{{@key}}={{this}}&{{/each}}page={{pager.page_prev}}">&laquo; Prev</a>
         {{else}}
-        &laquo;
+        &laquo; Prev
         {{/if}}
       </span>
   </li>
   {{# each pager.pages }}
-  <li {{# if_equal this ../pager.page }}class="active" {{/if_equal}}>
-    <span><a href="?{{#each ../pager.filter }}{{@key}}={{this}}&{{/each}}page={{this}}">{{ this }}</a></span>
-  </li>
+
+    {{# if_equal this ../pager.page }}
+      <li>
+        <span><a href="?{{#each ../pager.filter }}{{@key}}={{this}}&{{/each}}page={{this}}">{{ this }} of {{ ../pager.page_qnty }}</a></span>
+      </li>
+    {{/ if_equal}}
+
   {{/ each}}
   <li{{# unless pager.page_next }} class="disabled" {{/unless}}>
     <span>
 
         {{#if pager.page_next}}
-        <a href="?{{#each pager.filter }}{{@key}}={{this}}&{{/each}}page={{pager.page_next}}">&raquo;</a>
+        <a href="?{{#each pager.filter }}{{@key}}={{this}}&{{/each}}page={{pager.page_next}}">Next &raquo;</a>
         {{else}}
-        &raquo;
+        Next &raquo;
         {{/if}}
 
     </span>
