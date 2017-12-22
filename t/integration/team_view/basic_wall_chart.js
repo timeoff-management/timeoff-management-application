@@ -54,7 +54,7 @@ function check_teamview(data, emails){
   })
   .then(function(data){
     var promise_to_check = data.driver
-      .findElements(By.css( 'tr.teamview-user-list-row > td.user-name-cell' ))
+      .findElements(By.css( 'tr.teamview-user-list-row > td.left-column-cell' ))
 
       // Make sure that number of users is as expected
       .then(function(elements){
