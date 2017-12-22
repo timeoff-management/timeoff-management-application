@@ -1,0 +1,7 @@
+
+{{# each grouped_leaves}}
+  <h2>{{this.year}}</h2>
+  {{> user_requests leaves=this.leaves no_header=1 logged_user=../logged_user}}
+  <p><em>Days deducted from allowance:</em> <span>{{ this.total_deduction }}</span></p>
+  <div class="main-row_header">&nbsp;</div>
+{{/ each}}

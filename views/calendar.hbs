@@ -140,9 +140,14 @@
 
 </div>
 
-
 {{# unless show_full_year}}
+
+  <div class="row main-row_header">
+    <p class="col-md-12">All my absences in {{current_year}}</p>
+  </div>
+
   {{> user_requests leaves=current_user.my_leaves }}
+
 {{/unless}}
 
 

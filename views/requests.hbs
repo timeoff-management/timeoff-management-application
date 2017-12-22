@@ -60,6 +60,13 @@
   {{/unless}}
 </div>
 
-{{> user_requests leaves=my_leaves }}
+
+<div class="main-row_header">&nbsp;</div>
+
+<div class="row main-row_header">
+  <p class="col-md-12">All my absences</p>
+</div>
+
+{{> user_requests_grouped grouped_leaves=my_leaves_grouped logged_user=logged_user }}
 
 {{>footer}}
