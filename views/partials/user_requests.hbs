@@ -12,9 +12,9 @@
     <table class="table table-hover user-requests-table">
       <thead>
         <tr>
+          <th>Dates (from <i class="fa fa-long-arrow-right"></i> to)</th>
           <th>Type</th>
           <th>Deducted</th>
-          <th>Dates</th>
           <th>Approved by</th>
           <th></th>
           <th><span class="pull-right">Status</span></th>
@@ -25,9 +25,9 @@
       {{# each leaves }}
 
       <tr class="leave-request-row">
+        <td>{{#with this.get_start_leave_day}}{{as_date this.date}}{{/with}} <i class="fa fa-long-arrow-right"></i> {{#with this.get_end_leave_day}}{{as_date this.date}}{{/with}}</td>
         <td>{{ this.leave_type.name }}{{#if this.is_pended_revoke_leave}}<br>(pended revoke){{/if}}</td>
         <td>{{ this.get_deducted_days_number }}</td>
-        <td>From {{#with this.get_start_leave_day}}{{as_date this.date}}{{/with}} to {{#with this.get_end_leave_day}}{{as_date this.date}}{{/with}}</td>
         <td class="user-request-table-approver">{{#with this.approver}}{{this.full_name}}{{/with}}</td>
         <td>
           {{# if this.is_approved_leave }}
