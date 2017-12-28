@@ -35,7 +35,7 @@
         <tr vpp="pending_for__{{this.user.email}}">
           <td>{{#with this.user}}{{this.full_name}}{{/with}}</td>
           <td>{{this.user.department.name}}</td>
-          <td>{{as_date this.createdAt}}</td>
+          <td>{{as_date_from_timestamp this.createdAt}}</td>
           <td>From {{#with this.get_start_leave_day}}{{as_date this.date}}{{/with}} to {{#with this.get_end_leave_day}}{{as_date this.date}}{{/with}}</td>
           <td>{{#if this.is_pended_revoke_leave}}REVOKE {{/if}}{{this.leave_type.name}}</td>
           <td data-vpp="days_used">{{ this.get_deducted_days_number }}</td>

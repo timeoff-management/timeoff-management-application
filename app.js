@@ -62,9 +62,7 @@ app.use(function(req,res,next){
   var today;
 
   if ( req.user && req.user.company ) {
-    today = moment.utc(
-      moment.utc().tz(req.user.company.timezone).format('YYYY-MM-DD')
-    );
+    today = req.user.company.get_today();
   } else {
     today = moment.utc();
   }
