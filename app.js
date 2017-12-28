@@ -57,14 +57,27 @@ app.use(passport.session());
 //
 // Make sure session and user objects are available in templates
 app.use(function(req,res,next){
-    res.locals.session     = req.session;
-    res.locals.logged_user = req.user;
-    res.locals.url_to_the_site_root = '/';
-    res.locals.requested_path = req.originalUrl;
-    // For book leave request modal
-    res.locals.booking_start = moment();
-    res.locals.booking_end = moment();
-    next();
+
+  // Get today given user's timezone
+  var today;
+
+  if ( req.user && req.user.company ) {
+    today = moment.utc(
+      moment.utc().tz(req.user.company.timezone).format('YYYY-MM-DD')
+    );
+  } else {
+    today = moment.utc();
+  }
+
+  res.locals.session     = req.session;
+  res.locals.logged_user = req.user;
+  res.locals.url_to_the_site_root = '/';
+  res.locals.requested_path = req.originalUrl;
+  // For book leave request modal
+  res.locals.booking_start = today,
+  res.locals.booking_end = today,
+
+  next();
 });
 
 app.use(function(req,res,next){
