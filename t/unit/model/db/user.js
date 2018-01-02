@@ -51,14 +51,14 @@ describe('get_automatic_adjustment method', function(){
 
   describe('Start date is in current year, no end date', function(){
     var employee = model.User.build({
-      start_date : moment('2017-04-01'),
+      start_date : moment('2018-04-01'),
     });
     employee.department = {
       allowance : 20,
     };
 
     it('adjustment is made based on start date', function(){
-      expect(employee.get_automatic_adjustment({now : moment('2017-07-20')}))
+      expect(employee.get_automatic_adjustment({now : moment('2018-07-20')}))
         .to.be.equal(-5);
     });
 
@@ -81,22 +81,22 @@ describe('get_automatic_adjustment method', function(){
 
   describe('Start date is in current year, end date is in next year', function(){
     var employee = model.User.build({
-      start_date : moment('2017-04-01'),
-      end_date : moment('2018-10-01'),
+      start_date : moment('2018-04-01'),
+      end_date : moment('2019-10-01'),
     });
     employee.department = {
       allowance : 20,
     };
 
     it('adjustment is made based on start date', function(){
-      expect(employee.get_automatic_adjustment({now : moment('2017-07-20')}))
+      expect(employee.get_automatic_adjustment({now : moment('2018-07-20')}))
         .to.be.equal(-5);
     });
   });
 
   describe('Start date is in next year, no end date', function(){
     var employee = model.User.build({
-      start_date : moment('2017-04-01'),
+      start_date : moment('2018-04-01'),
     });
     employee.department = {
       allowance : 20,

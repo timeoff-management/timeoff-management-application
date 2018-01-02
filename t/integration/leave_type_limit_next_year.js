@@ -221,10 +221,10 @@ describe('Leave type limits for next year: ' + next_year, function(){
           driver      : driver,
           form_params : [{
             selector : 'input#from',
-            value : next_year + '-05-11',
+            value : next_year + '-05-14',
           },{
             selector : 'input#to',
-            value : next_year + '-05-11',
+            value : next_year + '-05-14',
           }],
           message : /Failed to create a leave request/,
         })

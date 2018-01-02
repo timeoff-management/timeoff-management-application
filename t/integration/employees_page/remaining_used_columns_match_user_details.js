@@ -107,10 +107,10 @@ describe('Leave request cancelation', function(){
       driver      : driver,
       form_params : [{
         selector : 'input#from',
-        value    : '2017-05-01',
+        value    : '2018-05-01',
       },{
         selector : 'input#to',
-        value    : '2017-05-07',
+        value    : '2018-05-07',
       }],
       message : /New leave request was added/,
     })

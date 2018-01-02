@@ -174,10 +174,10 @@ describe('Revoke leave request', function(){
             value           : "2",
           },{
             selector : 'input#from',
-            value : '2017-06-15',
+            value : '2018-05-15',
           },{
             selector : 'input#to',
-            value : '2017-06-16',
+            value : '2018-05-16',
           }],
           message : /New leave request was added/,
         })
@@ -188,8 +188,8 @@ describe('Revoke leave request', function(){
   it("Check that all days are marked as pended", function(done){
     check_booking_func({
       driver         : driver,
-      full_days      : [moment('2017-06-16')],
-      halfs_1st_days : [moment('2017-06-15')],
+      full_days      : [moment('2018-05-16')],
+      halfs_1st_days : [moment('2018-05-15')],
       type           : 'pended',
     })
     .then(function(){ done() });

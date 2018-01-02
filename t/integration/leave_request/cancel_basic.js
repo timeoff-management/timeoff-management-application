@@ -17,7 +17,7 @@ var test                 = require('selenium-webdriver/testing'),
   submit_form_func       = require('../../lib/submit_form'),
   user_info_func         = require('../../lib/user_info'),
   application_host       = config.get_application_host(),
-  some_weekday_date      = '2017-06-01';
+  some_weekday_date      = '2018-01-03';
 
 /*
  *  Scenario:
