@@ -117,7 +117,7 @@ describe('Leave request cancelation', function(){
       .then(function(){ done() });
   });
 
-  it("Submit new leave requesti from user B for one weekday", function(done){
+  it("Submit new leave request from user B for one weekday", function(done){
     submit_form_func({
       driver      : driver,
       form_params : [{
