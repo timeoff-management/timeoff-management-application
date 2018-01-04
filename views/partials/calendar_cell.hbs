@@ -10,7 +10,16 @@
         {{/if}}
     {{/if}}
     {{# if day.is_current_day }}current_day_cell{{/if}}
-">
+"
+{{#if day.is_leave_morning }}
+    {{#if day.is_new_leave}}
+    {{else}}
+        {{#if day.color}}
+            style="background: {{day.color}}"
+        {{/if}}
+   {{/if}}
+{{/if}}
+>
 <span
   {{#unless day.is_bank_holiday}}
     {{#unless day.is_weekend}}
@@ -55,4 +64,13 @@
         {{/if}}
     {{/if}}
     {{# if day.is_current_day }}current_day_cell{{/if}}
-"></td>
+"
+{{#if day.is_leave_afternoon }}
+    {{#if day.is_new_leave}}
+    {{else}}
+        {{#if day.color}}
+            style="background: {{day.color}}"
+        {{/if}}
+   {{/if}}
+{{/if}}
+></td>
