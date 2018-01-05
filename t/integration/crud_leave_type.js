@@ -41,16 +41,15 @@ describe('CRUD for leave types', function(){
     check_elements_func({
       driver : driver,
       elements_to_check : [{
-        selector : leave_type_edit_form_id+' input[name="name__0"]',
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="name_0"]',
         value    : 'Holiday',
       },{
-        selector : leave_type_edit_form_id+' input[name="name__1"]',
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="name_1"]',
         value    : 'Sick Leave',
       }],
     })
     .then(function(){ done() });
   });
-
 
 // TODO un comment that step when we resurect editing colors
 //    // Try to submit form with incorrect color code
@@ -70,11 +69,11 @@ describe('CRUD for leave types', function(){
     check_elements_func({
       driver : driver,
       elements_to_check : [{
-        selector : leave_type_edit_form_id+' input[name="use_allowance__0"]',
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="allowance_0"]',
         tick     : true,
         value    : 'on',
       },{
-        selector : leave_type_edit_form_id+' input[name="use_allowance__1"]',
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="allowance_1"]',
         tick     : true,
         value    : 'off',
       }],
@@ -86,7 +85,7 @@ describe('CRUD for leave types', function(){
     submit_form_func({
       driver      : driver,
       form_params : [{
-        selector : leave_type_edit_form_id+' input[name="use_allowance__1"]',
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="allowance_1"]',
         tick     : true,
         value    : 'on',
       }],
@@ -101,11 +100,11 @@ describe('CRUD for leave types', function(){
     check_elements_func({
       driver : driver,
       elements_to_check : [{
-        selector : leave_type_edit_form_id+' input[name="use_allowance__0"]',
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="allowance_0"]',
         value    : 'on',
         tick     : true,
       },{
-        selector : leave_type_edit_form_id+' input[name="use_allowance__1"]',
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="allowance_1"]',
         value    : 'on',
         tick     : true,
       }],
@@ -117,10 +116,10 @@ describe('CRUD for leave types', function(){
     submit_form_func({
       driver      : driver,
       form_params : [{
-        selector : leave_type_edit_form_id+' input[name="limit__0"]',
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="limit_0"]',
         value    : '0',
       },{
-        selector : leave_type_edit_form_id+' input[name="limit__1"]',
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="limit_1"]',
         value    : '5',
       }],
       submit_button_selector : leave_type_edit_form_id+' button[type="submit"]',
@@ -134,7 +133,7 @@ describe('CRUD for leave types', function(){
     submit_form_func({
       driver      : driver,
       form_params : [{
-        selector : leave_type_edit_form_id+' input[name="limit__0"]',
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="limit_0"]',
         value    : '-1',
       }],
       submit_button_selector : leave_type_edit_form_id+' button[type="submit"]',
@@ -174,13 +173,13 @@ describe('CRUD for leave types', function(){
     check_elements_func({
       driver : driver,
       elements_to_check : [{
-        selector : leave_type_new_form_id+' input[name="name__0"]',
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="name_0"]',
         value    : 'AAAAA',
       },{
-        selector : leave_type_new_form_id+' input[name="name__1"]',
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="name_1"]',
         value    : 'Holiday',
       },{
-        selector : leave_type_new_form_id+' input[name="name__2"]',
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="name_2"]',
         value    : 'Sick Leave',
       }],
     })
@@ -191,7 +190,7 @@ describe('CRUD for leave types', function(){
     submit_form_func({
       driver      : driver,
       form_params : [{
-        selector : leave_type_edit_form_id+' input[name="name__0"]',
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="name_0"]',
         value    : 'MM',
       }],
       submit_button_selector : leave_type_edit_form_id+' button[type="submit"]',
@@ -204,13 +203,13 @@ describe('CRUD for leave types', function(){
     check_elements_func({
       driver : driver,
       elements_to_check : [{
-        selector : leave_type_edit_form_id+' input[name="name__0"]',
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="name_0"]',
         value    : 'Holiday',
       },{
-        selector : leave_type_edit_form_id+' input[name="name__1"]',
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="name_1"]',
         value    : 'MM',
       },{
-        selector : leave_type_edit_form_id+' input[name="name__2"]',
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="name_2"]',
         value    : 'Sick Leave',
       }],
     })
@@ -221,13 +220,13 @@ describe('CRUD for leave types', function(){
     submit_form_func({
       driver : driver,
       elements_to_check : [{
-        selector : leave_type_edit_form_id+' input[name="name__0"]',
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="name_0"]',
         value    : 'Holiday',
       },{
-        selector : leave_type_edit_form_id+' input[name="name__1"]',
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="name_1"]',
         value    : 'Sick Leave',
       }],
-      submit_button_selector : leave_type_edit_form_id+' button[value="1"]',
+      submit_button_selector : leave_type_edit_form_id+' button[data-tom-leave-type-order="remove_1"]',
       message : /Leave type was successfully removed/,
     })
     .then(function(){ done() });
@@ -237,10 +236,10 @@ describe('CRUD for leave types', function(){
     check_elements_func({
       driver : driver,
       elements_to_check : [{
-          selector : leave_type_edit_form_id+' input[name="name__0"]',
+          selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="name_0"]',
           value    : 'Holiday',
       },{
-          selector : leave_type_edit_form_id+' input[name="name__1"]',
+          selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="name_1"]',
           value    : 'Sick Leave',
       }],
     })

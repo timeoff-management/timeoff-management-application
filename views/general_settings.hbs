@@ -206,8 +206,14 @@
       <div class="panel-body">
 
         <div class="row">
-          <div class="col-md-6"><label class="control-label">Leave Type Name</label></div>
-          <div class="col-md-offset-3 col-md-2"><label class="control-label">Limit</label></div>
+          <div class="col-md-6">
+            <label class="control-label">Leave Type Name</label>
+            <p><em>Tick one to always be on top of the list</em></p>
+          </div>
+          <div class="col-md-offset-3 col-md-2">
+            <label class="control-label">Limit</label>
+            <p><em>Days/year</em></p>
+          </div>
         </div>
 
         <div class="row">&nbsp;</div>
@@ -225,17 +231,24 @@
         {{#each company.leave_types}}
         <div class="row">
           <div class="col-md-6">
-            <input type="text" class="form-control" value="{{name}}" name="name__{{@index}}">
+
+            <div class="input-group">
+              <span class="input-group-addon">
+                <input type="radio" name="first_record" value="{{ this.id }}" {{# if this.sort_order }}checked="checked"{{/ if}}>
+              </span>
+              <input type="text" class="form-control" name="name__{{ this.id }}" value="{{name}}" data-tom-leave-type-order="name_{{@index}}">
+            </div>
+
           </div>
           <div class="col-md-3">
-            <input name="use_allowance__{{@index}}" id="use_allowance__{{@index}}" type="checkbox" {{#if use_allowance}}checked="checked"{{/if}}>
-            <label for="use_allowance__{{@index}}" class="control-label">Use allowance</label>
+            <input name="use_allowance__{{ this.id }}" id="use_allowance__{{ this.id }}" type="checkbox" {{#if use_allowance}}checked="checked"{{/if}} data-tom-leave-type-order="allowance_{{@index}}">
+            <label for="use_allowance__{{ this.id }}" class="control-label">Use allowance</label>
           </div>
           <div class="col-md-2">
-            <input type="number" class="form-control" value="{{limit}}" name="limit__{{@index}}">
+            <input type="number" class="form-control" value="{{limit}}" name="limit__{{ this.id }}" data-tom-leave-type-order="limit_{{@index}}">
           </div>
           <div class="col-md-1">
-            <button class="btn btn-default pull-right leavetype-remove-btn" value="{{@index}}"><span class="fa fa-remove"></span></button>
+            <button class="btn btn-default pull-right leavetype-remove-btn" value="{{ this.id }}" data-tom-leave-type-order="remove_{{@index}}"><span class="fa fa-remove"></span></button>
           </div>
         </div>
 

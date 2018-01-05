@@ -67,7 +67,7 @@ describe('Leave type limits for next year: ' + next_year, function(){
     submit_form_func({
       driver      : driver,
       form_params : [{
-        selector : leave_type_edit_form_id+' input[name="limit__0"]',
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="limit_0"]',
         value    : '1',
       }],
       submit_button_selector : leave_type_edit_form_id+' button[type="submit"]',
