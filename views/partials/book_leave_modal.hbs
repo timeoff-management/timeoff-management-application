@@ -24,7 +24,7 @@
             <label for="leave_type" class="control-label">Leave type:</label>
             <select class="form-control" id="leave_type" name="leave_type">
             {{# each logged_user.company.leave_types}}
-                <option value={{@index}}>{{this.name}}</option>
+                <option value={{@index}} data-tom="{{this.name}}">{{this.name}}</option>
             {{/each}}
             </select>
           </div>

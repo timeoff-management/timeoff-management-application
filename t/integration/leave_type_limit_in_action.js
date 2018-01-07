@@ -60,7 +60,7 @@ describe('Leave type limits in actoion', function(){
      submit_form_func({
       driver      : driver,
       form_params : [{
-        selector : leave_type_edit_form_id+' input[name="limit__0"]',
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="limit_0"]',
         value    : '3',
       }],
       submit_button_selector : leave_type_edit_form_id+' button[type="submit"]',
