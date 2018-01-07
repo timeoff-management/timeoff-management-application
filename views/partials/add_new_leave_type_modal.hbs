@@ -10,15 +10,6 @@
         <h4 class="modal-title">Add new Leave Type</h4>
       </div>
 
-
-      {{#each company.leave_types}}
-        <input type="hidden" value="{{name}}" name="name__{{ this.id }}" data-tom-leave-type-order="name_{{@index}}">
-        <input type="hidden" name="use_allowance__{{ this.id }}" value="{{use_allowance}}" data-tom-leave-type-order="allowance_{{ @index }}">
-
-        <input type="hidden" value="{{limit}}" name="limit__{{ this.id }}" data-tom-leave-type-order="limit_{{@index}}">
-      {{/each}}
-
-
       <div class="modal-body">
 
         <div class="form-group">

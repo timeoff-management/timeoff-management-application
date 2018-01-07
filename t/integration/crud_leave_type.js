@@ -9,6 +9,8 @@ var test                 = require('selenium-webdriver/testing'),
   check_elements_func    = require('../lib/check_elements'),
   By                     = require('selenium-webdriver').By,
   config                 = require('../lib/config'),
+  Bluebird               = require('bluebird'),
+  expect                 = require('chai').expect,
   application_host       = config.get_application_host(),
   leave_type_edit_form_id='#leave_type_edit_form',
   leave_type_new_form_id ='#leave_type_new_form';
@@ -186,7 +188,7 @@ describe('CRUD for leave types', function(){
     .then(function(){ done() });
   });
 
-  it('Add rename newly added leave type to start with "M"', function(done){
+  it('And rename newly added leave type to start with "M"', function(done){
     submit_form_func({
       driver      : driver,
       form_params : [{
@@ -244,6 +246,141 @@ describe('CRUD for leave types', function(){
       }],
     })
     .then(function(){ done() });
+  });
+
+  it("Add AAA and ZZZ leave types", function(done){
+    driver
+      .findElement(By.css('#add_new_leave_type_btn'))
+      .then(el => el.click())
+      // This is very important line when working with Bootstrap modals!
+      .then(() => driver.sleep(1000))
+      .then(() => submit_form_func({
+          driver      : driver,
+          form_params : [{
+            selector : leave_type_new_form_id+' input[name="name__new"]',
+            value : 'ZZZ',
+          },{
+            selector : leave_type_new_form_id+' input[name="use_allowance__new"]',
+            value    : 'on',
+            tick     : true,
+          }],
+          submit_button_selector : leave_type_new_form_id+' button[type="submit"]',
+          message : /Changes to leave types were saved/,
+        })
+      )
+      .then(() => driver.findElement(By.css('#add_new_leave_type_btn')))
+      .then(el => el.click())
+      .then(() => driver.sleep(1000))
+      .then(() => submit_form_func({
+          driver      : driver,
+          form_params : [{
+            selector : leave_type_new_form_id+' input[name="name__new"]',
+            value : 'AAA',
+          },{
+            selector : leave_type_new_form_id+' input[name="use_allowance__new"]',
+            value    : 'on',
+            tick     : true,
+          }],
+          submit_button_selector : leave_type_new_form_id+' button[type="submit"]',
+          message : /Changes to leave types were saved/,
+        })
+      )
+      .then(() => done());
+  });
+
+  it("Ensure AAA is first and ZZZ is last in the list (general settings page)", function(done){
+    check_elements_func({
+      driver : driver,
+      elements_to_check : [{
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="name_0"]',
+        value    : 'AAA',
+      },{
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="name_1"]',
+        value    : 'Holiday',
+      },{
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="name_2"]',
+        value    : 'Sick Leave',
+      },{
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="name_3"]',
+        value    : 'ZZZ',
+      }],
+    })
+    .then(() => done());
+  });
+
+  it("Ensure AAA is a first and ZZZ is a last in a list on book holiday modal", function(done){
+    driver
+      .findElements(By.css('select#leave_type option'))
+      .then(options => Bluebird.map(options, option => {
+        let option_info = {};
+        return option.getAttribute('value')
+          .then(val => Bluebird.resolve(option_info.value = val))
+          .then(() => option.getAttribute('data-tom'))
+          .then(txt => Bluebird.resolve(option_info.text = txt))
+          .then(() => Bluebird.resolve(option_info));
+      }))
+      .then(option_infos => {
+        expect(option_infos[0], 'AAA is first').to.include({ value : '0', text : 'AAA'});
+        expect(option_infos[3], 'ZZZ is last').to.include({ value : '3', text : 'ZZZ'});
+        done();
+      });
+  });
+
+  it('Mark ZZZ as one to be default one', function(done){
+    driver
+      .findElement(By.css(leave_type_edit_form_id+' input[data-tom-leave-type-order="name_3"]'))
+      .then(inp => inp.getAttribute('name'))
+      .then(name => Bluebird.resolve(name.split('__')[1]))
+      .then(id => submit_form_func({
+          driver      : driver,
+          form_params : [{
+            selector : leave_type_edit_form_id+' input[type="radio"][value="'+id+'"]',
+            tick     : true,
+            value    : 'on',
+          }],
+          submit_button_selector : leave_type_edit_form_id+' button[type="submit"]',
+          message : /Changes to leave types were saved/,
+        })
+      )
+      .then(() => done());
+  });
+
+  it("Ensure AAA is first and ZZZ is last in the list (general settings page)", function(done){
+    check_elements_func({
+      driver : driver,
+      elements_to_check : [{
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="name_0"]',
+        value    : 'AAA',
+      },{
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="name_1"]',
+        value    : 'Holiday',
+      },{
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="name_2"]',
+        value    : 'Sick Leave',
+      },{
+        selector : leave_type_edit_form_id+' input[data-tom-leave-type-order="name_3"]',
+        value    : 'ZZZ',
+      }],
+    })
+    .then(() => done());
+  });
+
+  it("Ensure ZZZ is a first and AAA is a second in a list on book holiday modal", function(done){
+    driver
+      .findElements(By.css('select#leave_type option'))
+      .then(options => Bluebird.map(options, option => {
+        let option_info = {};
+        return option.getAttribute('value')
+          .then(val => Bluebird.resolve(option_info.value = val))
+          .then(() => option.getAttribute('data-tom'))
+          .then(txt => Bluebird.resolve(option_info.text = txt))
+          .then(() => Bluebird.resolve(option_info));
+      }))
+      .then(option_infos => {
+        expect(option_infos[0], 'ZZZ is first').to.include({ value : '0', text : 'ZZZ'});
+        expect(option_infos[1], 'AAA is last').to.include({ value : '1', text : 'AAA'});
+        done();
+      });
   });
 
   after(function(done){
