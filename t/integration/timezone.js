@@ -34,7 +34,7 @@ const
  *
  * */
 
-describe('Check departments list page', function(){
+describe('Check Time zones', function(){
   let
     driver,
     user_email,
@@ -67,8 +67,8 @@ describe('Check departments list page', function(){
       driver      : driver,
       form_params : [{
         selector        : company_edit_form_id+' select[name="timezone"]',
-        option_selector : 'option[value="Australia/Sydney"]',
-        value           : 'Australia/Sydney',
+        option_selector : 'option[value="Pacific/Auckland"]',
+        value           : 'Pacific/Auckland',
       }],
       submit_button_selector : company_edit_form_id+' button[type="submit"]',
       message                : /successfully/i,
