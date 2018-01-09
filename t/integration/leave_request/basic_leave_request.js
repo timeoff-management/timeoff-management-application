@@ -317,3 +317,60 @@ describe("Use problematic date with non default date format", function(){
   });
 
 });
+
+describe("Book the very last day of year to be a holiday", function(){
+
+  this.timeout( config.get_execution_timeout() );
+
+  var driver;
+
+  it("Register new company", function(done){
+    register_new_user_func({
+      application_host    : application_host,
+    })
+    .then(function(data){
+      driver = data.driver;
+      done();
+    });
+  });
+
+  it("Place new holiday to be the very last day of the year", function(done){
+    driver.findElement(By.css('#book_time_off_btn'))
+      .then(el => el.click())
+      // This is very important line when working with Bootstrap modals!
+      .then(() => driver.sleep(1000))
+      .then(() => submit_form_func({
+        driver      : driver,
+        form_params : [{
+          selector : 'input#from',
+          value : '2018-12-31',
+        },{
+          selector : 'input#to',
+          value : '2018-12-31',
+        }],
+        message : /New leave request was added/,
+      })
+    )
+    .then(() => done());
+  });
+
+  it("Open calendar page and ensure that the very last day of the year is marked as pending", function(done){
+    open_page_func({
+      url    : application_host + 'calendar/?year=2018&show_full_year=1',
+      driver : driver,
+    })
+
+    .then(() => check_booking_func({
+      driver         : driver,
+      full_days      : [moment('2018-12-31')],
+      type           : 'pended',
+    }))
+
+    .then(() => done());
+  });
+
+  after(function(done){
+    driver.quit().then(function(){ done(); });
+  });
+
+});
