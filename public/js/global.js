@@ -132,6 +132,7 @@ $(document).ready(function(){
         var inp = document.createElement("input");
         inp.name = key;
         inp.value = val;
+        inp.type = 'hidden';
         form.appendChild(inp);
       });
 
