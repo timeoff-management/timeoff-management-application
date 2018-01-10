@@ -88,3 +88,55 @@ $('#add_secondary_supervisers_modal').on('show.bs.modal', function (event) {
     .html('<p class="text-center"><i class="fa fa-refresh fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span></p>')
     .load('/settings/departments/available-supervisors/'+department_id+'/');
 });
+
+/*
+ *  Given URL string return its query paramters as object.
+ *
+ *  If URL is not provided location of current page is used.
+ * */
+
+function getUrlVars(url){
+  if ( ! url ) {
+    url = window.location.href;
+  }
+  var vars = {}, hash;
+  var hashes = url.slice( url.indexOf('?') + 1).split('&');
+  for (var i = 0; i < hashes.length; i++) {
+    hash = hashes[i].split('=');
+    vars[hash[0]] = hash[1];
+  }
+  return vars;
+}
+
+/*
+ * Evend that is fired when user change base date (current month) on Team View page.
+ *
+ * */
+
+$(document).ready(function(){
+
+  $('#team_view_month_select_btn')
+    .datepicker()
+    .on('changeDate', function(e) {
+      var url = $(e.currentTarget).data('tom');
+
+      var form = document.createElement("form");
+      form.method = 'GET';
+      form.action = url;
+
+      var url_params = getUrlVars( url );
+      url_params['date'] = e.format('yyyy-mm');
+
+      // Move query parameters into the form
+      $.each( url_params, function(key, val){
+        var inp = document.createElement("input");
+        inp.name = key;
+        inp.value = val;
+        form.appendChild(inp);
+      });
+
+      document.body.appendChild(form);
+
+      return form.submit();
+    });
+});
