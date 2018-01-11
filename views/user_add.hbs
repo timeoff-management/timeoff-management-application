@@ -3,9 +3,16 @@
 
 <h1>New employee</h1>
 
-<p class="lead">Adding new employee account</p>
-
 {{> show_flash_messages }}
+
+<div class="row">
+  <div class="col-md-6 lead">Adding new employee account</div>
+  <div class="col-md-6">
+    <a class="btn btn-info pull-right" href="/users/import/" id="import_users_btn">Import new employees</a>
+  </div>
+</div>
+
+<div class="row">&nbsp;</div>
 
 <form class="form-horizontal" method="POST" action="/users/add/" id="add_new_user_form">
 
