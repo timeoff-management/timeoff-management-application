@@ -1,0 +1,60 @@
+
+{{> header }}
+
+<h1>Employees bulk import</h1>
+
+{{> show_flash_messages }}
+
+<div class="row">
+  <div class="col-md-6 lead">Quick employees import</div>
+  <div class="col-md-6">
+    <a class="btn btn-info pull-right" href="/users/add/" id="add_new_department">Add new employee</a>
+  </div>
+</div>
+
+<div class="row">&nbsp;</div>
+
+<div class="row">
+
+  <div class="col-md-10">
+
+    <p>Download sample</p>
+
+            <form class="form-horizontal" method="POST" action="/users/import-sample/" id="users_import_sample_form">
+              <div class="form-group">
+                <label for="users_import_sample_btn" class="col-md-6 control-label">Download .CSV sammple</label>
+                <div class="col-md-6">
+                  <button type="submit" id="users_import_sample_btn" class="btn btn-success">Download</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-md-offset-2">
+                  <em>Download sample prepopulated with current employees.</em>
+                </div>
+              </div>
+            </form>
+
+
+    <form action="/users/import/" method="post" role="form" enctype="multipart/form-data" class="panel-body">
+
+      <div class="form-group">
+        <label for="users_input_inp" class="control-label">.CSV file with users to be added into company account</label>
+        <div class="">
+          <input id="users_input_inp" type="file" name="users_import">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-success" type="submit">Restore</input>
+      </div>
+
+    </form>
+
+
+  </div>
+
+</div>
+
+<div class="row">&nbsp;</div>
+
+{{> footer }}
