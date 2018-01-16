@@ -30,60 +30,52 @@
 <div class="row">&nbsp;</div>
 
 <div class="row clearfix">
-  <div class="col-md-2">
-    <table class="team-view-users">
-      <tr><td class="team-view-header" colspan="2">
+  <div class="col-md-12">
+    <table class="team-view-table">
 
-        <div class="dropdown">
-          <button class="btn btn-default dropdown-toggle left-column-cell" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            {{# if current_department }}{{current_department.name}}{{else}}All departments{{/if}}
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <li><a href="?{{> team_view_url_parameters current_department = null }}">All</a></li>
-            {{#each related_departments}}
-            <li><a href="?{{> team_view_url_parameters base_date = ../base_date current_department = this }}">{{this.name}}</a></li>
-            {{/each}}
-          </ul>
-        </div>
-
-      </td></tr>
-    {{# each users_and_leaves}}
-      <tr class="teamview-user-list-row" data-vpp-user-list-row={{this.user.id}}>
-        <td class="teamview left-column-cell">{{# if ../logged_user.admin}} {{#with this.user }}<a href="/users/edit/{{this.id}}/">{{ this.full_name }}</a>{{/with}}  {{else}}{{#with this.user }}<span>{{ this.full_name }}</span>{{/with}}{{/if}}</td>
-        <td
-          class="teamview-deducted-days"
-          {{# if statistics }}
-          data-content="In {{as_date_formatted ../base_date 'MMMM, YYYY' }} {{# with this.user }}{{this.full_name}} used {{../statistics.deducted_days }} days from allowance{{/with}}"
-          data-placement="right"
-          data-toggle="popover"
-          data-trigger="focus hover"
-          {{/if}}
-        >
-          {{# if statistics }}{{ statistics.deducted_days }}{{/if}}
-        </td>
-      </tr>
-    {{/each}}
-    </table>
-  </div>
-
-  <div class="col-md-10">
-    <table class="calendar_month">
       <tr>
+        <td class="team-view-header" colspan="2">
+          <div class="dropdown pull-left">
+            <button class="btn btn-default dropdown-toggle left-column-cell" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              {{# if current_department }}{{current_department.name}}{{else}}All departments{{/if}}
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+              <li><a href="?{{> team_view_url_parameters current_department = null }}">All</a></li>
+              {{#each related_departments}}
+              <li><a href="?{{> team_view_url_parameters base_date = ../base_date current_department = this }}">{{this.name}}</a></li>
+              {{/each}}
+            </ul>
+          </div>
+        </td>
+
       {{# each users_and_leaves.0.days }}
         <td colspan="2" class="team-view-header"><b>{{as_date_formatted this.moment 'dd'}}</b></td>
       {{/each}}
       </tr>
-    {{# each users_and_leaves}}
-      <tr data-vpp="{{user.id}}">
-        {{# each this.days}}
-          {{> calendar_cell day = this}}
-        {{/each}}
-      </tr>
-    {{/each}}
+
+      {{# each users_and_leaves}}
+        <tr class="teamview-user-list-row" data-vpp-user-list-row={{this.user.id}}>
+          <td class="left-column-cell cross-link">{{# if ../logged_user.admin}} {{#with this.user }}<a href="/users/edit/{{this.id}}/">{{ this.full_name }}</a>{{/with}}  {{else}}{{#with this.user }}<span>{{ this.full_name }}</span>{{/with}}{{/if}}</td>
+          <td>
+            <span class="teamview-deducted-days"
+              {{# if statistics }}
+              data-content="In {{as_date_formatted ../base_date 'MMMM, YYYY' }} {{# with this.user }}{{this.full_name}} used {{../statistics.deducted_days }} days from allowance{{/with}}"
+              data-placement="right"
+              data-toggle="popover"
+              data-trigger="focus hover"
+              {{/if}}
+            >
+            {{# if statistics }}{{ statistics.deducted_days }}{{/if}}
+            </span>
+          </td>
+          {{# each this.days}}
+            {{> calendar_cell day = this}}
+          {{/each}}
+        </tr>
+      {{/each}}
     </table>
   </div>
-</div>
 
 <div class="row clearfix">&nbsp;</div>
 

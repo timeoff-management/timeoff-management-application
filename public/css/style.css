@@ -64,13 +64,33 @@ label.label-plain {
   margin-bottom: 30px; }
 
 /* styling calendar*/
-div.month_container {
-  height: 250px; }
-
 .calendar_month {
   width: 100%; }
 
 .calendar_month td {
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px; }
+
+.calendar_month thead {
+  text-align: center;
+  font-weight: bolder; }
+
+div.month_container {
+  height: 250px; }
+
+.team-view-table {
+  width: 100%; }
+
+.team-view-table td {
+  padding-top: 5px;
+  padding-bottom: 5px; }
+
+td.team-view-header {
+  height: 43px;
+  text-align: center; }
+
+td.calendar_cell {
   width: 15px !important;
   min-width: 15px !important;
   max-width: 15px !important;
@@ -79,9 +99,9 @@ div.month_container {
   padding-top: 5px;
   padding-bottom: 5px; }
 
-.calendar_month td span {
+td.calendar_cell span {
   position: relative;
-  left: 10px;
+  left: 7px;
   top: -1px;
   display: block;
   text-align: center;
@@ -109,20 +129,13 @@ td.leave_cell_pended {
 .modal-dialog {
   max-width: 450px; }
 
-.team-view-users td {
-  padding-top: 5px;
-  padding-bottom: 5px; }
-
-.team-view-users .left-column-cell {
+.left-column-cell {
   text-overflow: ellipsis;
   /* Cannot avoid specifying width with pixels... */
   width: 165px;
   white-space: nowrap;
   overflow: hidden;
   display: inline-block; }
-
-td.team-view-header {
-  height: 43px; }
 
 .main-row_header {
   /* TODO refactore */

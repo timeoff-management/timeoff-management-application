@@ -172,7 +172,7 @@ describe("Changing default company wide schedule", function(){
   it('... and make sure Wednsday is marked as non-working day', function(done){
     driver
       // We know that 7th of January 2015 is Wednesday
-      .findElement(By.css('table.calendar_month td.day_7'))
+      .findElement(By.css('table.team-view-table td.day_7'))
       .then(function(el){ return el.getAttribute('class'); })
       .then(function(css){
         expect(css).to.match(/\bweekend_cell\b/);
@@ -182,7 +182,7 @@ describe("Changing default company wide schedule", function(){
 
   it('... and ensure Monday is still working day', function(done){
     driver
-      .findElement(By.css('table.calendar_month td.day_5'))
+      .findElement(By.css('table.team-view-table td.day_5'))
       .then(function(el){ return el.getAttribute('class'); })
       .then(function(css){
         expect(css).not.to.match(/\bweekend_cell\b/);

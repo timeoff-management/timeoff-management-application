@@ -111,7 +111,7 @@ describe('Check Time zones', function(){
       driver : driver,
     })
     .then(() => driver.findElement(By.css(
-      'table.calendar_month td.half_1st.day_'+moment(today_aus).format('D')+'.current_day_cell'
+      'table.team-view-table td.half_1st.day_'+moment(today_aus).format('D')+'.current_day_cell'
     )))
     .then(el => {
       expect(el, 'Ensure that current date is marked correctly').to.exist;
@@ -224,7 +224,7 @@ describe('Check Time zones', function(){
       driver : driver,
     })
     .then(() => driver.findElement(By.css(
-      'table.calendar_month td.half_1st.day_'+moment(today_usa).format('D')+'.current_day_cell'
+      'table.team-view-table td.half_1st.day_'+moment(today_usa).format('D')+'.current_day_cell'
     )))
     .then(el => {
       expect(el, 'Ensure that current date is marked correctly').to.exist;

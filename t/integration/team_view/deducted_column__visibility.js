@@ -220,21 +220,21 @@ describe('Check that values for new columns are shown only for employess current
       driver : driver,
     })
 
-    .then(() => driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id_A}"] td.teamview-deducted-days`)))
+    .then(() => driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id_A}"] span.teamview-deducted-days`)))
     .then(el => el.getText())
     .then(txt => {
       expect(txt).to.be.eql('0');
       return Promise.resolve(1);
     })
 
-    .then(() => driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id_B}"] td.teamview-deducted-days`)))
+    .then(() => driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id_B}"] span.teamview-deducted-days`)))
     .then(el => el.getText())
     .then(txt => {
       expect(txt).to.be.eql('0');
       return Promise.resolve(1);
     })
 
-    .then(() => driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id_C}"] td.teamview-deducted-days`)))
+    .then(() => driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id_C}"] span.teamview-deducted-days`)))
     .then(el => el.getText())
     .then(txt => {
       expect(txt).to.be.eql('0');
@@ -267,21 +267,21 @@ describe('Check that values for new columns are shown only for employess current
       driver : driver,
     })
 
-    .then(() => driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id_A}"] td.teamview-deducted-days`)))
+    .then(() => driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id_A}"] span.teamview-deducted-days`)))
     .then(el => el.getText())
     .then(txt => {
       expect(txt).to.be.eql('');
       return Promise.resolve(1);
     })
 
-    .then(() => driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id_B}"] td.teamview-deducted-days`)))
+    .then(() => driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id_B}"] span.teamview-deducted-days`)))
     .then(el => el.getText())
     .then(txt => {
       expect(txt).to.be.eql('0');
       return Promise.resolve(1);
     })
 
-    .then(() => driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id_C}"] td.teamview-deducted-days`)))
+    .then(() => driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id_C}"] span.teamview-deducted-days`)))
     .then(el => el.getText())
     .then(txt => {
       expect(txt).to.be.eql('0');
@@ -314,21 +314,21 @@ describe('Check that values for new columns are shown only for employess current
       driver : driver,
     })
 
-    .then(() => driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id_A}"] td.teamview-deducted-days`)))
+    .then(() => driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id_A}"] span.teamview-deducted-days`)))
     .then(el => el.getText())
     .then(txt => {
       expect(txt).to.be.eql('');
       return Promise.resolve(1);
     })
 
-    .then(() => driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id_B}"] td.teamview-deducted-days`)))
+    .then(() => driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id_B}"] span.teamview-deducted-days`)))
     .then(el => el.getText())
     .then(txt => {
       expect(txt).to.be.eql('');
       return Promise.resolve(1);
     })
 
-    .then(() => driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id_C}"] td.teamview-deducted-days`)))
+    .then(() => driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id_C}"] span.teamview-deducted-days`)))
     .then(el => el.getText())
     .then(txt => {
       expect(txt).to.be.eql('0');

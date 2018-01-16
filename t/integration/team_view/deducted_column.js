@@ -338,7 +338,7 @@ describe('Case when holidays spans through more then one month and is devided by
       url    : application_host + 'calendar/teamview/?date=2016-08',
       driver : driver,
     })
-    .then(() => driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id_B}"] td.teamview-deducted-days`)))
+    .then(() => driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id_B}"] span.teamview-deducted-days`)))
     .then(el => el.getText())
     .then(txt => {
       expect(txt, 'Ensure that system shows 9 days as deducted')
@@ -352,7 +352,7 @@ describe('Case when holidays spans through more then one month and is devided by
       url    : application_host + 'calendar/teamview/?date=2016-07',
       driver : driver,
     })
-    .then(() => driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id_B}"] td.teamview-deducted-days`)))
+    .then(() => driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id_B}"] span.teamview-deducted-days`)))
     .then(el => el.getText())
     .then(txt => {
       expect(txt, 'Ensure that system shows 1.5 days as deducted')
@@ -366,7 +366,7 @@ describe('Case when holidays spans through more then one month and is devided by
       url    : application_host + 'calendar/teamview/?date=2016-09',
       driver : driver,
     })
-    .then(() => driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id_B}"] td.teamview-deducted-days`)))
+    .then(() => driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id_B}"] span.teamview-deducted-days`)))
     .then(el => el.getText())
     .then(txt => {
       expect(txt, 'Ensure that system shows 2 days as deducted')

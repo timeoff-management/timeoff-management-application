@@ -252,7 +252,7 @@ describe('Basic user specific schedule', function(){
   it('Make sure that team view shows user A has Sat and Sun as non-working days', function(done){
     driver
       // We know that 7th of January 2015 is Wednesday
-      .findElement(By.css('table.calendar_month tr[data-vpp="'+user_id_A+'"] td.day_7'))
+      .findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id_A+'"] td.day_7'))
       .then(function(el){ return el.getAttribute('class'); })
       .then(function(css){
         expect(css).to.not.match(/\bweekend_cell\b/);
@@ -260,7 +260,7 @@ describe('Basic user specific schedule', function(){
       })
       .then(function(){
         return driver
-          .findElement(By.css('table.calendar_month tr[data-vpp="'+user_id_A+'"] td.day_10'))
+          .findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id_A+'"] td.day_10'))
           .then(function(el){ return el.getAttribute('class'); })
           .then(function(css){
             expect(css).to.match(/\bweekend_cell\b/);
@@ -269,7 +269,7 @@ describe('Basic user specific schedule', function(){
       })
       .then(function(){
         return driver
-          .findElement(By.css('table.calendar_month tr[data-vpp="'+user_id_A+'"] td.day_11'))
+          .findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id_A+'"] td.day_11'))
           .then(function(el){ return el.getAttribute('class'); })
           .then(function(css){
             expect(css).to.match(/\bweekend_cell\b/);
@@ -282,7 +282,7 @@ describe('Basic user specific schedule', function(){
   it('Make sure team view shows user B has Wed, Sat, Sun as non-working days', function(done){
     driver
       // We know that 7th of January 2015 is Wednesday
-      .findElement(By.css('table.calendar_month tr[data-vpp="'+user_id_B+'"] td.day_7'))
+      .findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id_B+'"] td.day_7'))
       .then(function(el){ return el.getAttribute('class'); })
       .then(function(css){
         expect(css).to.match(/\bweekend_cell\b/);
@@ -290,7 +290,7 @@ describe('Basic user specific schedule', function(){
       })
       .then(function(){
         return driver
-          .findElement(By.css('table.calendar_month tr[data-vpp="'+user_id_B+'"] td.day_10'))
+          .findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id_B+'"] td.day_10'))
           .then(function(el){ return el.getAttribute('class'); })
           .then(function(css){
             expect(css).to.match(/\bweekend_cell\b/);
@@ -299,7 +299,7 @@ describe('Basic user specific schedule', function(){
       })
       .then(function(){
         return driver
-          .findElement(By.css('table.calendar_month tr[data-vpp="'+user_id_B+'"] td.day_11'))
+          .findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id_B+'"] td.day_11'))
           .then(function(el){ return el.getAttribute('class'); })
           .then(function(css){
             expect(css).to.match(/\bweekend_cell\b/);
@@ -586,7 +586,7 @@ describe('Basic user specific schedule', function(){
   it('Make sure that team view shows user A has Sat and Sun as non-working days', function(done){
     driver
       // We know that 7th of January 2015 is Wednesday
-      .findElement(By.css('table.calendar_month tr[data-vpp="'+user_id_A+'"] td.day_7'))
+      .findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id_A+'"] td.day_7'))
       .then(function(el){ return el.getAttribute('class'); })
       .then(function(css){
         expect(css).to.not.match(/\bweekend_cell\b/);
@@ -594,7 +594,7 @@ describe('Basic user specific schedule', function(){
       })
       .then(function(){
         return driver
-          .findElement(By.css('table.calendar_month tr[data-vpp="'+user_id_A+'"] td.day_10'))
+          .findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id_A+'"] td.day_10'))
           .then(function(el){ return el.getAttribute('class'); })
           .then(function(css){
             expect(css).to.match(/\bweekend_cell\b/);
@@ -603,7 +603,7 @@ describe('Basic user specific schedule', function(){
       })
       .then(function(){
         return driver
-          .findElement(By.css('table.calendar_month tr[data-vpp="'+user_id_A+'"] td.day_11'))
+          .findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id_A+'"] td.day_11'))
           .then(function(el){ return el.getAttribute('class'); })
           .then(function(css){
             expect(css).to.match(/\bweekend_cell\b/);
@@ -616,7 +616,7 @@ describe('Basic user specific schedule', function(){
   it('Make sure team view shows user B also has Sat, Sun as non-working days', function(done){
     driver
       // We know that 7th of January 2015 is Wednesday
-      .findElement(By.css('table.calendar_month tr[data-vpp="'+user_id_B+'"] td.day_7'))
+      .findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id_B+'"] td.day_7'))
       .then(function(el){ return el.getAttribute('class'); })
       .then(function(css){
         expect(css).to.not.match(/\bweekend_cell\b/);
@@ -624,7 +624,7 @@ describe('Basic user specific schedule', function(){
       })
       .then(function(){
         return driver
-          .findElement(By.css('table.calendar_month tr[data-vpp="'+user_id_B+'"] td.day_10'))
+          .findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id_B+'"] td.day_10'))
           .then(function(el){ return el.getAttribute('class'); })
           .then(function(css){
             expect(css).to.match(/\bweekend_cell\b/);
@@ -633,7 +633,7 @@ describe('Basic user specific schedule', function(){
       })
       .then(function(){
         return driver
-          .findElement(By.css('table.calendar_month tr[data-vpp="'+user_id_B+'"] td.day_11'))
+          .findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id_B+'"] td.day_11'))
           .then(function(el){ return el.getAttribute('class'); })
           .then(function(css){
             expect(css).to.match(/\bweekend_cell\b/);
@@ -838,7 +838,7 @@ describe('Populate company wide schedule before using user specific one', functi
   it('Ensure team view shows user A has Mon, Tue, Wed as working days', function(done){
     Promise.map([5,6,7], function(day_number){
       return driver
-        .findElement(By.css('table.calendar_month tr[data-vpp="'+user_id_A+'"] td.day_'+day_number))
+        .findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id_A+'"] td.day_'+day_number))
         .then(function(el){ return el.getAttribute('class'); })
         .then(function(css){
           expect(css).to.not.match(/\bweekend_cell\b/);
@@ -851,7 +851,7 @@ describe('Populate company wide schedule before using user specific one', functi
   it('Ensure team view shows user A has Thu, Fri, Sat, Sun as non-working days', function(done){
     Promise.map([8,9,10,11], function(day_number){
       return driver
-        .findElement(By.css('table.calendar_month tr[data-vpp="'+user_id_A+'"] td.day_'+day_number))
+        .findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id_A+'"] td.day_'+day_number))
         .then(function(el){ return el.getAttribute('class'); })
         .then(function(css){
           expect(css).to.match(/\bweekend_cell\b/);
@@ -864,7 +864,7 @@ describe('Populate company wide schedule before using user specific one', functi
   it('Ensure team view shows user B has Mon, Tue, Wed, Thu as working days', function(done){
     Promise.map([5,6,7,8], function(day_number){
       return driver
-        .findElement(By.css('table.calendar_month tr[data-vpp="'+user_id_B+'"] td.day_'+day_number))
+        .findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id_B+'"] td.day_'+day_number))
         .then(function(el){ return el.getAttribute('class'); })
         .then(function(css){
           expect(css).to.not.match(/\bweekend_cell\b/);
@@ -877,7 +877,7 @@ describe('Populate company wide schedule before using user specific one', functi
   it('Ensure team view shows user B has Fri, Sat, Sun as non-working days', function(done){
     Promise.map([9,10,11], function(day_number){
       return driver
-        .findElement(By.css('table.calendar_month tr[data-vpp="'+user_id_B+'"] td.day_'+day_number))
+        .findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id_B+'"] td.day_'+day_number))
         .then(function(el){ return el.getAttribute('class'); })
         .then(function(css){
           expect(css).to.match(/\bweekend_cell\b/);

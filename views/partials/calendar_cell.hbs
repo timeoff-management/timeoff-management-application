@@ -1,5 +1,5 @@
 
-<td class="half_1st day_{{ day.val }}
+<td class="calendar_cell half_1st day_{{ day.val }}
     {{#if day.is_bank_holiday}}bank_holiday_cell{{/if}}
     {{#if day.is_weekend}}weekend_cell{{/if}}
     {{#if day.is_leave_morning }}
@@ -44,7 +44,7 @@
 
 >{{day.val}}</span>
 </td>
-<td class="half_2nd day_{{ day.val }}
+<td class="calendar_cell half_2nd day_{{ day.val }}
     {{#if day.is_bank_holiday}}bank_holiday_cell{{/if}}
     {{#if day.is_weekend}}weekend_cell{{/if}}
     {{#if day.is_leave_afternoon }}
