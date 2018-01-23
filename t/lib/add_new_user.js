@@ -87,7 +87,7 @@ module.exports = Promise.promisify(function(args, callback){
           },
               select_department,
           ],
-          submit_button_selector : add_new_user_form_id+' button[type="submit"]',
+          submit_button_selector : add_new_user_form_id+' #add_new_user_btn',
           should_be_successful : error_message ? false : true,
           elements_to_check : [],
           message : error_message ?
