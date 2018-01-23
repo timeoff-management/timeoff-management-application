@@ -1,0 +1,76 @@
+
+{{> header }}
+
+<h1>Employees bulk import</h1>
+
+<div class="row">
+  <div class="col-md-6 lead">Quick employees import</div>
+  <div class="col-md-6">
+    <a class="btn btn-link pull-right" href="/users/add/" id="add_new_department">Add single employee <i class="fa fa-chevron-right"></i></a>
+  </div>
+</div>
+
+{{> show_flash_messages }}
+
+<div class="row main-row_header">
+  <p class="col-md-12">Description</p>
+</div>
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-1">
+    <p>TimeOff.Management supports importing employees in a bulk. So configuring the company account is fast and straightforward..</p>
+
+    <p>In order to import employees into the system one needs to build <strong>.CSV</strong> file of following columns (in exact order):</p>
+
+    <ul>
+      <li><strong>email</strong>: email of employee to be added</li>
+      <li><strong>name</strong>: employee's name</li>
+      <li><strong>lastname</strong>: employee's last name</li>
+      <li><strong>department</strong>: name of the department new employee is going to be part of. Please ensure that the department is already added into Company account.</li>
+    </ul>
+
+    <p>The easiest way to get import file is to download sample one based on current settings of company account from the form below. Amend the file with new employees and upload the file in the form below. </p>
+
+    <p>Users who are already in the system are ignored during import.</p>
+  </div>
+</div>
+
+<div class="row main-row_header">
+  <p class="col-md-12">Import</p>
+</div>
+
+<div class="row">
+
+  <div class="col-md-9">
+    <form action="/users/import/" method="post" role="form" enctype="multipart/form-data" class="panel-body">
+      <div class="form-group">
+        <label for="users_input_inp" class="control-label">.CSV file with users to be imported into company</label>
+        <input id="users_input_inp" type="file" name="users_import">
+      </div>
+      <div class="form-group">
+        <button class="btn btn-success" id="submit_users_btn" type="submit">Import employees</input>
+      </div>
+
+    </form>
+  </div>
+
+  <div class="col-md-3">
+    <form class="form-horizontal" method="POST" action="/users/import-sample/" id="users_import_sample_form">
+      <div class="form-group">
+        <button type="submit" id="users_import_sample_btn" class="btn btn-success">Download <strong>.CSV</strong> sample file</button>
+      </div>
+      <div class="form-group">
+        <div class="col-md-offset-1">
+          <em>The sample  file contains information about employees who are already in the system. </em>
+        </div>
+        <div class="col-md-offset-1">
+          <em>Extend the file to have records about new employees and upload it from the form on left hand side.</em>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row">&nbsp;</div>
+
+{{> footer }}

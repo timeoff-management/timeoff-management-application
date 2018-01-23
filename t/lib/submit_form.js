@@ -55,6 +55,9 @@ var submit_form_func = Promise.promisify( function(args, callback){
                             .then(function(el){ return el.click(); });
                       } else if ( test_case.hasOwnProperty('tick')) {
                           return el.click();
+                      } else if (test_case.file) {
+                        return Promise.resolve()
+                          .then(() => el.sendKeys( test_case.value ));
                       } else {
                           return el.clear().then(function(){
                               el.sendKeys( test_case.value );

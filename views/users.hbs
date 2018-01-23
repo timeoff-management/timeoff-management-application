@@ -8,7 +8,17 @@
 <div class="row">
   <div class="col-md-3 lead">{{company.name}}'s staff</div>
   <div class="col-md-3 col-md-offset-6">
-    <a href="/users/add/" class="btn btn-info pull-right" id="add_new_department">Add new employee</a>
+    <div class="btn-group pull-right">
+      <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Add new employee
+        <span class="caret"></span>
+        <span class="sr-only">Toggle Dropdown</span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href="/users/import/" id="import_users_btn">Import employees</a></li>
+        <li><a href="/users/add/" id="add_new_department">Add single employee</a></li>
+      </ul>
+    </div>
   </div>
 </div>
 

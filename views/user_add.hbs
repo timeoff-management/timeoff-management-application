@@ -3,9 +3,16 @@
 
 <h1>New employee</h1>
 
-<p class="lead">Adding new employee account</p>
-
 {{> show_flash_messages }}
+
+<div class="row">
+  <div class="col-md-6 lead">Adding new employee account</div>
+  <div class="col-md-6">
+    <a class="btn btn-link pull-right" href="/users/import/" id="import_users_btn">Import new employees <i class="fa fa-chevron-right"></i></a>
+  </div>
+</div>
+
+<div class="row">&nbsp;</div>
 
 <form class="form-horizontal" method="POST" action="/users/add/" id="add_new_user_form">
 
@@ -101,7 +108,7 @@
 
   <div class="form-group">
     <div class="col-md-offset-3 col-md-3">
-      <button type="submit" class="btn btn-success pull-right">Add new employee</button>
+      <button type="submit" id="add_new_user_btn" class="btn btn-success pull-right">Add new employee</button>
     </div>
   </div>
 </form>
