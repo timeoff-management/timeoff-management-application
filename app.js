@@ -141,6 +141,11 @@ app.use(
   require('./lib/route/audit')
 );
 
+app.use(
+  '/reports/',
+  require('./lib/route/reports')
+);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
