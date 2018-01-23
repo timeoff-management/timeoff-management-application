@@ -22,7 +22,9 @@ var test                 = require('selenium-webdriver/testing'),
  *
  *    * Register new account
  *    * Create 10 unique emails/users
- *    * Put them into CSV and =
+ *    * Put them into CSV and import in bulk
+ *    * Ensure that all users were added into
+ *      system and they appear on the Users page
  *
  * */
 
