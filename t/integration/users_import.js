@@ -128,6 +128,10 @@ describe('Bulk import of users', function(){
   });
 
   after(function(done){
-    driver.quit().then(() => done());
+    Promise.resolve()
+      .then(() => driver.quit())
+      .then(() => fs.unlinkAsync(test_users_filename))
+      .catch(err => Promise.resolve())
+      .then(() => done());
   });
 });
