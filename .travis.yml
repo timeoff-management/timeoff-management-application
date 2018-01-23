@@ -9,5 +9,4 @@ cache:
 env:
 before_install:
 before_script:
-  #  - node bin/wwww > /dev/null 2>&1 &
-  - node bin/wwww &
+  - node bin/wwww > /dev/null 2>&1 &
