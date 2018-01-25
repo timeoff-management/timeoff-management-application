@@ -1,0 +1,64 @@
+
+{{> header }}
+
+<h1>Allowance usage by time</h1>
+
+<div class="row">
+  <div class="col-md-6 lead">Shows allowance usage in given time frame</div>
+</div>
+
+<ol class="breadcrumb">
+  <li><a href="/reports/">All reports</a></li>
+  <li class="active">Allowance usage by time</li>
+</ol>
+
+<div class="row">&nbsp;</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <p>Here will users</p>
+  </div>
+</div>
+
+<div class="row clearfix">
+  <div class="col-md-12">
+    <table class="team-view-table">
+
+      <tr>
+        <td class="team-view-header" colspan="2">
+          <div class="dropdown pull-left">
+            <button class="btn btn-default dropdown-toggle left-column-cell" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              {{# if current_department }}{{current_department.name}}{{else}}All departments{{/if}}
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+              <li><a href="?{{> team_view_url_parameters current_department = null }}">All</a></li>
+              {{#each related_departments}}
+              <li><a href="?{{> team_view_url_parameters base_date = ../base_date current_department = this }}">{{this.name}}</a></li>
+              {{/each}}
+            </ul>
+          </div>
+        </td>
+
+      </tr>
+
+      {{# each users_and_leaves}}
+        <tr class="teamview-user-list-row" data-vpp-user-list-row={{this.user.id}}>
+          <td class="left-column-cell cross-link">{{#with this.user }}<a href="/users/edit/{{this.id}}/">{{ this.full_name }}</a>{{/with}}</td>
+          <td>
+            <span class="teamview-deducted-days"
+              data-content="In {{as_date_formatted ../base_date 'MMMM, YYYY' }} {{# with this.user }}{{this.full_name}} used {{../statistics.deducted_days }} days from allowance{{/with}}"
+              data-placement="right"
+              data-toggle="popover"
+              data-trigger="focus hover"
+            >
+            {{ statistics.deducted_days }}
+            </span>
+          </td>
+        </tr>
+      {{/each}}
+    </table>
+  </div>
+</div>
+
+{{> footer }}
