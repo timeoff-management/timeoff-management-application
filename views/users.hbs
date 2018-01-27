@@ -19,6 +19,11 @@
         <li><a href="/users/add/" id="add_new_department">Add single employee</a></li>
       </ul>
     </div>
+    <form action="/users/" method="GET">
+      <input type="hidden" name="department" value="{{department_id}}">
+      <input type="hidden" name="as-csv" value="1">
+      <button class="btn btn-link pull-right" type="submit"><i class="fa fa-download"></i> .csv</button>
+    </form>
   </div>
 </div>
 
