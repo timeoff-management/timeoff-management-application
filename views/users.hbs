@@ -49,15 +49,13 @@
     </thead>
     <tbody>
       {{# each users_info}}
-      {{# with this.user_row}}
-      <tr data-vpp-user-row="{{this.id}}">
-        <td class="user-link-cell"><a href="/users/edit/{{this.id}}/">{{this.full_name}}</a></td>
-        <td class="user_department"><a href="/settings/departments/edit/{{ this.department.id }}/">{{this.department.name}}</a></td>
-        <td>{{# if this.admin }}Yes{{else}}{{/if}}</td>
-        <td class="vpp-days-remaining">{{ ../number_of_days_available_in_allowance }}</td>
-        <td class="vpp-days-used">{{this.calculate_number_of_days_taken_from_allowance}}</td>
+      <tr data-vpp-user-row="{{this.user_id}}">
+        <td class="user-link-cell"><a href="/users/edit/{{this.user_id}}/">{{this.user_full_name}}</a></td>
+        <td class="user_department"><a href="/settings/departments/edit/{{ this.department_id }}/">{{this.department_name}}</a></td>
+        <td>{{# if this.is_admin }}Yes{{else}}{{/if}}</td>
+        <td class="vpp-days-remaining">{{ this.number_of_days_available_in_allowance }}</td>
+        <td class="vpp-days-used">{{this.number_of_days_taken_from_allowance}}</td>
       </tr>
-      {{/with}}
       {{/each}}
     </tbody>
   </table>
