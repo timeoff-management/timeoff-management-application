@@ -8,9 +8,19 @@
   <div class="col-md-6">
     <a class="btn btn-default pull-right" href="/users/add/" id="add_new_department">Add single employee <i class="fa fa-chevron-right"></i></a>
   </div>
+
 </div>
 
 {{> show_flash_messages }}
+
+<div class="row">
+  <div class="col-md-6">
+    <ol class="breadcrumb">
+      <li><a href="/users/">All Employees</a></li>
+      <li class="active">Import employees in a bulk</li>
+    </ol>
+  </div>
+</div>
 
 <div class="row main-row_header">
   <p class="col-md-12">Description</p>
@@ -18,7 +28,7 @@
 
 <div class="row">
   <div class="col-md-8 col-md-offset-1">
-    <p>TimeOff.Management supports importing employees in a bulk. So configuring the company account is fast and straightforward..</p>
+    <p>TimeOff.Management supports importing employees in a bulk.</p>
 
     <p>In order to import employees into the system one needs to build <strong>.CSV</strong> file of following columns (in exact order):</p>
 
