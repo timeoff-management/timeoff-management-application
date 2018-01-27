@@ -95,12 +95,18 @@
       <thead>
         <tr>
           <th>Employee full name</th>
+          {{# each users_and_leaves.0.statistics.leave_type_break_down.pretty_version}}
+          <th>{{this.name}}</th>
+          {{/each}}
           <th>Days deducted from allowance<br>in {{> reports/date_range_pretty same_month=same_month start_date=start_date_obj end_date=end_date_obj}}</th>
         </tr>
       </thead>
       {{# each users_and_leaves}}
         <tr data-vpp-user-list-row={{this.user.id}}>
           <td>{{#with this.user }}<a href="/users/edit/{{this.id}}/">{{ this.full_name }}</a>{{/with}}</td>
+          {{#each statistics.leave_type_break_down.pretty_version }}
+          <td>{{this.stat}}</td>
+          {{/each}}
           <td>{{ statistics.deducted_days }}</td>
         </tr>
       {{/each}}
