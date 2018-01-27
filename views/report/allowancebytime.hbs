@@ -1,0 +1,112 @@
+
+{{> header }}
+
+<h1>Allowance usage</h1>
+
+<div class="row">
+  <div class="col-md-6 lead">Shows allowance usage in {{> reports/date_range_pretty same_month=same_month start_date=start_date_obj end_date=end_date_obj}}</div>
+</div>
+
+{{> show_flash_messages }}
+
+<ol class="breadcrumb">
+  <li><a href="/reports/">All reports</a></li>
+  <li class="active">Allowance usage by time</li>
+</ol>
+
+<div class="row main-row_header">
+  <span class="col-md-12">Filter</span>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+  <form action="" method="GET">
+
+    <div class="panel panel-default">
+      <div class="panel-body">
+
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-4">
+            <label for="department_id">Department</label>
+            <select class="form-control" id="department_id" name="department">
+              <option>All</option>
+              {{#each related_departments}}
+              <option value="{{this.id}}" {{#if_equal this.id ../current_department.id}} selected {{/if_equal}}>{{this.name}}</option>
+              {{/each}}
+            </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-5">
+              <label>Date range within single year</label>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input type="text" name="start_date" class="form-control" id="start_date" placeholder="From Month"
+                  data-provide="datepicker" data-date-format="yyyy-mm" data-date-autoclose="1" data-date-min-view-mode="months"
+                  value="{{start_date_str}}"
+                >
+                <span class="input-group-addon">(YYYY-MM)</span>
+                <span class="input-group-addon"><i class="fa fa-long-arrow-right"></i></span>
+                <input type="text" name="end_date" class="form-control" id="end_date" placeholder="To Month"
+                  data-provide="datepicker" data-date-format="yyyy-mm" data-date-autoclose="1" data-date-min-view-mode="months"
+                  value="{{end_date_str}}"
+                >
+                <span class="input-group-addon">(YYYY-MM)</span>
+              </div>
+              <span class="help-block">Date range must be within single year</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group pull-right">
+          <button class="btn btn-link" type="submit" name="as-csv" value="1"
+            data-content="Donload report as .CSV file"
+            data-placement="top"
+            data-toggle="popover"
+            data-trigger="focus hover"
+          ><i class="fa fa-download"></i> .csv</button>
+          <button class="btn btn-success" type="submit">Update results</button>
+        </div>
+
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
+
+<div class="row main-row_header">
+  <span class="col-md-12">Report</span>
+</div>
+
+<div class="row">
+
+  {{# unless users_and_leaves }}
+  <div class="col-md-12 text-muted">
+    There are no user in selected department
+  </div>
+  {{else}}
+
+  <div class="col-md-12">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Employee full name</th>
+          <th>Days deducted from allowance<br>in {{> reports/date_range_pretty same_month=same_month start_date=start_date_obj end_date=end_date_obj}}</th>
+        </tr>
+      </thead>
+      {{# each users_and_leaves}}
+        <tr data-vpp-user-list-row={{this.user.id}}>
+          <td>{{#with this.user }}<a href="/users/edit/{{this.id}}/">{{ this.full_name }}</a>{{/with}}</td>
+          <td>{{ statistics.deducted_days }}</td>
+        </tr>
+      {{/each}}
+    </table>
+  </div>
+  {{/ unless}}
+</div>
+
+{{> footer }}
