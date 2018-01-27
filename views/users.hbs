@@ -22,7 +22,14 @@
     <form action="/users/" method="GET">
       <input type="hidden" name="department" value="{{department_id}}">
       <input type="hidden" name="as-csv" value="1">
-      <button class="btn btn-link pull-right" type="submit"><i class="fa fa-download"></i> .csv</button>
+      <button
+        class="btn btn-link pull-right"
+        type="submit"
+        data-content="Donload current page as .CSV file"
+        data-placement="top"
+        data-toggle="popover"
+        data-trigger="focus hover"
+      ><i class="fa fa-download"></i> .csv</button>
     </form>
   </div>
 </div>
