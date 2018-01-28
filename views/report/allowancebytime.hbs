@@ -18,30 +18,29 @@
   <span class="col-md-12">Filter</span>
 </div>
 
+<form action="" method="GET">
 <div class="row">
   <div class="col-md-12">
-  <form action="" method="GET">
 
     <div class="panel panel-default">
       <div class="panel-body">
 
-        <div class="form-group">
-          <div class="row">
-            <div class="col-md-4">
-            <label for="department_id">Department</label>
-            <select class="form-control" id="department_id" name="department">
-              <option>All</option>
-              {{#each related_departments}}
-              <option value="{{this.id}}" {{#if_equal this.id ../current_department.id}} selected {{/if_equal}}>{{this.name}}</option>
-              {{/each}}
-            </select>
+        <div class="row">
+
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="department_id">Department</label>
+              <select class="form-control" id="department_id" name="department">
+                <option>All</option>
+                {{#each related_departments}}
+                <option value="{{this.id}}" {{#if_equal this.id ../current_department.id}} selected {{/if_equal}}>{{this.name}}</option>
+                {{/each}}
+              </select>
             </div>
           </div>
-        </div>
 
-        <div class="form-group">
-          <div class="row">
-            <div class="col-md-5">
+          <div class="col-md-5 col-md-offset-1">
+            <div class="form-group">
               <label>Date range within single year</label>
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -60,23 +59,28 @@
               <span class="help-block">Date range must be within single year</span>
             </div>
           </div>
+
         </div>
 
-        <div class="form-group pull-right">
-          <button class="btn btn-link" type="submit" name="as-csv" value="1"
-            data-content="Donload report as .CSV file"
-            data-placement="top"
-            data-toggle="popover"
-            data-trigger="focus hover"
-          ><i class="fa fa-download"></i> .csv</button>
-          <button class="btn btn-success" type="submit">Update results</button>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group pull-right">
+              <button class="btn btn-link" type="submit" name="as-csv" value="1"
+                data-content="Donload report as .CSV file"
+                data-placement="top"
+                data-toggle="popover"
+                data-trigger="focus hover"
+              ><i class="fa fa-download"></i> .csv</button>
+              <button class="btn btn-success" type="submit">Update results</button>
+            </div>
+          </div>
         </div>
 
       </div>
     </div>
-  </form>
   </div>
 </div>
+</form>
 
 <div class="row main-row_header">
   <span class="col-md-12">Report</span>
