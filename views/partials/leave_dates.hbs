@@ -1,0 +1,7 @@
+{{#with leave}}
+  {{#with this.get_start_leave_day}}{{as_date this.date}}{{/with}}
+  {{#if this.does_start_half_morning }} (morning){{else}}{{#if this.does_start_half_afternoon }} (afternoon){{/if}}{{/if}}
+   <i class="fa fa-long-arrow-right"></i>
+  {{#with this.get_end_leave_day}}{{as_date this.date}}{{/with}}
+  {{#if this.does_end_half_morning }} (morning){{else}}{{#if this.does_end_half_afternoon }} (afternoon){{/if}}{{/if}}
+{{/with}}

@@ -18,7 +18,7 @@
   <div class="col-md-12">
     <p class="visible-xs-block"><em class="text-muted">Scroll table horizontally</em></p>
     <div class="table-responsive">
-    <table class="table table-hover">
+    <table class="table table-hover requests-to-approve-table">
       <thead>
         <tr>
           <th>Employee</th>
@@ -36,7 +36,7 @@
           <td>{{#with this.user}}{{this.full_name}}{{/with}}</td>
           <td>{{this.user.department.name}}</td>
           <td class="date_of_request">{{as_date_from_timestamp this.createdAt}}</td>
-          <td>{{#with this.get_start_leave_day}}{{as_date this.date}}{{/with}} <i class="fa fa-long-arrow-right"></i> {{#with this.get_end_leave_day}}{{as_date this.date}}{{/with}}</td>
+          <td data-tom-leave-dates="1">{{> leave_dates leave=this}}</td>
           <td>{{#if this.is_pended_revoke_leave}}REVOKE {{/if}}{{this.leave_type.name}}</td>
           <td data-vpp="days_used">{{ this.get_deducted_days_number }}</td>
           <td>
