@@ -237,6 +237,22 @@
                 <input type="radio" name="first_record" value="{{ this.id }}" {{# if this.sort_order }}checked="checked"{{/ if}}>
               </span>
               <input type="text" class="form-control" name="name__{{ this.id }}" value="{{name}}" data-tom-leave-type-order="name_{{@index}}">
+              <select class="form-control" name="color__{{ this.id }}">
+                <option value="leave_type_color_1" {{# if_equal this.color 'leave_type_color_1'}} selected {{/if_equal}}>1</option>
+                <option value="leave_type_color_2" {{# if_equal this.color 'leave_type_color_2'}} selected {{/if_equal}}>2</option>
+                <option value="leave_type_color_3" {{# if_equal this.color 'leave_type_color_3'}} selected {{/if_equal}}>3</option>
+                <option value="leave_type_color_4" {{# if_equal this.color 'leave_type_color_4'}} selected {{/if_equal}}>4</option>
+              </select>
+
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle {{this.color}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li><a href="#"><span class="badge leave_type_color_1">Color 1</span></a></li>
+                  <li><a href="#"><span class="badge leave_type_color_2">Color 2</span></a></li>
+                  <li><a href="#"><span class="badge leave_type_color_3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
+                  <li><a href="#"><span class="badge leave_type_color_4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
+                </ul>
+              </div>
             </div>
 
           </div>
