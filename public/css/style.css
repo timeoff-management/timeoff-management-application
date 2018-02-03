@@ -108,7 +108,7 @@ td.calendar_cell span {
   z-index: 10; }
 
 td.current_day_cell {
-  background: #e25440;
+  background: #FFCDD2;
   color: #ffffff; }
 
 td.weekend_cell {
@@ -120,11 +120,13 @@ td.bank_holiday_cell {
 
 td.leave_cell {
   background: #9fbb58;
-  color: #ffffff; }
+  color: #61686b;
+  font-weight: bolder; }
 
 td.leave_cell_pended {
   background: #FFCBA4;
-  color: #61686b; }
+  color: #61686b;
+  font-weight: bolder; }
 
 .modal-dialog {
   max-width: 450px; }
@@ -215,10 +217,10 @@ div.feeds-holder {
   background: #96c521 !important; }
 
 .leave_type_color_2 {
-  background: #ffcba4 !important; }
+  background: #40C4FF !important; }
 
 .leave_type_color_3 {
-  background: #cb6cac !important; }
+  background: #FF5722 !important; }
 
 .leave_type_color_4 {
-  background: #9fbb58 !important; }
+  background: #FF80AB !important; }
