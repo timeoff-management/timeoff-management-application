@@ -89,8 +89,7 @@ describe('Coloring of half days', function(){
     driver
       .findElement(By.css('#book_time_off_btn'))
       .then(el => el.click())
-      .then(() => driver.findElement(By.css('#book_leave_modal button[type="submit"]')))
-      .then(el => driver.wait(until.elementIsVisible(el), 1000))
+      .then(() => driver.sleep(1000))
       .then(() => submit_form_func({
         driver      : driver,
         form_params : [{
@@ -118,8 +117,7 @@ describe('Coloring of half days', function(){
     driver
       .findElement(By.css('#book_time_off_btn'))
       .then(el => el.click())
-      .then(() => driver.findElement(By.css('#book_leave_modal button[type="submit"]')))
-      .then(el => driver.wait(until.elementIsVisible(el), 1000))
+      .then(() => driver.sleep(1000))
       .then(() => submit_form_func({
         driver      : driver,
         form_params : [{
@@ -148,8 +146,7 @@ describe('Coloring of half days', function(){
     driver
       .findElement(By.css('#book_time_off_btn'))
       .then(el => el.click())
-      .then(() => driver.findElement(By.css('#book_leave_modal button[type="submit"]')))
-      .then(el => driver.wait(until.elementIsVisible(el), 1000))
+      .then(() => driver.sleep(1000))
       .then(() => submit_form_func({
         driver      : driver,
         form_params : [{
@@ -178,8 +175,7 @@ describe('Coloring of half days', function(){
     driver
       .findElement(By.css('#book_time_off_btn'))
       .then(el => el.click())
-      .then(() => driver.findElement(By.css('#book_leave_modal button[type="submit"]')))
-      .then(el => driver.wait(until.elementIsVisible(el), 1000))
+      .then(() => driver.sleep(1000))
       .then(() => submit_form_func({
         driver      : driver,
         form_params : [{
@@ -208,8 +204,7 @@ describe('Coloring of half days', function(){
     driver
       .findElement(By.css('#book_time_off_btn'))
       .then(el => el.click())
-      .then(() => driver.findElement(By.css('#book_leave_modal button[type="submit"]')))
-      .then(el => driver.wait(until.elementIsVisible(el), 1000))
+      .then(() => driver.sleep(1000))
       .then(() => submit_form_func({
         driver      : driver,
         form_params : [{
