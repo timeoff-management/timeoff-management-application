@@ -58,6 +58,10 @@ var submit_form_func = Promise.promisify( function(args, callback){
                       } else if (test_case.file) {
                         return Promise.resolve()
                           .then(() => el.sendKeys( test_case.value ));
+                      } else if (test_case.hasOwnProperty('dropdown_option')) {
+                        return el.click()
+                          .then(() => driver.findElement(By.css(test_case.dropdown_option)))
+                          .then(dd => dd.click())
                       } else {
                           return el.clear().then(function(){
                               el.sendKeys( test_case.value );
