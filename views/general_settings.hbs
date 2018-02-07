@@ -32,7 +32,7 @@
                 <div class="col-md-8">
                   <select class="form-control" id="input_country" name="country">
                     {{#each countries}}
-                    <option value="{{@key}}" {{# if_equal @key ../company.country }} selected="selected"{{/if_equal}}>{{this.name}}</option>
+                    <option value="{{@key}}" {{# if_equal @key ../company.country }} selected="selected"{{/if_equal}}>{{@key}}: {{this.name}}</option>
                     {{/each}}
                   </select>
                 </div>

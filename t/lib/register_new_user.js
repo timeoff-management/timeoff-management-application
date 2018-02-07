@@ -104,11 +104,6 @@ var register_new_user_func = Promise.promisify( function(args, callback){
           selector : 'input[name="password_confirmed"]',
           value    : '123456',
         },
-        {
-          selector        : 'select[name="country"]',
-          option_selector : 'option[value="IS"]',
-          value           : 'IS',
-        },
       ],
       function( test_case ){
         driver
@@ -119,14 +114,14 @@ var register_new_user_func = Promise.promisify( function(args, callback){
       })
   ]);
 
-  // Submit registration form
-  driver
-    .findElement(
-      By.css('#submit_registration')
-    )
-    .then(function(el){
-      el.click();
-    });
+  driver.call(() => submit_form_func({
+    driver : driver,
+    form_params : [{
+      selector        : 'select[name="country"]',
+      option_selector : 'option[value="ZZ"]',
+    }],
+    submit_button_selector : '#submit_registration',
+  }));
 
   driver.wait(until.elementLocated(By.css('div')), 1000);
 

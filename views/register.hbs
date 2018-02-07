@@ -61,9 +61,8 @@
         <div class="col-md-6">
           <select class="form-control" id="country_inp" placeholder="Country name" name="country">
             {{#each countries}}
-            <option value="{{@key}}" {{#if this.default }} selected="selected" {{/if}}>{{this.name}}</option>
+            <option value="{{@key}}" {{#if this.default }} selected="selected" {{/if}}>{{@key}}: {{this.name}}</option>
             {{/each}}
-            <option value="UK">Other</option>
           </select>
         </div>
       </div>
