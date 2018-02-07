@@ -52,7 +52,6 @@ var register_new_user_func = Promise.promisify( function(args, callback){
       expect(text).to.match(/Register new company/i);
     });
 
-
   // Click on registration link
   driver
     .findElement(By.css('a[href="/register/"]'))
@@ -70,53 +69,28 @@ var register_new_user_func = Promise.promisify( function(args, callback){
     .then(function(ee){
       expect(ee).to.be.equal('New company');
     });
-  // TODO check title when it is implemented
-//  driver.getTitle()
-//    .then(function(title) {
-//      expect(title).to.be.equal('Please enter your details');
-//    });
-
-  // Fill in all text fields
-  Promise.all([
-    _.map(
-      [
-        {
-          selector : 'input[name="company_name"]',
-          value    : 'Company '+(new Date()).getTime(),
-        },
-        {
-          selector : 'input[name="name"]',
-          value    : 'name' + random_token,
-        },
-        {
-          selector : 'input[name="lastname"]',
-          value    : 'lastname' + random_token,
-        },
-        {
-          selector : 'input[name="email"]',
-          value    : new_user_email,
-        },
-        {
-          selector : 'input[name="password"]',
-          value    : '123456',
-        },
-        {
-          selector : 'input[name="password_confirmed"]',
-          value    : '123456',
-        },
-      ],
-      function( test_case ){
-        driver
-          .findElement(By.css( test_case.selector ))
-          .then(function(el){
-            el.sendKeys( test_case.value );
-          });
-      })
-  ]);
 
   driver.call(() => submit_form_func({
     driver : driver,
     form_params : [{
+      selector : 'input[name="company_name"]',
+      value    : 'Company '+(new Date()).getTime(),
+    },{
+      selector : 'input[name="name"]',
+      value    : 'name' + random_token,
+    },{
+      selector : 'input[name="lastname"]',
+      value    : 'lastname' + random_token,
+    },{
+      selector : 'input[name="email"]',
+      value    : new_user_email,
+    },{
+      selector : 'input[name="password"]',
+      value    : '123456',
+    },{
+      selector : 'input[name="password_confirmed"]',
+      value    : '123456',
+    },{
       selector        : 'select[name="country"]',
       option_selector : 'option[value="ZZ"]',
     }],
