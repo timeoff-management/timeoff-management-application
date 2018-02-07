@@ -135,7 +135,7 @@ td.calendar_cell {
 }
 td.calendar_cell span {
     position   : relative;
-    left       : 7px;
+    left       : 9px;
     top        : -1px;
     display    : block;
     text-align : center;
@@ -278,4 +278,8 @@ div.feeds-holder {
 
 .leave_type_color_4 {
   background: #FF80AB !important;
+}
+
+.leave_type_color_5 {
+  background: #00BCD4 !important;
 }
