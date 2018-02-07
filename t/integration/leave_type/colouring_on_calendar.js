@@ -5,9 +5,9 @@ const
   test                   = require('selenium-webdriver/testing'),
   until                  = require('selenium-webdriver').until,
   register_new_user_func = require('../../lib/register_new_user'),
-  login_user_func        = require('../../lib/login_with_user'),
   open_page_func         = require('../../lib/open_page'),
   submit_form_func       = require('../../lib/submit_form'),
+  user_info_func         = require('../../lib/user_info'),
   By                     = require('selenium-webdriver').By,
   config                 = require('../../lib/config'),
   Bluebird               = require('bluebird'),
@@ -30,7 +30,6 @@ const
  *   ** 2018-02-13 (afternoon) - 2018-02-14 (morning) : Sick (1 day)
  *   ** 2018-02-14 (afternoon) - 2018-02-15 (morning) : Holiday (1 day)
  *   * Ensure that all absences are approved
- *
  *   * Go to callendar page and ensure that all half days cells have correct color classes
  *   * Go to Team view page and ensure that all half a day cells have correct color classes
  *   * On Team view page ensure that days deducted from allowance are stated correctly
@@ -40,12 +39,12 @@ const
  *   ** Holiday: 2 days
  *   ** Allowance: 2 days
  *
- *
  * */
 
 describe('Coloring of half days', function(){
 
-  var driver;
+  let driver, user_email, user_id,
+    leave_type_holiday_id, leave_type_sick_id;
 
   this.timeout( config.get_execution_timeout() );
 
@@ -55,6 +54,18 @@ describe('Coloring of half days', function(){
     })
     .then(data => {
       driver = data.driver;
+      user_email = data.email;
+      done();
+    });
+  });
+
+  it("Obtain information user", function(done){
+    user_info_func({
+      driver : driver,
+      email  : user_email,
+    })
+    .then(data => {
+      user_id = data.user.id;
       done();
     });
   });
@@ -74,7 +85,15 @@ describe('Coloring of half days', function(){
       message : /Changes to leave types were saved/,
     }))
 
-    .then(() => done() );
+    // Capture Leave type IDs while we are on this page
+    .then(() => driver.findElements(By.css('button.leavetype-remove-btn')))
+    .then(btns => Bluebird.map(btns, btn => btn.getAttribute('value')))
+    .then(ids => {
+      leave_type_holiday_id = ids[0];
+      leave_type_sick_id = ids[1];
+
+      done();
+    });
   });
 
   it('Go Calendar page', done => {
@@ -267,6 +286,7 @@ describe('Coloring of half days', function(){
       driver : driver,
     })
 
+    // Check Feb 1
     .then(() => driver.findElement(By.css('table.month_February td.calendar_cell.day_1.half_1st')))
     .then(el => el.getAttribute('class'))
     .then(cls => {
@@ -281,10 +301,217 @@ describe('Coloring of half days', function(){
       return Bluebird.resolve();
     })
 
-    .then(() => done());
+    // Check Feb 2
+    .then(() => driver.findElement(By.css('table.month_February td.calendar_cell.day_2.half_1st')))
+    .then(el => el.getAttribute('class'))
+    .then(cls => {
+      expect(cls).to.match(/leave_type_color_3/);
+      return Bluebird.resolve();
+    })
 
+    .then(() => driver.findElement(By.css('table.month_February td.calendar_cell.day_2.half_2nd')))
+    .then(el => el.getAttribute('class'))
+    .then(cls => {
+      expect(cls).to.match(/leave_type_color_1/);
+      return Bluebird.resolve();
+    })
+
+    // Check Feb 8
+    .then(() => driver.findElement(By.css('table.month_February td.calendar_cell.day_8.half_1st')))
+    .then(el => el.getAttribute('class'))
+    .then(cls => {
+      expect(cls).to.match(/leave_type_color_1/);
+      return Bluebird.resolve();
+    })
+
+    .then(() => driver.findElement(By.css('table.month_February td.calendar_cell.day_8.half_2nd')))
+    .then(el => el.getAttribute('class'))
+    .then(cls => {
+      expect(cls).not.to.match(/leave_type_color_/);
+      return Bluebird.resolve();
+    })
+
+    // Check Feb 13
+    .then(() => driver.findElement(By.css('table.month_February td.calendar_cell.day_13.half_1st')))
+    .then(el => el.getAttribute('class'))
+    .then(cls => {
+      expect(cls).not.to.match(/leave_type_color_/);
+      return Bluebird.resolve();
+    })
+
+    .then(() => driver.findElement(By.css('table.month_February td.calendar_cell.day_13.half_2nd')))
+    .then(el => el.getAttribute('class'))
+    .then(cls => {
+      expect(cls).to.match(/leave_type_color_3/);
+      return Bluebird.resolve();
+    })
+
+    // Check Feb 14
+    .then(() => driver.findElement(By.css('table.month_February td.calendar_cell.day_14.half_1st')))
+    .then(el => el.getAttribute('class'))
+    .then(cls => {
+      expect(cls).to.match(/leave_type_color_3/);
+      return Bluebird.resolve();
+    })
+
+    .then(() => driver.findElement(By.css('table.month_February td.calendar_cell.day_14.half_2nd')))
+    .then(el => el.getAttribute('class'))
+    .then(cls => {
+      expect(cls).to.match(/leave_type_color_1/);
+      return Bluebird.resolve();
+    })
+
+    // Check Feb 15
+    .then(() => driver.findElement(By.css('table.month_February td.calendar_cell.day_15.half_1st')))
+    .then(el => el.getAttribute('class'))
+    .then(cls => {
+      expect(cls).to.match(/leave_type_color_1/);
+      return Bluebird.resolve();
+    })
+
+    .then(() => driver.findElement(By.css('table.month_February td.calendar_cell.day_15.half_2nd')))
+    .then(el => el.getAttribute('class'))
+    .then(cls => {
+      expect(cls).not.to.match(/leave_type_color_/);
+      return Bluebird.resolve();
+    })
+
+    .then(() => done());
   });
 
+  it("Go to Team view page and ensure that all half a day cells have correct color classes", done => {
+    open_page_func({
+      url    : application_host + 'calendar/teamview/?date=2018-02',
+      driver : driver,
+    })
+
+    // Check Feb 1
+    .then(() => driver.findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id+'"] td.calendar_cell.day_1.half_1st')))
+    .then(el => el.getAttribute('class'))
+    .then(cls => {
+      expect(cls).not.to.match(/leave_type_color_/);
+      return Bluebird.resolve();
+    })
+
+    .then(() => driver.findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id+'"] td.calendar_cell.day_1.half_2nd')))
+    .then(el => el.getAttribute('class'))
+    .then(cls => {
+      expect(cls).to.match(/leave_type_color_3/);
+      return Bluebird.resolve();
+    })
+
+    // Check Feb 2
+    .then(() => driver.findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id+'"] td.calendar_cell.day_2.half_1st')))
+    .then(el => el.getAttribute('class'))
+    .then(cls => {
+      expect(cls).to.match(/leave_type_color_3/);
+      return Bluebird.resolve();
+    })
+
+    .then(() => driver.findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id+'"] td.calendar_cell.day_2.half_2nd')))
+    .then(el => el.getAttribute('class'))
+    .then(cls => {
+      expect(cls).to.match(/leave_type_color_1/);
+      return Bluebird.resolve();
+    })
+
+    // Check Feb 8
+    .then(() => driver.findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id+'"] td.calendar_cell.day_8.half_1st')))
+    .then(el => el.getAttribute('class'))
+    .then(cls => {
+      expect(cls).to.match(/leave_type_color_1/);
+      return Bluebird.resolve();
+    })
+
+    .then(() => driver.findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id+'"] td.calendar_cell.day_8.half_2nd')))
+    .then(el => el.getAttribute('class'))
+    .then(cls => {
+      expect(cls).not.to.match(/leave_type_color_/);
+      return Bluebird.resolve();
+    })
+
+    // Check Feb 13
+    .then(() => driver.findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id+'"] td.calendar_cell.day_13.half_1st')))
+    .then(el => el.getAttribute('class'))
+    .then(cls => {
+      expect(cls).not.to.match(/leave_type_color_/);
+      return Bluebird.resolve();
+    })
+
+    .then(() => driver.findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id+'"] td.calendar_cell.day_13.half_2nd')))
+    .then(el => el.getAttribute('class'))
+    .then(cls => {
+      expect(cls).to.match(/leave_type_color_3/);
+      return Bluebird.resolve();
+    })
+
+    // Check Feb 14
+    .then(() => driver.findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id+'"] td.calendar_cell.day_14.half_1st')))
+    .then(el => el.getAttribute('class'))
+    .then(cls => {
+      expect(cls).to.match(/leave_type_color_3/);
+      return Bluebird.resolve();
+    })
+
+    .then(() => driver.findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id+'"] td.calendar_cell.day_14.half_2nd')))
+    .then(el => el.getAttribute('class'))
+    .then(cls => {
+      expect(cls).to.match(/leave_type_color_1/);
+      return Bluebird.resolve();
+    })
+
+    // Check Feb 15
+    .then(() => driver.findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id+'"] td.calendar_cell.day_15.half_1st')))
+    .then(el => el.getAttribute('class'))
+    .then(cls => {
+      expect(cls).to.match(/leave_type_color_1/);
+      return Bluebird.resolve();
+    })
+
+    .then(() => driver.findElement(By.css('table.team-view-table tr[data-vpp-user-list-row="'+user_id+'"] td.calendar_cell.day_15.half_2nd')))
+    .then(el => el.getAttribute('class'))
+    .then(cls => {
+      expect(cls).not.to.match(/leave_type_color_/);
+      return Bluebird.resolve();
+    })
+
+    .then(() => done());
+  });
+
+  it("On Team view page ensure that days deducted from allowance are stated correctly", done => {
+    open_page_func({
+      url    : application_host + 'calendar/teamview/?date=2018-02',
+      driver : driver,
+    })
+    .then(() => driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id}"] span.teamview-deducted-days`)))
+    .then(el => el.getText())
+    .then(txt => {
+      expect(txt, 'Ensure that system shows 2 days as deducted')
+        .to.be.eql('2');
+      done();
+    });
+  });
+
+  it("Go to report page and for 2018-02 ensure that report contains correct summaries", done => {
+    open_page_func({
+      url    : application_host + 'reports/allowancebytime/?start_date=2018-02&end_date=2018-02',
+      driver : driver,
+    })
+    .then(() => driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id}"]`)))
+
+    .then(tr => Bluebird.join(
+      tr.findElement(By.css('[data-vpp-deducted-days="1"]')),
+      tr.findElement(By.css(`[data-vpp-leave-type-id="${leave_type_holiday_id}"]`)),
+      tr.findElement(By.css(`[data-vpp-leave-type-id="${leave_type_sick_id}"]`)),
+      (allowance_el, holiday_el, sick_el) => Bluebird.map([ allowance_el, holiday_el, sick_el ], el => el.getText())
+    ))
+    .then(stat => {
+      expect(stat, 'Ensure that report shows correct deducted days')
+        .to.be.deep.equal(['2','2','2']);
+      done();
+    });
+
+  });
 
   after(function(done){
     driver.quit().then(() => done() );

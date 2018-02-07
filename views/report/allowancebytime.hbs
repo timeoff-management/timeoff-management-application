@@ -109,9 +109,9 @@
         <tr data-vpp-user-list-row={{this.user.id}}>
           <td>{{#with this.user }}<a href="/users/edit/{{this.id}}/">{{ this.full_name }}</a>{{/with}}</td>
           {{#each statistics.leave_type_break_down.pretty_version }}
-          <td>{{this.stat}}</td>
+          <td data-vpp-leave-type-id="{{this.id}}">{{this.stat}}</td>
           {{/each}}
-          <td>{{ statistics.deducted_days }}</td>
+          <td data-vpp-deducted-days="1">{{ statistics.deducted_days }}</td>
         </tr>
       {{/each}}
     </table>
