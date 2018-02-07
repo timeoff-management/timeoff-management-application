@@ -141,3 +141,32 @@ $(document).ready(function(){
       return form.submit();
     });
 });
+
+
+$(document).ready(function(){
+
+  $('[data-tom-color-picker] a')
+    .on('click', function(e){
+      e.stopPropagation();
+
+      // Close dropdown
+      $(e.target).closest('.dropdown-menu').dropdown('toggle');
+
+      var new_class_name =  $(e.target).data('tom-color-picker-css-class');
+
+      // Ensure newly selected color is on triggering element
+      $(e.target).closest('[data-tom-color-picker]')
+        .find('button.dropdown-toggle')
+        .attr('class', function(idx, c){ return c.replace(/leave_type_color_\d+/g, '') })
+        .addClass( new_class_name );
+
+      // Capture newly picked up color in hidden input for submission
+      $(e.target).closest('[data-tom-color-picker]')
+        .find('input[type="hidden"]')
+        .attr('value', new_class_name);
+
+      return false;
+    });
+});
+
+

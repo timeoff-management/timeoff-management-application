@@ -13,6 +13,8 @@ $font-size-bigger : 16px;
 
 $selected-item-background : #F5F7F8;
 
+$leave_cell_font_color : #61686b;
+
 // 5E5E5E
 
 body {
@@ -133,18 +135,18 @@ td.calendar_cell {
 }
 td.calendar_cell span {
     position   : relative;
-    left       : 7px;
+    left       : 9px;
     top        : -1px;
     display    : block;
     text-align : center;
     z-index : 10;
 }
 td.current_day_cell {
-  background: #e25440;
+  background: #FFCDD2;
   color : #ffffff;
 }
 td.weekend_cell {
-    background: $selected-item-background;
+  background: $selected-item-background;
 }
 td.bank_holiday_cell {
     background : #31B0D5;
@@ -152,11 +154,13 @@ td.bank_holiday_cell {
 }
 td.leave_cell {
     background : #9fbb58;
-    color : #ffffff;
+    color : $leave_cell_font_color;
+  font-weight: bolder;
 }
 td.leave_cell_pended {
   background: #FFCBA4;
-  color: $primary-font-color;
+  color: $leave_cell_font_color;
+  font-weight: bolder;
 }
 .modal-dialog {
     max-width : 450px;
@@ -260,3 +264,22 @@ div.feeds-holder {
   font-weight: bolder;
 }
 
+.leave_type_color_1 {
+  background: #96c521 !important;
+}
+
+.leave_type_color_2 {
+  background: #40C4FF !important;
+}
+
+.leave_type_color_3 {
+  background: #FF5722 !important;
+}
+
+.leave_type_color_4 {
+  background: #FF80AB !important;
+}
+
+.leave_type_color_5 {
+  background: #00BCD4 !important;
+}

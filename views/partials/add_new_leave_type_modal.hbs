@@ -20,11 +20,30 @@
         <div class="form-group">
           <input type="checkbox" id="leave_type_use_allovance_new" name="use_allowance__new">&nbsp;
           <label for="leave_type_use_allovance_new" class="control-label">Use allowance</label>
+          <p><em>If checked leaves of this type are going to be counted towards employee's annual holiday allowance.</em></p>
         </div>
+
+        <div class="form-group">
+          <div class="dropdown" data-tom-color-picker="1">
+            <input type="hidden" name="color__new" value="leave_type_color_1">
+            <button type="button" class="btn btn-default dropdown-toggle leave_type_color_1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-paint-brush"></i> Pick up color for new type</button>
+            <ul class="dropdown-menu">
+              <li><a href="#" class="btn btd-default leave_type_color_1" data-tom-color-picker-css-class="leave_type_color_1">Color 1</a></li>
+              <li><a href="#" class="btn btd-default leave_type_color_2" data-tom-color-picker-css-class="leave_type_color_2">Color 2</a></li>
+              <li><a href="#" class="btn btd-default leave_type_color_3" data-tom-color-picker-css-class="leave_type_color_3">Color 3</a></li>
+              <li><a href="#" class="btn btd-default leave_type_color_4" data-tom-color-picker-css-class="leave_type_color_4">Color 4</a></li>
+              <li><a href="#" class="btn btd-default leave_type_color_5" data-tom-color-picker-css-class="leave_type_color_4">Color 5</a></li>
+            </ul>
+          </div>
+          <p><em>Determine how leaves of new type are going to be highlighted on Calendar/Team view pages.</em></p>
+        </div>
+
+
 
         <div class="form-group">
           <label for="leave_type_limit_new" class="control-label">Limit:</label>
           <input type="number" class="form-control" id="leave_type_limit_new" name="limit__new">
+          <p><em>If set to non-zero value determines maximum number of days of new leave type each employee could take during the year.</em></p>
         </div>
 
       </div>

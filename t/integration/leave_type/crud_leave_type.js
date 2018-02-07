@@ -1,14 +1,15 @@
 
 'use strict';
 
-var test                 = require('selenium-webdriver/testing'),
-  register_new_user_func = require('../lib/register_new_user'),
-  login_user_func        = require('../lib/login_with_user'),
-  open_page_func         = require('../lib/open_page'),
-  submit_form_func       = require('../lib/submit_form'),
-  check_elements_func    = require('../lib/check_elements'),
+const
+  test                 = require('selenium-webdriver/testing'),
+  register_new_user_func = require('../../lib/register_new_user'),
+  login_user_func        = require('../../lib/login_with_user'),
+  open_page_func         = require('../../lib/open_page'),
+  submit_form_func       = require('../../lib/submit_form'),
+  check_elements_func    = require('../../lib/check_elements'),
   By                     = require('selenium-webdriver').By,
-  config                 = require('../lib/config'),
+  config                 = require('../../lib/config'),
   Bluebird               = require('bluebird'),
   expect                 = require('chai').expect,
   application_host       = config.get_application_host(),
@@ -53,19 +54,45 @@ describe('CRUD for leave types', function(){
     .then(function(){ done() });
   });
 
-// TODO un comment that step when we resurect editing colors
-//    // Try to submit form with incorrect color code
-//    .then(function(data){
-//        return submit_form_func({
-//            driver      : data.driver,
-//            form_params : [{
-//                selector : leave_type_edit_form_id+' input[name="color__0"]',
-//                value    : '<script>Test name',
-//            }],
-//            submit_button_selector : leave_type_edit_form_id+' button[type="submit"]',
-//            message : /New color for \w+ should be color code/,
-//        });
-//    })
+  it("Make sure default colours are set for leave types", done => {
+    driver.findElements(By.css('form#leave_type_edit_form [data-tom-color-picker]'))
+      .then(els => {
+        expect(els.length, "Ensure number of colour pickers is the same as leave types")
+          .to.be.equal(2);
+
+        return Bluebird.map(els, el => el.findElement(By.css('input[type="hidden"]')));
+      })
+      .then(els => Bluebird.map(els, el => el.getAttribute('value')))
+      .then(colours => {
+        expect( colours.sort(), 'Check default colour values' )
+          .to.be.deep.equal(['leave_type_color_1', 'leave_type_color_1']);
+        done();
+      });
+  });
+
+  it("Change Sick leave type to be non-default colour", done => {
+
+    submit_form_func({
+      driver      : driver,
+      form_params : [{
+        selector : leave_type_edit_form_id + ' [data-tom-color-picker="1"][data-tom-leave-type-order="colour__1"] button.dropdown-toggle',
+        dropdown_option : leave_type_edit_form_id + ' [data-tom-color-picker="1"][data-tom-leave-type-order="colour__1"] [data-tom-color-picker-css-class="leave_type_color_2"]'
+      }],
+      submit_button_selector : leave_type_edit_form_id+' button[type="submit"]',
+      message : /Changes to leave types were saved/,
+    })
+    .then(() => done() );
+  });
+
+  it('Ensure that color class for Sick days was updated to be non-default', done => {
+    driver.findElements(By.css('form#leave_type_edit_form [data-tom-color-picker] input[type="hidden"]'))
+      .then(els => Bluebird.map(els, el => el.getAttribute('value')))
+      .then(colours => {
+        expect( colours.sort(), 'Check default colour values' )
+          .to.be.deep.equal(['leave_type_color_1', 'leave_type_color_2']);
+        done();
+      })
+  });
 
   it('Make sure that both leave types have "use allowance" tick boxes set', function(done){
     check_elements_func({
