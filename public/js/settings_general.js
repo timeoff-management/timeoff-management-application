@@ -14,6 +14,17 @@ $(document).ready(function () {
     return false;
   });
 
+  $('button#bankholiday-import-btn').on('click', function(e){
+
+    e.stopPropagation();
+
+    var import_form = $('#import_bankholiday_form');
+
+    import_form.submit();
+
+    return false;
+  });
+
 
   $('button.leavetype-remove-btn').on('click', function(e){
 
