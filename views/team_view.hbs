@@ -33,6 +33,7 @@
   <div class="col-md-12">
     <table class="team-view-table table-hover">
 
+      <thead>
       <tr>
         <td class="team-view-header" colspan="2">
           <div class="dropdown pull-left">
@@ -54,7 +55,9 @@
         <td colspan="2" class="team-view-header"><b>{{as_date_formatted this.moment 'dd'}}</b></td>
       {{/each}}
       </tr>
+      </thead>
 
+      <tbody>
       {{# each users_and_leaves}}
         <tr class="teamview-user-list-row" data-vpp-user-list-row={{this.user.id}}>
           <td class="left-column-cell cross-link">{{# if ../logged_user.admin}} {{#with this.user }}<a href="/users/edit/{{this.id}}/">{{ this.full_name }}</a>{{/with}}  {{else}}{{#with this.user }}<span>{{ this.full_name }}</span>{{/with}}{{/if}}</td>
@@ -75,6 +78,7 @@
           {{/each}}
         </tr>
       {{/each}}
+      </tbody>
     </table>
   </div>
 </div>
