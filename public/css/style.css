@@ -16,6 +16,9 @@ a {
 .no-bottom-space {
   margin-bottom: 0px; }
 
+.large-bottom-space {
+  margin-bottom: 300px; }
+
 /*
   Increase space between form groups so they are more prominent
 */
