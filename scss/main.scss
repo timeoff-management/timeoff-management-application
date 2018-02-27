@@ -50,6 +50,18 @@ a {
   font-style: italic;
 }
 
+/*
+ Make certain progress bars to be taller
+ */
+
+.progress.bigger {
+  height: 38px;
+
+  .progress-bar {
+    line-height: 38px;
+  }
+}
+
 /* Space out content a bit */
 body {
   padding-top: 20px;
