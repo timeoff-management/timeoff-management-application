@@ -11,6 +11,12 @@ a {
   color: #5ba4e5; }
 
 /*
+  Simple class that makes its content's font size little bit bigger
+ */
+.text-bigger {
+  font-size: 16px; }
+
+/*
   Add special class to remove default buttom space
 */
 .no-bottom-space {

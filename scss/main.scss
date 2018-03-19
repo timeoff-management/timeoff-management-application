@@ -27,6 +27,13 @@ a {
 }
 
 /*
+  Simple class that makes its content's font size little bit bigger
+ */
+.text-bigger {
+  font-size: $font-size-bigger;
+}
+
+/*
   Add special class to remove default buttom space
 */
 .no-bottom-space {
