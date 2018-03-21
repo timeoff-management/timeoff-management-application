@@ -84,15 +84,6 @@ describe('Check departments list page', function(){
       });
   });
 
-  it("There is a link to Bulk update page and it works", function(done){
-    driver
-      .findElements(By.css('a[href*="/settings/departments-bulk-update/"]'))
-      .then(function(links){
-        expect(links.length).to.be.eql(1, "There should be on such link");
-        done();
-      });
-  });
-
   it('Add new "AAA" department', function(done){
     driver.findElement(By.css('#add_new_department_btn'))
       .then(function(el){

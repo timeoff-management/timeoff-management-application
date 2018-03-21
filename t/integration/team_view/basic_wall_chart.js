@@ -17,7 +17,8 @@ var test                 = require('selenium-webdriver/testing'),
   config                 = require('../../lib/config'),
   new_department_form_id = '#add_new_department_form',
   application_host       = config.get_application_host(),
-  company_edit_form_id   ='#company_edit_form';
+  company_edit_form_id   ='#company_edit_form',
+  department_edit_form_id = '#department_edit_form';
 
 /*
  *  Scenario to check in thus test.
@@ -124,7 +125,7 @@ describe('Check basic scenario for Team view page', function(){
 
   it('Create new department: "IT"', function(done){
     open_page_func({
-      url    : application_host + 'settings/departments-bulk-update/',
+      url    : application_host + 'settings/departments/',
       driver : driver,
     })
     .then(function(){ done() });
@@ -174,22 +175,25 @@ describe('Check basic scenario for Team view page', function(){
 
   it("Make sure user C is superviser of IT department", function(done){
     open_page_func({
-      url    : application_host + 'settings/departments-bulk-update/',
+      url    : application_host + 'settings/departments/',
       driver : driver,
     })
-    .then(function(){
-      submit_form_func({
-        driver      : driver,
-        form_params : [{
-          selector        : 'select[name="boss_id__0"]',
-          // because we have test names generated based on time, user C
-          // is going to be last in a drop down
-          option_selector : 'option:nth-child(3)',
-        }],
-        message : /Changes to departments were saved/,
-      })
-      .then(function(){ done() });
-    });
+    .then(() => driver
+      .findElements(By.css('a[href*="/settings/departments/edit/"]'))
+      .then(links => links[0].click())
+    )
+    .then(() => submit_form_func({
+      driver      : driver,
+      form_params : [{
+        selector        : 'select[name="boss_id"]',
+        // because we have test names generated based on time, user C
+        // is going to be last in a drop down
+        option_selector : 'option:nth-child(3)',
+      }],
+        submit_button_selector : department_edit_form_id+' button[type="submit"]',
+        message : /Department .* was updated/,
+    }))
+    .then(() => done());
   });
 
   it("Logout from A account", function(done){
@@ -238,23 +242,26 @@ describe('Check basic scenario for Team view page', function(){
 
   it("Update IT department to be supervised by user B", function(done){
     open_page_func({
-      url    : application_host + 'settings/departments-bulk-update/',
+      url    : application_host + 'settings/departments/',
       driver : driver,
     })
-    .then(function(){
-      submit_form_func({
-        driver      : driver,
-        form_params : [{
-          selector        : 'select[name="boss_id__0"]',
-          // because we have test names generated based on time, user B
-          // is going to be second one in a drop down as it was added before
-          // all other ones
-          option_selector : 'option:nth-child(2)',
-        }],
-        message : /Changes to departments were saved/,
-      })
-      .then(function(){ done() });
-    });
+    .then(() => driver
+      .findElements(By.css('a[href*="/settings/departments/edit/"]'))
+      .then(links => links[0].click())
+    )
+    .then(() => submit_form_func({
+      driver      : driver,
+      form_params : [{
+        selector        : 'select[name="boss_id"]',
+        // because we have test names generated based on time, user B
+        // is going to be second one in a drop down as it was added before
+        // all other ones
+        option_selector : 'option:nth-child(2)',
+      }],
+        submit_button_selector : department_edit_form_id+' button[type="submit"]',
+        message : /Department .* was updated/,
+    }))
+    .then(() => done());
   });
 
   it("Logout from A account", function(done){

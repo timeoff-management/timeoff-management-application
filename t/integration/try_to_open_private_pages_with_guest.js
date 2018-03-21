@@ -25,8 +25,7 @@ describe('Try to access private pages with guest user', function(){
     Promise.all(_.map(
       // Add more URLs to check into the array below
       [
-        'logout/', 'settings/general/', 'settings/departments/',
-        'settings/departments-bulk-update/'
+        'logout/', 'settings/general/', 'settings/departments/'
       ],
       function(path) {
 
@@ -76,8 +75,8 @@ describe('Try to access admin pages with non-admin user', function(){
     var admin_pages =  [
       'users/add/',
       'users/',
-      'settings/general/', 'settings/departments/',
-      'settings/departments-bulk-update/',
+      'settings/general/',
+      'settings/departments/'
     ];
 
     return Promise.each(admin_pages, function(path){

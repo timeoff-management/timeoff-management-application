@@ -17,7 +17,8 @@ var test                 = require('selenium-webdriver/testing'),
   check_booking_func     = require('../../lib/check_booking_on_calendar'),
   check_elements_func    = require('../../lib/check_elements'),
   config                 = require('../../lib/config'),
-  application_host       = config.get_application_host();
+  application_host       = config.get_application_host(),
+  department_edit_form_id = '#department_edit_form';
 
 /*
  *  Scenario to check:
@@ -94,30 +95,39 @@ describe('Revoke leave request', function(){
 
   it("Open department management page", function(done){
     open_page_func({
-      url    : application_host + 'settings/departments-bulk-update/',
+      url    : application_host + 'settings/departments/',
       driver : driver,
     })
     .then(function(){ done() });
   });
 
   it('Update department to be supervised by MANAGER_A', function(done){
-    submit_form_func({
+    open_page_func({
+      url    : application_host + 'settings/departments/',
+      driver : driver,
+    })
+    .then(() => driver
+      .findElements(By.css('a[href*="/settings/departments/edit/"]'))
+      .then(links => links[0].click())
+    )
+    .then(() => submit_form_func({
       driver      : driver,
       form_params : [{
-        selector : 'input[name="name__0"]',
+        selector : 'input[name="name"]',
         // Just to make sure it is always first in the lists
         value : 'AAAAA',
       },{
-        selector        : 'select[name="allowance__0"]',
+        selector        : 'select[name="allowance"]',
         option_selector : 'option[value="15"]',
         value : '15',
       },{
-        selector        : 'select[name="boss_id__0"]',
-        option_selector : 'select[name="boss_id__0"] option:nth-child(2)',
+        selector        : 'select[name="boss_id"]',
+        option_selector : 'select[name="boss_id"] option:nth-child(2)',
       }],
-      message : /Changes to departments were saved/,
-    })
-    .then(function(){ done() });
+        submit_button_selector : department_edit_form_id+' button[type="submit"]',
+        message : /Department .* was updated/,
+    }))
+    .then(() => done());
   });
 
   it("Logout from admin account", function(done){
@@ -263,30 +273,39 @@ describe('Revoke leave request', function(){
 
   it("Open department management page", function(done){
     open_page_func({
-      url    : application_host + 'settings/departments-bulk-update/',
+      url    : application_host + 'settings/departments/',
       driver : driver,
     })
     .then(function(){ done() });
   });
 
   it('Update department to be supervised by MANAGER_B', function(done){
-    submit_form_func({
+    open_page_func({
+      url    : application_host + 'settings/departments/',
+      driver : driver,
+    })
+    .then(() => driver
+      .findElements(By.css('a[href*="/settings/departments/edit/"]'))
+      .then(links => links[0].click())
+    )
+    .then(() => submit_form_func({
       driver      : driver,
       form_params : [{
-        selector : 'input[name="name__0"]',
+        selector : 'input[name="name"]',
         // Just to make sure it is always first in the lists
         value : 'AAAAA',
       },{
-        selector        : 'select[name="allowance__0"]',
+        selector        : 'select[name="allowance"]',
         option_selector : 'option[value="15"]',
         value : '15',
       },{
-        selector        : 'select[name="boss_id__0"]',
-        option_selector : 'select[name="boss_id__0"] option:nth-child(3)',
+        selector        : 'select[name="boss_id"]',
+        option_selector : 'select[name="boss_id"] option:nth-child(3)',
       }],
-      message : /Changes to departments were saved/,
-    })
-    .then(function(){ done() });
+      submit_button_selector : department_edit_form_id+' button[type="submit"]',
+      message : /Department .* was updated/,
+    }))
+    .then(() => done());
   });
 
   it("Logout from admin account", function(done){
