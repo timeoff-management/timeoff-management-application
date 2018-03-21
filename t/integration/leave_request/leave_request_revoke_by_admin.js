@@ -185,7 +185,7 @@ describe('Revoke leave request by Admin', function(){
 
   it("Open department settings page", function(done){
       open_page_func({
-        url    : application_host + 'settings/departments-bulk-update/',
+        url    : application_host + 'settings/departments/',
         driver : driver,
       })
       .then(function(){ done() });
