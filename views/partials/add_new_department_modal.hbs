@@ -8,13 +8,6 @@
         <h4 class="modal-title">Add new Department</h4>
       </div>
 
-      {{#each departments}}
-        <input type="hidden" value="{{name}}" name="name__{{@index}}">
-        <input type="hidden" value="{{this.allowance}}" name="allowance__{{@index}}">
-        <input type="hidden" name="include_public_holidays__{{@index}}" value="{{include_public_holidays}}">
-        <input type="hidden" name="boss_id__{{@index}}" value="{{this.bossId}}">
-      {{/each}}
-
       <div class="modal-body">
 
         <div class="form-group">
