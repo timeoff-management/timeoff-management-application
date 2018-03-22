@@ -1,7 +1,8 @@
 
 'use strict';
 
-var test                 = require('selenium-webdriver/testing'),
+const
+  test                   = require('selenium-webdriver/testing'),
   By                     = require('selenium-webdriver').By,
   expect                 = require('chai').expect,
   _                      = require('underscore'),
@@ -10,6 +11,7 @@ var test                 = require('selenium-webdriver/testing'),
   csv                    = Promise.promisifyAll(require('csv')),
   register_new_user_func = require('../lib/register_new_user'),
   login_user_func        = require('../lib/login_with_user'),
+  logout_user_func       = require('../lib/logout_user'),
   open_page_func         = require('../lib/open_page'),
   submit_form_func       = require('../lib/submit_form'),
   add_new_user_func      = require('../lib/add_new_user'),
@@ -25,6 +27,8 @@ var test                 = require('selenium-webdriver/testing'),
  *    * Put them into CSV and import in bulk
  *    * Ensure that all users were added into
  *      system and they appear on the Users page
+ *    * Ensure that newly added users do not have password "undefined"
+ *      (as it happened to be after bulk import feature went live)
  *
  * */
 
@@ -36,6 +40,7 @@ describe('Bulk import of users', function(){
   let email_admin,
       driver,
       csv_data,
+      sample_email,
       test_users_filename =  __dirname +'/../test.csv';
 
   it('Create new company', function(done){
@@ -68,6 +73,9 @@ describe('Bulk import of users', function(){
         'Sales'
       ]);
     }
+
+    // Safe one of the emails
+    sample_email = csv_data[1][0];
 
     Promise.resolve()
       .then(() => fs.unlinkAsync(test_users_filename))
@@ -126,6 +134,25 @@ describe('Bulk import of users', function(){
       })
     ))
 
+    .then(() => done());
+  });
+
+  it("Logout from admin account", function(done){
+    logout_user_func({
+      application_host : application_host,
+      driver           : driver,
+    })
+    .then(function(){done()});
+  });
+
+  it('Now try to login as newly added employee using "undefined" as password..', done => {
+    login_user_func({
+      application_host : application_host,
+      user_email       : sample_email,
+      driver           : driver,
+      password         : 'undefined',
+      should_fail      : true,
+    })
     .then(() => done());
   });
 

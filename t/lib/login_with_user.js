@@ -15,6 +15,7 @@ var login_with_user_func = Promise.promisify(function(args, callback){
   var application_host = args.application_host,
       user_email       = args.user_email,
       result_callback  = callback,
+      password         = args.password || '123456',
       should_fail      = args.should_fail || false,
 
   // Create new instance of driver
@@ -67,7 +68,7 @@ var login_with_user_func = Promise.promisify(function(args, callback){
         },
         {
           selector : 'input[name="password"]',
-          value    : '123456',
+          value    : password,
         },
       ],
       function( test_case ){
