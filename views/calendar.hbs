@@ -22,9 +22,9 @@
   <div class="col-md-3 top-leave-type-statistics">
     <dl>
       {{#with current_user }}
-      <dt>{{ ../number_of_days_available_in_allowance }}</dt>
+      <dt data-tom-days-available-in-allowance>{{ ../number_of_days_available_in_allowance }}</dt>
       <dd>Days remaining</dd>
-      <dd>out of {{ ../total_number_of_days_in_allowance }} in Allowance</dd>
+      <dd>out of <span data-tom-total-days-in-allowance>{{ ../total_number_of_days_in_allowance }}</span> in Allowance</dd>
       {{/with}}
     </dl>
   </div>
