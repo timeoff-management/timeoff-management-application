@@ -53,6 +53,14 @@
       </div>
 
       <div class="form-group">
+        <label for="slack_username_inp" class="col-md-3 control-label">Slack Username</label>
+        <div class="col-md-3">
+          <input class="form-control" id="slack_username_inp" name="slack_username" required value="{{employee.slack_username}}" aria-describedby="slack_username_help">
+        </div>
+        <span id="slack_username_help" class="help-block col-md-6">Slack Username used by employee</span>
+      </div>
+
+      <div class="form-group">
         <label for="select_inp" class="col-md-3 control-label">Department</label>
         <div class="col-md-3">
           <select class="form-control" id="select_inp" name="department" aria-describedby="department_help">
