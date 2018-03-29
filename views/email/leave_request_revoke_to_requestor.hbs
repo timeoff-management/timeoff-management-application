@@ -1,11 +1,8 @@
 Leave request is waiting decision
 =====
-<p>Hello
-  <strong>{{#with requester}}{{this.full_name}}{{/with}}</strong>,</p>
+<p>Hello <strong>{{#with requester}}{{this.full_name}}{{/with}}</strong>,</p>
 
-<p>Your leave request
-  <strong>{{>leave_request_detail leave=leave }} cancellation</strong> was sent to
-  <strong>{{#with approver }}{{this.full_name}}{{/with}}</strong>.</p>
+<p>Your leave request <strong>{{>leave_request_detail leave=leave }} cancellation</strong> was sent to <strong>{{#with approver }}{{this.full_name}}{{/with}}</strong>.</p>
 
 <p>There will be another email upon decision.</p>
 
