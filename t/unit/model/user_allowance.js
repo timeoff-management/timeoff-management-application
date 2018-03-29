@@ -4,8 +4,8 @@
 const
   expect        = require('chai').expect,
   moment        = require('moment'),
-  UserAllowance = require('../../../../lib/model/user_allowance'),
-  model         = require('../../../../lib/model/db');
+  UserAllowance = require('../../../lib/model/user_allowance'),
+  model         = require('../../../lib/model/db');
 
 describe('employement_range_adjustment attribute', function(){
 
