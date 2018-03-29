@@ -1,17 +1,23 @@
 {
   "allow_create_new_accounts" : true,
   "send_emails"              : false,
-  "application_sender_email" : "email@test.com",
+  "send_slacks": true,
+  "slack_settings":{
+    "client_id": "200500485780.336692439747",
+    "client_secret": "",
+    "token": "xoxp-200500485780-200451086578-337639356630-7fbc8779c8ea1350230afdfd9532a901"
+  },
+  "application_sender_email" : "mail@mail.com",
   "email_transporter" : {
     "host" : "localhost",
-    "port" : 25,
+    "port" : 587,
     "auth" : {
-      "user" : "user",
-      "pass" : "pass"
+      "user" : "",
+      "pass" : ""
     }
   },
   "ga_analytics_on" : false,
   "crypto_secret" : "!2~`HswpPPLa22+=±§sdq qwe,appp qwwokDF_",
-  "application_domain" : "http://app.timeoff.management",
+  "application_domain" : "localhost:3000",
   "promotion_website_domain" : "http://timeoff.management"
 }
