@@ -7,7 +7,7 @@
     "icon_url": "The image can be hosted anywhere, but I would recoment to upload an icon to your Slack and use it's url.",
     "bot_name": "The display name for the messages being sent."
   },
-  "application_sender_email" : "mail@mail.com",
+  "application_sender_email" : "email@test.com",
   "email_transporter" : {
     "host" : "localhost",
     "port" : 25,
