@@ -24,19 +24,66 @@
       {{#with current_user }}
       <dt data-tom-days-available-in-allowance>{{ ../user_allowance.number_of_days_available_in_allowance }}</dt>
       <dd>Days remaining</dd>
-      <dd>out of <span data-tom-total-days-in-allowance>{{ ../user_allowance.total_number_of_days_in_allowance }}</span> in Allowance</dd>
+      <dd>out of <span data-tom-total-days-in-allowance>{{ ../user_allowance.total_number_of_days_in_allowance }}</span> in allowance</dd>
       {{/with}}
     </dl>
   </div>
 
   <div class="col-md-3 secondary-leave-type-statistics hidden-xs">
     <dl>
-      <dt>Allowance breakdown</dt>
-        <dd><em>Nominal allowance</em><span class="pull-right">{{ user_allowance.nominal_allowance }}</span></dd>
-        <dd><em>Carried over from {{previous_year}}</em><span class="pull-right">{{ user_allowance.carry_over }}</span></dd>
-        <dd><em>Individual adjustment</em><span class="pull-right">{{ user_allowance.manual_adjustment }}</span></dd>
-        <dd><em>Start/end of employment</em><span class="pull-right">{{ user_allowance.employement_range_adjustment }}</span></dd>
-        <dd><em>Used so far</em><span class="pull-right">-{{ user_allowance.number_of_days_taken_from_allowance}}</span></dd>
+      <dt>Allowance breakdown
+        <i class="fa fa-question-circle"
+          data-content="This is explanation how we get the total allowance. Hover on each number to get details what does one mean."
+          data-placement="top"
+          data-toggle="popover"
+          data-trigger="focus hover"
+        ></i>
+      </dt>
+        <dd>
+          <em>Nominal allowance </em>
+          <span class="pull-right"
+            data-content="Allowance derived from department current user belongs to."
+            data-placement="top"
+            data-toggle="popover"
+            data-trigger="focus hover"
+          >{{ user_allowance.nominal_allowance }}</span>
+        </dd>
+        <dd>
+          <em>Carried over from {{previous_year}}</em>
+          <span class="pull-right"
+            data-content="Allowance carried over from previous year. Note: this amount is calculated on the very first day of the year."
+            data-placement="top"
+            data-toggle="popover"
+            data-trigger="focus hover"
+          >{{ user_allowance.carry_over }}</span>
+        </dd>
+        <dd>
+          <em>Individual adjustment</em>
+          <span class="pull-right"
+            data-content="Adjustment to allowance done by admin user."
+            data-placement="top"
+            data-toggle="popover"
+            data-trigger="focus hover"
+          >{{ user_allowance.manual_adjustment }}</span>
+        </dd>
+        <dd>
+          <em>Start/end of employment</em>
+          <span class="pull-right"
+            data-content="Automatic adjustment to allowance based on employee's start and end day of employment."
+            data-placement="top"
+            data-toggle="popover"
+            data-trigger="focus hover"
+          >{{ user_allowance.employement_range_adjustment }}</span>
+        </dd>
+        <dd>
+          <em>Used so far</em>
+          <span class="pull-right"
+            data-content="Number of days already taken from allowance."
+            data-placement="top"
+            data-toggle="popover"
+            data-trigger="focus hover"
+          >{{#if_equal user_allowance.number_of_days_taken_from_allowance 0}}{{else}}-{{/if_equal}}{{ user_allowance.number_of_days_taken_from_allowance}}</span>
+        </dd>
     </dl>
   </div>
 
