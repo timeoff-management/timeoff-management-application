@@ -41,21 +41,27 @@
 
   <div class="form-group">
     <label class="control-label">Days remaining for {{ employee.name }} to take this year</label>
-    <p>{{ leave_statistics.remaining }} out of {{  leave_statistics.total_for_current_year }}</p>
+    <p>{{ leave_statistics.remaining }} out of {{  leave_statistics.total_for_current_year }} in allowance</p>
     <input id="days_remaining_inp" type="hidden" value="{{ leave_statistics.remaining }} out of {{  leave_statistics.total_for_current_year }}">
   </div>
 
   <div class="row">
-    <dl class="col-md-5">
-      <dt>Absences used this year grouped by leave types</dt>
-      {{# if leave_type_statistics }}
-        {{# each leave_type_statistics }}
-          <dd><em>{{this.leave_type.name}}:</em> <span class="pull-right">{{this.days_taken}}{{# if this.limit}} out of {{this.limit}}{{/if}}</span></dd>
-        {{/each}}
-      {{else}}
-        <dd class="text-muted">No approved requests so far.</dd>
-      {{/if}}
-    </dl>
+    <div class="col-md-5">
+      <dl>
+        <dt>Absences used this year grouped by leave types</dt>
+        {{# if leave_type_statistics }}
+          {{# each leave_type_statistics }}
+            <dd><em>{{this.leave_type.name}}:</em> <span class="pull-right">{{this.days_taken}}{{# if this.limit}} out of {{this.limit}}{{/if}}</span></dd>
+          {{/each}}
+        {{else}}
+          <dd class="text-muted">No approved requests so far.</dd>
+        {{/if}}
+      </dl>
+    </div>
+
+    <div class="col-md-5 col-md-offset-2">
+      {{> user_details/allowance_breakdown user_allowance = user_allowance }}
+    </div>
   </div>
 
   <div class="form-group">

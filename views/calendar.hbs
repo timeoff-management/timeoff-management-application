@@ -4,7 +4,7 @@
 <h1>Employee calendar</h1>
 
 <div class="row">
-    <div class="col-md-6 lead">{{logged_user.name}} {{logged_user.lastname}}'s calendar for {{this_year}}</div>
+    <div class="col-md-6 lead">{{logged_user.name}} {{logged_user.lastname}}'s calendar for {{current_year}}</div>
     <div class="col-md-6">
     </div>
 </div>
@@ -22,13 +22,16 @@
   <div class="col-md-3 top-leave-type-statistics">
     <dl>
       {{#with current_user }}
-      <dt data-tom-days-available-in-allowance>{{ ../number_of_days_available_in_allowance }}</dt>
+      <dt data-tom-days-available-in-allowance>{{ ../user_allowance.number_of_days_available_in_allowance }}</dt>
       <dd>Days remaining</dd>
-      <dd>out of <span data-tom-total-days-in-allowance>{{ ../total_number_of_days_in_allowance }}</span> in Allowance</dd>
+      <dd>out of <span data-tom-total-days-in-allowance>{{ ../user_allowance.total_number_of_days_in_allowance }}</span> in allowance</dd>
       {{/with}}
     </dl>
   </div>
 
+  <div class="col-md-3 secondary-leave-type-statistics hidden-xs">
+    {{> user_details/allowance_breakdown user_allowance = user_allowance }}
+  </div>
 
   <div class="col-md-3 secondary-leave-type-statistics hidden-xs">
     <dl>
@@ -47,15 +50,6 @@
 
   <div class="col-md-3 secondary-leave-type-statistics hidden-xs">
     <dl>
-      <dt>Available types</dt>
-        {{~# each full_leave_type_statistics ~}}
-          <dd>{{this.leave_type.name ~}}{{~# if this.limit }} (up to {{this.limit}} days){{~/if}} </dd>
-        {{~/ each}}
-    </dl>
-  </div>
-
-  <div class="col-md-3 secondary-leave-type-statistics hidden-xs">
-    <dl>
       <dt>Details</dt>
       {{~# each supervisors  ~}}
       <dd>
@@ -64,7 +58,7 @@
       </dd>
       {{~/ each ~}}
       <dd><em>Department:</em> <span class="pull-right"><a href="/calendar/teamview/?department={{ current_user.department.id }}">{{ current_user.department.name }}</a></span></dd>
-      <dd><em>Allowance in {{this_year}}:</em><span class="pull-right"> {{ total_number_of_days_in_allowance }} days</span><dd>
+      <dd><em>Allowance in {{current_year}}:</em><span class="pull-right"> {{ user_allowance.total_number_of_days_in_allowance }} days</span><dd>
     </dl>
   </div>
 
