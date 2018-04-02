@@ -71,6 +71,9 @@ To have nice visualisation of database schema use this tool http://ondras.zarovi
 <row name="admin" null="1" autoincrement="0">
 <datatype>TINYINT</datatype>
 <default>NULL</default></row>
+<row name="slack_username" null="1" autoincrement="0">
+<datatype>VARBINARY</datatype>
+<default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
