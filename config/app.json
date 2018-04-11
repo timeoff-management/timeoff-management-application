@@ -2,6 +2,14 @@
   "allow_create_new_accounts" : true,
   "send_emails"              : false,
   "application_sender_email" : "email@test.com",
+  "login": {
+    "default": false,
+    "google": ["hokify.com"]
+  },
+  "google": {
+    "clientID": "123",
+    "clientSecret": "123"
+  },
   "email_transporter" : {
     "host" : "localhost",
     "port" : 25,

@@ -5,10 +5,11 @@
 
 {{> show_flash_messages }}
 
-<form class="form-horizontal" action="/login" method="post">
+
+  {{#if login.default}}
+      <form class="form-horizontal" action="/login" method="post">
 
   <div class="row">&nbsp;</div>
-
   <div class="form-group">
     <label for="email_inp" class="col-md-2 control-label col-md-offset-2">Employee email:</label>
     <div class="col-md-5">
@@ -32,7 +33,16 @@
     </div>
   </div>
 
-</form>
+      </form>
+    {{/if}}
+
+    {{#if login.google}}
+        <form action="/auth/google" method="GET">
+            <button type="submit" class="btn btn-default btn-login-google">
+                <span class="provider-logo google"></span> Login with Google
+            </button>
+        </form>
+    {{/if}}
 
 <div class="row">&nbsp;</div>
 
