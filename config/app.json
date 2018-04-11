@@ -3,7 +3,7 @@
   "send_emails"              : false,
   "application_sender_email" : "email@test.com",
   "login": {
-    "default": false,
+    "default": true,
     "google": ["hokify.com"]
   },
   "google": {
@@ -18,7 +18,7 @@
       "pass" : "pass"
     }
   },
-  "ga_analytics_on" : false,
+  "ga_tracker": "UA-63733147-1",
   "crypto_secret" : "!2~`HswpPPLa22+=±§sdq qwe,appp qwwokDF_",
   "application_domain" : "http://app.timeoff.management",
   "promotion_website_domain" : "http://timeoff.management"
