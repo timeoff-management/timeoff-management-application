@@ -19,6 +19,8 @@ module.exports = function(args){
             normalise_date : function(date) { return date; },
           },
         },
+        body: params,
+        query: params,
         param   : function(key){
             return params[key];
         },

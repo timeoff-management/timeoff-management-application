@@ -94,7 +94,7 @@ describe('CRUD for bank holidays', function(){
     .then(function(){done()});
   });
 
-  test.it("Add new bank holiday to be in the beginning of the list", function(done){
+    it("Add new bank holiday to be in the beginning of the list", function (done) {
     driver.findElement(By.css('#add_new_bank_holiday_btn'))
       .then(function(el){ return el.click() })
       .then(function(){

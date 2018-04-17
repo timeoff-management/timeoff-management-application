@@ -36,7 +36,7 @@ var register_new_user_func = Promise.promisify( function(args, callback){
 //  driver.manage().timeouts().implicitlyWait(10*1000);
 
   // Make sure we are in desktop version
-  driver.manage().window().setSize(1024, 768);
+    //driver.manage().window().setSize(1024, 768);
 
   // Go to front page
   driver.get( application_host );
