@@ -42,7 +42,7 @@
   <div class="form-group">
     <label class="control-label">Days available for {{ employee.name }} to take this year</label>
     <p>{{ user_allowance.number_of_days_available_in_allowance }} out of {{ user_allowance.total_number_of_days_in_allowance }} in allowance</p>
-    <input id="days_remaining_inp" type="hidden" value="{{ leave_statistics.remaining }} out of {{  leave_statistics.total_for_current_year }}">
+    <input id="days_remaining_inp" type="hidden" value="{{ user_allowance.number_of_days_available_in_allowance }} out of {{ user_allowance.total_number_of_days_in_allowance }}">
   </div>
 
   <div class="form-group">

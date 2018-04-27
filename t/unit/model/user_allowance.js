@@ -283,4 +283,8 @@ describe('accrued_adjustment attribute', function(){
     });
   });
 
+  // TODO
+  // 1. Check case when it is 1 Jan and employee started last year
+  // 2. Check case when it is 31 Jan and employee started last year
+
 });
