@@ -283,8 +283,103 @@ describe('accrued_adjustment attribute', function(){
     });
   });
 
-  // TODO
-  // 1. Check case when it is 1 Jan and employee started last year
-  // 2. Check case when it is 31 Jan and employee started last year
+  describe('Started last year, today is 1 of January', () => {
+    let employee = model.User.build({
+      start_date : moment('2016-04-01'),
+    });
 
+    let ul = new UserAllowance({
+      user : employee,
+      year : moment('2017', 'YYYY'),
+      now  : moment('2017-01-01'),
+
+      number_of_days_taken_from_allowance : 0,
+      manual_adjustment                   : 0,
+      carry_over                          : 0,
+      nominal_allowance                   : 24,
+    });
+
+    it('Ensure year total allowance is correct', () => {
+      expect( ul.total_number_of_days_in_allowance ).to.be.eql( 24 );
+    });
+
+    it('Check accrued_adjustment', () => {
+      expect( ul.accrued_adjustment ).to.be.eql(-24);
+    });
+  });
+
+  describe('Started last year, today is 14th of January', () => {
+    let employee = model.User.build({
+      start_date : moment('2016-04-01'),
+    });
+
+    let ul = new UserAllowance({
+      user : employee,
+      year : moment('2017', 'YYYY'),
+      now  : moment('2017-01-14'),
+
+      number_of_days_taken_from_allowance : 0,
+      manual_adjustment                   : 0,
+      carry_over                          : 0,
+      nominal_allowance                   : 24
+    });
+
+    it('Ensure year total allowance is correct', () => {
+      expect( ul.total_number_of_days_in_allowance ).to.be.eql( 24 );
+    });
+
+    it('Check accrued_adjustment', () => {
+      expect( ul.accrued_adjustment ).to.be.eql(-23);
+    });
+  });
+
+  describe('Started last year, today is 31th of December', () => {
+    let employee = model.User.build({
+      start_date : moment('2016-04-01'),
+    });
+
+    let ul = new UserAllowance({
+      user : employee,
+      year : moment('2017', 'YYYY'),
+      now  : moment('2017-12-31'),
+
+      number_of_days_taken_from_allowance : 0,
+      manual_adjustment                   : 0,
+      carry_over                          : 0,
+      nominal_allowance                   : 24
+    });
+
+    it('Ensure year total allowance is correct', () => {
+      expect( ul.total_number_of_days_in_allowance ).to.be.eql( 24 );
+    });
+
+    it('Check accrued_adjustment', () => {
+      expect( ul.accrued_adjustment ).to.be.eql(-0);
+    });
+  });
+
+  describe('Started last year, today is 15th of December', () => {
+    let employee = model.User.build({
+      start_date : moment('2016-04-01'),
+    });
+
+    let ul = new UserAllowance({
+      user : employee,
+      year : moment('2017', 'YYYY'),
+      now  : moment('2017-12-15'),
+
+      number_of_days_taken_from_allowance : 0,
+      manual_adjustment                   : 0,
+      carry_over                          : 0,
+      nominal_allowance                   : 24
+    });
+
+    it('Ensure year total allowance is correct', () => {
+      expect( ul.total_number_of_days_in_allowance ).to.be.eql( 24 );
+    });
+
+    it('Check accrued_adjustment', () => {
+      expect( ul.accrued_adjustment ).to.be.eql(-1);
+    });
+  });
 });
