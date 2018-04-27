@@ -69,6 +69,14 @@
     </label>
     <span class="help-block">Determine if employees from {{department.name}} have <a href="/settings/general"/>bank holidays</a> in addition to their allowance</span>
   </div>
+
+  <div class="form-group">
+    <label for="is_accrued_allowance_inp" class="control-label">
+      <input class="" id="is_accrued_allowance_inp" name="is_accrued_allowance" type="checkbox" {{# if department.is_accrued_allowance}} checked="checked" {{/if}} >
+      Accrued allowance
+    </label>
+    <span class="help-block">If enabled, holiday allowance starts to build up - or accrue - from the first day of employment. It accrues in proportion to the annual entitlement. E.g. an employee in the ninth month of employment would have built up 9/12ths (or three-quarters) of annual entitlement.</span>
+  </div>
 </div>
 
 <div class="row">

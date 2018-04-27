@@ -43,6 +43,17 @@
               <span class="fa fa-question-circle"> </span>
             </button>
           </th>
+          <th>Accrued Allowance
+            <button type="button"
+              class="btn btn-xs btn-link"
+              data-content="If set YES, holiday allowance starts to build up - or accrue - from the first day of employment. It accrues in proportion to the annual entitlement. E.g. an employee in the ninth month of employment would have built up 9/12ths (or three-quarters) of annual entitlement."
+              data-placement="top"
+              data-toggle="popover"
+              data-trigger="focus hover"
+            >
+              <span class="fa fa-question-circle"> </span>
+            </button>
+          </th>
           <th></th>
         </tr>
       </thead>
@@ -56,6 +67,7 @@
           </td>
           <td><a href="/users/?department={{ this.id }}">{{this.users.length}}</a></td>
           <td>{{# if this.include_public_holidays }}Yes{{/if}}</td>
+          <td>{{# if this.is_accrued_allowance }}Yes{{/if}}</td>
           <td><a href="/settings/departments/edit/{{this.id}}/" class="btn btn-link btn-xs pull-right"><span class="fa fa-chevron-right"></span></a></td>
         </tr>
         {{/each}}
