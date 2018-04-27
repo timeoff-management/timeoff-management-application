@@ -62,4 +62,15 @@
         data-trigger="focus hover"
       >{{#if_equal user_allowance.number_of_days_taken_from_allowance 0}}{{else}}-{{/if_equal}}{{ user_allowance.number_of_days_taken_from_allowance}}</span>
     </dd>
+    {{# if user_allowance.is_accrued_allowance }}
+      <dd>
+        <em>Locked so far</em>
+        <span class="pull-right"
+          data-content="Number of unavailable days in allowance due to accrual nature of vacation entitlement."
+          data-placement="top"
+          data-toggle="popover"
+          data-trigger="focus hover"
+        >{{ user_allowance.accrued_adjustment }}</span>
+      </dd>
+    {{/ if}}
 </dl>

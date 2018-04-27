@@ -40,9 +40,17 @@
   </div>
 
   <div class="form-group">
-    <label class="control-label">Days remaining for {{ employee.name }} to take this year</label>
-    <p>{{ leave_statistics.remaining }} out of {{  leave_statistics.total_for_current_year }} in allowance</p>
+    <label class="control-label">Days available for {{ employee.name }} to take this year</label>
+    <p>{{ user_allowance.number_of_days_available_in_allowance }} out of {{ user_allowance.total_number_of_days_in_allowance }} in allowance</p>
     <input id="days_remaining_inp" type="hidden" value="{{ leave_statistics.remaining }} out of {{  leave_statistics.total_for_current_year }}">
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">Is Accrued Allowance?</label>
+    <p>{{# if user_allowance.is_accrued_allowance }}Yes{{else}}No{{/if}}</p>
+    <span class="help-block">
+      The way of available allowance calculation is defined on department level. <a href="/settings/departments/edit/{{employee.DepartmentId}}">More details <i class="fa fa-angle-double-right"></i></a>
+    </span>
   </div>
 
   <div class="row">
