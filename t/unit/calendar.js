@@ -86,7 +86,7 @@ describe('Check calendar month object', function(){
     });
 
     it('It knows whether day is bank holiday', function(){
-        var mar = new CalendarMonth('2015-03-19', { bank_holidays : ['2015-03-08'], schedule : schedule, today : moment.utc() });
+        var mar = new CalendarMonth('2015-03-19', { bank_holidays : [{date : '2015-03-08'}], schedule : schedule, today : moment.utc() });
 
         expect(mar.is_bank_holiday(8)).to.be.ok;
         expect(mar.is_bank_holiday(10)).not.to.be.ok;
