@@ -85,6 +85,20 @@
 
           <div class="col-md-offset-1 col-md-5">
 
+            <div class="form-horizontal">
+              <div class="form-group">
+                <label for="" class="col-md-7 control-label">Backup employees' leaves data</label>
+                <div class="col-md-5">
+                  <a class="btn btn-success" href="/settings/company/backup/"><i class="fa fa-download"></i> Employees and Leaves data</a>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-md-offset-2">
+                  <em>Download list of employees with their leave requests ever. The file is in <strong>.CSV</strong> format which is compatible with MS Excel.</em>
+                </div>
+              </div>
+            </div>
+
             <form class="form-horizontal" method="POST" action="/settings/schedule" id="company_schedule_form">
             <input type="hidden" name="company_wide" value="1">
             <div class="form-group">
@@ -106,7 +120,6 @@
               </div>
             </div>
             </form>
-
 
           </div>
         </div>
