@@ -1,0 +1,25 @@
+
+<div class="modal fade" id="{{container_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    <form method="POST" action="/settings//company/delete/" id="remove_company_form">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Remove company account</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="remove_company_name_confirmation" class="control-label">Company name:</label>
+          <input type="text" class="form-control" id="remove_company_name_confirmation" name="confirm_name" required>
+          <p><em>Please type in the name of company you wish to remove.</em></p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-danger">Delete company account</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
