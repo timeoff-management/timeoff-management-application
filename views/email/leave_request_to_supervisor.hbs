@@ -1,9 +1,10 @@
-New leave request
-=====
-<p>Hello <strong>{{#with approver }}{{this.full_name}}{{/with}}</strong>,</p>
+<h3>Wniosek urlopowy</h3>
 
-<p><strong>{{#with requester}}{{this.full_name}}{{/with}}</strong> sent new leave request <strong>{{>leave_request_detail leave=leave }}</strong>.</p>
+<p>Dzień dobry,</p>
 
-<p>Please visit {{> email/link href=(concatenate (get_application_domain) '/requests/' ) text='Pending requests'}} page to approve or reject outstanding requests.</p>
+<p>Proszę o udzielenie mi urlopu w dniach {{>leave_request_detail leave=leave }}.</p>
 
-<p>Thanks</p>
+<p>Pozdrawiam</p>
+{{#with requester}}{{this.full_name}}{{/with}}
+
+<p>{{> email/link href=(concatenate (get_application_domain) '/requests/' ) text='Zobacz'}}</p>
