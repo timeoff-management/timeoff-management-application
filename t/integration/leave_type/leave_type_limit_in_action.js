@@ -131,7 +131,7 @@ describe('Leave type limits in actoion', function(){
             selector : 'input#to',
             value : '2015-06-18',
           }],
-          message : /Adding requested .* absense would exceed maximum allowed for such type by 1/,
+          message : /Adding requested .* absence would exceed maximum allowed for such type by 1/,
           multi_line_message : true,
         })
         .then(function(){ done() });
