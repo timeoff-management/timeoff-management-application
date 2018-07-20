@@ -142,6 +142,25 @@ $(document).ready(function(){
     });
 });
 
+/*
+ * This is to use tablesorter and allow table columns to be sorted client side.
+ *
+ * */
+$(document).ready(function() {
+  $(".sortable-table").tablesorter();
+});
+
+/*
+ * Shortcut to reset to default table sorting
+ *
+ * */
+$(function() {
+  $('#reset-sort').click(function() {
+    $('.sortable-table').trigger('sortReset');
+    return false;
+  });
+});
+
 
 $(document).ready(function(){
 
@@ -168,5 +187,3 @@ $(document).ready(function(){
       return false;
     });
 });
-
-
