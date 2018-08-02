@@ -13,6 +13,7 @@ describe('Check bug when type mismatch happenned', function(){
         day_part_start : 2,
         date_end     : '2015-05-07 00:00:00.000 +00:00',
         day_part_end : 2,
+        employee_comment : 'Employee comment',
     });
 
     it('String value of 2 properly used', function(){
@@ -26,6 +27,7 @@ describe('Check bug when type mismatch happenned', function(){
                     to_date_part : 2,
                     leave_type   : 1,
                     reason       : 1,
+                    employee_comment : 'Employee comment',
                 })
             )
         ).to.be.equal(false);
@@ -39,6 +41,7 @@ describe('leave request half a day with existing booking of half a day', functio
         date_end : '2015-04-09',
         day_part_start : 2,
         day_part_end : 2,
+        employee_comment : 'Employee comment',
     });
 
     it('clash', function(){
@@ -52,6 +55,7 @@ describe('leave request half a day with existing booking of half a day', functio
                     to_date_part : 1,
                     leave_type   : 1,
                     reason       : 1,
+                    employee_comment : 'Employee comment',
                 })
             )
         ).to.not.be.ok;
@@ -68,6 +72,7 @@ describe('leave request half a day with existing booking of half a day', functio
                     to_date_part : 1,
                     leave_type   : 1,
                     reason       : 1,
+                    employee_comment : 'Employee comment',
                 })
             )
         ).to.be.ok;
@@ -82,6 +87,7 @@ describe('Leave request is spread through more then one day', function(){
         date_end       : '2015-04-10',
         day_part_start : 2,
         day_part_end   : 1,
+        employee_comment : 'Employee comment',
     });
 
     it('leave object is instanciated', function(){
@@ -99,6 +105,7 @@ describe('Leave request is spread through more then one day', function(){
                     // do not care about following parameters
                     leave_type   : 1,
                     reason       : 1,
+                    employee_comment : 'Employee comment',
                 })
             )
         ).to.not.be.ok;
@@ -115,6 +122,7 @@ describe('Leave request is spread through more then one day', function(){
                     // do not care about following parameters
                     leave_type   : 1,
                     reason       : 1,
+                    employee_comment : 'Employee comment',
                 })
             )
         ).to.not.be.ok;
@@ -131,6 +139,7 @@ describe('Leave request is spread through more then one day', function(){
                     // do not care about following parameters
                     leave_type   : 1,
                     reason       : 1,
+                    employee_comment : 'Employee comment',
                 })
             )
         ).to.be.ok;
@@ -144,6 +153,7 @@ describe('Leave request is spread through more then one day', function(){
                     from_date_part : 1,
                     to_date        : '2015-04-09',
                     to_date_part   : 2,
+                    employee_comment : 'Employee comment',
                     // do not care about following parameters
                     leave_type   : 1,
                     reason       : 1,
@@ -160,6 +170,7 @@ describe('Leave request is spread through more then one day', function(){
                     from_date_part : 2,
                     to_date        : '2015-04-11',
                     to_date_part   : 1,
+                    employee_comment : 'Employee comment',
                     // do not care about following parameters
                     leave_type   : 1,
                     reason       : 1,
@@ -178,6 +189,7 @@ describe('Case when leave request is within one day', function(){
         date_end       : '2015-04-10',
         day_part_start : 2,
         day_part_end   : 1,
+        employee_comment : 'Employee comment',
     });
 
     it('Is half and attempt to stick to the half day part so they fit', function(){
@@ -187,6 +199,7 @@ describe('Case when leave request is within one day', function(){
                     from_date      : '2015-04-09',
                     from_date_part : 3,
                     to_date        : '2015-04-09',
+                    employee_comment : 'Employee comment',
                     // do not care about following parameters
                     to_date_part : 1,
                     leave_type   : 1,
@@ -203,6 +216,7 @@ describe('Case when leave request is within one day', function(){
                     from_date      : '2015-04-09',
                     from_date_part : 2,
                     to_date        : '2015-04-09',
+                    employee_comment : 'Employee comment',
                     // do not care about following parameters
                     to_date_part : 1,
                     leave_type   : 1,
@@ -219,6 +233,7 @@ describe('Case when leave request is within one day', function(){
                     from_date      : '2015-04-10',
                     from_date_part : 2,
                     to_date        : '2015-04-10',
+                    employee_comment : 'Employee comment',
                     // do not care about following parameters
                     to_date_part : 1,
                     leave_type   : 1,
@@ -235,6 +250,7 @@ describe('Case when leave request is within one day', function(){
                     from_date      : '2015-04-09',
                     from_date_part : 1,
                     to_date        : '2015-04-09',
+                    employee_comment : 'Employee comment',
                     // do not care about following parameters
                     to_date_part : 1,
                     leave_type   : 1,
@@ -251,6 +267,7 @@ describe('Case when leave request is within one day', function(){
                     from_date      : '2015-04-10',
                     from_date_part : 1,
                     to_date        : '2015-04-10',
+                    employee_comment : 'Employee comment',
                     // do not care about following parameters
                     to_date_part : 1,
                     leave_type   : 1,

@@ -18,6 +18,8 @@
           <th>Approved by</th>
           <th></th>
           <th><span class="pull-right">Status</span></th>
+          <th>Employee Comment</th>
+          <th>Supervisor Comment</th>
         </tr>
       </thead>
 
@@ -47,6 +49,7 @@
           {{/if}}
         </td>
         <td><span class="pull-right leave-request-row-status">{{#if this.is_new_leave }}Pending{{else}}{{#if this.is_approved_leave}}Approved{{else}}Rejected{{/if}}{{/if}}</span></td>
+        <td>{{#if this.get_employee_comment}}{{this.get_employee_comment}}{{/if}}</td>
       </tr>
 
       {{/ each }}
