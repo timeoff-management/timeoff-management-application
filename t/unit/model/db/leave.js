@@ -23,11 +23,11 @@ describe('Check bug when type mismatch happenned', function(){
                     from_date      : '2015-05-07',
                     from_date_part : '2',
                     to_date        : '2015-05-07',
+                    employee_comment : 'Employee comment',
                     // do not care about following parameters
                     to_date_part : 2,
                     leave_type   : 1,
                     reason       : 1,
-                    employee_comment : 'Employee comment',
                 })
             )
         ).to.be.equal(false);
@@ -51,11 +51,11 @@ describe('leave request half a day with existing booking of half a day', functio
                     from_date      : '2015-04-09',
                     from_date_part : 2,
                     to_date        : '2015-04-09',
+                    employee_comment : 'Employee comment',
                     // do not care about following parameters
                     to_date_part : 1,
                     leave_type   : 1,
                     reason       : 1,
-                    employee_comment : 'Employee comment',
                 })
             )
         ).to.not.be.ok;
@@ -68,11 +68,11 @@ describe('leave request half a day with existing booking of half a day', functio
                     from_date      : '2015-04-09',
                     from_date_part : 3,
                     to_date        : '2015-04-09',
+                    employee_comment : 'Employee comment',
                     // do not care about following parameters
                     to_date_part : 1,
                     leave_type   : 1,
                     reason       : 1,
-                    employee_comment : 'Employee comment',
                 })
             )
         ).to.be.ok;
@@ -102,10 +102,10 @@ describe('Leave request is spread through more then one day', function(){
                     from_date_part : 1,
                     to_date        : '2015-04-09',
                     to_date_part   : 1,
+                    employee_comment : 'Employee comment',
                     // do not care about following parameters
                     leave_type   : 1,
                     reason       : 1,
-                    employee_comment : 'Employee comment',
                 })
             )
         ).to.not.be.ok;
@@ -119,10 +119,10 @@ describe('Leave request is spread through more then one day', function(){
                     from_date_part : 1,
                     to_date        : '2015-04-11',
                     to_date_part   : 1,
+                    employee_comment : 'Employee comment',
                     // do not care about following parameters
                     leave_type   : 1,
                     reason       : 1,
-                    employee_comment : 'Employee comment',
                 })
             )
         ).to.not.be.ok;
@@ -136,10 +136,10 @@ describe('Leave request is spread through more then one day', function(){
                     from_date_part : 1,
                     to_date        : '2015-04-09',
                     to_date_part   : 3,
+                    employee_comment : 'Employee comment',
                     // do not care about following parameters
                     leave_type   : 1,
                     reason       : 1,
-                    employee_comment : 'Employee comment',
                 })
             )
         ).to.be.ok;
