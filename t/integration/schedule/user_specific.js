@@ -5,6 +5,7 @@ var test                 = require('selenium-webdriver/testing'),
   By                     = require('selenium-webdriver').By,
   Promise                = require("bluebird"),
   expect                 = require('chai').expect,
+  moment                 = require('moment'),
   add_new_user_func      = require('../../lib/add_new_user'),
   check_elements_func    = require('../../lib/check_elements'),
   config                 = require('../../lib/config'),
@@ -86,6 +87,24 @@ describe('Basic user specific schedule', function(){
       user_id_B = data.user.id;
       done();
     });
+  });
+
+  it('Ensure that user A started at the begining of current year', (done) => {
+    open_page_func({
+      url    : application_host + 'users/edit/'+user_id_A+'/',
+      driver : driver,
+    })
+    .then(() => submit_form_func({
+        driver      : driver,
+        form_params : [{
+          selector : 'input#start_date_inp',
+          value    : moment.utc().year() + '-01-01',
+        }],
+        submit_button_selector : 'button#save_changes_btn',
+        message : /Details for .* were updated/,
+      })
+    )
+    .then(() => done());
   });
 
   it('Open user B schedule and ensure wording indicates company wide one is used', function(done){

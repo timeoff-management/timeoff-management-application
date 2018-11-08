@@ -4,12 +4,14 @@
 var test                 = require('selenium-webdriver/testing'),
   By                     = require('selenium-webdriver').By,
   Promise                = require("bluebird"),
+  moment                 = require('moment'),
   expect                 = require('chai').expect,
   register_new_user_func = require('../../lib/register_new_user'),
   open_page_func         = require('../../lib/open_page'),
   submit_form_func       = require('../../lib/submit_form'),
   check_elements_func    = require('../../lib/check_elements'),
   config                 = require('../../lib/config'),
+  user_info_func         = require('../../lib/user_info'),
   application_host       = config.get_application_host(),
   schedule_form_id       = '#company_schedule_form';
 
@@ -209,7 +211,7 @@ describe('Leave request reflects shanges in company schedule', function(){
 
   this.timeout( config.get_execution_timeout() );
 
-  var driver;
+  var driver, email_A, user_id_A;
 
   it("Register new company", function(done){
     register_new_user_func({
@@ -217,8 +219,42 @@ describe('Leave request reflects shanges in company schedule', function(){
     })
     .then(function(data){
       driver = data.driver;
+      email_A = data.email;
       done();
     });
+  });
+
+  it("Obtain information about newly added user", function(done){
+    user_info_func({
+      driver : driver,
+      email  : email_A,
+    })
+    .then(function(data){
+      user_id_A = data.user.id;
+      done();
+    });
+  });
+
+  it('Ensure that user started at the begining of current year', (done) => {
+    open_page_func({
+      url    : application_host + 'users/edit/'+user_id_A+'/',
+      driver : driver,
+    })
+    .then(() => submit_form_func({
+        driver      : driver,
+        form_params : [{
+          selector : 'input#start_date_inp',
+          value    : moment.utc().year() + '-01-01',
+        }],
+        submit_button_selector : 'button#save_changes_btn',
+        message : /Details for .* were updated/,
+      })
+    )
+    .then(() => open_page_func({
+      url    : application_host,
+      driver : driver,
+    }))
+    .then(() => done());
   });
 
   it("Open Book leave popup window", function(done){
