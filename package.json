@@ -37,6 +37,7 @@
     "serve-favicon": "^2.1.7",
     "sqlite3": "^3.1.1",
     "underscore": "^1.8.3",
+    "uuid": "^3.3.2",
     "validator": "^3.43.0"
   },
   "devDependencies": {
