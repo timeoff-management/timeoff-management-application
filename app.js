@@ -35,7 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 // Setup authentication mechanism
-var passport = require('./lib/passport')();
+const passport = require('./lib/passport')();
 
 var session = require('express-session');
 // initalize sequelize with session store
@@ -100,6 +100,11 @@ app.use( require('./lib/middleware/session_aware_redirect') );
 app.use(
   '/feed/',
   require('./lib/route/feed')
+);
+
+app.use(
+  '/integration/v1/',
+  require('./lib/route/integration_api')(passport)
 );
 
 app.use(
