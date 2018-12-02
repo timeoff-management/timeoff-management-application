@@ -3,6 +3,7 @@
 
 const
   Promise = require('bluebird'),
+  moment = require('moment'),  
   models = require('../lib/model/db');
 
 const
@@ -28,11 +29,13 @@ models.User
     user => {
       return user
         .reload_with_leave_details({YEAR_FROM})
-        .then( user => user.promise_number_of_days_available_in_allowance(YEAR_FROM) )
+        .then( user => user.promise_allowance({ year : moment(new Date(YEAR_FROM, 0, 1))})
+          .then(allowance_obj => Promise.resolve([allowance_obj.number_of_days_available_in_allowance, user]))
+        )
         .then(remainer => {
           return user.promise_to_update_carried_over_allowance({
             year                   : YEAR_TO,
-            carried_over_allowance : remainer,
+            carried_over_allowance : remainer[0],
           });
         })
         .then(() => Promise.resolve(console.log('Done with user ' + user.id)));
