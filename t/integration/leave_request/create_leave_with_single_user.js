@@ -1,20 +1,23 @@
 
 'use strict';
 
-var test             = require('selenium-webdriver/testing'),
-    config           = require('../../lib/config'),
-    application_host = config.get_application_host(),
-    By               = require('selenium-webdriver').By,
-    expect           = require('chai').expect,
-    _                = require('underscore'),
-    Promise          = require("bluebird"),
-    moment           = require('moment'),
-    login_user_func        = require('../../lib/login_with_user'),
-    register_new_user_func = require('../../lib/register_new_user'),
-    open_page_func         = require('../../lib/open_page'),
-    submit_form_func       = require('../../lib/submit_form'),
-    check_elements_func    = require('../../lib/check_elements'),
-    check_booking_func     = require('../../lib/check_booking_on_calendar');
+const
+  test             = require('selenium-webdriver/testing'),
+  config           = require('../../lib/config'),
+  application_host = config.get_application_host(),
+  By               = require('selenium-webdriver').By,
+  expect           = require('chai').expect,
+  _                = require('underscore'),
+  Promise          = require("bluebird"),
+  moment           = require('moment'),
+  login_user_func        = require('../../lib/login_with_user'),
+  register_new_user_func = require('../../lib/register_new_user'),
+  open_page_func         = require('../../lib/open_page'),
+  submit_form_func       = require('../../lib/submit_form'),
+  check_elements_func    = require('../../lib/check_elements'),
+  check_booking_func     = require('../../lib/check_booking_on_calendar'),
+  user_info_func         = require('../../lib/user_info'),
+  userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year');
 
 
 /*
@@ -28,22 +31,23 @@ var test             = require('selenium-webdriver/testing'),
  *
  * */
 
-
-describe('Leave request with singl user', function(){
+describe('Leave request with single user', function(){
 
   this.timeout( config.get_execution_timeout() );
 
-  var new_user_email, driver;
+  let new_user_email, driver;
 
   it('Create new company', function(done){
-    register_new_user_func({
-      application_host : application_host,
-    })
-    .then(function( data ){
-      driver = data.driver;
-      new_user_email = data.email;
+    register_new_user_func({ application_host })
+    .then((data) => {
+      ({driver, email:new_user_email} = data);
       done();
     });
+  });
+
+  it("Ensure user starts at the very beginning of current year", done =>{
+    userStartsAtTheBeginingOfYear({driver, email: new_user_email})
+      .then(() => done())
   });
 
   it("Open calendar page", function(done){

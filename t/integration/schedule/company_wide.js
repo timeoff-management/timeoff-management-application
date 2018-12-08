@@ -1,7 +1,8 @@
 
 'use strict';
 
-var test                 = require('selenium-webdriver/testing'),
+const
+  test                 = require('selenium-webdriver/testing'),
   By                     = require('selenium-webdriver').By,
   Promise                = require("bluebird"),
   moment                 = require('moment'),
@@ -13,7 +14,8 @@ var test                 = require('selenium-webdriver/testing'),
   config                 = require('../../lib/config'),
   user_info_func         = require('../../lib/user_info'),
   application_host       = config.get_application_host(),
-  schedule_form_id       = '#company_schedule_form';
+  schedule_form_id       = '#company_schedule_form',
+  userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year');
 
 /*
  *  Scenario 1:
@@ -211,7 +213,7 @@ describe('Leave request reflects shanges in company schedule', function(){
 
   this.timeout( config.get_execution_timeout() );
 
-  var driver, email_A, user_id_A;
+  let driver, email_A;
 
   it("Register new company", function(done){
     register_new_user_func({
@@ -224,37 +226,15 @@ describe('Leave request reflects shanges in company schedule', function(){
     });
   });
 
-  it("Obtain information about newly added user", function(done){
-    user_info_func({
-      driver : driver,
-      email  : email_A,
-    })
-    .then(function(data){
-      user_id_A = data.user.id;
-      done();
-    });
+  it("Obtain information about newly added user", (done) => {
+    user_info_func({driver, email:email_A})
+    .then(data => done());
   });
 
-  it('Ensure that user started at the begining of current year', (done) => {
-    open_page_func({
-      url    : application_host + 'users/edit/'+user_id_A+'/',
-      driver : driver,
-    })
-    .then(() => submit_form_func({
-        driver      : driver,
-        form_params : [{
-          selector : 'input#start_date_inp',
-          value    : moment.utc().year() + '-01-01',
-        }],
-        submit_button_selector : 'button#save_changes_btn',
-        message : /Details for .* were updated/,
-      })
-    )
-    .then(() => open_page_func({
-      url    : application_host,
-      driver : driver,
-    }))
-    .then(() => done());
+  it("Ensure user starts at the very beginning of current year", done =>{
+    userStartsAtTheBeginingOfYear({driver, email:email_A})
+      .then(() => open_page_func({driver, url:application_host}))
+      .then(() => done())
   });
 
   it("Open Book leave popup window", function(done){

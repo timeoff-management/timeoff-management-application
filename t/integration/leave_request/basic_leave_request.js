@@ -1,7 +1,7 @@
 
 'use strict';
 
-var test             = require('selenium-webdriver/testing'),
+const test             = require('selenium-webdriver/testing'),
     config           = require('../../lib/config'),
     application_host = config.get_application_host(),
     By               = require('selenium-webdriver').By,
@@ -17,7 +17,9 @@ var test             = require('selenium-webdriver/testing'),
     submit_form_func       = require('../../lib/submit_form'),
     check_elements_func    = require('../../lib/check_elements'),
     check_booking_func     = require('../../lib/check_booking_on_calendar'),
-    add_new_user_func      = require('../../lib/add_new_user');
+    user_info_func         = require('../../lib/user_info'),
+    add_new_user_func      = require('../../lib/add_new_user'),
+    userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year');
 
 
 /*
@@ -262,17 +264,22 @@ describe("Use problematic date with non default date format", function(){
 
   this.timeout( config.get_execution_timeout() );
 
-  var driver;
+  let driver, email, user_id;
 
   it("Register new company with default date to be DD/MM/YY", function(done){
     register_new_user_func({
       application_host    : application_host,
       default_date_format : 'DD/MM/YY',
     })
-    .then(function(data){
-      driver = data.driver;
+    .then((data) => {
+      ({email, driver} = data);
       done();
     });
+  });
+
+  it("Ensure user starts at the very beginning of current year", done =>{
+    userStartsAtTheBeginingOfYear({driver, email})
+      .then(() => done())
   });
 
   it("Open calendar page", function(done){

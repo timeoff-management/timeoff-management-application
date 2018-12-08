@@ -1,7 +1,8 @@
 
 'use strict';
 
-var test             = require('selenium-webdriver/testing'),
+const
+    test             = require('selenium-webdriver/testing'),
     By               = require('selenium-webdriver').By,
     expect           = require('chai').expect,
     _                = require('underscore'),
@@ -16,7 +17,8 @@ var test             = require('selenium-webdriver/testing'),
   leave_type_edit_form_id='#leave_type_edit_form',
   leave_type_new_form_id ='#leave_type_new_form',
   config                 = require('../../lib/config'),
-  application_host       = config.get_application_host();
+  application_host       = config.get_application_host(),
+  userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year');
 
 /*
  *  Scenario to go in this test:
@@ -32,16 +34,21 @@ describe('Try to remove used leave type', function(){
 
   this.timeout( config.get_execution_timeout() );
 
-  var driver;
+  var driver, email;
 
   it('Create new company', function(done){
     register_new_user_func({
       application_host : application_host,
     })
     .then(function(data){
-      driver = data.driver;
+      ({driver, email} = data);
       done();
     });
+  });
+
+  it("Ensure user starts at the very beginning of current year", done =>{
+    userStartsAtTheBeginingOfYear({driver, email})
+      .then(() => done())
   });
 
   it("Open page with leave types", function(done){
