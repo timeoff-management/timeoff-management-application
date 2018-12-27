@@ -64,6 +64,21 @@
 
 
               <div class="form-group">
+                <label for="input_carry_over" class="col-md-4 control-label">Carried over days</label>
+                <div class="col-md-8">
+                  <select class="form-control" id="input_carry_over" name="carry_over">
+                    {{#each carryOverOptions}}
+                    <option value="{{this.days}}" {{# if_equal this.days ../company.carry_over }} selected="selected"{{/if_equal}}>{{this.label}}</option>
+                    {{/each}}
+                  </select>
+                    <p>
+                      <em>Number of days in employee allowance that are carried over to the next year.</em>
+                    </p>
+                </div>
+              </div>
+
+
+              <div class="form-group">
                 <div class="col-md-offset-4 col-md-8">
                   <div class="checkbox">
                     <label for="share-all-absences">
