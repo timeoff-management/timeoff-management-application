@@ -13,7 +13,8 @@ const
   Bluebird               = require('bluebird'),
   expect                 = require('chai').expect,
   application_host       = config.get_application_host(),
-  leave_type_edit_form_id='#leave_type_edit_form';
+  leave_type_edit_form_id='#leave_type_edit_form',
+  userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year');
 
 /*
  *  Aim of the scenario: to ensure that half a days are highlighted correctly
@@ -68,6 +69,12 @@ describe('Coloring of half days', function(){
       user_id = data.user.id;
       done();
     });
+  });
+
+  it("Ensure user starts at the very beginning of current year", done =>{
+    userStartsAtTheBeginingOfYear({driver, email:user_email, year:2018})
+      .then(() => open_page_func({ url:application_host,driver}))
+      .then(() => done())
   });
 
   it('Changes default color for Sick days to be "color 3"', done => {

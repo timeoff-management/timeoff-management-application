@@ -329,16 +329,22 @@ describe("Book the very last day of year to be a holiday", function(){
 
   this.timeout( config.get_execution_timeout() );
 
-  var driver;
+  let driver, email;
 
   it("Register new company", function(done){
     register_new_user_func({
       application_host    : application_host,
     })
     .then(function(data){
-      driver = data.driver;
+      ({driver, email} = data);
       done();
     });
+  });
+
+  it("Ensure user starts at the very beginning of current year", done =>{
+    userStartsAtTheBeginingOfYear({driver, email})
+      .then(() => open_page_func({ url:application_host,driver}))
+      .then(() => done())
   });
 
   it("Place new holiday to be the very last day of the year", function(done){

@@ -13,7 +13,8 @@ const
   expect                 = require('chai').expect,
   Bluebird               = require('bluebird'),
   moment                 = require('moment'),
-  company_edit_form_id   ='#company_edit_form';
+  company_edit_form_id   ='#company_edit_form',
+  userStartsAtTheBeginingOfYear = require('../lib/set_user_to_start_at_the_beginning_of_the_year');
 
 /*
  *  Basic scenario for checking time zones:
@@ -52,6 +53,12 @@ describe('Check Time zones', function(){
       user_email = data.email;
       done();
     });
+  });
+
+  it("Ensure user starts at the very beginning of current year", done =>{
+    userStartsAtTheBeginingOfYear({driver, email:user_email})
+      .then(() => open_page_func({ url:application_host,driver}))
+      .then(() => done())
   });
 
   it("Open page for editing company details", function(done){

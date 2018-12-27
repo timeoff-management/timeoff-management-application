@@ -14,7 +14,8 @@ const
   submit_form_func       = require('../../lib/submit_form'),
   config                 = require('../../lib/config'),
   application_host       = config.get_application_host(),
-  company_edit_form_id   ='#company_edit_form';
+  company_edit_form_id   ='#company_edit_form',
+  userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year');
 
 /*
  *  Scenario to test:
@@ -47,6 +48,12 @@ describe("Remove company account", function(){
       driver        = data.driver;
       done();
     });
+  });
+
+  it("Ensure user starts at the very beginning of current year", done =>{
+    userStartsAtTheBeginingOfYear({driver, email:emailCompanyA})
+      .then(() => open_page_func({ url:application_host,driver}))
+      .then(() => done())
   });
 
   it("Book a leave by user from company A", done => {
@@ -85,6 +92,12 @@ describe("Remove company account", function(){
       driver        = data.driver;
       done();
     });
+  });
+
+  it("Ensure user starts at the very beginning of current year", done =>{
+    userStartsAtTheBeginingOfYear({driver, email:emailCompanyB})
+      .then(() => open_page_func({ url:application_host,driver}))
+      .then(() => done())
   });
 
   it("Book a leave by user from company B", done => {

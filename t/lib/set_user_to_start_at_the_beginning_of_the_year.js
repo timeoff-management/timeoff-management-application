@@ -18,6 +18,7 @@ module.exports = ({
   driver,
   email,
   userId=null,
+  year=moment.utc().year(),
   applicationHost=config.get_application_host()}
 ) =>
   getUserId({userId,email,driver})
@@ -26,7 +27,7 @@ module.exports = ({
       driver,
       form_params : [{
         selector : 'input#start_date_inp',
-        value    : moment.utc().year() + '-01-01',
+        value    : `${year}-01-01`,
       }],
       submit_button_selector : 'button#save_changes_btn',
       message : /Details for .* were updated/,
