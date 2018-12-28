@@ -7265,6 +7265,15 @@
           "name": "Boxing Day"
         }
       ]
-    }
+    },
+    "ZZ": {
+      "name": "Other",
+      "bank_holidays": [
+        {
+          "name" : "Early May bank holiday",
+          "date" : "2015-05-04"
+        }
+      ]
+     }
   }
 }
