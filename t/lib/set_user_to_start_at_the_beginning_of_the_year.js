@@ -19,18 +19,20 @@ module.exports = ({
   email,
   userId=null,
   year=moment.utc().year(),
-  applicationHost=config.get_application_host()}
-) =>
+  applicationHost=config.get_application_host(),
+  overwriteDate=null,
+}) =>
   getUserId({userId,email,driver})
     .then(userId => openPageFunc({driver, url:`${applicationHost}users/edit/${userId}/`}))
     .then(() => submitFormFunc({
       driver,
       form_params : [{
-        selector : 'input#start_date_inp',
-        value    : `${year}-01-01`,
+        selector: 'input#start_date_inp',
+        value: (overwriteDate ? overwriteDate.format('YYYY-MM-DD') : `${year}-01-01`),
       }],
       submit_button_selector : 'button#save_changes_btn',
       message : /Details for .* were updated/,
     }))
+    .then(() => openPageFunc({driver, url:applicationHost}))
     .then(() => bluebird.resolve({driver}));
 
