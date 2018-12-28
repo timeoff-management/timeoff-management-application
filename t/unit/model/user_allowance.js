@@ -187,7 +187,6 @@ describe('accrued_adjustment attribute', function(){
 
     let ul = new UserAllowance({
       user : employee,
-      year : moment('2017', 'YYYY'),
       now  : moment('2017-02-01'),
 
       number_of_days_taken_from_allowance : 0,
@@ -212,7 +211,6 @@ describe('accrued_adjustment attribute', function(){
 
     let ul = new UserAllowance({
       user : employee,
-      year : moment('2016', 'YYYY'),
       now  : moment('2016-07-01'),
 
       number_of_days_taken_from_allowance : 0,
@@ -237,7 +235,6 @@ describe('accrued_adjustment attribute', function(){
 
     let ul = new UserAllowance({
       user : employee,
-      year : moment('2016', 'YYYY'),
       now  : moment('2016-07-01'),
 
       number_of_days_taken_from_allowance : 0,
@@ -265,7 +262,6 @@ describe('accrued_adjustment attribute', function(){
 
     let ul = new UserAllowance({
       user : employee,
-      year : moment('2016', 'YYYY'),
       now  : moment('2016-07-01'),
 
       number_of_days_taken_from_allowance : 0,
@@ -290,7 +286,6 @@ describe('accrued_adjustment attribute', function(){
 
     let ul = new UserAllowance({
       user : employee,
-      year : moment('2017', 'YYYY'),
       now  : moment('2017-01-01'),
 
       number_of_days_taken_from_allowance : 0,
@@ -315,7 +310,6 @@ describe('accrued_adjustment attribute', function(){
 
     let ul = new UserAllowance({
       user : employee,
-      year : moment('2017', 'YYYY'),
       now  : moment('2017-01-14'),
 
       number_of_days_taken_from_allowance : 0,
@@ -340,7 +334,6 @@ describe('accrued_adjustment attribute', function(){
 
     let ul = new UserAllowance({
       user : employee,
-      year : moment('2017', 'YYYY'),
       now  : moment('2017-12-31'),
 
       number_of_days_taken_from_allowance : 0,
@@ -365,7 +358,6 @@ describe('accrued_adjustment attribute', function(){
 
     let ul = new UserAllowance({
       user : employee,
-      year : moment('2017', 'YYYY'),
       now  : moment('2017-12-15'),
 
       number_of_days_taken_from_allowance : 0,
