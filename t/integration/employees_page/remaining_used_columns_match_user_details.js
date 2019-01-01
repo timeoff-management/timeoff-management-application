@@ -17,13 +17,14 @@ var test                 = require('selenium-webdriver/testing'),
   register_new_user_func = require('../../lib/register_new_user'),
   submit_form_func       = require('../../lib/submit_form'),
   user_info_func         = require('../../lib/user_info'),
-  application_host       = config.get_application_host();
+  application_host       = config.get_application_host(),
+  userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year');
 
 /*
  *  Scenario (based in bug #166):
  *
  *    * Create company
- *    * Obtain admoin details and go to admin details page
+ *    * Obtain admin details and go to admin details page
  *    * Update admin's details to have start date as very beginnign of this year
  *    * Add one week length holiday and approve it
  *    * Check that allowance section of user details page shows "15 out of 20"
@@ -61,35 +62,12 @@ describe('Leave request cancelation', function(){
     });
   });
 
-  it('Open user A details page', function(done){
-    open_page_func({
-      url    : application_host + 'users/edit/'+user_id_A+'/',
-      driver : driver,
+  it("Update admin details to have start date at very beginig of this year", done =>{
+    userStartsAtTheBeginingOfYear({
+      driver,
+      email: email_A,
     })
-    .then(function(){ done() });
-  });
-
-
-  it('Update admin details to have start date at very beginig of this year', function(done){
-    submit_form_func({
-      driver      : driver,
-      form_params : [{
-        selector : 'input#start_date_inp',
-        value    : moment().startOf('year').format('YYYY-MM-DD'),
-      }],
-      submit_button_selector : 'button#save_changes_btn',
-      message : /Details for .+ were updated/,
-      should_be_successful : true,
-    })
-    .then(function(){ done() });
-  });
-
-  it("Open calendar page", function(done){
-    open_page_func({
-      url    : application_host + 'calendar/?year=2015&show_full_year=1',
-      driver : driver,
-    })
-    .then(function(){done()});
+    .then(() => done())
   });
 
   it("Open Book leave popup window", function(done){
@@ -103,14 +81,15 @@ describe('Leave request cancelation', function(){
   });
 
   it("Submit new leave request for user A one weekday", function(done){
+    const currentYear = moment.utc().year();
     submit_form_func({
       driver      : driver,
       form_params : [{
         selector : 'input#from',
-        value    : '2018-05-01',
+        value    : `${currentYear}-05-01`,
       },{
         selector : 'input#to',
-        value    : '2018-05-07',
+        value    : `${currentYear}-05-07`,
       }],
       message : /New leave request was added/,
     })
