@@ -29,7 +29,7 @@ models.User
     user => {
       let carryOver;
       return Promise.resolve(user.getCompany().then(c => carryOver = c.carry_over))
-        .then(() => user.reload_with_leave_details({YEAR_FROM}))
+        .then(() => user.reload_with_leave_details({year:moment.utc(YEAR_FROM, 'YYYY')}))
         .then(user => user.promise_allowance({year:moment.utc(YEAR_FROM, 'YYYY')}))
         .then(allowance => {
           return user.promise_to_update_carried_over_allowance({
