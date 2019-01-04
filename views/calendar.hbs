@@ -73,12 +73,12 @@
 </div>
 
 <div class="row">
-  <div class="col-md-2">
+  <div class="col-xs-2">
     {{#if show_full_year}}
     <a class="btn btn-default" href="/calendar/?year={{previous_year}}{{#if show_full_year}}&show_full_year=1{{/if}}"><span aria-hidden="true" class="fa fa-chevron-left"></span> {{previous_year}} </a>
     {{/if}}
   </div>
-  <div class="col-md-8 calendar-section-caption">
+  <div class="col-xs-8 calendar-section-caption">
 
     <strong>{{#if show_full_year}}January - December {{current_year}}{{else}}Upcoming Months{{/if}}</strong>
     &nbsp;
@@ -91,7 +91,7 @@
 
 
   </div>
-  <div class="col-md-2">
+  <div class="col-xs-2">
     {{#if show_full_year}}
     <a class="btn btn-default pull-right" href="/calendar/?year={{next_year}}{{#if show_full_year}}&show_full_year=1{{/if}}">{{next_year}} <span aria-hidden="true" class="fa fa-chevron-right"></span></a>
     {{/if}}
