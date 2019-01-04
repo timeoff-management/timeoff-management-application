@@ -46,7 +46,7 @@ describe('Leave request with single user', function(){
   });
 
   it("Ensure user starts at the very beginning of current year", done =>{
-    userStartsAtTheBeginingOfYear({driver, email: new_user_email})
+    userStartsAtTheBeginingOfYear({driver, email: new_user_email, year:2015})
       .then(() => done())
   });
 

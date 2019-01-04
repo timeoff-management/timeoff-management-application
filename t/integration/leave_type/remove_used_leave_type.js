@@ -47,7 +47,7 @@ describe('Try to remove used leave type', function(){
   });
 
   it("Ensure user starts at the very beginning of current year", done =>{
-    userStartsAtTheBeginingOfYear({driver, email})
+    userStartsAtTheBeginingOfYear({driver, email, year:2015})
       .then(() => done())
   });
 

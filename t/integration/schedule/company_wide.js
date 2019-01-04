@@ -232,8 +232,7 @@ describe('Leave request reflects shanges in company schedule', function(){
   });
 
   it("Ensure user starts at the very beginning of current year", done =>{
-    userStartsAtTheBeginingOfYear({driver, email:email_A})
-      .then(() => open_page_func({driver, url:application_host}))
+    userStartsAtTheBeginingOfYear({driver, email:email_A, year:2015})
       .then(() => done())
   });
 

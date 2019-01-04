@@ -16,7 +16,8 @@ var test                 = require('selenium-webdriver/testing'),
   submit_form_func       = require('../../lib/submit_form'),
   user_info_func         = require('../../lib/user_info'),
   application_host       = config.get_application_host(),
-  schedule_form_id       = '#company_schedule_form';
+  schedule_form_id       = '#company_schedule_form',
+  userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year');
 
 /*
  * Scenario 1: Basic user specific schedule
@@ -89,22 +90,9 @@ describe('Basic user specific schedule', function(){
     });
   });
 
-  it('Ensure that user A started at the begining of current year', (done) => {
-    open_page_func({
-      url    : application_host + 'users/edit/'+user_id_A+'/',
-      driver : driver,
-    })
-    .then(() => submit_form_func({
-        driver      : driver,
-        form_params : [{
-          selector : 'input#start_date_inp',
-          value    : moment.utc().year() + '-01-01',
-        }],
-        submit_button_selector : 'button#save_changes_btn',
-        message : /Details for .* were updated/,
-      })
-    )
-    .then(() => done());
+  it("Ensure that user A started at the begining of current year", done =>{
+    userStartsAtTheBeginingOfYear({driver, email:email_A, year: 2015})
+      .then(() => done())
   });
 
   it('Open user B schedule and ensure wording indicates company wide one is used', function(done){

@@ -278,7 +278,7 @@ describe("Use problematic date with non default date format", function(){
   });
 
   it("Ensure user starts at the very beginning of current year", done =>{
-    userStartsAtTheBeginingOfYear({driver, email})
+    userStartsAtTheBeginingOfYear({driver, email, year:2016})
       .then(() => done())
   });
 
@@ -342,8 +342,7 @@ describe("Book the very last day of year to be a holiday", function(){
   });
 
   it("Ensure user starts at the very beginning of current year", done =>{
-    userStartsAtTheBeginingOfYear({driver, email})
-      .then(() => open_page_func({ url:application_host,driver}))
+    userStartsAtTheBeginingOfYear({driver, email, year: 2018})
       .then(() => done())
   });
 

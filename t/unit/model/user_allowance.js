@@ -374,4 +374,56 @@ describe('accrued_adjustment attribute', function(){
       expect( ul.accrued_adjustment ).to.be.eql(-1);
     });
   });
+
+  describe('Started this year, calculate available allowance for previous year', () => {
+    const employee = model.User.build({
+      start_date: moment.utc('2019-01-01'),
+    });
+
+    const department = model.Department.build({
+      is_accrued_allowance: false,
+    });
+
+    employee.department = department;
+
+    const ul = new UserAllowance({
+      user : employee,
+      now  : moment('2018-01-01'),
+
+      number_of_days_taken_from_allowance : 0,
+      manual_adjustment                   : 0,
+      carry_over                          : 0,
+      nominal_allowance                   : 24
+    });
+
+    it('Ensure available allowance is correct', () => {
+      expect( ul.number_of_days_available_in_allowance ).to.be.eql(0);
+    });
+  });
+
+  describe('Started this year, calculate available allowance for current year', () => {
+    const employee = model.User.build({
+      start_date: moment.utc('2019-01-01'),
+    });
+
+    const department = model.Department.build({
+      is_accrued_allowance: false,
+    });
+
+    employee.department = department;
+
+    const ul = new UserAllowance({
+      user : employee,
+      now  : moment('2019-06-01'),
+
+      number_of_days_taken_from_allowance : 0,
+      manual_adjustment                   : 0,
+      carry_over                          : 0,
+      nominal_allowance                   : 24
+    });
+
+    it('Ensure available allowance is correct', () => {
+      expect( ul.number_of_days_available_in_allowance ).to.be.eql(24);
+    });
+  });
 });

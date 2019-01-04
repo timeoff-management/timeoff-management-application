@@ -51,8 +51,7 @@ describe("Remove company account", function(){
   });
 
   it("Ensure user starts at the very beginning of current year", done =>{
-    userStartsAtTheBeginingOfYear({driver, email:emailCompanyA})
-      .then(() => open_page_func({ url:application_host,driver}))
+    userStartsAtTheBeginingOfYear({driver, email:emailCompanyA, year: 2018})
       .then(() => done())
   });
 
@@ -95,7 +94,7 @@ describe("Remove company account", function(){
   });
 
   it("Ensure user starts at the very beginning of current year", done =>{
-    userStartsAtTheBeginingOfYear({driver, email:emailCompanyB})
+    userStartsAtTheBeginingOfYear({driver, email:emailCompanyB, year: 2018})
       .then(() => open_page_func({ url:application_host,driver}))
       .then(() => done())
   });
@@ -245,5 +244,4 @@ describe("Remove company account", function(){
   after(done => {
     driver.quit().then(() => done());
   });
-
 });
