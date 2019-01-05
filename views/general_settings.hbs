@@ -138,6 +138,23 @@
             </div>
             </form>
 
+            <div class="form-horizontal">
+              <div class="form-group">
+                <label for="" class="col-md-10 control-label">Calculate and carry over unused allowance</label>
+              </div>
+              <div class="form-group">
+                <div class="col-md-offset-2">
+                  <p><em>This acction for each employee would take unused allowance from <strong>{{yearPrev}}</strong> and carry it over to current <strong>{{yearCurrent}}</strong> year.</em></p>
+                  <p><em> Please note, employees allowance is going to be updated.</em></p>
+                </div>
+              </div>
+              <div class="form-group">
+                <form class="col-md-offset-2 col-md-11" id="calculate_carry_over_form" method="post" action="/settings/carryOverUnusedAllowance">
+                  <button class="btn btn-success pull-right"><i class="fa fa-share"></i> Carriy over allowance</button>
+                </form>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
