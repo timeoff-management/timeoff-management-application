@@ -19,7 +19,7 @@ var webdriver = require('selenium-webdriver'),
 var register_new_user_func = Promise.promisify( function(args, callback){
 
   var
-    application_host      = args.application_host,
+    application_host      = args.application_host || args.applicationHost,
     failing_error_message = args.failing_error_message,
     default_date_format   = args.default_date_format,
     random_token          = (new Date()).getTime(),
