@@ -1,5 +1,4 @@
 
-
 'use strict';
 
 const
@@ -8,9 +7,7 @@ const
   until               = require('selenium-webdriver').until,
   Promise             = require("bluebird"),
   expect              = require('chai').expect,
-  moment              = require('moment'),
   registerNewUserFunc = require('../../lib/register_new_user'),
-  checkElementsFunc   = require('../../lib/check_elements'),
   config              = require('../../lib/config'),
   openPageFunc        = require('../../lib/open_page'),
   submitFormFunc      = require('../../lib/submit_form'),
