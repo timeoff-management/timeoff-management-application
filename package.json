@@ -44,6 +44,7 @@
     "chai": "^2.2.0",
     "mocha": "^3.5.3",
     "node-sass": "^4.5.3",
+    "request-promise": "^4.2.2",
     "selenium-webdriver": "2.53.3"
   },
   "scripts": {
