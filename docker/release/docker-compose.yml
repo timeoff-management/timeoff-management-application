@@ -1,0 +1,38 @@
+version: '2'
+
+services:
+  timeoff:
+    build:
+      context: ../../
+      dockerfile: docker/release/Dockerfile.timeoff
+      args:
+        app_version: ${APP_VERSION}
+        port: ${HTTP_PORT}
+        node_env: production
+    network_mode: "host"
+    ports:
+      - ${HTTP_PORT}:${HTTP_PORT}
+    expose:
+      - ${HTTP_PORT}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile.mysql
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+    network_mode: "host"
+    ports:
+      - 3306:3306
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"

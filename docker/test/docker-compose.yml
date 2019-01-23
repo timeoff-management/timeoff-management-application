@@ -1,0 +1,28 @@
+version: '2'
+ 
+services:
+  timeoff:
+    build:
+      context: ../../
+      dockerfile: docker/release/Dockerfile.timeoff
+      args:
+        app_version: ${APP_VERSION}
+        port: ${HTTP_PORT}
+        node_env: development
+    network_mode: "host"
+    ports:
+      - ${HTTP_PORT}:${HTTP_PORT}
+    logging:
+      driver: none
+  test:
+    build:
+      context: ../../
+      dockerfile: docker/test/Dockerfile.timeoff
+      args:
+        app_version: ${APP_VERSION}
+        use_chrome: ${TEST_MODE}
+        port: ${HTTP_PORT}
+        node_env: development
+    network_mode: "host"
+    depends_on:
+      - timeoff
