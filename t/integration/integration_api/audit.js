@@ -12,6 +12,7 @@ const
   submitFormFunc      = require('../../lib/submit_form'),
   userInfoFunc        = require('../../lib/user_info'),
   checkElementsFunc   = require('../../lib/check_elements'),
+  addNewUserFunc      = require('../../lib/add_new_user'),
   config              = require('../../lib/config'),
   applicationHost     = config.get_application_host();
 
@@ -21,8 +22,10 @@ const
  *   * Create new company
  *   * Enable API integration
  *   * Navigate to current user details and update its Name and Surname
+ *   * Add second user
+ *   * Remove second user
  *   * Fetch the Audit feed from integration API and ensure that
- *     user details update was captured
+ *     users details manipulations were captured
  *
  * */
 
@@ -30,7 +33,7 @@ describe('Basic audit for user changes', function(){
 
   this.timeout( config.get_execution_timeout() );
 
-  let driver, token, email, userId;
+  let driver, token, email, userId, secondEmail, secondUserId;
 
   it('Create new company', done => {
     registerNewUserFunc({applicationHost})
@@ -84,6 +87,32 @@ describe('Basic audit for user changes', function(){
     .then(() => done());
   });
 
+  it("Create second user", done => {
+    addNewUserFunc({
+      application_host : applicationHost,
+      driver,
+    })
+    .then(data => {
+      secondEmail = data.new_user_email;
+      return userInfoFunc({ driver, email: secondEmail });
+    })
+    .then(data => (secondUserId = data.user.id))
+    .then(() => done());
+  });
+
+  it("Remove second account", done => {
+    openPageFunc({
+      url: `${applicationHost}users/edit/${secondUserId}/`,
+      driver,
+    })
+    .then(() => submitFormFunc({
+      submit_button_selector : 'button#remove_btn',
+      message : /Employee records were removed from the system/,
+      driver,
+    }))
+    .then(() => done());
+  });
+
   it('Fetch the Audit feed from integration API', done => {
     rp(`${applicationHost}integration/v1/audit`,{
       method : 'GET',
@@ -103,6 +132,15 @@ describe('Basic audit for user changes', function(){
 
       expect(twoEvents.map(i=>i.attribute).join(',')).to.be.eql('name,lastname');
       expect(twoEvents.map(i=>i.newValue).join(',')).to.be.eql('NewAuditName,NewAuditLastName');
+
+      const removedEvents = obj
+        .filter(i=>i.entityType === 'USER')
+        .filter(i=>i.entityId === secondUserId);
+
+      expect(removedEvents.length, 'There records regarding user deletion')
+        .to.be.above(0);
+      expect(removedEvents.filter(i=>i.newValue==='null').length, 'all of them are nulls')
+        .to.be.eql( removedEvents.length );
 
       done();
     });
