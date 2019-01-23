@@ -5,3 +5,5 @@
 *.swm
 node_modules/
 *.sqlite
+.env
+package-lock.json
