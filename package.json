@@ -6,6 +6,9 @@
   "engines": {
     "node": ">=4.0.0"
   },
+  "optionalDependencies": {
+    "mysql2": "^1.6.4"
+  },
   "dependencies": {
     "@slack/client": "^4.1.0",
     "bluebird": "^3.5.1",
