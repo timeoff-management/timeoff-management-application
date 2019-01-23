@@ -48,6 +48,8 @@
       <div class="col-md-5 col-md-offset-2 well">
         <form method="POST" action="/calendar/feeds/regenerate/">
         <a href="webcal://{{current_host}}/feed/{{team_view_feed.feed_token}}/ical.ics">Team view feed <i class="fa fa-rss"></i></a>
+            <a href="webcal://{{current_host}}/feed/{{team_view_feed.feed_token}}/anniversary.ics">Anniversaries Team
+                feed <i class="fa fa-rss"></i></a>
 
         <input type="hidden" name="token" value="{{team_view_feed.feed_token}}"/>
         <button type="submit" class="close" aria-label="Close"><span aria-hidden="true"><i class="fa fa-trash"></i></span></button>
