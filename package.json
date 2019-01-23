@@ -7,7 +7,8 @@
     "node": ">=4.0.0"
   },
   "optionalDependencies": {
-    "mysql2": "^1.6.4"
+    "mysql2": "^1.6.4",
+    "sqlite3": "^4.0.0"
   },
   "dependencies": {
     "@slack/client": "^4.1.0",
@@ -40,7 +41,6 @@
     "sequelize": "^4.37.6",
     "sequelize-cli": "4.0.0",
     "serve-favicon": "^2.1.7",
-    "sqlite3": "^4.0.0",
     "underscore": "^1.8.3",
     "validator": "^9.4.1"
   },
