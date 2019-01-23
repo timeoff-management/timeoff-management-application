@@ -46,7 +46,7 @@ describe('Check validation for leave request', function(){
         from_date_part : '1',
         to_date        : '2015-05-12',
         to_date_part   : '2',
-        reason         : 'some reason',
+        employee_comment : 'employee comment',
     };
 
 
@@ -137,12 +137,12 @@ describe('Check validation for leave request', function(){
     });
 
 
-    it('Reason is optional', function(){
+    it('Employee comment is optional', function(){
 
         var params = _.clone( valid_params );
-        delete params.reason;
+        delete params.employee_comment;
         var vp = _.clone( valid_params );
-        vp.reason = '';
+        vp.employee_comment = '';
         var req = new MockExpressReq({params : params});
 
         expect(

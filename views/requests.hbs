@@ -27,6 +27,7 @@
           <th>Leave dates</th>
           <th>Type</th>
           <th>Days</th>
+          <th>Employee Comment</th>
           <th colspan="2"></th>
         </tr>
       </thead>
@@ -39,11 +40,22 @@
           <td data-tom-leave-dates="1">{{> leave_dates leave=this}}</td>
           <td>{{#if this.is_pended_revoke_leave}}REVOKE {{/if}}{{this.leave_type.name}}</td>
           <td data-vpp="days_used">{{ this.get_deducted_days_number }}</td>
+          <td>{{#if this.get_employee_comment}}{{this.get_employee_comment}}{{/if}}</td>
           <td>
             <form action="/requests/reject/" method="POST">
-            <input class="btn btn-warning" type="submit" value="Reject">
+            <input class="btn btn-warning" onclick="commentHandler(this)" type="submit" value="Reject">
             <input type="hidden" value="{{this.id}}" name="request">
             </form>
+            <script>
+              var commentHandler = function(event) {
+              var approverComment = prompt("Would you like to enter an explanation?","Enter text here...");
+                if (approverComment !== "" && approverComment !== "Enter text here...") {
+                  console.log("APPROVER COMMENT: " + approverComment);
+                  location = "requests/reject/";
+                }
+                return approverComment;
+              }
+            </script>
           </td>
           <td>
             <form action="/requests/approve/" method="POST">
