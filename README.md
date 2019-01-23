@@ -3,9 +3,7 @@
 
 Web application for managing employee absences.
 
-[![Stories in Ready](https://badge.waffle.io/timeoff-management/application.png?label=ready&title=Ready)](https://waffle.io/timeoff-management/application)
-
-<a href="https://travis-ci.org/timeoff-management/application"><img align="right" src="https://travis-ci.org/timeoff-management/application.svg?branch=master" alt="Build status" /></a>
+[![Build Status](https://travis-ci.org/arruko/application.svg?branch=master)](https://travis-ci.org/arruko/application)
 
 ## Features
 
@@ -78,8 +76,6 @@ Optionally allow employees to see the time off information of entire company reg
 
 ### Cloud hosting
 
-Visit http://timeoff.management/
-
 Create company account and use cloud based version.
 
 ### Self hosting
@@ -96,7 +92,19 @@ npm start
 ```
 Open http://localhost:3000/ in your browser.
 
+
+Another method based on docker containers would be to use ```docker```, ```docker-compose``` and ```make``` in conjunction with your cloud provider in order to use make to orchestrate deployment:
+
+```bash
+git clone https://github.com/timeoff-management/application.git timeoff-management
+cd timeoff-management
+make clean base release
+```
+Open http://localhost:3000/ in your browser.
+
 ## Run tests
+
+### Locally
 
 We have quite a wide test coverage, to make sure that the main user paths work as expected.
 
@@ -105,12 +113,30 @@ Please run them frequently while developing the project.
 (make sure you have [PhantomJS](http://phantomjs.org/download.html) installed in path)
 
 ```bash
+git clone https://github.com/timeoff-management/application.git timeoff-management
+cd timeoff-management
+npm install
 npm test
 ```
 
 (make sure that application with default settings is up and running)
 
 Any bug fixes or enhancements should have good test coverage to get them into "master" branch.
+
+### Environment agnostic
+
+You will need to install ```docker```, ```docker-compose``` and ```make``` in order to use this method. Please check ```docker-compose.yml``` files for specific ```docker-compose``` file version. 
+
+(make sure that application with default settings is up and running, docker-compose should instantiate a timeoff.management release version for testing)
+
+```bash
+git clone https://github.com/timeoff-management/application.git timeoff-management
+cd timeoff-management
+make clean base test
+```
+#### Test settings
+
+Make sure you have already configured your cloud provider settings on ```Makefile``` and ```Makefile.settings``` in order to properly build your base images and then timeoff images. 
 
 ## Updating existing instance with new code
 
