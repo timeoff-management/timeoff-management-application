@@ -1,5 +1,4 @@
 
-
 'use strict';
 
 const
@@ -14,7 +13,6 @@ const
   checkElementsFunc   = require('../../lib/check_elements'),
   config              = require('../../lib/config'),
   applicationHost     = config.get_application_host();
-
 
 /*
  *  Scenario to go in this test:
