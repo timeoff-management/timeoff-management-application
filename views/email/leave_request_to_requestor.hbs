@@ -4,6 +4,8 @@ Leave request is waiting decision
 
 <p>Your leave request <strong>{{>leave_request_detail leave=leave }} was sent</strong> to {{#with approver }}{{this.full_name}}{{/with}}.</p>
 
+{{> email/leave_comments comments=comments }}
+
 <p>There will be another email upon decision.</p>
 
 <p>Thanks</p>
