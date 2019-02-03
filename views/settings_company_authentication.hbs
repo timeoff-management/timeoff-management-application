@@ -13,13 +13,13 @@
 
 <div class="row">
   <div class="col-md-8 col-md-offset-1">
-    <p>TimeOff.Management supports LDAP authentication for customers that want to integrate application with the rest of their infrastructure. The obvious reason is to allow employees reuse their Active directory credentials in TimeOff.Management.</p>
+    <p>TimeOff.Management supports LDAP authentication for customers that want to integrate the application with the rest of their infrastructure. The obvious reason is to allow employees to reuse their Active directory credentials in TimeOff.Management.</p>
 
     <p>This page allows you to setup the TimeOff.Management to communicate with a custom LDAP server.</p>
 
-    <p>Please note that employees have to use their <strong>LDAP email</strong> with <strong>LDAP password</strong> (rather than username). This is due to multi-tenant nature of TimeOff.Management application that allows hosting more than one company within single installation.</p>
+    <p>Please note that employees have to use their <strong>LDAP email</strong> with <strong>LDAP password</strong> (rather than username). This is due to the multi-tenant nature of TimeOff.Management application that allows hosting more than one company within a single installation.</p>
 
-    <p>Form bellow has placeholders with examples how to setup TimeOff.Management to use free test LDAP server described <a href="http://www.forumsys.com/en/tutorials/integration-how-to/ldap/online-ldap-test-server/">here</a>.</p>
+    <p>Form below has placeholders with examples how to setup TimeOff.Management to use free test LDAP server described <a href="http://www.forumsys.com/en/tutorials/integration-how-to/ldap/online-ldap-test-server/">here</a>.</p>
 
   </div>
 
@@ -94,8 +94,8 @@
 
       <hr/>
 
-      <p class="col-md-offset-2">In order to prevent situation when a company account is locked out, current administrator (<strong>{{# with logged_user}}{{this.full_name}}{{/with}}</strong>) has to enter the password associated with her/his email on the LDAP server.</p>
-      <p class="col-md-offset-2"> This is just to make sure <strong>{{# with logged_user}}{{this.full_name}}{{/with}}</strong> can login into TimeOff.Management with new LDAP settings.</p>
+      <p class="col-md-offset-2">In order to prevent a situation where a company account locks itself out, the current administrator (<strong>{{# with logged_user}}{{this.full_name}}{{/with}}</strong>) has to enter the password associated with her/his email on the LDAP server.</p>
+      <p class="col-md-offset-2">This is to ensure that <strong>{{# with logged_user}}{{this.full_name}}{{/with}}</strong> can login into TimeOff.Management with new LDAP settings.</p>
 
       <hr/>
 

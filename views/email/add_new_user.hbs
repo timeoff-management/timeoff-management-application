@@ -6,7 +6,7 @@ New TimeOff.Management account for {{#with new_user }}{{this.full_name}}{{/with}
 
 <p>Please contact <strong>{{admin_user.name}}</strong> about your new password and login at {{> email/link href=(get_application_domain) text="TimeOff.Management" }}</p>
 
-<p>Alternatively follow link below to set new password:
+<p>Alternatively follow the link below to set a new password:
 
 {{# with new_user ~}}
 {{> email/link href=(concatenate (get_application_domain) '/reset-password/?t=' (this.get_reset_password_token)) text='Set new password'}}
