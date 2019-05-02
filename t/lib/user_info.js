@@ -1,4 +1,3 @@
-
 /*
  * For given email fetch user account info using provided driver
  * where an client side JS is used to trigger AJAX request to
@@ -6,10 +5,9 @@
  *
  * */
 
-'use strict';
+"use strict";
 
-var
-  bluebird        = require("bluebird");
+var bluebird = require("bluebird");
 
 // Function that is executed on the client,
 // it relies on presence of jQuery and window.VPP_email
@@ -17,72 +15,64 @@ var func_to_inject = function() {
   var callback = arguments[arguments.length - 1];
 
   $.ajax({
-    url: '/users/search/',
-    type: 'post',
+    url: "/users/search/",
+    type: "post",
     data: {
-      email : window.VPP_email,
+      email: window.VPP_email
     },
     headers: {
-      Accept : "application/json",
+      Accept: "application/json"
     },
-    dataType: 'json',
-    success: function (data) {
+    dataType: "json",
+    success: function(data) {
       callback(data);
     }
   });
 };
 
+var user_info_func = bluebird.promisify(function(args, callback) {
+  var result_callback = callback,
+    driver = args.driver,
+    email = args.email;
 
-var user_info_func = bluebird.promisify( function(args, callback){
-
-  var
-    result_callback = callback,
-    driver          = args.driver,
-    email           = args.email;
-
-  if ( ! driver ) {
+  if (!driver) {
     throw "'driver' was not passed into the user_info!";
   }
 
-  if ( ! email ) {
+  if (!email) {
     throw "'email' was not passed into the user_info!";
   }
 
-  return bluebird.resolve()
+  return bluebird
+    .resolve()
 
-  .then(function(data){
+    .then(function(data) {
+      // Inject email we are using to identify user into the tested page
+      driver.executeScript('window.VPP_email = "' + email + '";');
 
-    // Inject email we are using to identify user into the tested page
-    driver
-      .executeScript('window.VPP_email = "'+email+'";');
+      var user;
 
-    var user;
-
-    // execute AJAX request on the client that fetchs user info by email
-    driver
-      .executeAsyncScript(func_to_inject)
-      .then(function(users){
+      // execute AJAX request on the client that fetchs user info by email
+      driver.executeAsyncScript(func_to_inject).then(function(users) {
         user = users.length > 0 ? users[0] : {};
       });
 
-    return driver.call(function(){
-      return bluebird.resolve(user);
+      return driver.call(function() {
+        return bluebird.resolve(user);
+      });
+    })
+
+    .then(function(user) {
+      // "export" current driver
+      result_callback(null, {
+        driver: driver,
+        user: user
+      });
     });
-  })
-
-  .then(function(user){
-    // "export" current driver
-    result_callback(
-      null,
-      {
-        driver : driver,
-        user   : user,
-      }
-    );
-  });
-
 });
 
-module.exports = function(args){
-  return args.driver.call(function(){return user_info_func(args)});
-}
+module.exports = function(args) {
+  return args.driver.call(function() {
+    return user_info_func(args);
+  });
+};

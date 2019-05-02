@@ -1,17 +1,17 @@
 {
-  "allow_create_new_accounts" : true,
-  "send_emails"              : false,
-  "application_sender_email" : "email@test.com",
-  "email_transporter" : {
-    "host" : "localhost",
-    "port" : 25,
-    "auth" : {
-      "user" : "user",
-      "pass" : "pass"
+  "allow_create_new_accounts": true,
+  "send_emails": false,
+  "application_sender_email": "email@test.com",
+  "email_transporter": {
+    "host": "localhost",
+    "port": 25,
+    "auth": {
+      "user": "user",
+      "pass": "pass"
     }
   },
-  "ga_analytics_on" : false,
-  "crypto_secret" : "!2~`HswpPPLa22+=±§sdq qwe,appp qwwokDF_",
-  "application_domain" : "http://app.timeoff.management",
-  "promotion_website_domain" : "http://timeoff.management"
+  "ga_tracker": "UA-63733147-1",
+  "crypto_secret": "!2~`HswpPPLa22+=±§sdq qwe,appp qwwokDF_",
+  "application_domain": "http://app.timeoff.management",
+  "promotion_website_domain": "http://timeoff.management"
 }

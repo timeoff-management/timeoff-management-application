@@ -1,4 +1,3 @@
-
 # TimeOff.Management
 
 Web application for managing employee absences.
@@ -55,9 +54,9 @@ Admin user can download the entire company data as a single JSON file and then r
 
 The most used customer paths are mobile friendly:
 
-* employee is able to request new leave from mobile device
+- employee is able to request new leave from mobile device
 
-* supervisor is able to record decision from the mobile as well.
+- supervisor is able to record decision from the mobile as well.
 
 **Lots of other little things that would make life easier**
 
@@ -94,6 +93,7 @@ cd timeoff-management
 npm install
 npm start
 ```
+
 Open http://localhost:3000/ in your browser.
 
 ## Run tests
@@ -127,4 +127,3 @@ npm start
 ## Feedback
 
 Please report any issues or feedback to <a href="https://twitter.com/FreeTimeOffApp">twitter</a> or Email: pavlo at timeoff.management
-
