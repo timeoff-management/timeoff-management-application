@@ -22,6 +22,8 @@ module.exports = function(args) {
         }
       }
     },
+    body: params,
+    query: params,
     param: function(key) {
       return params[key];
     }

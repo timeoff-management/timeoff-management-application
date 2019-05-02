@@ -15,7 +15,7 @@ var webdriver = require("selenium-webdriver"),
   company_edit_form_id = "#company_edit_form",
   submit_form_func = require("../lib/submit_form");
 
-var register_new_user_func = Promise.promisify(function(args, callback) {
+var register_new_user_func = async function(args) {
   var application_host = args.application_host || args.applicationHost,
     failing_error_message = args.failing_error_message,
     default_date_format = args.default_date_format,
@@ -41,12 +41,12 @@ var register_new_user_func = Promise.promisify(function(args, callback) {
     .setSize(1024, 768);
 
   // Go to front page
-  driver.get(application_host);
+  await driver.get(application_host);
 
-  driver.wait(until.elementLocated(By.css("h1")), 1000);
+  await driver.wait(until.elementLocated(By.css("h1")), 1000);
 
   // Check if there is a registration link
-  driver
+  await driver
     .findElement(By.css('a[href="/register/"]'))
     .then(function(el) {
       return el.getText();
@@ -56,14 +56,14 @@ var register_new_user_func = Promise.promisify(function(args, callback) {
     });
 
   // Click on registration link
-  driver.findElement(By.css('a[href="/register/"]')).then(function(el) {
+  await driver.findElement(By.css("a[href=\"/register/\"]")).then(function(el) {
     el.click();
   });
 
-  driver.wait(until.elementLocated(By.css("h1")), 1000);
+  await driver.wait(until.elementLocated(By.css("h1")), 1000);
 
   // Make sure that new page is a registration page
-  driver
+  await driver
     .findElement(By.css("h1"))
     .then(function(el) {
       return el.getText();
@@ -72,7 +72,7 @@ var register_new_user_func = Promise.promisify(function(args, callback) {
       expect(ee).to.be.equal("New company");
     });
 
-  driver.call(() =>
+  await driver.call(() =>
     submit_form_func({
       driver: driver,
       form_params: [
@@ -109,10 +109,10 @@ var register_new_user_func = Promise.promisify(function(args, callback) {
     })
   );
 
-  driver.wait(until.elementLocated(By.css("div")), 1000);
+  await driver.wait(until.elementLocated(By.css("div")), 1000);
 
   if (failing_error_message) {
-    driver
+    await driver
       .findElement(By.css("div.alert-danger"))
       .then(function(el) {
         return el.getText();
@@ -122,7 +122,7 @@ var register_new_user_func = Promise.promisify(function(args, callback) {
       });
   } else {
     // Make sure registration completed successfully
-    driver
+    await driver
       .findElement(By.css("div.alert-success"))
       .then(function(el) {
         return el.getText();
@@ -134,7 +134,7 @@ var register_new_user_func = Promise.promisify(function(args, callback) {
 
   if (default_date_format) {
     // open company general configuration page and set the default format to be as requested
-    driver.call(function() {
+    await driver.call(function() {
       return open_page_func({
         url: application_host + "settings/general/",
         driver: driver
@@ -142,7 +142,7 @@ var register_new_user_func = Promise.promisify(function(args, callback) {
     });
 
     // update company to use provided date format as a default
-    driver.call(function() {
+    await driver.call(function() {
       return submit_form_func({
         driver: driver,
         form_params: [
@@ -160,20 +160,21 @@ var register_new_user_func = Promise.promisify(function(args, callback) {
   }
 
   // Pass data back to the caller
-  driver.get(application_host).then(function() {
-    callback(null, {
-      driver: driver,
-      email: new_user_email
-    });
-  });
-});
+  await driver.get(application_host);
 
-module.exports = function(args) {
+  return {
+    driver: driver,
+    email: new_user_email
+  };
+};
+
+module.exports = async function(args) {
   if (args.hasOwnProperty("driver")) {
     return args.driver.call(function() {
       return register_new_user_func(args);
     });
   } else {
-    return register_new_user_func(args);
+    const result = register_new_user_func(args);
+    return result;
   }
 };

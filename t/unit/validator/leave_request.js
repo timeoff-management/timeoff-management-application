@@ -10,7 +10,7 @@ describe("Check validation for leave request", function() {
     var req = new MockExpressReq();
 
     expect(function() {
-      leave_request_validator({ req: req });
+      leave_request_validator({ req: req, params: req.body });
     }).to.throw("Got validation errors");
 
     expect(req.session.flash.errors.length).to.be.equal(4);

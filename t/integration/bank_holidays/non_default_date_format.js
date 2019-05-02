@@ -38,7 +38,10 @@ describe("Try to manage Bank holidays with non-default date format", function() 
     }).then(function(data) {
       driver = data.driver;
       done();
-    });
+    })
+      .catch(err => {
+        console.error("ER", err);
+      })
   });
 
   it("Open page with bank holidays", function(done) {

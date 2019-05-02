@@ -3,16 +3,14 @@
 var webdriver = require("selenium-webdriver"),
   Promise = require("bluebird");
 
-module.exports = Promise.promisify(function(args, callback) {
+module.exports = async function(args) {
   var url = args.url,
-    driver = args.driver,
-    result_callback = callback;
+    driver = args.driver;
 
   // Open front page
-  driver.get(url).then(function() {
-    // "export" current driver
-    result_callback(null, {
-      driver: driver
-    });
-  });
-});
+  await driver.get(url);
+
+  return {
+    driver: driver
+  };
+};

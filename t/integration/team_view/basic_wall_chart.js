@@ -91,7 +91,7 @@ describe("Check basic scenario for Team view page", function() {
 
   var driver, user_A, user_B, user_C;
 
-  test.it("Performing registration process", function(done) {
+  it("Performing registration process", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(function(data) {

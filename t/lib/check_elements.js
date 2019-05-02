@@ -28,8 +28,7 @@ var check_elements_func = Promise.promisify(function(args, callback) {
           expect(text).to.be.equal(test_case.value);
         });
     })
-  ])
-  .then(function() {
+  ]).then(function() {
     // "export" current driver
     result_callback(null, {
       driver: driver
