@@ -44,10 +44,12 @@
     "chai": "^2.2.0",
     "mocha": "^3.5.3",
     "node-sass": "^4.5.3",
+    "prettier": "1.17.0",
     "request-promise": "^4.2.2",
     "selenium-webdriver": "2.53.3"
   },
   "scripts": {
+    "prettier": "prettier --write \"**/*.js\"",
     "test": "node node_modules/mocha/bin/mocha --recursive t/*",
     "start": "node bin/wwww",
     "db-update": "node node_modules/.bin/sequelize db:migrate --config=config/db.json --models-path=lib/model/db/",
