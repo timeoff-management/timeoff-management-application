@@ -28,7 +28,7 @@ module.exports = {
               // Copy data form original Departments into new Temp one
               .then(function() {
                 return queryInterface.sequelize.query(
-                  "INSERT INTO `Departments_backup` (id, name, include_public_holidays, createdAt, updatedAt, companyId, bossId, allowance) SELECT id, name, include_public_holidays, createdAt, updatedAt, companyId, bossId, allowence FROM `" +
+                  "INSERT INTO `Departments_backup` (id, name, include_public_holidays, createdAt, updatedAt, company_id, bossId, allowance) SELECT id, name, include_public_holidays, createdAt, updatedAt, company_id, bossId, allowence FROM `" +
                   models.Department.tableName +
                   "`"
                 );
@@ -53,7 +53,7 @@ module.exports = {
 
               .then(function() {
                 queryInterface.addIndex(models.Department.tableName, [
-                  "companyId"
+                  "company_id"
                 ]);
               })
 

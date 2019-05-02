@@ -29,7 +29,7 @@ module.exports = {
           // Copy data form original Users into new Temp one
           .then(function() {
             return queryInterface.sequelize.query(
-              "INSERT INTO `Users_backup` (`id`, `email`, `password`, `name`, `lastname`, `activated`, `admin`, `start_date`, `end_date`, `createdAt`, `updatedAt`, `companyId`, `DepartmentId`, `auto_approve`) SELECT `id`, `email`, `password`, `name`, `lastname`, `activated`, `admin`, `start_date`, `end_date`, `createdAt`, `updatedAt`, `companyId`, `DepartmentId`, `auto_approve` FROM `" +
+              "INSERT INTO `Users_backup` (`id`, `email`, `password`, `name`, `lastname`, `activated`, `admin`, `start_date`, `end_date`, `createdAt`, `updatedAt`, `company_id`, `department_id`, `auto_approve`) SELECT `id`, `email`, `password`, `name`, `lastname`, `activated`, `admin`, `start_date`, `end_date`, `createdAt`, `updatedAt`, `company_id`, `department_id`, `auto_approve` FROM `" +
                 models.User.tableName +
                 "`"
             );
@@ -41,7 +41,7 @@ module.exports = {
           )
           .then(() => queryInterface.sequelize.query("PRAGMA foreign_keys=on;"))
           .then(() =>
-            queryInterface.addIndex(models.User.tableName, ["companyId"])
+            queryInterface.addIndex(models.User.tableName, ["company_id"])
           )
       );
     });

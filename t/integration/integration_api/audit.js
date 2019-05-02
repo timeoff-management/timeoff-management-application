@@ -133,28 +133,28 @@ describe("Basic audit for user changes", function() {
       .then(res => JSON.parse(res))
       .then(obj => {
         const twoEvents = obj
-          .filter(i => i.entityType === "USER")
-          .filter(i => i.entityId === userId);
+          .filter(i => i.entity_type === "USER")
+          .filter(i => i.entity_id === userId);
 
         expect(twoEvents.length).to.be.eql(2);
 
         expect(twoEvents.map(i => i.attribute).join(",")).to.be.eql(
           "name,lastname"
         );
-        expect(twoEvents.map(i => i.newValue).join(",")).to.be.eql(
+        expect(twoEvents.map(i => i.new_value).join(",")).to.be.eql(
           "NewAuditName,NewAuditLastName"
         );
 
         const removedEvents = obj
-          .filter(i => i.entityType === "USER")
-          .filter(i => i.entityId === secondUserId);
+          .filter(i => i.entity_type === "USER")
+          .filter(i => i.entity_id === secondUserId);
 
         expect(
           removedEvents.length,
           "There records regarding user deletion"
         ).to.be.above(0);
         expect(
-          removedEvents.filter(i => i.newValue === "null").length,
+          removedEvents.filter(i => i.new_value === "null").length,
           "all of them are nulls"
         ).to.be.eql(removedEvents.length);
 
