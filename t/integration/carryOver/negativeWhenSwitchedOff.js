@@ -22,7 +22,7 @@ const test = require("selenium-webdriver/testing"),
  *  * Create new company
  *  * Amend its user to started at the very begining of last year
  *  * Add and approve week long leave in last year
- *  * Adjust user's deparment's allpwance to be 1 day
+ *  * Adjust user's deparment's allowance to be 1 day
  *  * Ensure that company has Carry Over set to be 'None'
  *  * Calculate carry over
  *  * Ensure that newly created user's carried over still remains 0
@@ -110,7 +110,7 @@ describe("No negative allowanca is carried overs", function() {
       .then(() => done());
   });
 
-  it("Adjust user's deparment's allpwance to be 1 day", done => {
+  it("Adjust user's deparment's allowance to be 1 day", done => {
     openPageFunc({
       driver,
       url: `${applicationHost}settings/departments/`
