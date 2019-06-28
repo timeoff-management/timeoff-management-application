@@ -18,7 +18,14 @@
       <ul class="nav navbar-nav navbar-left">
         {{# if logged_user }}
           <li><a href="/calendar/">Calendar</a></li>
-          <li><a href="/calendar/teamview/">Team View</a></li>
+          {{# if logged_user.admin }}
+            <li><a href="/calendar/teamview/">Team View</a></li>
+          {{else}}
+            {{# if logged_user.company.is_team_view_hidden }}
+            {{else}}
+              <li><a href="/calendar/teamview/">Team View</a></li>
+            {{/if}}
+          {{/if}}
           {{# if logged_user.admin }}
             <li class="hidden-xs"><a href="/users/">Employees</a></li>
           {{/if}}

@@ -90,6 +90,21 @@
                   </div>
                 </div>
               </div>
+
+              <div class="form-group">
+                <div class="col-md-offset-4 col-md-8">
+                  <div class="checkbox">
+                    <label for="is-team-view-hidden">
+                      <input id="is-team-view-hidden" type="checkbox" name="is_team_view_hidden" {{# if company.is_team_view_hidden }} checked="checked"{{/if}}>Hide Team View page for non-admin users
+                    </label>
+                    <p>
+                      <em>If marked Team view page is shown only to admin users.</em>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+
               <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                   <button type="submit" class="btn btn-success pull-right">Save changes</button>
