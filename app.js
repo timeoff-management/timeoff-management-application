@@ -74,7 +74,7 @@ app.use(function(req,res,next){
   // For book leave request modal
   res.locals.booking_start = today,
   res.locals.booking_end = today,
-  res.locals.keep_team_vew_hidden =
+  res.locals.keep_team_view_hidden =
     !! (req.user && req.user.company.is_team_view_hidden && ! req.user.admin);
 
   next();

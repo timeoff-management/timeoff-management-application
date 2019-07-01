@@ -22,7 +22,7 @@
         <p class="description-paragraph">
           <a href="/calendar/">My Calendar</a> page - feeds all data from My Calendar page
         </p>
-        {{# unless keep_team_vew_hidden}}
+        {{# unless keep_team_view_hidden}}
         <p class="description-paragraph">
           <a href="/calendar/teamview/">Team view</a> page - feeds Team view data for current month
         </p>
@@ -46,7 +46,7 @@
         </form>
       </div>
 
-      {{# unless keep_team_vew_hidden }}
+      {{# unless keep_team_view_hidden }}
       <div class="col-md-5 col-md-offset-2 well">
         <form method="POST" action="/calendar/feeds/regenerate/">
         <a href="webcal://{{current_host}}/feed/{{team_view_feed.feed_token}}/ical.ics">Team view feed <i class="fa fa-rss"></i></a>
