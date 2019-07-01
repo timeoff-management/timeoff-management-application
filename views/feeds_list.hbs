@@ -18,13 +18,15 @@
 
         <p class="description-paragraph">Share your TimeOff.Management data with external calendar providers such as Microsoft Outlook, Apple Calendar (iCal) or Google Calendar.</p>
 
-        <p class="description-paragraph">We provide two streams from:</p>
+        <p class="description-paragraph">We provide following streams from:</p>
         <p class="description-paragraph">
           <a href="/calendar/">My Calendar</a> page - feeds all data from My Calendar page
         </p>
+        {{# unless keep_team_vew_hidden}}
         <p class="description-paragraph">
           <a href="/calendar/teamview/">Team view</a> page - feeds Team view data for current month
         </p>
+        {{/ unless}}
 
         <p class="description-paragraph">To export particular feed into default calendar application just click on corresponding link.</p>
 
@@ -35,7 +37,6 @@
 
     <div class="row feeds-holder">
 
-
       <div class="col-md-5 well">
         <form method="POST" action="/calendar/feeds/regenerate/">
         <a href="webcal://{{current_host}}/feed/{{calendar_feed.feed_token}}/ical.ics">My calendar feed <i class="fa fa-rss"></i></a>
@@ -45,6 +46,7 @@
         </form>
       </div>
 
+      {{# unless keep_team_vew_hidden }}
       <div class="col-md-5 col-md-offset-2 well">
         <form method="POST" action="/calendar/feeds/regenerate/">
         <a href="webcal://{{current_host}}/feed/{{team_view_feed.feed_token}}/ical.ics">Team view feed <i class="fa fa-rss"></i></a>
@@ -53,6 +55,7 @@
         <button type="submit" class="close" aria-label="Close"><span aria-hidden="true"><i class="fa fa-trash"></i></span></button>
         </form>
       </div>
+      {{/ unless }}
 
     </div>
   </div>
