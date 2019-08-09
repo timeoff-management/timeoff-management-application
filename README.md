@@ -45,11 +45,9 @@ There are following types of users: employees, supervisors, and administrators.
 
 Optional LDAP authentication: configure application to use your LDAP server for user authentication.
 
-**Seamless data migration betweeen different installations**
+**Ability to extract leave data into CSV**
 
-User friendly and simple workflow for data migration between different TimeOff.Management installations.
-
-Admin user can download the entire company data as a single JSON file and then restore the account at a different installation by simply uploading the JSON.
+Ability to back up entire company leave data into CSV file. So it could be used in any spreadsheet applications.
 
 **Works on mobile phones**
 
