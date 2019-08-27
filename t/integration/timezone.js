@@ -19,16 +19,16 @@ const
 /*
  *  Basic scenario for checking time zones:
  *
- *  * Create a copany
- *  * Update Time zone to be somethng in Australia
- *  * Get the date from Book leave modal and put it into today_aus
- *  * Get the current date from Calendar page and ensure it is the same as today_aus
- *  * Get the current date from Team view page and ensure it is the same as today_aus
- *  * Book a leave and ensure its "created at" value on My requests page is today_aus
+ *  * Create a company
+ *  * Update Time zone to be somethng in Tonga
+ *  * Get the date from Book leave modal and put it into today_tonga
+ *  * Get the current date from Calendar page and ensure it is the same as today_tonga
+ *  * Get the current date from Team view page and ensure it is the same as today_tonga
+ *  * Book a leave and ensure its "created at" value on My requests page is today_tonga
  *  * Reject newly added leave
- *  * Update Time zone to be USA/Alaska
+ *  * Update Time zone to be Pacific/Midway
  *  * Get the date from Book leave modal and put it into today_usa
- *  * Ensure that today_usa is one day behind the today_aus
+ *  * Ensure that today_usa is one day behind the today_tonga
  *  * Get the current date from Calendar page and ensure it is the same as today_usa
  *  * Get the current date from Team view page and ensure it is the same as today_usa
  *  * Book a leave and ensure its "created at" value on My requests page is today_usa
@@ -40,7 +40,7 @@ describe('Check Time zones', function(){
     driver,
     user_email,
     today_usa,
-    today_aus;
+    today_tonga;
 
   this.timeout( config.get_execution_timeout() );
 
@@ -69,13 +69,13 @@ describe('Check Time zones', function(){
     .then(() => done() );
   });
 
-  it("Update Time zone to be somethng in Australia", function(done){
+  it("Update Time zone to be somethng in Tonga", function(done){
     submit_form_func({
       driver      : driver,
       form_params : [{
         selector        : company_edit_form_id+' select[name="timezone"]',
-        option_selector : 'option[value="Pacific/Auckland"]',
-        value           : 'Pacific/Auckland',
+        option_selector : 'option[value="Pacific/Tongatapu"]',
+        value           : 'Pacific/Tongatapu',
       }],
       submit_button_selector : company_edit_form_id+' button[type="submit"]',
       message                : /successfully/i,
@@ -84,7 +84,7 @@ describe('Check Time zones', function(){
     .then(function(){ done() });
   });
 
-  it("Get the date from Book leave modal and put it into today_aus variable", function(done){
+  it("Get the date from Book leave modal and put it into today_tonga variable", function(done){
     driver.findElement(By.css('#book_time_off_btn'))
       .then(el => el.click())
       // This is very important line when working with Bootstrap modals!
@@ -92,19 +92,19 @@ describe('Check Time zones', function(){
       .then(() => driver.findElement(By.css( 'input.book-leave-from-input' )))
       .then(el => el.getAttribute('value'))
       .then(today => {
-        today_aus = today;
+        today_tonga = today;
         done();
       });
   });
 
-  it("Get the current date from Calendar page and ensure it is the same as today_aus", function(done){
+  it("Get the current date from Calendar page and ensure it is the same as today_tonga", function(done){
     open_page_func({
       url    : application_host + 'calendar/',
       driver : driver,
     })
     .then(() => driver.findElement(By.css(
-      'table.month_'+moment(today_aus).format('MMMM')
-      + ' td.half_1st.day_'+moment(today_aus).format('D')+'.current_day_cell'
+      'table.month_'+moment(today_tonga).format('MMMM')
+      + ' td.half_1st.day_'+moment(today_tonga).format('D')+'.current_day_cell'
     )))
     .then(el => {
       expect(el, 'Ensure that current date is marked correctly').to.exist;
@@ -112,13 +112,13 @@ describe('Check Time zones', function(){
     });
   });
 
-  it("Get the current date from Team view page and ensure it is the same as today_aus", function(done){
+  it("Get the current date from Team view page and ensure it is the same as today_tonga", function(done){
     open_page_func({
       url    : application_host + 'calendar/teamview/',
       driver : driver,
     })
     .then(() => driver.findElement(By.css(
-      'table.team-view-table td.half_1st.day_'+moment(today_aus).format('D')+'.current_day_cell'
+      'table.team-view-table td.half_1st.day_'+moment(today_tonga).format('D')+'.current_day_cell'
     )))
     .then(el => {
       expect(el, 'Ensure that current date is marked correctly').to.exist;
@@ -127,7 +127,7 @@ describe('Check Time zones', function(){
     })
     .then(el => el.getText())
     .then(month_caption => {
-      expect(month_caption, 'Ensure month is correct').to.be.eql(moment(today_aus).format('MMMM, YYYY'));
+      expect(month_caption, 'Ensure month is correct').to.be.eql(moment(today_tonga).format('MMMM, YYYY'));
       done();
     })
   });
@@ -149,7 +149,7 @@ describe('Check Time zones', function(){
     .then(() => done());
   });
 
-  it('Ensure its "created at" value on My requests page is today_aus', function( done ){
+  it('Ensure its "created at" value on My requests page is today_tonga', function( done ){
     open_page_func({
       url    : application_host + 'requests/',
       driver : driver,
@@ -157,7 +157,7 @@ describe('Check Time zones', function(){
     .then(() => driver.findElement(By.css('tr[vpp="pending_for__'+user_email+'"] td.date_of_request')))
     .then(el => el.getText())
     .then(text => {
-      expect(text).to.be.eql(moment(today_aus).format('YYYY-MM-DD'));
+      expect(text).to.be.eql(moment(today_tonga).format('YYYY-MM-DD'));
       done();
     });
   });
@@ -177,13 +177,13 @@ describe('Check Time zones', function(){
     .then(() => done() );
   });
 
-  it("Update Time zone to be USA/Alaska", function(done){
+  it("Update Time zone to be Pacific/Midway", function(done){
     submit_form_func({
       driver      : driver,
       form_params : [{
         selector        : company_edit_form_id+' select[name="timezone"]',
-        option_selector : 'option[value="US/Alaska"]',
-        value           : 'US/Alaska',
+        option_selector : 'option[value="Pacific/Midway"]',
+        value           : 'Pacific/Midway',
       }],
       submit_button_selector : company_edit_form_id+' button[type="submit"]',
       message                : /successfully/i,
@@ -205,8 +205,8 @@ describe('Check Time zones', function(){
       });
   });
 
-  it("Ensure that today_usa is one day behind the today_aus", function(done){
-    expect(moment(today_usa).format('YYYY-MM-DD')).to.be.not.eql(moment(today_aus).format('YYYY-MM-DD'));
+  it("Ensure that today_usa is one day behind the today_tonga", function(done){
+    expect(moment(today_usa).format('YYYY-MM-DD')).to.be.not.eql(moment(today_tonga).format('YYYY-MM-DD'));
     done();
   });
 
