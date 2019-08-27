@@ -90,7 +90,7 @@ describe('System prevent revoking admin rights from very last admin within compa
         value    : 'on',
       }],
       submit_button_selector : 'button#save_changes_btn',
-      message: /This is last admin witihn company. Cannot revoke admin rights./,
+      message: /This is last admin within company. Cannot revoke admin rights./,
     })
     .then(function(){ done() });
   });
