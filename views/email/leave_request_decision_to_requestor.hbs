@@ -1,4 +1,4 @@
-Leave request was decided
+Leave request was {{#if_equal action 'approve'}}accepted{{else}}denied{{/if_equal}}
 =====
 <p>Hello <strong>{{#with requester}}{{this.full_name}}{{/with}}</strong>,</p>
 
