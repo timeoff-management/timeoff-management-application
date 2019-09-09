@@ -238,6 +238,19 @@ describe('Dealing with inactive users', function(){
       });
   });
 
+  it('Check that employee is striked in the list', function(done) {
+    driver.
+      findElement(By.css('a[href="/users/edit/'+employee_id+'/"]'))
+      .then(el => el.findElements(By.tagName("s")))
+      .then(els => {
+        if (els.length === 1) {
+          done();
+        } else {
+          throw new Error("User is not striked")
+        }
+      })
+  });
+
   it("Open department settings page", function(done){
     open_page_func({
       url    : application_host + 'settings/departments/',
