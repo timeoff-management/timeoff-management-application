@@ -67,6 +67,17 @@ describe('Deactivate and activate user', function(){
     });
   });
 
+  it('Check that the deactivated badge is not displayed', function(done){
+    driver.findElements(By.className('badge alert-warning'))
+    .then(els => {
+      if (els.length > 0){
+        throw new Error('The badge was found')
+      } else {
+        done();
+      }
+    })
+  });
+
   it('Mark EMPLOYEE as inactive by specifying end date to be in past', function(done){
     open_page_func({
       url    : application_host + 'users/edit/'+employee_id+'/',
@@ -84,6 +95,17 @@ describe('Deactivate and activate user', function(){
         should_be_successful : true,
       })
       .then(function(){ done() });
+    });
+  });
+
+  it('Check that the deactivated badge is displayed', function(done){
+    driver.findElements(By.className('badge alert-warning'))
+    .then(els => {expect(els.length).to.be.eql(1, 'No badge visible');
+    return els[0].getText();
+    })
+    .then(val => {
+      expect(val).to.be.eql('Deactivated', 'It is not the deactivated badge');
+      done();
     });
   });
 
