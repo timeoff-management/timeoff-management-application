@@ -109,6 +109,7 @@ describe('Basic audit for user changes', function(){
       submit_button_selector : 'button#remove_btn',
       message : /Employee records were removed from the system/,
       driver,
+      confirm_dialog : true,
     }))
     .then(() => done());
   });

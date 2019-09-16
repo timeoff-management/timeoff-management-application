@@ -30,6 +30,9 @@ var submit_form_func = Promise.promisify( function(args, callback){
       // bu defaul it looks into firts message only
       multi_line_message = args.multi_line_message || false,
 
+      // Indicates if there is a confirmation dialog
+      confirm_dialog = args.confirm_dialog || false,
+
       // CSS selecetor for form submition button
       submit_button_selector = args.submit_button_selector ||'button[type="submit"]';
 
@@ -72,6 +75,10 @@ var submit_form_func = Promise.promisify( function(args, callback){
       ]);
     });
 
+    // Accept the confirm dialog
+    if (confirm_dialog) {
+      driver.executeScript('window.confirm = function(msg) { return true; }');
+    }
 
     // Submit the form
     driver
