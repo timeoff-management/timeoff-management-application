@@ -43,15 +43,20 @@
   {{/each}}
 </div>
 
+
+
 <div class="col-md-9">
-  <table class="table table-hover">
+  <div class="reset-sort-link">
+    <a id="reset-sort" href="#">Reset sort to default (by Last Name)</a>
+  </div>
+  <table class="table sortable-table table-hover">
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Department</th>
-        <th>Is Administrator?</th>
-        <th>Available allowance</th>
-        <th>Days used</th>
+        <th class="sortable-table-header">Name</th>
+        <th class="sortable-table-header">Department</th>
+        <th class="sortable-table-header">Is Administrator?</th>
+        <th class="sortable-table-header">Available allowance</th>
+        <th class="sortable-table-header">Days used</th>
       </tr>
     </thead>
     <tbody>

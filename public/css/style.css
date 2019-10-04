@@ -145,6 +145,39 @@ td.leave_cell_pended {
   color: #61686b;
   font-weight: bolder; }
 
+.reset-sort-link {
+  margin-bottom: 20px;
+}
+
+/* Sortable Table Highlight & Styling */
+.sortable-table-header {
+    cursor: pointer;
+}
+
+.sortable-table-header:hover {
+  background-color: #f5f7f8;
+}
+
+.tablesorter-header {
+    background-image: url(../img/bg.gif);
+    cursor: pointer;
+    font-weight: bold;
+    background-repeat: no-repeat;
+    background-position: center right;
+    padding-left: 20px;
+    margin-left: -1px;
+}
+
+.tablesorter-headerAsc {
+    background-image: url(../img/asc.gif);
+    background-color: #f5f7f8;
+}
+
+.tablesorter-headerDesc {
+  background-image: url(../img/desc.gif);
+  background-color: #f5f7f8;
+}
+
 .modal-dialog {
   max-width: 450px; }
 
