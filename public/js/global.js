@@ -170,3 +170,26 @@ $(document).ready(function(){
 });
 
 
+
+$(document).ready(function(){
+  $('.user-details-summary-trigger').popover({
+    html: true,
+    trigger: 'focus hover',
+    placement: 'top',
+    delay: {show: 1000, hide: 10},
+    content: function(){
+        var div_id =  "tmp-id-" + $.now();
+        return details_in_popup($(this).attr('data-userId'), div_id);
+    }
+  });
+
+  function details_in_popup(userId, div_id){
+    $.ajax({
+        url: '/users/summary/'+userId+'/',
+        success: function(response){
+            $('#'+div_id).html(response);
+        }
+    });
+    return '<div id="'+ div_id +'">Loading...</div>';
+  }
+});
