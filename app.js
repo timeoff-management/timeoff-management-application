@@ -135,8 +135,9 @@ app.use(
 
 app.use(
   '/users/',
-  require('./lib/route/users'),
-  require('./lib/route/users/summary')
+  // Order of following requires for /users/ matters
+  require('./lib/route/users/summary'),
+  require('./lib/route/users')
 );
 
 app.use(
