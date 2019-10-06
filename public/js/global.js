@@ -180,7 +180,7 @@ $(document).ready(function(){
     delay: {show: 1000, hide: 10},
     content: function(){
         var div_id =  "tmp-id-" + $.now();
-        return details_in_popup($(this).attr('data-userId'), div_id);
+        return details_in_popup($(this).attr('data-user-id'), div_id);
     }
   });
 
