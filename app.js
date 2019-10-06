@@ -38,7 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const passport = require('./lib/passport')();
 
 var session = require('express-session');
-// initalize sequelize with session store
+// Initialize sequelize with session store
 var SequelizeStore = require('connect-session-sequelize')(session.Store);
 app.use(session({
     secret            : 'my dirty secret ;khjsdkjahsdajhasdam,nnsnad,',
@@ -135,6 +135,8 @@ app.use(
 
 app.use(
   '/users/',
+  // Order of following requires for /users/ matters
+  require('./lib/route/users/summary'),
   require('./lib/route/users')
 );
 

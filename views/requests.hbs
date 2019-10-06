@@ -33,7 +33,9 @@
       <tbody>
         {{#each to_be_approved_leaves }}
         <tr vpp="pending_for__{{this.user.email}}">
-          <td>{{#with this.user}}{{this.full_name}}{{/with}}</td>
+          <td>{{#with this.user}}{{this.full_name}}
+            <i class="fa fa-question-circle user-details-summary-trigger" data-user-id="{{this.id}}"></i>{{/with}}
+          </td>
           <td>{{this.user.department.name}}</td>
           <td class="date_of_request">{{as_date_from_timestamp this.createdAt}}</td>
           <td data-tom-leave-dates="1">{{> leave_dates leave=this}}</td>
