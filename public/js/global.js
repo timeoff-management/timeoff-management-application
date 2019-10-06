@@ -173,9 +173,10 @@ $(document).ready(function(){
 
 $(document).ready(function(){
   $('.user-details-summary-trigger').popover({
+    title: 'Employee summary',
     html: true,
-    trigger: 'focus hover',
-    placement: 'top',
+    trigger: 'hover',
+    placement: 'auto',
     delay: {show: 1000, hide: 10},
     content: function(){
         var div_id =  "tmp-id-" + $.now();
