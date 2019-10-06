@@ -169,8 +169,6 @@ $(document).ready(function(){
     });
 });
 
-
-
 $(document).ready(function(){
   $('.user-details-summary-trigger').popover({
     title: 'Employee summary',
@@ -179,18 +177,18 @@ $(document).ready(function(){
     placement: 'auto',
     delay: {show: 1000, hide: 10},
     content: function(){
-        var div_id =  "tmp-id-" + $.now();
-        return details_in_popup($(this).attr('data-user-id'), div_id);
+      var divId =  "tmp-id-" + $.now();
+      return detailsInPopup($(this).attr('data-user-id'), divId);
     }
   });
 
-  function details_in_popup(userId, div_id){
+  function detailsInPopup(userId, divId){
     $.ajax({
-        url: '/users/summary/'+userId+'/',
-        success: function(response){
-            $('#'+div_id).html(response);
-        }
+      url: '/users/summary/'+userId+'/',
+      success: function(response){
+        $('#'+divId).html(response);
+      }
     });
-    return '<div id="'+ div_id +'">Loading...</div>';
+    return '<div id="'+ divId +'">Loading...</div>';
   }
 });
