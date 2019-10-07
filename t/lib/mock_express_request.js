@@ -19,9 +19,7 @@ module.exports = function(args){
             normalise_date : function(date) { return date; },
           },
         },
-        param   : function(key){
-            return params[key];
-        },
+        body : params,
     };
 
     // Make request be aware of flash messages
