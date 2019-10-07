@@ -6,6 +6,8 @@ New leave request
 
 {{> email/leave_comments comments=comments }}
 
+{{> email/requester_allowance requester=requester requesterAllowance=requesterAllowance}}
+
 <p>Please visit {{> email/link href=(concatenate (get_application_domain) '/requests/' ) text='Pending requests'}} page to approve or reject outstanding requests.</p>
 
 <p>Thanks</p>

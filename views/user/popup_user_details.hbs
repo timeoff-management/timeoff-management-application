@@ -1,0 +1,20 @@
+
+<div>
+  <strong>Name:</strong> {{userFullName}}.
+</div>
+<div>
+  <strong>Department:</strong> {{departmentName}}.
+</div>
+{{#if userAllowance }}
+  <div>
+    <strong>Available:</strong> {{userAllowance.number_of_days_available_in_allowance}} days out of {{userAllowance.total_number_of_days_in_allowance}}.
+  </div>
+{{/if}}
+{{#if supervisorNames}}
+  <div>
+    <strong>Approvers:</strong>
+    <ul>
+      {{#each supervisorNames}}<li>{{this}}{{#unless @last}},{{/unless}}</li>{{/each}}
+    </ul>
+  </div>
+{{/if}}
