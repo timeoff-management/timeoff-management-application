@@ -59,11 +59,11 @@ module.exports = Promise.promisify(function(args, callback){
         },{
             selector : add_new_user_form_id+' input[name="password_confirm"]',
             value    : '123456',
-        },{
+        },
+        select_department, {
             selector : add_new_user_form_id+' input[name="start_date"]',
             value : '2015-06-01',
         },
-            select_department,
         ],
         submit_button_selector : add_new_user_form_id+' #add_new_user_btn',
         should_be_successful : error_message ? false : true,
