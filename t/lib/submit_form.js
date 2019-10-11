@@ -67,6 +67,11 @@ var submit_form_func = Promise.promisify( function(args, callback){
                           .then(() => driver.findElement(By.css(test_case.dropdown_option)))
                           .then(dd => dd.click())
                       } else {
+                          // Prevent the browser validations to allow backend validations to occur
+                          if (test_case.change_step) {
+                            driver.executeScript("return arguments[0].step = '0.1'", el);
+                          }
+
                           return el.clear().then(function(){
                               el.sendKeys( test_case.value );
                               // Tabs to trigger the calendars overlays
