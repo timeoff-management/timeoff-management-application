@@ -1,10 +1,9 @@
 
 'use strict';
 
-var test           = require('selenium-webdriver/testing'),
+var test             = require('selenium-webdriver/testing'),
     config           = require('../lib/config'),
     application_host = config.get_application_host(),
-    webdriver = require('selenium-webdriver'),
     By        = require('selenium-webdriver').By,
     expect    = require('chai').expect,
     _         = require('underscore'),
@@ -13,7 +12,8 @@ var test           = require('selenium-webdriver/testing'),
     login_user_func        = require('../lib/login_with_user'),
     register_new_user_func = require('../lib/register_new_user'),
     logout_user_func       = require('../lib/logout_user'),
-    add_new_user_func      = require('../lib/add_new_user');
+    add_new_user_func      = require('../lib/add_new_user'),
+    build_driver           = require('../lib/build_driver');
 
 
 describe('Try to access private pages with guest user', function(){
@@ -29,9 +29,7 @@ describe('Try to access private pages with guest user', function(){
       ],
       function(path) {
 
-        var driver = new webdriver.Builder()
-            .withCapabilities(webdriver.Capabilities.phantomjs())
-            .build();
+        var driver = build_driver()
 
         // Open front page
         driver.get( application_host + path);
@@ -47,10 +45,7 @@ describe('Try to access private pages with guest user', function(){
   });
 
   it('Check main (dashboard) page', function(done) {
-
-    var driver = new webdriver.Builder()
-        .withCapabilities(webdriver.Capabilities.phantomjs())
-        .build();
+    var driver = build_driver();
 
     // Open front page
     driver.get( application_host);
