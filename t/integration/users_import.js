@@ -41,7 +41,7 @@ describe('Bulk import of users', function(){
       driver,
       csv_data,
       sample_email,
-      test_users_filename =  __dirname +'/../test.csv';
+      test_users_filename =  __dirname +'/test.csv';
 
   it('Create new company', function(done){
     register_new_user_func({
