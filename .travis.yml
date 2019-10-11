@@ -2,10 +2,16 @@ language: node_js
 node_js:
   - "v6.14.0"
 sudo: false
+addons:
+    chrome: stable
 cache:
   directories:
     - node_modules
 env:
+  - USE_CHROME=1
 before_install:
 before_script:
+  - wget https://chromedriver.storage.googleapis.com/77.0.3865.40/chromedriver_linux64.zip
+  - cd bin; unzip ../chromedriver_linux64.zip; cd ../
+  - export PATH=$PWD/bin:$PATH
   - node bin/wwww > /dev/null 2>&1 &
