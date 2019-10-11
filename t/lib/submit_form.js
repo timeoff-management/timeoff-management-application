@@ -2,6 +2,7 @@
 
 var webdriver  = require('selenium-webdriver'),
 By             = require('selenium-webdriver').By,
+Key            = require('selenium-webdriver').Key,
 expect         = require('chai').expect,
 _              = require('underscore'),
 Promise        = require("bluebird"),
@@ -68,6 +69,9 @@ var submit_form_func = Promise.promisify( function(args, callback){
                       } else {
                           return el.clear().then(function(){
                               el.sendKeys( test_case.value );
+                              // Tabs to trigger the calendars overlays
+                              // to close so the modal submit button can be clicked
+                              el.sendKeys(Key.TAB)
                           });
                       }
                   });
