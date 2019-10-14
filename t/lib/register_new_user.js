@@ -4,16 +4,16 @@
 
 'use strict';
 
-var webdriver = require('selenium-webdriver'),
-    By        = require('selenium-webdriver').By,
+var By        = require('selenium-webdriver').By,
     until     = require('selenium-webdriver').until,
     expect    = require('chai').expect,
     _         = require('underscore'),
     uuid      = require('node-uuid'),
     Promise   = require("bluebird"),
-    open_page_func       = require('../lib/open_page'),
+    open_page_func       = require('./open_page'),
+    build_driver         = require('./build_driver'),
     company_edit_form_id = '#company_edit_form',
-    submit_form_func     = require('../lib/submit_form');
+    submit_form_func     = require('./submit_form');
 
 
 var register_new_user_func = Promise.promisify( function(args, callback){
@@ -25,15 +25,9 @@ var register_new_user_func = Promise.promisify( function(args, callback){
     random_token          = (new Date()).getTime(),
     new_user_email        = args.user_email || random_token + '@test.com';
 
-  var capabilities = process.env.USE_CHROME ? 'chrome' : 'phantomjs';
-
   // Instantiate new driver object if it not provided as paramater
-  var driver = args.driver || new webdriver.Builder()
-      .withCapabilities(webdriver.Capabilities[capabilities]())
-      .build();
+  var driver = args.driver || build_driver()
 
-//  driver.manage().timeouts().pageLoadTimeout(10*1000);
-//  driver.manage().timeouts().implicitlyWait(10*1000);
 
   // Make sure we are in desktop version
   driver.manage().window().setSize(1024, 768);

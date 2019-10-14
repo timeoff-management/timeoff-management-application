@@ -1,14 +1,14 @@
 
 'use strict';
 
-var webdriver = require('selenium-webdriver'),
-    By        = require('selenium-webdriver').By,
+var By        = require('selenium-webdriver').By,
     expect    = require('chai').expect,
     _         = require('underscore'),
     until     = require('selenium-webdriver').until,
     Promise   = require("bluebird"),
     uuid      = require('node-uuid'),
-    submit_form_func = require('../lib/submit_form'),
+    submit_form_func = require('./submit_form'),
+    build_driver     = require('./build_driver'),
     add_new_user_form_id = '#add_new_user_form',
     driver;
 
@@ -22,9 +22,7 @@ module.exports = Promise.promisify(function(args, callback){
       // with that error
       error_message = args.error_message,
 
-  driver = args.driver || new webdriver.Builder()
-    .withCapabilities(webdriver.Capabilities.phantomjs())
-    .build();
+  driver = args.driver || build_driver();
 
   var random_token =  (new Date()).getTime();
   var new_user_email = args.email || random_token + '@test.com';
@@ -61,11 +59,11 @@ module.exports = Promise.promisify(function(args, callback){
         },{
             selector : add_new_user_form_id+' input[name="password_confirm"]',
             value    : '123456',
-        },{
+        },
+        select_department, {
             selector : add_new_user_form_id+' input[name="start_date"]',
             value : '2015-06-01',
         },
-            select_department,
         ],
         submit_button_selector : add_new_user_form_id+' #add_new_user_btn',
         should_be_successful : error_message ? false : true,
