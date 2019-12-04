@@ -6,7 +6,7 @@
 <form method="post" action="/settings/departments/delete/{{ department.id }}/">
   <div class="row">
     <div class="col-md-6 lead">
-      Define public holidays for {{company.name}}
+      Define public holidays for {{company.name}}`s account
     </div>
   </div>
 </form>
@@ -17,13 +17,13 @@
 
 <div class="row">
   <div class="col-xs-2">
-    <a class="btn btn-default" href="/calendar/?year={{previous_year}}"><span aria-hidden="true" class="fa fa-chevron-left"></span> {{yearPrev}} </a>
+    <a class="btn btn-default" href="?year={{yearPrev}}"><span aria-hidden="true" class="fa fa-chevron-left"></span> {{yearPrev}} </a>
   </div>
   <div class="col-xs-8 calendar-section-caption">
     <strong>January - December {{yearCurrent}}</strong>
   </div>
   <div class="col-xs-2">
-    <a class="btn btn-default pull-right" href="/calendar/?year={{next_year}}">{{yearNext}} <span aria-hidden="true" class="fa fa-chevron-right"></span></a>
+    <a class="btn btn-default pull-right" href="?year={{yearNext}}">{{yearNext}} <span aria-hidden="true" class="fa fa-chevron-right"></span></a>
   </div>
 </div>
 
@@ -36,7 +36,7 @@
         <table class="calendar_month month_{{ this.month }}">
         <thead>
         <tr>
-            <td colspan="14">{{#if ../show_full_year}}{{this.month}}{{else}}{{as_date_formatted this.moment 'MMMM, YYYY'}}{{/if}}</td>
+            <td colspan="14">{{this.month}}</td>
         </tr>
         <tr>
             <td colspan="2">M</td>
@@ -56,7 +56,6 @@
             {{/each}}
         </tr>
         {{/each}}
-
         </tbody></table>
     </div>
     {{/each}}
