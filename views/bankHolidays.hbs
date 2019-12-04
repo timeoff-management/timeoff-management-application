@@ -1,0 +1,69 @@
+
+{{> header }}
+
+<h1>Bank holidays</h1>
+
+<form method="post" action="/settings/departments/delete/{{ department.id }}/">
+  <div class="row">
+    <div class="col-md-6 lead">
+      Define public holidays for {{company.name}}
+    </div>
+  </div>
+</form>
+
+<div class="row">&nbsp;</div>
+
+{{> show_flash_messages }}
+
+<div class="row">
+  <div class="col-xs-2">
+    <a class="btn btn-default" href="/calendar/?year={{previous_year}}"><span aria-hidden="true" class="fa fa-chevron-left"></span> {{yearPrev}} </a>
+  </div>
+  <div class="col-xs-8 calendar-section-caption">
+    <strong>January - December {{yearCurrent}}</strong>
+  </div>
+  <div class="col-xs-2">
+    <a class="btn btn-default pull-right" href="/calendar/?year={{next_year}}">{{yearNext}} <span aria-hidden="true" class="fa fa-chevron-right"></span></a>
+  </div>
+</div>
+
+<div class="row">&nbsp;</div>
+
+<div class="row clearfix">
+
+    {{# each calendar}}
+    <div class="col-md-3 month_container">
+        <table class="calendar_month month_{{ this.month }}">
+        <thead>
+        <tr>
+            <td colspan="14">{{#if ../show_full_year}}{{this.month}}{{else}}{{as_date_formatted this.moment 'MMMM, YYYY'}}{{/if}}</td>
+        </tr>
+        <tr>
+            <td colspan="2">M</td>
+            <td colspan="2">T</td>
+            <td colspan="2">W</td>
+            <td colspan="2">T</td>
+            <td colspan="2">F</td>
+            <td colspan="2">S</td>
+            <td colspan="2">S</td>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each this.weeks }}
+        <tr>
+            {{#each this}}
+              {{> calendar_cell day = this}}
+            {{/each}}
+        </tr>
+        {{/each}}
+
+        </tbody></table>
+    </div>
+    {{/each}}
+
+</div>
+
+
+<div class="row">&nbsp;</div>
+
+{{> footer }}
