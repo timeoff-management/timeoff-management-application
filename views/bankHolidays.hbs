@@ -16,7 +16,7 @@
       </button>
       <ul class="dropdown-menu">
         <li><a href="#" id="import_users_btn">Import default holidays for {{yearCurrent}}</a></li>
-        <li><a href="#" id="add_new_department">Add new bank holiday</a></li>
+        <li><a href="#" id="add_new_department" data-toggle="modal" data-target="#add_new_bank_holiday_modal">Add new bank holiday</a></li>
       </ul>
     </div>
   </div>
@@ -84,6 +84,9 @@
     </div>
     {{/unless}}
 
+    <form id="delete_bankholiday_form" method="post" action="/settings/bankholidays_v2/delete/">
+      <input name="year" value="{{yearCurrent}}" type="hidden">
+    </form>
     <form id="update_bankholiday_form" method="post" action="/settings/bankholidays_v2/?year={{yearCurrent}}">
     {{#each bankHolidays}}
     <div class="row">
@@ -97,7 +100,7 @@
         <input type="text" class="form-control" value="{{name}}" name="name__{{id}}">
       </div>
       <div class="col-md-2">
-        <button class="btn btn-default pull-right bankholiday-remove-btn" type="button" value="{{@index}}"><span class="fa fa-remove"></span></button>
+        <button class="btn btn-default pull-right bankholiday-remove-btn" type="button" value="{{id}}"><span class="fa fa-remove"></span></button>
       </div>
     </div>
 
