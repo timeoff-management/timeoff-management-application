@@ -1,14 +1,12 @@
 
 "use strict";
 
-var
-  test                    = require('selenium-webdriver/testing'),
+const
   register_new_user_func  = require('../../lib/register_new_user'),
   open_page_func          = require('../../lib/open_page'),
   submit_form_func        = require('../../lib/submit_form'),
   expect                  = require('chai').expect,
   By                      = require('selenium-webdriver').By,
-  Promise                 = require("bluebird"),
   config                  = require('../../lib/config'),
   application_host        = config.get_application_host(),
   bankholiday_form_id     = '#update_bankholiday_form',
@@ -47,19 +45,19 @@ describe('Try to manage Bank holidays with non-default date format', function(){
 
   it("Open page with bank holidays", function(done){
     open_page_func({
-      url    : application_host + 'settings/general/',
-      driver : driver,
+      driver,
+      url: application_host + 'settings/bankholidays_v2/?year=2015',
     })
-    .then(function(){done()});
+    .then(() => done());
   });
 
   it("Remove default predefined bank holidays", function(done){
     submit_form_func({
-      driver                 : driver,
+      driver,
       message                : /Bank holiday was successfully removed/,
-      submit_button_selector : bankholiday_form_id+' button[value="0"]',
+      submit_button_selector : bankholiday_form_id+' button[tom-test-hook="remove__0"]',
     })
-    .then(function(){done()});
+    .then(() => done());
   });
 
   it("And make sure that no bank holidays are shown", function(done){
@@ -145,23 +143,23 @@ describe('Try to manage Bank holidays with non-default date format', function(){
     submit_form_func({
       driver      : driver,
       form_params : [{
-        selector : bankholiday_form_id+' input[name="name__0"]',
+        selector : bankholiday_form_id+' input[tom-test-hook="name__0"]',
         value    : 'NOTHING',
       },{
-        selector : bankholiday_form_id+' input[name="name__1"]',
+        selector : bankholiday_form_id+' input[tom-test-hook="name__1"]',
         value    : 'NOTHING',
       },{
-        selector : bankholiday_form_id+' input[name="name__2"]',
+        selector : bankholiday_form_id+' input[tom-test-hook="name__2"]',
         value    : 'NOTHING',
       }],
       elements_to_check : [{
-        selector : bankholiday_form_id+' input[name="date__0"]',
+        selector : bankholiday_form_id+' input[tom-test-hook="date__0"]',
         value    : '01/01/2015',
       },{
-        selector : bankholiday_form_id+' input[name="date__1"]',
+        selector : bankholiday_form_id+' input[tom-test-hook="date__1"]',
         value    : '02/01/2015',
       },{
-        selector : bankholiday_form_id+' input[name="date__2"]',
+        selector : bankholiday_form_id+' input[tom-test-hook="date__2"]',
         value    : '01/05/2015',
       }],
       submit_button_selector : bankholiday_form_id+' button[type="submit"]',
@@ -195,14 +193,12 @@ describe("Try to use DD/MM/YY and some missleading date", function(){
     });
   });
 
-  it("Open general settings page", function(done){
-    driver.call(function(){
-      open_page_func({
-        url    : application_host + 'settings/general/',
-        driver : driver,
-      })
-      .then(function(){ done() });
-    });
+  it("Open page with bank holidays", function(done){
+    open_page_func({
+      driver,
+      url: application_host + 'settings/bankholidays_v2/',
+    })
+    .then(() => done());
   });
 
   it("Try to add new bank holiday with date that was reported to be problematic", function(done){
