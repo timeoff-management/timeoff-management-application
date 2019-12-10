@@ -14,7 +14,7 @@ $(document).ready(function () {
     return false;
   });
 
-  $('button#bankholiday-import-btn').on('click', function(e){
+  $('#bankholiday-import-btn').on('click', function(e){
 
     e.stopPropagation();
 
