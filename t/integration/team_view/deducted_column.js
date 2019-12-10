@@ -92,7 +92,7 @@ describe('Case when holidays spans through more then one month and is devided by
   it("Open page with bank holidays", function(done){
     open_page_func({
       driver,
-      url: application_host + 'settings/bankholidays_v2/',
+      url: application_host + 'settings/bankholidays/',
     })
     .then(() => done());
   });

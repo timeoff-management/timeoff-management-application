@@ -271,7 +271,7 @@
       </div>
       <div class="panel-body">
         <div class="row">
-          <div class="col-md-12 tst-no-bank-holidays">Bank holidays could be found <a href="/settings/bankholidays_v2/">here</a></div>
+          <div class="col-md-12 tst-no-bank-holidays">Bank holidays could be found <a href="/settings/bankholidays/">here</a></div>
         </div>
       </div>
     </div>
@@ -315,13 +315,6 @@
   </div>
 </div>
 
-
-{{> add_new_bank_holiday_modal
-  container_id='add_new_bank_holiday_modal'
-  form_action='/settings/bankholidays/'
-}}
-
-
 {{> add_new_leave_type_modal
   container_id='add_new_leave_type_modal'
   form_action='/settings/leavetypes/'
@@ -329,7 +322,6 @@
 
 {{> remove_company_modal
   container_id='remove_company_modal'
-
 }}
 
 {{> footer }}

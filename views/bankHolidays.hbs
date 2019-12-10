@@ -91,11 +91,11 @@
     </div>
     {{/unless}}
 
-    <form id="delete_bankholiday_form" method="post" action="/settings/bankholidays_v2/delete/">
+    <form id="delete_bankholiday_form" method="post" action="/settings/bankholidays/delete/">
       <input name="year" value="{{yearCurrent}}" type="hidden">
     </form>
-    <form id="import_bankholiday_form" method="post" action="/settings/bankholidays_v2/import/?year={{yearCurrent}}"></form>
-    <form id="update_bankholiday_form" method="post" action="/settings/bankholidays_v2/?year={{yearCurrent}}">
+    <form id="import_bankholiday_form" method="post" action="/settings/bankholidays/import/?year={{yearCurrent}}"></form>
+    <form id="update_bankholiday_form" method="post" action="/settings/bankholidays/?year={{yearCurrent}}">
     {{#each bankHolidays}}
     <div class="row">
       <div class="col-md-4">
@@ -139,7 +139,7 @@
 
 {{> add_new_bank_holiday_modal
   container_id='add_new_bank_holiday_modal'
-  form_action='/settings/bankholidays_v2/'
+  form_action='/settings/bankholidays/'
   startDateOfYearCurrent=startDateOfYearCurrent
   yearCurrent=yearCurrent
 }}

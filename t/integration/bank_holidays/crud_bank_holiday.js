@@ -30,7 +30,7 @@ describe('CRUD for bank holidays', function(){
   it("Open page with bank holidays", (done) => {
     open_page_func({
       driver,
-      url: application_host + 'settings/bankholidays_v2/?year=2015',
+      url: application_host + 'settings/bankholidays/?year=2015',
     })
     .then(() => done());
   });
@@ -65,7 +65,7 @@ describe('CRUD for bank holidays', function(){
   it("Go back to current year page of bank holidays", (done) => {
     open_page_func({
       driver,
-      url: `${application_host}settings/bankholidays_v2/?year=${moment().year()}`,
+      url: `${application_host}settings/bankholidays/?year=${moment().year()}`,
     })
     .then(() => done());
   });
@@ -100,7 +100,7 @@ describe('CRUD for bank holidays', function(){
   it("Go back to 2015", (done) => {
     open_page_func({
       driver,
-      url: application_host + 'settings/bankholidays_v2/?year=2015',
+      url: application_host + 'settings/bankholidays/?year=2015',
     })
     .then(() => done());
   });

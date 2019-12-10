@@ -46,7 +46,7 @@ describe('Try to manage Bank holidays with non-default date format', function(){
   it("Open page with bank holidays", function(done){
     open_page_func({
       driver,
-      url: application_host + 'settings/bankholidays_v2/?year=2015',
+      url: application_host + 'settings/bankholidays/?year=2015',
     })
     .then(() => done());
   });
@@ -196,7 +196,7 @@ describe("Try to use DD/MM/YY and some missleading date", function(){
   it("Open page with bank holidays", function(done){
     open_page_func({
       driver,
-      url: application_host + 'settings/bankholidays_v2/',
+      url: application_host + 'settings/bankholidays/',
     })
     .then(() => done());
   });
