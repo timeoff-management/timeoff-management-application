@@ -3,13 +3,19 @@ node_js:
   - "v6.14.0"
 sudo: false
 addons:
-    chrome: stable
+#    chrome: stable
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - dpkg
+      - google-chrome-stable
 cache:
   directories:
     - node_modules
 env:
   - USE_CHROME=1
-  - VPP=1
+    #  - VPP=1
 before_install:
 before_script:
   #  - wget https://chromedriver.storage.googleapis.com/77.0.3865.40/chromedriver_linux64.zip
