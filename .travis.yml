@@ -8,7 +8,8 @@ cache:
   directories:
     - node_modules
 env:
-  - USE_CHROME=1
+  #  - USE_CHROME=1
+  - VPP=1
 before_install:
 before_script:
   - wget https://chromedriver.storage.googleapis.com/77.0.3865.40/chromedriver_linux64.zip
