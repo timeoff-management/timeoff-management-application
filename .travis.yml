@@ -22,4 +22,5 @@ before_script:
   - wget http://chromedriver.storage.googleapis.com/2.24/chromedriver_linux64.zip
   - cd bin; unzip ../chromedriver_linux64.zip; cd ../
   - export PATH=$PWD/bin:$PATH
+  - export CHROME_BIN=chromium-browser
   - node bin/wwww > /dev/null 2>&1 &
