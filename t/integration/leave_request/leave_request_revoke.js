@@ -45,10 +45,10 @@ describe('Revoke leave request', function(){
 
   this.timeout( config.get_execution_timeout() );
 
-  var email_admin   , admin_user_id,
-      email_manager_a, manager_a_user_id,
-      email_manager_b, manager_b_user_id,
-      email_employee, employee_user_id,
+  let email_admin,
+      email_manager_a,
+      email_manager_b,
+      email_employee,
       driver;
 
   it('Create new company', function(done){
@@ -186,10 +186,10 @@ describe('Revoke leave request', function(){
             value           : "2",
           },{
             selector : 'input#from',
-            value : `${currentYear}-05-15`,
+            value : `${currentYear}-05-14`,
           },{
             selector : 'input#to',
-            value : `${currentYear}-05-16`,
+            value : `${currentYear}-05-15`,
           }],
           message : /New leave request was added/,
         })
@@ -200,8 +200,8 @@ describe('Revoke leave request', function(){
   it("Check that all days are marked as pended", function(done){
     check_booking_func({
       driver         : driver,
-      full_days      : [moment.utc(`${currentYear}-05-16`)],
-      halfs_1st_days : [moment.utc(`${currentYear}-05-15`)],
+      full_days      : [moment.utc(`${currentYear}-05-15`)],
+      halfs_1st_days : [moment.utc(`${currentYear}-05-14`)],
       type           : 'pended',
     })
     .then(function(){ done() });
