@@ -98,10 +98,12 @@ We have quite a wide test coverage, to make sure that the main user paths work a
 
 Please run them frequently while developing the project.
 
-(make sure you have [PhantomJS](http://phantomjs.org/download.html) installed in path)
+Make sure you have Chrome driver installed in your path and Chrome browser for your platform.
+
+If you want to see the browser execute the interactions prefix with `SHOW_CHROME=1`
 
 ```bash
-npm test
+USE_CHROME=1 npm test
 ```
 
 (make sure that application with default settings is up and running)

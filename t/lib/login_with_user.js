@@ -1,12 +1,12 @@
 
 'use strict';
 
-var webdriver = require('selenium-webdriver'),
-    By        = require('selenium-webdriver').By,
+var By        = require('selenium-webdriver').By,
     expect    = require('chai').expect,
     until     = require('selenium-webdriver').until,
     _         = require('underscore'),
     Promise   = require("bluebird"),
+    build_driver = require('./build_driver'),
     driver;
 
 
@@ -16,13 +16,10 @@ var login_with_user_func = Promise.promisify(function(args, callback){
       user_email       = args.user_email,
       result_callback  = callback,
       password         = args.password || '123456',
-      should_fail      = args.should_fail || false,
+      should_fail      = args.should_fail || false;
 
   // Create new instance of driver
-  driver = args.driver || new webdriver.Builder()
-    .withCapabilities(webdriver.Capabilities.phantomjs())
-//    .withCapabilities(webdriver.Capabilities.chrome())
-    .build();
+  driver = args.driver || build_driver();
 
   // Make sure we are in desktop version
   driver.manage().window().setSize(1024, 768);

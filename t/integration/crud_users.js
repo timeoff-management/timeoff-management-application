@@ -370,6 +370,7 @@ describe('CRUD for users', function(){
       form_params : [{
           selector : 'input[name="adjustment"]',
           value    : '1.2',
+          change_step: true,
       }],
       submit_button_selector : 'button#save_changes_btn',
       message : /New allowance adjustment of user should be either whole integer number or with half/,

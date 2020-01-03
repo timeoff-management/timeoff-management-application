@@ -38,7 +38,7 @@ describe('Revoke leave request by Admin', function(){
 
   this.timeout( config.get_execution_timeout() );
 
-  var email_admin   , admin_user_id,
+  let email_admin,
       email_employee, employee_user_id,
       driver;
 

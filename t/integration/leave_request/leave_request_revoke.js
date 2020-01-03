@@ -47,10 +47,10 @@ describe('Revoke leave request', function(){
 
   this.timeout( config.get_execution_timeout() );
 
-  var email_admin   , admin_user_id,
-      email_manager_a, manager_a_user_id,
-      email_manager_b, manager_b_user_id,
-      email_employee, employee_user_id,
+  let email_admin,
+      email_manager_a,
+      email_manager_b,
+      email_employee,
       driver;
 
   it('Create new company', function(done){
