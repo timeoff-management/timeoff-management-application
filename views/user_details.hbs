@@ -19,6 +19,7 @@
 <div class="col-md-3 list-group">
   <a href="/users/edit/{{employee.id}}/" class="list-group-item{{# if show_main_tab }} selected-item{{/if}}">General details</a>
   <a href="/users/edit/{{employee.id}}/schedule/" class="list-group-item {{# if show_schedule_tab }} selected-item{{/if}}">Schedule</a>
+  <a href="/users/edit/{{employee.id}}/calendar/" class="list-group-item {{# if show_calendar_tab }} selected-item{{/if}}">Calendar</a>
   <a href="/users/edit/{{employee.id}}/absences/" class="list-group-item{{# if show_absence_tab }} selected-item{{/if}}">Absences</a>
 </div>
 
@@ -29,6 +30,10 @@
 {{else if show_schedule_tab}}
 
   {{> user_details/schedule }}
+
+{{else if show_calendar_tab}}
+
+  {{> user_details/calendar }}
 
 {{else}}
 
