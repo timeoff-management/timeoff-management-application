@@ -28,7 +28,7 @@
       >{{ user_allowance.nominal_allowance }}</span>
     </dd>
     <dd>
-      <em>Carried over from {{previous_year}}</em>
+      <em>Carried over from {{#if previous_year}}{{previous_year}}{{else}}previous year{{/if}}</em>
       <span class="pull-right"
         data-content="Allowance carried over from previous year. Note: this amount is calculated on the very first day of the year."
         data-placement="top"
