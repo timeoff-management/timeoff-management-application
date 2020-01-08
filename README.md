@@ -90,7 +90,7 @@ cd timeoff-management
 npm install
 npm start
 ```
-Open http://localhost:3000/ in your browser.
+Open http://localhost:80/ in your browser.
 
 ## Run tests
 
