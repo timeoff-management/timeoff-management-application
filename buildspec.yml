@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 10
+    commands: 
+      - echo Running NPM install
+      - npm install
+
+  pre_build:
+    commands:
+      - echo Nothing to do in the pre-build phase
+  
+  build:
+    commands:
+      - echo Nothing to do in the build phase
+  
+  post_build:
+    commands:
+      - echo Install completed on 'date'
+
+artifacts:
+  files:
+    - '**/*'
