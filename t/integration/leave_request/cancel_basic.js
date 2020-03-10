@@ -1,8 +1,7 @@
 
 'use strict';
 
-var test                 = require('selenium-webdriver/testing'),
-  By                     = require('selenium-webdriver').By,
+const By                 = require('selenium-webdriver').By,
   until                  = require('selenium-webdriver').until,
   Promise                = require("bluebird"),
   moment                 = require('moment'),
@@ -17,18 +16,19 @@ var test                 = require('selenium-webdriver/testing'),
   submit_form_func       = require('../../lib/submit_form'),
   user_info_func         = require('../../lib/user_info'),
   application_host       = config.get_application_host(),
-  some_weekday_date      = '2019-01-03';
+  // TODO remove hard-coded values
+  some_weekday_date      = '2020-01-02';
 
 /*
  *  Scenario:
  *    * Create a company with admin user A and regular employee B
  *    * Login as regular user B and place a leave request
- *    * Go to Requests page and ensure that new entry apeared in My leaves section
+ *    * Go to Requests page and ensure that new entry appeared in My leaves section
  *    * New entry is in Pending status and has Delete/Cancel icon
  *    * Cancel leave request
  *    * Ensure that My requests page does not contain any entries
  *    * Login as admin user A and ensure that there is no pending leave requests
- *    * Go to email audit page and ensure that there were two emails regarding cancelation
+ *    * Go to email audit page and ensure that there were two emails regarding cancellation
  *    * Go to user B details and ensure its details shows nothing from allowance was used
  *    * Login back as user B
  *    * Submit leave request for the same date as the first one was

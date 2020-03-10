@@ -91,11 +91,11 @@ describe('Case when holidays spans through more then one month and is devided by
 
   it("Open page with bank holidays", function(done){
     open_page_func({
-      url    : application_host + 'settings/general/',
-      driver : driver,
+      driver,
+      url: application_host + 'settings/bankholidays/',
     })
-    .then(function(){done()});
-  })
+    .then(() => done());
+  });
 
   it("Create new bank holiday to be on 2 Aug 2016", function(done){
     driver.findElement(By.css('#add_new_bank_holiday_btn'))

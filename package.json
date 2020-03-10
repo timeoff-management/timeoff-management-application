@@ -1,10 +1,10 @@
 {
   "name": "TimeOff.Management",
-  "version": "0.10.0",
+  "version": "1.0.0",
   "private": false,
   "description": "Simple yet powerful absence management software for small and medium size business",
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=10.16.0"
   },
   "dependencies": {
     "bluebird": "^2.10.2",
@@ -17,6 +17,7 @@
     "express-handlebars": "^3.0.0",
     "express-session": "^1.13.0",
     "formidable": "~1.0.17",
+    "handlebars": "4.5.0",
     "html-to-text": "^3.2.0",
     "ical-generator": "^0.2.7",
     "joi": "~12.0.0",
@@ -35,14 +36,14 @@
     "sequelize": "^3.19.2",
     "sequelize-cli": "2.5.1",
     "serve-favicon": "^2.1.7",
-    "sqlite3": "^3.1.1",
+    "sqlite3": "^4.0.1",
     "underscore": "^1.8.3",
     "uuid": "^3.3.2",
     "validator": "^3.43.0"
   },
   "devDependencies": {
     "chai": "^2.2.0",
-    "mocha": "^3.5.3",
+    "mocha": "^6.2.2",
     "node-sass": "^4.5.3",
     "request-promise": "^4.2.2",
     "selenium-webdriver": "2.53.3"

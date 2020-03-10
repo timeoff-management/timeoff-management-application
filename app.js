@@ -127,11 +127,9 @@ app.use(
   require('./lib/route/settings')
 );
 
-// '/settings/' path is quite big hence there are two modules providng handlers for it
-app.use(
-  '/settings/',
-  require('./lib/route/departments')
-);
+// '/settings/' path is quite big hence there are two modules providing handlers for it
+app.use('/settings/', require('./lib/route/departments'));
+app.use('/settings/', require('./lib/route/bankHolidays'));
 
 app.use(
   '/users/',

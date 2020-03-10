@@ -1,0 +1,95 @@
+
+<div class="col-md-9">
+
+  {{> user_details/breadcrumb employee=employee }}
+
+  <div class="row">
+    <div class="col-xs-2">
+      <a class="btn btn-default" href="/users/edit/{{current_user.id}}/calendar/?year={{previous_year}}"><span aria-hidden="true" class="fa fa-chevron-left"></span> {{previous_year}} </a>
+    </div>
+    <div class="col-xs-8 calendar-section-caption">
+      <h3>{{current_year}}</h3>
+    </div>
+    <div class="col-xs-2">
+      {{#if show_full_year}}
+      <a class="btn btn-default pull-right" href="/users/edit/{{current_user.id}}/calendar/?year={{next_year}}{{#if show_full_year}}&show_full_year=1{{/if}}">{{next_year}} <span aria-hidden="true" class="fa fa-chevron-right"></span></a>
+      {{/if}}
+    </div>
+  </div>
+
+  <div class="row main-row_header">
+    <div class="col-md-12"><hr/></div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-4 top-leave-type-statistics">
+      <dl>
+        {{#with current_user }}
+        <dt data-tom-days-available-in-allowance>{{ ../user_allowance.number_of_days_available_in_allowance }}</dt>
+        <dd>Days available</dd>
+        <dd>out of <span data-tom-total-days-in-allowance>{{ ../user_allowance.total_number_of_days_in_allowance }}</span> in allowance</dd>
+        {{/with}}
+      </dl>
+    </div>
+
+    <div class="col-md-4 secondary-leave-type-statistics hidden-xs">
+      {{> user_details/allowance_breakdown user_allowance = user_allowance }}
+    </div>
+
+    <div class="col-md-4 secondary-leave-type-statistics hidden-xs">
+      <dl>
+        <dt>Used</dt>
+
+        {{# if leave_type_statistics }}
+          {{# each leave_type_statistics }}
+            <dd><em>{{this.leave_type.name}}:</em> <span class="pull-right">{{this.days_taken}}{{# if this.limit}} out of {{this.limit}}{{/if}}</span></dd>
+          {{/each}}
+        {{else}}
+
+          <dd class="text-muted">No approved requests so far.</dd>
+        {{/if}}
+      </dl>
+    </div>
+
+  </div>
+
+
+  <div class="row main-row_header">
+    <div class="col-md-12"><hr/></div>
+  </div>
+
+  <div class="row clearfix">
+    {{# each calendar}}
+    <div class="col-md-4 month_container">
+      <table class="calendar_month month_{{ this.month }}">
+      <thead>
+      <tr>
+        <td colspan="14">{{this.month}}</td>
+      </tr>
+      <tr>
+        <td colspan="2">M</td>
+        <td colspan="2">T</td>
+        <td colspan="2">W</td>
+        <td colspan="2">T</td>
+        <td colspan="2">F</td>
+        <td colspan="2">S</td>
+        <td colspan="2">S</td>
+      </tr>
+      </thead>
+      <tbody>
+      {{#each this.weeks }}
+      <tr>
+        {{#each this}}
+          {{> calendar_cell day = this}}
+        {{/each}}
+      </tr>
+      {{/each}}
+
+      </tbody></table>
+    </div>
+    {{/each}}
+  </div>
+
+
+</div>
