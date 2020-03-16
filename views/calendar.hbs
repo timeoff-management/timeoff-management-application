@@ -1,10 +1,10 @@
 
 {{> header }}
 
-<h1>Employee calendar</h1>
+<h1>Mon planning</h1>
 
-<div class="row">
-    <div class="col-md-6 lead">{{logged_user.name}} {{logged_user.lastname}}'s calendar for {{current_year}}</div>
+<div class="row hidden">
+    <div class="col-md-6 lead">{{logged_user.name}} {{logged_user.lastname}} {{current_year}}</div>
     <div class="col-md-6">
     </div>
 </div>
@@ -13,11 +13,11 @@
 
 <div class="row">&nbsp;</div>
 
-<div class="row main-row_header hidden-xs">
-  <div class="col-md-12">Statistics</div>
+<div class="row main-row_header hidden">
+  <div class="col-md-12">Statistiques</div>
 </div>
 
-<div class="row">
+<div class="row hidden">
 
   <div class="col-md-3 top-leave-type-statistics">
     <dl>
@@ -68,8 +68,8 @@
 </div>
 
 
-<div class="row main-row_header">
-  <div class="col-md-12">Calendar <a href="/calendar/feeds/" data-toggle="tooltip" data-placement="right" title="Export absences  to external calendars"><span class="fa fa-rss"></span></a></div>
+<div class="row main-row_header hidden">
+  <div class="col-md-12">Planning <a href="/calendar/feeds/" data-toggle="tooltip" data-placement="right" title="Export absences  to external calendars"><span class="fa fa-rss"></span></a></div>
 </div>
 
 <div class="row">
@@ -80,13 +80,13 @@
   </div>
   <div class="col-xs-8 calendar-section-caption">
 
-    <strong>{{#if show_full_year}}January - December {{current_year}}{{else}}Upcoming Months{{/if}}</strong>
+    <strong>{{#if show_full_year}}Janvier - Décembre {{current_year}}{{else}}Voir les mois suivants{{/if}}</strong>
     &nbsp;
 
     {{# unless show_full_year}}
-    <a class="btn btn-default" href="/calendar/?show_full_year=1">More... &nbsp;<span class="fa fa-plus"></span></a>
+    <a class="btn btn-default" href="/calendar/?show_full_year=1">Voir plus... &nbsp;<span class="fa fa-plus"></span></a>
     {{else}}
-    <a class="btn btn-default" href="/calendar/">Less... &nbsp;<span class="fa fa-minus"></span></a>
+    <a class="btn btn-default" href="/calendar/">Voir moins... &nbsp;<span class="fa fa-minus"></span></a>
     {{/unless}}
 
 
@@ -110,13 +110,13 @@
             <td colspan="14">{{#if ../show_full_year}}{{this.month}}{{else}}{{as_date_formatted this.moment 'MMMM, YYYY'}}{{/if}}</td>
         </tr>
         <tr>
+            <td colspan="2">L</td>
             <td colspan="2">M</td>
-            <td colspan="2">T</td>
-            <td colspan="2">W</td>
-            <td colspan="2">T</td>
-            <td colspan="2">F</td>
+            <td colspan="2">M</td>
+            <td colspan="2">J</td>
+            <td colspan="2">V</td>
             <td colspan="2">S</td>
-            <td colspan="2">S</td>
+            <td colspan="2">D</td>
         </tr>
         </thead>
         <tbody>
@@ -137,7 +137,7 @@
 {{# unless show_full_year}}
 
   <div class="row main-row_header">
-    <p class="col-md-12">All my absences in {{current_year}}</p>
+    <p class="col-md-12">Mes absences {{current_year}}</p>
   </div>
 
   {{> user_requests leaves=current_user.my_leaves }}
