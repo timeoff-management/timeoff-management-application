@@ -2,7 +2,7 @@
 <div class="row">
   {{# unless leaves}}
   <div class="col-md-12 text-muted">
-    There are no leave requests yet.
+    Aucune absence pour le moment.
   </div>
   {{else}}
 
@@ -12,12 +12,10 @@
     <table class="table table-hover user-requests-table">
       <thead>
         <tr>
-          <th>Dates (from <i class="fa fa-long-arrow-right"></i> to)</th>
-          <th>Type</th>
-          <th>Deducted</th>
-          <th>Approved by</th>
+          <th>Du <i class="fa fa-long-arrow-right"></i> au</th>
+          <th>Motif</th>
+          <th>Nombre de jours</th>
           <th></th>
-          <th><span class="pull-right">Status</span></th>
         </tr>
       </thead>
 
@@ -28,25 +26,23 @@
         <td data-tom-leave-dates="1">{{> leave_dates leave=this}}</td>
         <td>{{ this.leave_type.name }}{{#if this.is_pended_revoke_leave}}<br>(pended revoke){{/if}}</td>
         <td>{{ this.get_deducted_days_number }}</td>
-        <td class="user-request-table-approver">{{#with this.approver}}{{this.full_name}}{{/with}}</td>
         <td>
           {{# if this.is_approved_leave }}
           {{# unless this.is_pended_revoke_leave}}
           <form method="post" action="/requests/revoke/">
             <input type="hidden" value="{{this.id}}" name="request">
-            <button type="submit" class="pull-right btn btn-default btn-xs revoke-btn" title="Revoke leave request. Subject of approval."><i class="fa fa-trash"> Revoke</i></button>
+            <button type="submit" class="pull-right btn btn-danger" title="Supprimer mon absence"><i class="fa fa-trash"></i></button>
           </form>
           {{/unless}}
           {{else}}
             {{#if_equal this.userId ../logged_user.id }}
             <form method="post" action='/requests/cancel/'>
               <input type="hidden" value="{{this.id}}" name="request">
-              <button type="submit" class="pull-right btn btn-default btn-xs revoke-btn" title="Cancel leave request" value="cancel"><i class="fa fa-trash"> Cancel</i></button>
+              <button type="submit" class="pull-right btn btn-danger" title="Annuler ma demande" value="cancel"><i class="fa fa-trash"></i></button>
             </form>
             {{/if_equal}}
           {{/if}}
         </td>
-        <td><span class="pull-right leave-request-row-status">{{#if this.is_new_leave }}Pending{{else}}{{#if this.is_approved_leave}}Approved{{else}}Rejected{{/if}}{{/if}}</span></td>
       </tr>
 
       {{/ each }}

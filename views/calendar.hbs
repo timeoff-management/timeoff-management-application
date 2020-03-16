@@ -1,7 +1,10 @@
 
 {{> header }}
 
-<h1>Mon planning</h1>
+<h1>
+  Mon planning
+  <button type="button" class="pull-right btn btn-success btn-lg" data-toggle="modal" data-target="#book_leave_modal" id="book_time_off_btn">Enregistrer une absence</button>
+</h1>
 
 <div class="row hidden">
     <div class="col-md-6 lead">{{logged_user.name}} {{logged_user.lastname}} {{current_year}}</div>
@@ -136,8 +139,8 @@
 
 {{# unless show_full_year}}
 
-  <div class="row main-row_header">
-    <p class="col-md-12">Mes absences {{current_year}}</p>
+  <div class="row">
+    <div class="col-md-12"><h3>Mes absences {{current_year}}</h3></div>
   </div>
 
   {{> user_requests leaves=current_user.my_leaves }}

@@ -5,13 +5,13 @@
     <form method="POST" action="{{leave_modal_form_action}}">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="exampleModalLabel">New absence</h4>
+        <h4 class="modal-title" id="exampleModalLabel">Enregistrer une absence</h4>
       </div>
       <div class="modal-body">
 
           {{# if_equal logged_user.supervised_users.length 1 }}{{else}}
           <div class="form-group">
-            <label for="employee" class="control-label">For employee:</label>
+            <label for="employee" class="control-label">Agent</label>
             <select class="form-control" id="employee" name="user">
               {{#each logged_user.supervised_users}}
               <option value="{{@index}}" {{# if_equal this.id ../logged_user.id }}selected="selected"{{/if_equal}}>{{this.full_name}}</option>
@@ -21,7 +21,7 @@
           {{/if_equal}}
 
           <div class="form-group">
-            <label for="leave_type" class="control-label">Leave type:</label>
+            <label for="leave_type" class="control-label">Motif</label>
             <select class="form-control" id="leave_type" name="leave_type">
             {{# each logged_user.company.leave_types}}
                 <option value={{@index}} data-tom="{{this.name}}">{{this.name}}</option>
@@ -30,13 +30,13 @@
           </div>
 
           <div class="form-group">
-            <label for="from" class="control-label">From:</label>
+            <label for="from" class="control-label">Du</label>
             <div class="row">
               <div class="col-md-5">
                 <select class="form-control" name="from_date_part">
-                  <option value="1" selected="selected">All day</option>
-                  <option value="2">Morning</option>
-                  <option value="3">Afternoon</option>
+                  <option value="1" selected="selected">Toute la journée</option>
+                  <option value="2">Matin</option>
+                  <option value="3">Après-Midi</option>
                 </select>
               </div>
               <div class="col-md-7">
@@ -49,13 +49,13 @@
           </div>
 
           <div class="form-group">
-            <label for="to" class="control-label">To:</label>
+            <label for="to" class="control-label">Au</label>
             <div class="row">
               <div class="col-md-5">
                 <select class="form-control" name="to_date_part">
-                  <option value="1" selected="selected">All day</option>
-                  <option value="2">Morning</option>
-                  <option value="3">Afternoon</option>
+                  <option value="1" selected="selected">Toute la journée</option>
+                  <option value="2">Matin</option>
+                  <option value="3">Après-Midi</option>
                 </select>
               </div>
               <div class="col-md-7">
@@ -68,14 +68,14 @@
           </div>
 
           <div class="form-group">
-            <label for="leave_type" class="control-label">Comment (optional):</label>
+            <label for="leave_type" class="control-label">Commentaire (optional):</label>
             <textarea class="form-control" id="leave_reason" name="reason"></textarea>
           </div>
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-success">Create</button>
+        <button type="button" class="btn btn-link" data-dismiss="modal">Annuler</button>
+        <button type="submit" class="btn btn-success">Enregistrer</button>
         {{# if redirect_back_to }}
           <input type="hidden" name="redirect_back_to" value="{{redirect_back_to}}">
         {{else}}
@@ -86,5 +86,3 @@
     </div>
   </div>
 </div>
-
-
