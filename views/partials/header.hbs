@@ -46,9 +46,9 @@
               </ul>
             </li>
             {{/if}}
-            <li class="visible-xs-block"><a href="/requests/">Requests</a></li>
-            <li class="visible-xs-block"><a href="/logout/">Logout</a></li>
-            <li class="dropdown hidden-xs">
+            <li class="hidden visible-xs-block"><a href="/requests/">Requests</a></li>
+            <li class="hidden visible-xs-block"><a href="/logout/">Logout</a></li>
+            <li class="dropdown hidden">
               <a id="me_menu" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Me <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="/requests/">Requests</a></li>
@@ -57,6 +57,7 @@
                 <li><a href="/logout/">Logout</a></li>
               </ul>
             </li>
+            <li><a href="/logout/">Me déconnecter</a></li>
           {{else}}
             <li><a href="/login/">Connection</a></li>
           {{/if}}
