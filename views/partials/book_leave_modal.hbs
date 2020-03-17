@@ -32,6 +32,12 @@
           <div class="form-group">
             <label for="from" class="control-label">Du</label>
             <div class="row">
+              <div class="col-md-7">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                  <input type="text" class="form-control book-leave-from-input" id="from" data-provide="datepicker" data-date-autoclose="1" data-date-format="{{# with logged_user.company }}{{this.get_default_date_format_for_date_picker}}{{/with}}" data-date-week-start="1" value="{{as_date booking_start}}" name="from_date">
+                </div>
+              </div>
               <div class="col-md-5">
                 <select class="form-control" name="from_date_part">
                   <option value="1" selected="selected">Toute la journée</option>
@@ -39,18 +45,18 @@
                   <option value="3">Après-Midi</option>
                 </select>
               </div>
-              <div class="col-md-7">
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                  <input type="text" class="form-control book-leave-from-input" id="from" data-provide="datepicker" data-date-autoclose="1" data-date-format="{{# with logged_user.company }}{{this.get_default_date_format_for_date_picker}}{{/with}}" data-date-week-start="1" value="{{as_date booking_start}}" name="from_date">
-                </div>
-              </div>
             </div>
           </div>
 
           <div class="form-group">
             <label for="to" class="control-label">Au</label>
             <div class="row">
+              <div class="col-md-7">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                  <input type="text" class="form-control book-leave-to-input" id="to" data-provide="datepicker" data-date-autoclose="1" data-date-format="{{#with logged_user.company }}{{this.get_default_date_format_for_date_picker}}{{/with}}" data-date-week-start="1" value="{{as_date booking_end}}" name="to_date">
+                </div>
+              </div>
               <div class="col-md-5">
                 <select class="form-control" name="to_date_part">
                   <option value="1" selected="selected">Toute la journée</option>
@@ -58,16 +64,10 @@
                   <option value="3">Après-Midi</option>
                 </select>
               </div>
-              <div class="col-md-7">
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                  <input type="text" class="form-control book-leave-to-input" id="to" data-provide="datepicker" data-date-autoclose="1" data-date-format="{{#with logged_user.company }}{{this.get_default_date_format_for_date_picker}}{{/with}}" data-date-week-start="1" value="{{as_date booking_end}}" name="to_date">
-                </div>
-              </div>
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group hidden">
             <label for="leave_type" class="control-label">Commentaire (optional):</label>
             <textarea class="form-control" id="leave_reason" name="reason"></textarea>
           </div>
