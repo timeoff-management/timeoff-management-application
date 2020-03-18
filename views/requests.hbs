@@ -1,15 +1,15 @@
 
 {{> header }}
 
-<h1>{{logged_user.name}} {{logged_user.lastname}} messages</h1>
+<h1 class="hidden">{{logged_user.name}} {{logged_user.lastname}} messages</h1>
 
 {{> show_flash_messages }}
 
-<div class="row main-row_header">
+<div class="row main-row_header hidden">
   <p class="col-md-12">Leave request to approve</p>
 </div>
 
-<div class="row">
+<div class="row hidden">
   {{# unless to_be_approved_leaves}}
   <div class="col-md-12 text-muted">
     There are no leave requests to decide on.
@@ -63,10 +63,10 @@
 </div>
 
 
-<div class="main-row_header">&nbsp;</div>
+<div class="main-row_header hidden">&nbsp;</div>
 
-<div class="row main-row_header">
-  <p class="col-md-12">All my absences</p>
+<div class="row">
+  <h1 class="col-md-12">Toutes mes absences</h1>
 </div>
 
 {{> user_requests_grouped grouped_leaves=my_leaves_grouped logged_user=logged_user }}

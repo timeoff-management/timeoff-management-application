@@ -17,18 +17,13 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-left">
         {{# if logged_user }}
-          <li><a href="/calendar/">Calendar</a></li>
+          <li><a href="/calendar/">Mon planning</a></li>
           {{# unless keep_team_view_hidden }}
             <li><a href="/calendar/teamview/">Team View</a></li>
           {{/ unless }}
           {{# if logged_user.admin }}
             <li class="hidden-xs"><a href="/users/">Employees</a></li>
           {{/if}}
-          <li class="navbar-form navbar-left">
-            <div class="form-group">
-              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#book_leave_modal" id="book_time_off_btn">New absence</button>
-            </div>
-          </li>
         {{/if}}
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -51,9 +46,9 @@
               </ul>
             </li>
             {{/if}}
-            <li class="visible-xs-block"><a href="/requests/">Requests</a></li>
-            <li class="visible-xs-block"><a href="/logout/">Logout</a></li>
-            <li class="dropdown hidden-xs">
+            <li class="hidden visible-xs-block"><a href="/requests/">Requests</a></li>
+            <li class="hidden visible-xs-block"><a href="/logout/">Logout</a></li>
+            <li class="dropdown hidden">
               <a id="me_menu" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Me <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="/requests/">Requests</a></li>
@@ -62,6 +57,7 @@
                 <li><a href="/logout/">Logout</a></li>
               </ul>
             </li>
+            <li><a href="/logout/">Me déconnecter</a></li>
           {{else}}
             <li><a href="/login/">Connection</a></li>
           {{/if}}
