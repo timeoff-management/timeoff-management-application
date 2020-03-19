@@ -5,7 +5,7 @@
     <form method="POST" action="{{leave_modal_form_action}}">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="exampleModalLabel">Enregistrer une absence</h4>
+        <h4 class="modal-title" id="exampleModalLabel">Enregistrer ma disponibilité</h4>
       </div>
       <div class="modal-body">
 
@@ -21,7 +21,7 @@
           {{/if_equal}}
 
           <div class="form-group">
-            <label for="leave_type" class="control-label">Motif</label>
+            <label for="leave_type" class="control-label">Ma disponibilité</label>
             <select class="form-control" id="leave_type" name="leave_type">
             {{# each logged_user.company.leave_types}}
                 <option value={{@index}} data-tom="{{this.name}}">{{this.name}}</option>

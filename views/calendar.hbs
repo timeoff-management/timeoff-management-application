@@ -3,7 +3,7 @@
 
 <h1>
   Mon planning
-  <button type="button" class="pull-right btn btn-success btn-lg" data-toggle="modal" data-target="#book_leave_modal" id="book_time_off_btn">Enregistrer une absence</button>
+  <button type="button" class="pull-right btn btn-success btn-lg" data-toggle="modal" data-target="#book_leave_modal" id="book_time_off_btn">Enregistrer ma disponibilité</button>
 </h1>
 
 <div class="row hidden">
@@ -140,7 +140,7 @@
 {{# unless show_full_year}}
 
   <div class="row">
-    <div class="col-md-12"><h3>Mes absences {{current_year}}</h3></div>
+    <div class="col-md-12"><h3>Mes disponibilités</h3></div>
   </div>
 
   {{> user_requests leaves=current_user.my_leaves }}
