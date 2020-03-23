@@ -5,3 +5,4 @@
 *.swm
 node_modules/
 *.sqlite
+config/db.json
