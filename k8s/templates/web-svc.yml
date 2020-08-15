@@ -1,0 +1,21 @@
+{{- range $key, $value := .Values.services }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .app_name }}
+  namespace: {{ $.Values.namespace }}
+  annotations:
+    {{- range $key, $value := .annotations }}
+    {{ $key }}: {{ $value | squote }}
+    {{- end }}
+spec:
+  type: NodePort
+  selector:
+    app: {{ .app_name }}
+    component: {{ .component }}
+  ports:
+  - protocol: TCP
+    port: {{ .service_port }}
+    targetPort: {{ .app_port }}
+{{- end }}

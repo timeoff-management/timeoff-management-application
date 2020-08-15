@@ -1,0 +1,34 @@
+name: Build
+
+on:
+  pull_request:
+    paths-ignore:
+    - 'k8s/**'
+    branches:
+    - master
+    - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build y publish branch
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup AWS ECR
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        docker_login=$(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+        eval "${docker_login}"
+
+    - name: Build y push docker image [PR]
+      env:
+        PR_NUMBER: ${{ github.event.number }}
+        ECR_DOMAIN: ${{ secrets.ECR_DOMAIN }}
+      run: |
+        docker build -t ${ECR_DOMAIN}/monet-webapp:PR-${PR_NUMBER} .
+        docker push ${ECR_DOMAIN}/monet-webapp:PR-${PR_NUMBER}

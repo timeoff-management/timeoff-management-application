@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.app.name }}
+    component: web
+spec:
+  strategy:
+    rollingUpdate:
+      maxSurge: {{ .Values.app.rollingUpdate.maxSurge }}
+      maxUnavailable: {{ .Values.app.rollingUpdate.maxUnavailable }}
+  replicas: {{ .Values.app.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.app.name }}
+      component: web
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app.name }}
+        component: web
+      annotations:
+        timestamp: "{{ date "20060102150405" .Release.Time }}"
+    spec:
+      volumes:
+        - name: {{ .Values.app.name }}
+          secret:
+            secretName: {{ .Values.app.name }}
+      containers:
+      - name: {{ .Values.app.name }}-web
+        image: {{ .Values.app.image }}:{{ .Values.app.tag }}
+        imagePullPolicy: {{ .Values.app.imagePullPolicy | default "IfNotPresent" | quote }}
+        args:
+          - sh
+          - -c
+          - gunicorn --bind 0.0.0.0:${DJANGO_PORT} monet.config.wsgi
+        readinessProbe:
+          httpGet:
+            path: /status/
+            port: {{ .Values.app.port }}
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /status/
+            port: {{ .Values.app.port }}
+          failureThreshold: 2
+          periodSeconds: 5
+        resources:
+          requests:
+            memory: {{ .Values.app.memory | quote }}
+            cpu: {{ .Values.app.cpu | quote }}
+        ports:
+          - containerPort: {{ .Values.app.port }}
+        volumeMounts:
+          - name: {{ .Values.app.name }}
+            readOnly: true
+            mountPath: {{ .Values.app.env.SECRETS_DIR | default "/var/secrets" | quote }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.app.name }}
+        env:
+        {{- range .Values.app.secrets_env }}
+        - name: {{ .envName }}
+          valueFrom:
+            secretKeyRef:
+              name: {{ .secretName }}
+              key: {{ .secretKey }}
+        {{- end }}

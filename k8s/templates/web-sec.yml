@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ .Values.app.name }}
+  namespace: default
+type: Opaque
+data:
+  {{- range $key, $value := .Values.app.secrets }}
+  {{ $key }}: {{ $value | quote }}
+  {{- end }}

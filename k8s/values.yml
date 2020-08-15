@@ -1,0 +1,136 @@
+---
+namespace: default
+
+services:
+- app_name: monet-web
+  component: web
+  app_port: 8000
+  service_port: 8000
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
+
+ingress:
+  annotations:
+    kubernetes.io/ingress.class: alb
+    kubernetes.io/ingress.allow-http: "false"
+  sub_domains:
+  - cert_name: monet-api
+    sub: api.test.monet.com.co
+    service_name: monet-web
+    service_port: 8000
+  - cert_name: monet-web
+    sub: web.test.monet.com.co
+    service_name: monet-web
+    service_port: 8000
+
+celery:
+  beat:
+    memory: "64Mi"
+    cpu: "25m"
+  worker:
+    replicas: 1
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 1
+    memory: "128Mi"
+    cpu: "50m"
+
+app:
+  name: monet-web
+  image: us.gcr.io/monet-270920/monet-webapp
+  tag:
+  imagePullPolicy: Always
+  replicas: 1
+  rollingUpdate:
+    maxSurge: 1
+    maxUnavailable: 0
+  memory: "128Mi"
+  cpu: "50m"
+  port: 8000
+  service_port: 8000
+  env:
+    SECRETS_DIR: /var/secrets
+    DJANGO_SETTINGS_MODULE: monet.config.settings.test
+    DEBUG: False
+    DEBUG_PROPAGATE_EXCEPTIONS: True
+    DJANGO_READ_DOT_ENV_FILE: False
+    POSTGRES_DB: monet
+    POSTGRES_HOST: monet-db.test.monet.internal
+    POSTGRES_PORT: 5432
+    POSTGRES_USER: monet
+    REDIS_HOST: monet-redis.test.monet.internal
+    REDIS_PORT: 6379
+    GS_BUCKET_NAME: test-monet-webapp
+    GOOGLE_APPLICATION_CREDENTIALS: /var/secrets/gcp_service_account
+    JWT_VERIFYING_KEY: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDRSUkiWBJiXLnHPanRlic2tcx1KX3+9r9dtrIwNEUudCDqJqpZCyZ9YXi9XYNceHLmoSpQtt5C6iKen3aJ8l1IINQhB34e2tmAcvDm2XHbr9kcw3NMDN9mobwW+XF4JL0MJrPv02lBR2SBL1mGuujvlIXJZf/Z6d0Y5GEeQCnWjzf6fPTvxXwe2UoiaXVQgCegFxHGjsCZMhRGXQQSxzgDiDSJ0GwJugSDOaz0xjIkXLgUQGnm8vX3Fi+BFIEaQ7dsARfOjMLZ62h8eOq2gQiTWXOqmSQ48QDxlMulM3u92OiLsdoBpZx0Ij2H605ZvIsSsM91JiRSwXItuK9fP40hVPKtTKrYIeMzjshwFSRtvcY4gP+zE3U18huq1/Bi3hfKbR2hxSMxNH78LK2rYrFOJVFpLe64PVmK7kjQv6BZbYZVPJ5be5mAlXCDUmuKnFFhvxVQU1Fzg1fq8uEji697blrO/JjRpSfWQz1tJ3ZpNJ99QKSfY0Y3EQCO40pn+BHtKRmqAdSzmFvJ6jm/wza7dzxzGoFluUlt49J8JIdV+2Yybq3K226G+DUmtxokveLqEIQBYw1HnLkY+54tReHgDtZECIjR9mls8ogCyWzFKch1HW3He799y9cpakBH9Sjc8tkpeWUepuiyOKWHPA+PNimezZfdqDypUq2HvLOntQ== tech-test@monet.com"
+    ONURIX_USER: 1095
+    MONET_KEY_PATH: /var/secrets/monet_gpg_private_key
+    BANK_KEY_PATH: /var/secrets/bank_gpg_public_key
+    URL_DB_FIREBASE: https://monet-270920.firebaseio.com
+  secrets:
+    jwt_signing_key:
+    db_password:
+    gcp_service_account:
+    django_key:
+    sms_api_key:
+    sendgrid_api_key:
+    monet_nit:
+    monet_bank_account:
+    bank_sftp_ip:
+    bank_sftp_username:
+    bank_sftp_password:
+    bank_sftp_path:
+    bank_sftp_port:
+    monet_onesignal_app_id:
+    monet_gpg_private_key:
+    monet_onesignal_api_key:
+    bank_gpg_public_key:
+  secrets_env:
+  - envName: POSTGRES_PASSWORD
+    secretName: monet-web
+    secretKey: db_password
+  - envName: DJANGO_SECRET_KEY
+    secretName: monet-web
+    secretKey: django_key
+  - envName: JWT_SIGNING_KEY
+    secretName: monet-web
+    secretKey: jwt_signing_key
+  - envName: ONURIX_KEY
+    secretName: monet-web
+    secretKey: sms_api_key
+  - envName: MOCKUP_KEY
+    secretName: monet-web
+    secretKey: mock_api_key
+  - envName: SENTRY_DSN_KEY
+    secretName: monet-web
+    secretKey: sentry_dsn_key
+  - envName: SENDGRID_API_KEY
+    secretName: monet-web
+    secretKey: sendgrid_api_key
+  - envName: MONET_NIT
+    secretName: monet-web
+    secretKey: monet_nit
+  - envName: MONET_BANK_ACCOUNT
+    secretName: monet-web
+    secretKey: monet_bank_account
+  - envName: BANK_SFTP_IP
+    secretName: monet-web
+    secretKey: bank_sftp_ip
+  - envName: BANK_SFTP_USERNAME
+    secretName: monet-web
+    secretKey: bank_sftp_username
+  - envName: BANK_SFTP_PASSWORD
+    secretName: monet-web
+    secretKey: bank_sftp_password
+  - envName: BANK_SFTP_PATH
+    secretName: monet-web
+    secretKey: bank_sftp_path
+  - envName: BANK_SFTP_PORT
+    secretName: monet-web
+    secretKey: bank_sftp_port
+  - envName: ONE_SIGNAL_APP_ID
+    secretName: monet-web
+    secretKey: monet_onesignal_app_id
+  - envName: ONE_SIGNAL_APP_AUTH_KEY
+    secretName: monet-web
+    secretKey: monet_onesignal_api_key

@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.name }}-celery-worker
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.app.name }}
+    component: worker
+spec:
+  strategy:
+    rollingUpdate:
+      maxSurge: {{ .Values.celery.worker.rollingUpdate.maxSurge }}
+      maxUnavailable: {{ .Values.celery.worker.rollingUpdate.maxUnavailable }}
+  replicas: {{ .Values.celery.worker.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.app.name }}
+      component: worker
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app.name }}
+        component: worker
+      annotations:
+        timestamp: "{{ date "20060102150405" .Release.Time }}"
+    spec:
+      volumes:
+        - name: {{ .Values.app.name }}
+          secret:
+            secretName: {{ .Values.app.name }}
+      containers:
+      - name: worker
+        image: {{ .Values.app.image }}:{{ .Values.app.tag }}
+        imagePullPolicy: {{ .Values.app.imagePullPolicy | default "IfNotPresent" | quote }}
+        args:
+          - sh
+          - -c
+          - npm start
+        resources:
+          requests:
+            memory: {{ .Values.celery.worker.memory | quote }}
+            cpu: {{ .Values.celery.worker.cpu | quote }}
+        volumeMounts:
+          - name: {{ .Values.app.name }}
+            readOnly: true
+            mountPath: {{ .Values.app.env.SECRETS_DIR | default "/var/secrets" | quote }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.app.name }}
+        env:
+        {{- range .Values.app.secrets_env }}
+        - name: {{ .envName }}
+          valueFrom:
+            secretKeyRef:
+              name: {{ .secretName }}
+              key: {{ .secretKey }}
+        {{- end }}

@@ -1,0 +1,64 @@
+name: Monet Validate
+
+on:
+  pull_request:
+    branches:
+    - master
+    - develop
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    name: Validación
+    container:
+      image: python:3.8
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_DB: monet_db
+          POSTGRES_USER: monet_user
+          POSTGRES_PASSWORD: monet_password
+        ports:
+        - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+      redis:
+        image: bitnami/redis:latest
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        env:
+          ALLOW_EMPTY_PASSWORD: "no"
+          REDIS_PASSWORD: ABCDE
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Pull cache
+        id: cache-python
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: monet-webapp-dependencies-${{ hashFiles('**/base.txt') }}-${{ hashFiles('**/local.txt') }}
+          restore-keys: |
+            monet-webapp-dependencies-
+
+      - name: Install dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements/local.txt
+
+      - name: Lint flake8
+        run: |
+          flake8 --use-flake8-tabs .
+
+      - name: Tests
+        run: |
+          python manage.py test
