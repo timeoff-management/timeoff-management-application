@@ -14,29 +14,28 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Setup gcloud CLI
+      - name: Setup AWS ECR
         env:
-          GCP_SA: ${{ secrets.GCP_SA }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          echo $GCP_SA | base64 -d > service-account.json && \
-          gcloud auth activate-service-account --key-file=service-account.json && \
-          gcloud auth configure-docker --quiet
+          docker_login=$(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+          eval "${docker_login}"
 
-      # - name: Extraer nombre branch
-      #   shell: bash
-      #   run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-      #   id: extract_branch
+      - name: Extraer nombre branch
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
 
       - name: Build y push docker image [Branch]
-        # env:
-        #   BRANCH_NAME: ${{ steps.extract_branch.outputs.branch }}
+        env:
+          BRANCH_NAME: ${{ steps.extract_branch.outputs.branch }}
+          ECR_DOMAIN: ${{ secrets.ECR_DOMAIN }}
         run: |
-          source ./env/test.sh
-          docker build -t us.gcr.io/${PROJECT_ID}/monet-webapp:${IMAGE_TAG} --build-arg target_env=test .
-          docker push us.gcr.io/${PROJECT_ID}/monet-webapp:${IMAGE_TAG}
+          docker build -t ${ECR_DOMAIN}/monet-webapp:PR-${PR_NUMBER} .
+          docker push ${ECR_DOMAIN}/monet-webapp:PR-${PR_NUMBER}
 
       - name: K8S deploy
         run: |
-          source ./env/test.sh
-          gcloud container clusters get-credentials monet-cluster --zone ${ZONE} --project ${PROJECT_ID}
+          aws eks --region us-east-1 update-kubeconfig --name default
           ./deploy.sh
