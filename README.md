@@ -11,9 +11,12 @@ In the following diagram you can see:
  
  * Global Architecture in AWS Cloud
  * Deployment Strategy of application using Github And Github Actions
- * Infrastructure deployment using Github + Terraform + Terarform Cloud   
+ * Infrastructure deployment using Github + Terraform + Terraform Cloud   
+
 
 ![Architecture](time-off-infrastructure.png)
+
+CloudFront URL to access to TimeOff Management:  https://d9cjju6z589xo.cloudfront.net/login/
 
 ### Self hosting
 
