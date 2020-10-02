@@ -60,10 +60,6 @@
   "placementConstraints": [],
   "memory": "512",
   "taskRoleArn": null,
-  "compatibilities": [
-    "EC2",
-    "FARGATE"
-  ],
   "family": "_time-off_prod",
   "pidMode": null,
   "requiresCompatibilities": [
@@ -71,7 +67,6 @@
   ],
   "networkMode": "awsvpc",
   "cpu": "256",
-  "revision": 3,
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
   "volumes": []
