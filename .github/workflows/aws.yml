@@ -67,7 +67,7 @@ jobs:
       id: _time-off_prod
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        task-definition: task-definition.json
+        task-definition: task_definition.json
         container-name: time-off
         image: ${{ steps.build-image.outputs.image }}
 
