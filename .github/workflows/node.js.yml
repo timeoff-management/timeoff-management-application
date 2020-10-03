@@ -23,4 +23,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
+      - run: wget https://chromedriver.storage.googleapis.com/77.0.3865.40/chromedriver_linux64.zip
+      - run:  cd bin; unzip ../chromedriver_linux64.zip; cd ../
+      - run: export PATH=$PWD/bin:$PATH
+      - run: node bin/wwww > /dev/null 2>&1 &
       - run: npm test
