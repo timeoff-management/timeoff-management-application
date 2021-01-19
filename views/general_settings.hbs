@@ -62,6 +62,16 @@
                 </div>
               </div>
 
+              <div class="form-group">
+               <label for="input_time_zone" class="col-md-4 control-label">Holiday year start</label>
+                <div class="col-md-8">
+                  <select class="form-control" id="holiday_year_start_inp" placeholder="Holiday Year Start" name="holiday_year_start">
+                    {{#each months_available}}
+                    <option value="{{this}}" {{# if_equal @key ../company.holiday_year_start_month }} selected="selected"{{/if_equal}}>{{this}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+              </div>
 
               <div class="form-group">
                 <label for="input_carry_over" class="col-md-4 control-label">Carried over days</label>
