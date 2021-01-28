@@ -1,0 +1,11 @@
+{
+    "apps": [
+      {
+        "name": "timeOff",
+        "script": "npm",
+        "args" : "start",
+        "exec_mode": "cluster",
+        "instances": 2
+      }
+    ]
+  }
