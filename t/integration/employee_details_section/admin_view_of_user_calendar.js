@@ -13,8 +13,7 @@ const By                 = require('selenium-webdriver').By,
   userInfoFunc         = require('../../lib/user_info'),
   application_host       = config.get_application_host(),
   checkBookingFunc     = require('../../lib/check_booking_on_calendar'),
-  // TODO remove hard-coded values
-  someWeekdayDate      = '2020-01-10';
+  someWeekdayDate    =  moment().utc().startOf('year').add(1, 'week').startOf('isoWeek').add(2, 'day').format('YYYY-MM-DD');
 
 /*
  * Aim:
