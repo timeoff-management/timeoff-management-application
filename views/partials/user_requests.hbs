@@ -25,7 +25,9 @@
       {{# each leaves }}
 
       <tr class="leave-request-row">
-        <td data-tom-leave-dates="1">{{> leave_dates leave=this}}</td>
+        <td data-tom-leave-dates="1">
+          <a class="leave-details-summary-trigger" data-leave-id="{{this.id}}" href="#">{{> leave_dates leave=this}}</a>
+        </td>
         <td>{{ this.leave_type.name }}{{#if this.is_pended_revoke_leave}}<br>(pended revoke){{/if}}</td>
         <td>{{ this.get_deducted_days_number }}</td>
         <td class="user-request-table-approver">{{#with this.approver}}{{this.full_name}}{{/with}}</td>

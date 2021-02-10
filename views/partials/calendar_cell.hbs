@@ -17,6 +17,9 @@
     {{#unless day.is_weekend}}
       {{# with  day.leave_obj }}
         {{#if this }}
+          class="leave-details-summary-trigger"
+          data-leave-id="{{this.id}}"
+
           data-toggle="tooltip"
           data-placement="top"
           title="
