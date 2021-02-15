@@ -1,27 +1,36 @@
 
-<div>
-  <strong>Dates:</strong> {{leave.startDate}} <i class="fa fa-long-arrow-right"></i> {{leave.endDate}}.
-</div>
-<div>
-  <strong>Type:</strong> {{leave.type}}.
-</div>
-<div>
-  <strong>Status:</strong> {{leave.status}}.
-</div>
-<div>
-  <strong>Employee:</strong> {{leave.employeeFullName}}.
-</div>
-<div>
-  <strong>Deducted days:</strong> {{leave.deductedDays}}.
-</div>
-<div>
-  <strong>Approver:</strong> {{leave.approver}}.
-</div>
-<div>
-  <strong>Requested on:</strong> {{leave.createdAt}}.
-</div>
-{{#if leave.commentsString }}
-<div>
-  <strong>Comments:</strong> {{leave.commentsString}}.
-</div>
+{{#if limitedView}}
+  <div>
+    <strong>Dates:</strong> {{leave.startDate}} <i class="fa fa-long-arrow-right"></i> {{leave.endDate}}.
+  </div>
+  <div>
+    <strong>Employee:</strong> {{leave.employeeFullName}}.
+  </div>
+{{else}}
+  <div>
+    <strong>Dates:</strong> {{leave.startDate}} <i class="fa fa-long-arrow-right"></i> {{leave.endDate}}.
+  </div>
+  <div>
+    <strong>Type:</strong> {{leave.type}}.
+  </div>
+  <div>
+    <strong>Status:</strong> {{leave.status}}.
+  </div>
+  <div>
+    <strong>Employee:</strong> {{leave.employeeFullName}}.
+  </div>
+  <div>
+    <strong>Deducted days:</strong> {{leave.deductedDays}}.
+  </div>
+  <div>
+    <strong>Approver:</strong> {{leave.approver}}.
+  </div>
+  <div>
+    <strong>Requested on:</strong> {{leave.createdAt}}.
+  </div>
+  {{#if leave.commentsString }}
+  <div>
+    <strong>Comments:</strong> {{leave.commentsString}}.
+  </div>
+  {{/if}}
 {{/if}}
