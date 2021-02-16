@@ -27,6 +27,7 @@
           <th>Leave dates</th>
           <th>Type</th>
           <th>Days</th>
+          <th class="col-xs-2">Comment</th>
           <th colspan="2"></th>
         </tr>
       </thead>
@@ -41,6 +42,7 @@
           <td data-tom-leave-dates="1"><a class="leave-details-summary-trigger" data-leave-id="{{this.id}}" href="#">{{> leave_dates leave=this}}</a></td>
           <td>{{#if this.is_pended_revoke_leave}}REVOKE {{/if}}{{this.leave_type.name}}</td>
           <td data-vpp="days_used">{{ this.get_deducted_days_number }}</td>
+          <td>{{this.comment.comment}}</td>
           <td>
             <form action="/requests/reject/" method="POST">
             <input class="btn btn-warning" type="submit" value="Reject">
