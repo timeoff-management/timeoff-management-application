@@ -192,3 +192,27 @@ $(document).ready(function(){
     return '<div id="'+ divId +'">Loading...</div>';
   }
 });
+
+$(document).ready(function(){
+  $('.leave-details-summary-trigger').popover({
+    title: 'Leave summary',
+    html: true,
+    trigger: 'hover',
+    placement: 'auto',
+    delay: {show: 1000, hide: 10},
+    content: function(){
+      var divId =  "tmp-id-" + $.now();
+      return detailsInPopup($(this).attr('data-leave-id'), divId);
+    }
+  });
+
+  function detailsInPopup(leaveId, divId){
+    $.ajax({
+      url: '/calendar/leave-summary/'+leaveId+'/',
+      success: function(response){
+        $('#'+divId).html(response);
+      }
+    });
+    return '<div id="'+ divId +'">Loading...</div>';
+  }
+});

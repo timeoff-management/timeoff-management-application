@@ -27,7 +27,7 @@ const next_year = moment().add(1, 'y').format('YYYY');
  *    - Update Holiday leave type to be limited to 1 day
  *    - Create new user
  *    - Login as new user
- *    - Submit 1 day of the keave type in the next year
+ *    - Submit 1 day of the leave type in the next year
  *    - Make sure the system accepts the request
  *    - Login back as admin and approve the request
  *
@@ -210,10 +210,10 @@ describe('Leave type limits for next year: ' + next_year, function(){
           driver      : driver,
           form_params : [{
             selector : 'input#from',
-            value : next_year + '-05-14',
+            value : next_year + '-05-17',
           },{
             selector : 'input#to',
-            value : next_year + '-05-14',
+            value : next_year + '-05-17',
           }],
           message : /Failed to create a leave request/,
         })
