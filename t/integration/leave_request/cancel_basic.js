@@ -16,8 +16,7 @@ const By                 = require('selenium-webdriver').By,
   submit_form_func       = require('../../lib/submit_form'),
   user_info_func         = require('../../lib/user_info'),
   application_host       = config.get_application_host(),
-  // TODO remove hard-coded values
-  some_weekday_date      = '2020-01-02';
+  some_weekday_date      = moment().utc().startOf('year').add(1, 'week').startOf('isoWeek').add(2, 'day').format('YYYY-MM-DD');
 
 /*
  *  Scenario:

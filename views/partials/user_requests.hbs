@@ -17,6 +17,7 @@
           <th>Deducted</th>
           <th>Approved by</th>
           <th></th>
+          <th class="col-xs-2">Comment</th>
           <th><span class="pull-right">Status</span></th>
         </tr>
       </thead>
@@ -25,7 +26,9 @@
       {{# each leaves }}
 
       <tr class="leave-request-row">
-        <td data-tom-leave-dates="1">{{> leave_dates leave=this}}</td>
+        <td data-tom-leave-dates="1">
+          <a class="leave-details-summary-trigger" data-leave-id="{{this.id}}" href="#">{{> leave_dates leave=this}}</a>
+        </td>
         <td>{{ this.leave_type.name }}{{#if this.is_pended_revoke_leave}}<br>(pended revoke){{/if}}</td>
         <td>{{ this.get_deducted_days_number }}</td>
         <td class="user-request-table-approver">{{#with this.approver}}{{this.full_name}}{{/with}}</td>
@@ -34,18 +37,19 @@
           {{# unless this.is_pended_revoke_leave}}
           <form method="post" action="/requests/revoke/">
             <input type="hidden" value="{{this.id}}" name="request">
-            <button type="submit" class="pull-right btn btn-default btn-xs revoke-btn" title="Revoke leave request. Subject of approval."><i class="fa fa-trash"> Revoke</i></button>
+            <button type="submit" class="pull-right btn btn-default btn-xs revoke-btn" title="Revoke leave request. Subject of approval."><i class="fa fa-trash"></i> Revoke</button>
           </form>
           {{/unless}}
           {{else}}
             {{#if_equal this.userId ../logged_user.id }}
             <form method="post" action='/requests/cancel/'>
               <input type="hidden" value="{{this.id}}" name="request">
-              <button type="submit" class="pull-right btn btn-default btn-xs revoke-btn" title="Cancel leave request" value="cancel"><i class="fa fa-trash"> Cancel</i></button>
+              <button type="submit" class="pull-right btn btn-default btn-xs revoke-btn" title="Cancel leave request" value="cancel"><i class="fa fa-trash"></i> Cancel</button>
             </form>
             {{/if_equal}}
           {{/if}}
         </td>
+        <td>{{this.comment.comment}}</td>
         <td><span class="pull-right leave-request-row-status">{{#if this.is_new_leave }}Pending{{else}}{{#if this.is_approved_leave}}Approved{{else}}Rejected{{/if}}{{/if}}</span></td>
       </tr>
 

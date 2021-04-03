@@ -122,6 +122,13 @@ npm run-script db-update
 npm start
 ```
 
+## How to?
+
+There are some customizations available.
+
+## How to amend or extend colours available for colour picker?
+Follow instructions on [this page](docs/extend_colors_for_leave_type.md).
+
 
 ## Feedback
 
