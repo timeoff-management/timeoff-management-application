@@ -1,0 +1,135 @@
+{{> header }}
+
+<h1>Leaves</h1>
+
+<div class="row">
+  <div class="col-md-6 lead">Shows absences in a given period</div>
+</div>
+
+{{> show_flash_messages }}
+
+<ol class="breadcrumb">
+  <li><a href="/reports/">All reports</a></li>
+  <li class="active">Absences</li>
+</ol>
+<div class="row main-row_header">
+  <span class="col-md-12">Filter</span>
+</div>
+<form action="" method="GET">
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Date range</label>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input type="text" name="start_date" class="form-control" id="start_date" placeholder="From Day"
+                  data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="1"
+                  value="{{startDateStr}}"
+                >
+                <span class="input-group-addon">(YYYY-MM-DD)</span>
+                <span class="input-group-addon"><i class="fa fa-long-arrow-right"></i></span>
+                <input type="text" name="end_date" class="form-control" id="end_date" placeholder="To Day"
+                  data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="1"
+                  value="{{endDateStr}}"
+                >
+                <span class="input-group-addon">(YYYY-MM-DD)</span>
+              </div>
+              <span class="help-block">Date range that that contain either start or end of date of a leave</span>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="department_id">Department</label>
+              <select class="form-control" id="department_id" name="department">
+                <option>All</option>
+                {{#each departments}}
+                <option value="{{this.id}}" {{#if_equal this.id ../departmentId}} selected="selected" {{/if_equal}}>{{this.name}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="leave_type_id">Leave Type</label>
+              <select class="form-control" id="leave_type_id" name="leave_type">
+                <option>All</option>
+                {{#each leaveTypes}}
+                <option value="{{this.id}}" {{#if_equal this.id ../leaveTypeId}} selected="selected" {{/if_equal}}>{{this.name}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group pull-right">
+              <button class="btn btn-link" type="submit" name="as-csv" value="1"
+                data-content="Download report as .CSV file"
+                data-placement="top"
+                data-toggle="popover"
+                data-trigger="focus hover"
+              ><i class="fa fa-download"></i> .csv</button>
+              <button class="btn btn-success single-click" type="submit">Update results</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row main-row_header">
+  <span class="col-md-12">Leaves</span>
+</div>
+<div class="row">
+  {{#unless leaves}}
+  <div class="col-md-12 text-muted">
+    There are no leave requests.
+  </div>
+  {{else}}
+  <div class="col-md-12">
+    <p class="visible-xs-block"><em class="text-muted">Scroll table horizontally</em></p>
+    <div class="table-responsive">
+    <table class="table table-hover user-requests-table">
+      <thead>
+        <tr>
+          <th class="col-xs-2">Employee {{#if_equal sortBy 'employeeFullName'}}<i class="fa fa-sort-alpha-asc"></i>{{else}}<button class="btn btn-link btn-xs" name="sort_by" type="submit" value="employeeFullName"><i class="fa fa-sort-asc"></i></button>{{/if_equal}}</th>
+          <th class="col-xs-2">Department {{#if_equal sortBy 'departmentName'}}<i class="fa fa-sort-alpha-asc"></i>{{else}}<button class="btn btn-link btn-xs" name="sort_by" type="submit" value="departmentName"><i class="fa fa-sort-asc"></i></button>{{/if_equal}}</th>
+          <th class="col-xs-1">Type {{#if_equal sortBy 'type'}}<i class="fa fa-sort-alpha-asc"></i>{{else}}<button class="btn btn-link btn-xs" name="sort_by" type="submit" value="type"><i class="fa fa-sort-asc"></i></button>{{/if_equal}}</th>
+          <th class="_col-xs-1">Days</th>
+          <th class="col-xs-1">From {{#if_equal sortBy 'startDate'}}<i class="fa fa-sort-alpha-asc"></i>{{else}}<button class="btn btn-link btn-xs" name="sort_by" type="submit" value="startDate"><i class="fa fa-sort-asc"></i></button>{{/if_equal}}</th>
+          <th class="col-xs-1">To {{#if_equal sortBy 'endDate'}}<i class="fa fa-sort-alpha-asc"></i>{{else}}<button class="btn btn-link btn-xs" name="sort_by" type="submit" value="endDate"><i class="fa fa-sort-asc"></i></button>{{/if_equal}}</th>
+          <th class="col-xs-1">Status {{#if_equal sortBy 'status'}}<i class="fa fa-sort-alpha-asc"></i>{{else}}<button class="btn btn-link btn-xs" name="sort_by" type="submit" value="status"><i class="fa fa-sort-asc"></i></button>{{/if_equal}}</th>
+          <th class="col-xs-1">Added {{#if_equal sortBy 'createdAt'}}<i class="fa fa-sort-alpha-asc"></i>{{else}}<button class="btn btn-link btn-xs" name="sort_by" type="submit" value="createdAt"><i class="fa fa-sort-asc"></i></button>{{/if_equal}}</th>
+          <th class="col-xs-2">Approver {{#if_equal sortBy 'approver'}}<i class="fa fa-sort-alpha-asc"></i>{{else}}<button class="btn btn-link btn-xs" name="sort_by" type="submit" value="approver"><i class="fa fa-sort-asc"></i></button>{{/if_equal}}</th>
+          <th class="col-xs-2">Comment</th>
+        </tr>
+      </thead>
+      <tbody>
+      {{#each leaves }}
+        <tr class="leave-request-row">
+          <td>{{ this.employeeFullName }}</td>
+          <td>{{ this.departmentName}}</td>
+          <td>{{ this.type }}</td>
+          <td>{{ this.deductedDays }}</td>
+          <td>{{as_date this.startDate }}</td>
+          <td>{{as_date this.endDate}}</td>
+          <td>{{ this.status }}</td>
+          <td>{{as_date_from_timestamp this.createdAt}}</td>
+          <td>{{ this.approver }}</td>
+          <td>{{ this.comment }}</td>
+        </tr>
+      {{/each }}
+      </tbody>
+    </table>
+    </div>
+  </div>
+  {{/unless}}
+</div>
+</form>
+
+{{> footer }}

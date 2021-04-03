@@ -35,7 +35,7 @@ var check_booking_func = Promise.promisify( function(args, callback){
             _.map(option.halfs, function(half){
 
               var selector = 'table.month_'+day.format('MMMM')+' td.day_'
-                  +day.format('DD')+'.'+half;
+                  +day.format('D')+'.'+half;
 
               return driver.findElement( By.css(selector) )
                 .then(function(el){ return el.getAttribute('class'); })

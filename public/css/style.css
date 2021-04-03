@@ -80,6 +80,9 @@ label.label-plain {
 .header {
   margin-bottom: 30px; }
 
+.popover {
+  min-width: 300px; }
+
 /* styling calendar*/
 .calendar_month {
   width: 100%; }
