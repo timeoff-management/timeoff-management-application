@@ -1,5 +1,8 @@
 # TimeOff.Management Infrastructure Description.
 
+## URL
+test-timeoff-management.eastus2.cloudapp.azure.com
+
 ## Building
 
 For an easy creation we created a Terraform script for azure that will create the infrastructure descripbe below, with HTTP and HTTPS enable.
