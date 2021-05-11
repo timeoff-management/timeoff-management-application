@@ -1,0 +1,33 @@
+name: RUN test for CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: get credentials
+      uses: Azure/aks-set-context@v1
+      with:
+        creds: '${{ secrets.LOGIN }}'
+        cluster-name: test-aks
+        resource-group: timeoff
+        
+    - name: create docker registry
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${GITHUB_SERVER_URL}${GITHUB_REPOSITORY}
+        username: myronmd26
+        password: ${{ secrets.token_git }}
+      
+    - name: Create, push and update image
+      run: |
+      docker build --tag timeoff:latest .
+      docker tag timeoff:latest $DOCKER_REGISTRY/timeoff-management-application/timeoff:latest
+      docker push $DOCKER_REGISTRY/timeoff-management-application/timeoff:latest
+      kubectl rollout restart deployment/timeoff
