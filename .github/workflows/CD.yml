@@ -2,7 +2,7 @@ name: RUN test for CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ myron ]
 
 jobs:
   build:
@@ -27,7 +27,7 @@ jobs:
       
     - name: Create, push and update image
       run: |
-      docker build --tag timeoff:latest .
-      docker tag timeoff:latest $DOCKER_REGISTRY/timeoff-management-application/timeoff:latest
-      docker push $DOCKER_REGISTRY/timeoff-management-application/timeoff:latest
-      kubectl rollout restart deployment/timeoff
+        docker build --tag timeoff:latest .
+        docker tag timeoff:latest $DOCKER_REGISTRY/timeoff-management-application/timeoff:latest
+        docker push $DOCKER_REGISTRY/timeoff-management-application/timeoff:latest
+        kubectl rollout restart deployment/timeoff
