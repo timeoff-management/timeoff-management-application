@@ -21,13 +21,13 @@ jobs:
     - name: create docker registry
       uses: azure/docker-login@v1
       with:
-        login-server: $DOCKER_REGISTRY
+        login-server: docker.pkg.github.com
         username: myronmd26
         password: ${{ secrets.token_git }}
       
     - name: Create, push and update image
       run: |
         docker build --tag timeoff:latest .
-        docker tag timeoff:latest $DOCKER_REGISTRY/timeoff-management-application/timeoff:latest
-        docker push $DOCKER_REGISTRY/timeoff-management-application/timeoff:latest
+        docker tag timeoff:latest docker.pkg.github.com/myronmd26/timeoff-management-application/timeoff:latest
+        docker push docker.pkg.github.com/myronmd26/timeoff-management-application/timeoff:latest
         kubectl rollout restart deployment/timeoff
