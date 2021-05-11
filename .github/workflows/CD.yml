@@ -2,7 +2,7 @@ name: RUN test for CI
 
 on:
   push:
-    branches: [ myron ]
+    branches: [ master ]
 
 jobs:
   build:
