@@ -21,7 +21,7 @@ jobs:
     - name: create docker registry
       uses: azure/docker-login@v1
       with:
-        login-server: ${GITHUB_SERVER_URL}${GITHUB_REPOSITORY}
+        login-server: $DOCKER_REGISTRY
         username: myronmd26
         password: ${{ secrets.token_git }}
       
