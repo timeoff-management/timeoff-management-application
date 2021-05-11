@@ -1,7 +1,7 @@
 # TimeOff.Management Infrastructure Description.
 
 ## URL
-test-timeoff-management.eastus2.cloudapp.azure.com
+[timeoff link](https://test-timeoff-management.eastus2.cloudapp.azure.com)
 
 ## Building
 
