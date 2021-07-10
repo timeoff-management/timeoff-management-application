@@ -79,6 +79,17 @@
       </div>
 
       <div class="form-group">
+        <label for="holiday_year_start_inp" class="col-md-2 control-label">Holiday year start</label>
+        <div class="col-md-6">
+          <select class="form-control" id="holiday_year_start_inp" placeholder="Holiday Year Start" name="holiday_year_start">
+            {{#each months_available}}
+            <option value="{{this}}" {{#if_equal this 'Jan' }} selected="selected" {{/if_equal}}>{{this}}</option>
+            {{/each}}
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
         <div class="col-md-offset-2 col-md-6">
           <button id="submit_registration" type="submit" class="btn btn-success">Create</button>
         </div>
