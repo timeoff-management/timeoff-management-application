@@ -4,7 +4,7 @@
   "private": false,
   "description": "Simple yet powerful absence management software for small and medium size business",
   "engines": {
-    "node": ">=12.18.0"
+    "node": ">=13.0.0"
   },
   "dependencies": {
     "bluebird": "^2.10.2",

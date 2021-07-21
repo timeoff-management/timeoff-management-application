@@ -13,5 +13,6 @@
   "ga_analytics_on" : false,
   "crypto_secret" : "!2~`HswpPPLa22+=±§sdq qwe,appp qwwokDF_",
   "application_domain" : "http://app.timeoff.management",
-  "promotion_website_domain" : "http://timeoff.management"
+  "promotion_website_domain" : "http://timeoff.management",
+  "locale_code_for_sorting": "en"
 }
