@@ -129,6 +129,18 @@ There are some customizations available.
 ## How to amend or extend colours available for colour picker?
 Follow instructions on [this page](docs/extend_colors_for_leave_type.md).
 
+## Customization
+
+There are few options to configure an installation.
+
+### Make sorting sensitive to particular locale
+
+Given the software could be installed for company with employees with non-English names there might be a need to
+respect the alphabet while sorting customer entered content.
+
+For that purpose the application config file has `locale_code_for_sorting` entry.
+By default the value is `en` (English). One can override it with other locales such as `cs`, `fr`, `de` etc.
+
 
 ## Feedback
 
