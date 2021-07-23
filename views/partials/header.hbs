@@ -33,8 +33,17 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-          {{# if logged_user }}
-            {{# if logged_user.admin }}
+          {{#if logged_user }}
+            <li class="dropdown" id="header-notification-dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                <span class="fa fa-bell-o"></span>
+                <span class="label label-info notification-badge hidden"></span>
+              </a>
+              <ul class="dropdown-menu" role="menu">
+                <li class="dropdown-header">No notifications</li>
+              </ul>
+            </li>
+            {{#if logged_user.admin }}
             <li class="dropdown hidden-xs">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="fa fa-gears"></span> <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">

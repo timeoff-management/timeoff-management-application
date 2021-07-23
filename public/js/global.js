@@ -189,6 +189,7 @@ $(document).ready(function(){
         $('#'+divId).html(response);
       }
     });
+
     return '<div id="'+ divId +'">Loading...</div>';
   }
 });
@@ -214,5 +215,44 @@ $(document).ready(function(){
       }
     });
     return '<div id="'+ divId +'">Loading...</div>';
+  }
+});
+
+$(document).ready(function() {
+  if (typeof($.ajax) === 'function') {
+    $.ajax({
+      url: '/api/v1/notifications/',
+      success: function(args){
+        const error = args.error;
+        const data = args.data;
+
+        if (error) {
+          console.log('Failed to fetch notifications');
+          return;
+        }
+
+        if (!data || !data.length) {
+          return;
+        }
+
+        $('#header-notification-dropdown .notification-badge')
+          .removeClass('hidden')
+          .html(
+            data
+              .map(function(d) {return d.numberOfRequests})
+              .reduce(function(acc, it){ return acc + it}, 0)
+          );
+
+        const dropDown = $('#header-notification-dropdown ul.dropdown-menu');
+        dropDown.empty();
+
+        for (var i=0; i<data.length; i++) {
+          const notification = data[i];
+          dropDown.append(
+            '<li><a href="'+notification.link+'">'+notification.label+'</a></li>'
+          );
+        }
+      }
+    });
   }
 });
