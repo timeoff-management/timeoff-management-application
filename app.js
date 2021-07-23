@@ -117,6 +117,8 @@ app.use(
   require('./lib/route/dashboard')
 );
 
+app.use('/api/v1/', require('./lib/route/api'));
+
 app.use(
   '/calendar/',
   require('./lib/route/calendar')
