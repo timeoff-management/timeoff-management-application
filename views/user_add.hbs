@@ -56,7 +56,7 @@
         <label for="select_inp" class="col-md-3 control-label">Department</label>
         <div class="col-md-3">
           <select class="form-control" id="select_inp" name="department" aria-describedby="department_help">
-            {{#each company.departments}}
+            {{#each departments}}
                 <option value="{{this.id}}" data-vpp="{{@index}}">{{this.name}}</option>
             {{/each}}
           </select>
