@@ -24,7 +24,7 @@
   <div class="form-group">
     <label for="select_inp" class="control-label">Department</label>
     <select class="form-control" id="select_inp" name="department" aria-describedby="department_help">
-      {{#each company.departments}}
+      {{#each departments}}
           <option value="{{this.id}}" {{#if_equal ../employee.DepartmentId this.id}} selected="selected"{{/if_equal}}>{{this.name}} (approver {{this.boss.name}} {{this.boss.lastname}})</option>
       {{/each}}
     </select>
