@@ -146,4 +146,3 @@ By default the value is `en` (English). One can override it with other locales s
 
 Please report any issues or feedback to <a href="https://twitter.com/FreeTimeOffApp">twitter</a> or Email: pavlo at timeoff.management
 
-
