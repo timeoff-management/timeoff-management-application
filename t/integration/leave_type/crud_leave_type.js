@@ -339,7 +339,7 @@ describe('CRUD for leave types', function(){
       .findElements(By.css('select#leave_type option'))
       .then(options => Bluebird.map(options, option => {
         let option_info = {};
-        return option.getAttribute('value')
+        return option.getAttribute('data-tom-index')
           .then(val => Bluebird.resolve(option_info.value = val))
           .then(() => option.getAttribute('data-tom'))
           .then(txt => Bluebird.resolve(option_info.text = txt))
@@ -396,7 +396,7 @@ describe('CRUD for leave types', function(){
       .findElements(By.css('select#leave_type option'))
       .then(options => Bluebird.map(options, option => {
         let option_info = {};
-        return option.getAttribute('value')
+        return option.getAttribute('data-tom-index')
           .then(val => Bluebird.resolve(option_info.value = val))
           .then(() => option.getAttribute('data-tom'))
           .then(txt => Bluebird.resolve(option_info.text = txt))

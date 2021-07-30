@@ -18,6 +18,7 @@ var test             = require('selenium-webdriver/testing'),
     check_elements_func    = require('../../lib/check_elements'),
     add_new_user_func      = require('../../lib/add_new_user');
 
+
 describe('Ensure that leaves with not full days are rendered properly', function(){
 
   this.timeout( config.get_execution_timeout() );
@@ -195,7 +196,7 @@ describe('Ensure that leaves with not full days are rendered properly', function
             value : '2015-06-11',
           },{
             selector : 'select[name="leave_type"]',
-            option_selector : 'option[value="1"]',
+            option_selector : 'option[data-tom-index="1"]',
           }],
           message : /New leave request was added/,
         })

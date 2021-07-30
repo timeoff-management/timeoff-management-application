@@ -219,40 +219,58 @@ $(document).ready(function(){
 });
 
 $(document).ready(function() {
-  if (typeof($.ajax) === 'function') {
-    $.ajax({
-      url: '/api/v1/notifications/',
-      success: function(args){
-        const error = args.error;
-        const data = args.data;
+  const fetchNotifications = () => {
+    if (typeof($.ajax) === 'function') {
+      $.ajax({
+        url: '/api/v1/notifications/',
+        success: function(args){
+          const error = args.error;
+          const data = args.data;
 
-        if (error) {
-          console.log('Failed to fetch notifications');
-          return;
+          if (error) {
+            console.log('Failed to fetch notifications');
+            return;
+          }
+
+          const dropDown = $('#header-notification-dropdown ul.dropdown-menu');
+          const badge = $('#header-notification-dropdown .notification-badge');
+
+          if (!data || !data.length) {
+            badge.addClass('hidden');
+            dropDown.empty();
+            dropDown.append('<li class="dropdown-header">No notifications</li>')
+
+            document.title = document.title.replace(/\(\d+\)\s*/, '');
+
+            return;
+          }
+
+          const numberOfNotifications = data
+            .map(function(d) {return d.numberOfRequests})
+            .reduce(function(acc, it){ return acc + it}, 0)
+
+          badge.removeClass('hidden').html(numberOfNotifications);
+
+          if (!document.title.startsWith('(')) {
+            document.title = '(' + numberOfNotifications + ') ' + document.title;
+          } else {
+            document.title = document.title.replace(/\(\d+\)/, '('+numberOfNotifications+')');
+          }
+
+          dropDown.empty();
+
+          for (var i=0; i<data.length; i++) {
+            const notification = data[i];
+            dropDown.append(
+              '<li><a href="'+notification.link+'">'+notification.label+'</a></li>'
+            );
+          }
         }
+      });
+    }
 
-        if (!data || !data.length) {
-          return;
-        }
-
-        $('#header-notification-dropdown .notification-badge')
-          .removeClass('hidden')
-          .html(
-            data
-              .map(function(d) {return d.numberOfRequests})
-              .reduce(function(acc, it){ return acc + it}, 0)
-          );
-
-        const dropDown = $('#header-notification-dropdown ul.dropdown-menu');
-        dropDown.empty();
-
-        for (var i=0; i<data.length; i++) {
-          const notification = data[i];
-          dropDown.append(
-            '<li><a href="'+notification.link+'">'+notification.label+'</a></li>'
-          );
-        }
-      }
-    });
+    setTimeout(fetchNotifications, 30 * 1000);
   }
+
+  fetchNotifications();
 });

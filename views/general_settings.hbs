@@ -202,13 +202,13 @@
         <form id="delete_leavetype_form" method="post" action="/settings/leavetypes/delete/"></form>
         <form id="leave_type_edit_form" method="post" action="/settings/leavetypes/">
 
-        {{#unless company.leave_types.length }}
+        {{#unless leave_types.length }}
         <div class="row">
           <div class="col-md-4">No Leave type records</div>
         </div>
         {{/unless}}
 
-        {{#each company.leave_types}}
+        {{#each leave_types}}
         <div class="row">
           <div class="col-md-6">
 

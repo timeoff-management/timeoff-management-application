@@ -112,7 +112,7 @@ describe('Try to remove used leave type', function(){
             option_selector : 'option[value="2"]',
           },{
             selector : 'select[name="leave_type"]',
-            option_selector : 'option[value="0"]',
+            option_selector : 'option[data-tom-index="0"]',
           },{
             selector : 'input#from',
             value : '2015-06-15',

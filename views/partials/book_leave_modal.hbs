@@ -23,8 +23,8 @@
           <div class="form-group">
             <label for="leave_type" class="control-label">Leave type:</label>
             <select class="form-control" id="leave_type" name="leave_type">
-            {{# each logged_user.company.leave_types}}
-                <option value={{@index}} data-tom="{{this.name}}">{{this.name}}</option>
+            {{#each logged_user.company.leave_types }}
+              <option value={{this.id}} data-tom="{{this.name}}" data-tom-index={{@index}}>{{this.name}}</option>
             {{/each}}
             </select>
           </div>
