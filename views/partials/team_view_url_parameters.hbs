@@ -1,1 +1,4 @@
-{{#if current_department }}department={{current_department.id}}{{/if}}{{#if base_date }}&date={{ as_date_formatted base_date 'YYYY-MM' }}{{/if}}{{#if grouped_mode}}&grouped_mode={{grouped_mode}}{{/if}}
+{{#if current_department }}{{#unless grouped_mode}}department={{current_department.id}}&{{/unless}}{{/if~}}
+{{~#if base_date }}date={{ as_date_formatted base_date 'YYYY-MM' }}&{{/if~}}
+{{~#if grouped_mode }}grouped_mode={{grouped_mode}}&{{/if~}}
+{{~#if save_grouped_mode}}save_grouped_mode=1&{{/if~}}
