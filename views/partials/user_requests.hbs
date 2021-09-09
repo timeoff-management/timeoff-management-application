@@ -37,14 +37,14 @@
           {{# unless this.is_pended_revoke_leave}}
           <form method="post" action="/requests/revoke/">
             <input type="hidden" value="{{this.id}}" name="request">
-            <button type="submit" class="pull-right btn btn-default btn-xs revoke-btn" title="Revoke leave request. Subject of approval."><i class="fa fa-trash"></i> Revoke</button>
+            <button type="submit" class="pull-right btn btn-default btn-xs revoke-btn single-click" title="Revoke leave request. Subject of approval."><i class="fa fa-trash"></i> Revoke</button>
           </form>
           {{/unless}}
           {{else}}
             {{#if_equal this.userId ../logged_user.id }}
             <form method="post" action='/requests/cancel/'>
               <input type="hidden" value="{{this.id}}" name="request">
-              <button type="submit" class="pull-right btn btn-default btn-xs revoke-btn" title="Cancel leave request" value="cancel"><i class="fa fa-trash"></i> Cancel</button>
+              <button type="submit" class="pull-right btn btn-default btn-xs revoke-btn single-click" title="Cancel leave request" value="cancel"><i class="fa fa-trash"></i> Cancel</button>
             </form>
             {{/if_equal}}
           {{/if}}

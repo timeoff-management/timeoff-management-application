@@ -274,3 +274,22 @@ $(document).ready(function() {
 
   fetchNotifications();
 });
+
+/**
+ * Prevent for double submission.
+ */
+ $(document).ready(function(){
+  $('.single-click').on('click', function(e) {
+    e.stopPropagation();
+
+    $(e.target).prop('disabled', true);
+    var form = $(e.target).closest('form');
+    var submitName = $(e.target).attr('name');
+    if (submitName !== undefined) {
+      $('<input>').attr({type: 'hidden', name: submitName, value: '1'}).appendTo(form);
+    }
+    form.submit();
+
+    return false;
+  });
+});
