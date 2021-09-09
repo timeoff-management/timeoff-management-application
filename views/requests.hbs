@@ -45,13 +45,13 @@
           <td>{{this.comment.comment}}</td>
           <td>
             <form action="/requests/reject/" method="POST">
-            <input class="btn btn-warning" type="submit" value="Reject">
+            <input class="btn btn-warning single-click" type="submit" value="Reject">
             <input type="hidden" value="{{this.id}}" name="request">
             </form>
           </td>
           <td>
             <form action="/requests/approve/" method="POST">
-            <input class="btn btn-success" type="submit" value="Approve">
+            <input class="btn btn-success single-click" type="submit" value="Approve">
             <input type="hidden" value="{{this.id}}" name="request">
             </form>
           </td>

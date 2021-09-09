@@ -742,7 +742,7 @@ describe('CRUD for department secondary supervisers', function(){
       });
   });
 
-  it('Click on "Remove" button next to user C and observe that it disappeares from "secondary supervisors" section after page is reloaded', function(done){
+  it('Click on "Remove" button next to user C and observe that it disappears from "secondary supervisors" section after page is reloaded', function(done){
     driver
       .findElement(By.css(`button[name="remove_supervisor_id"][value="${ user_id_C }"]`))
       .then(el => el.click())
