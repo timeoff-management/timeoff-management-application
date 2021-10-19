@@ -141,6 +141,9 @@ respect the alphabet while sorting customer entered content.
 For that purpose the application config file has `locale_code_for_sorting` entry.
 By default the value is `en` (English). One can override it with other locales such as `cs`, `fr`, `de` etc.
 
+## Use Redis as a sessions storage
+
+Follow instructions on [this page](docs/SessionStoreInRedis.md).
 
 ## Feedback
 
