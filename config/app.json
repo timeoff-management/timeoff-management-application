@@ -10,6 +10,13 @@
       "pass" : "pass"
     }
   },
+  "sessionStore": {
+    "useRedis": false,
+    "redisConnectionConfiguration": {
+      "host": "localhost",
+      "port": 6379
+    }
+  },
   "ga_analytics_on" : false,
   "crypto_secret" : "!2~`HswpPPLa22+=±§sdq qwe,appp qwwokDF_",
   "application_domain" : "http://app.timeoff.management",
