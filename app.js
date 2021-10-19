@@ -6,6 +6,7 @@ var logger       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var moment       = require('moment');
+const createSessionMiddleware = require('./lib/middleware/withSession');
 
 var app = express();
 
@@ -37,16 +38,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Setup authentication mechanism
 const passport = require('./lib/passport')();
 
-var session = require('express-session');
-// Initialize sequelize with session store
-var SequelizeStore = require('connect-session-sequelize')(session.Store);
-app.use(session({
-    secret            : 'my dirty secret ;khjsdkjahsdajhasdam,nnsnad,',
-    resave            : false,
-    saveUninitialized : false,
-    store: new SequelizeStore({
-      db: app.get('db_model').sequelize
-    }),
+app.use(createSessionMiddleware({
+  sequelizeDb: app.get('db_model').sequelize,
 }))
 app.use(passport.initialize());
 app.use(passport.session());
