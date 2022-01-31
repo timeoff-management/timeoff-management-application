@@ -21358,6 +21358,58 @@
         {
           "date": "2021-12-25",
           "name": "Natal"
+        },
+        {
+          "date": "2022-01-01",
+          "name": "Ano Novo"
+        },
+        {
+          "date": "2022-04-15",
+          "name": "Sexta-Feira Santa"
+        },
+        {
+          "date": "2022-04-17",
+          "name": "Páscoa"
+        },
+        {
+          "date": "2022-04-25",
+          "name": "Dia da Liberdade"
+        },
+        {
+          "date": "2022-05-01",
+          "name": "Dia do Trabalhador"
+        },
+        {
+          "date": "2022-06-10",
+          "name": "Dia de Portugal"
+        },
+        {
+          "date": "2022-06-16",
+          "name": "Corpo de Deus"
+        },
+        {
+          "date": "2022-08-15",
+          "name": "Assunção de Nossa Senhora"
+        },
+        {
+          "date": "2022-10-05",
+          "name": "Implantação da República"
+        },
+        {
+          "date": "2022-11-01",
+          "name": "Dia de Todos os Santos"
+        },
+        {
+          "date": "2022-12-01",
+          "name": "Restauração da Independência"
+        },
+        {
+          "date": "2022-12-08",
+          "name": "Imaculada Conceição"
+        },
+        {
+          "date": "2022-12-25",
+          "name": "Natal"
         }
       ]
     },
