@@ -1,0 +1,28 @@
+[
+  {
+    "name": "${app_name}",
+    "image": "${account_id}.dkr.ecr.${region}.amazonaws.com/${app_name}:latest",
+    "memoryReservation": ${memory},
+    "cpu": ${cpu},
+    "portMappings": [
+      {
+        "containerPort": ${container_port},
+        "hostPort": ${container_port},
+        "protocol": "tcp"
+      }
+    ],
+    "linuxParameters": {
+      "initProcessEnabled": true
+    },
+    "Environment": [
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "${cloudwatch_log_group}",
+        "awslogs-region": "${region}",
+        "awslogs-stream-prefix": "/ecs_service"
+      }
+    }
+  }
+]
