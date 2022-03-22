@@ -33,7 +33,7 @@ podTemplate(
             }
             container('builder') {
               stage('CI - Run Tests') {
-                sh("npm ci")
+                sh("npm install")
                 //Commenting the tests out since tests don't support ci silent tests (repo maintenance is too old and mostly dead). See the README, section "Run tests"
                 //sh("npm test")
               } // stage end
