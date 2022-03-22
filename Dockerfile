@@ -39,10 +39,10 @@ RUN apk add --no-cache \
     libc-dev
 
 RUN adduser --system app --home /app 
-USER app
 WORKDIR /app
 
 FROM base as ready
+USER app
 RUN git clone https://github.com/snwbr/timeoff-management-application.git timeoff-management
 WORKDIR /app/timeoff-management
 
