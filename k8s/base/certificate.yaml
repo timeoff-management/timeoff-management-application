@@ -1,0 +1,14 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: timeoff
+  namespace: apps
+spec:
+  dnsNames:
+    - snwbr.net
+    - ingress.snwbr.net
+  secretName: timeoff-tls
+  issuerRef:
+    name: ingress
+    kind: ClusterIssuer

@@ -1,0 +1,8 @@
+resources:
+- certificate.yaml
+- deployment.yaml
+- service.yaml
+- ingressroute.yaml
+- hpa.yaml
+
+namespace: apps
