@@ -5,7 +5,7 @@ def ci = "tfpod-${UUID.randomUUID().toString()}"
 podTemplate(
   label: ci,
   containers: [
-    containerTemplate(name: 'docker', image: "20.10.13-alpine3.15", ttyEnabled: true, alwaysPullImage: false, command: 'cat'),
+    containerTemplate(name: 'docker', image: "docker:20.10.13-alpine3.15", ttyEnabled: true, alwaysPullImage: false, command: 'cat'),
     containerTemplate(name: 'builder', image: "dperezro/timeoff:build", ttyEnabled: true, alwaysPullImage: false, command: 'cat'),
     containerTemplate(name: 'kubeval', image: "garethr/kubeval:0.15.0", ttyEnabled: true, alwaysPullImage: false, command: 'cat'),
     containerTemplate(name: 'kustomize',image: "k8s.gcr.io/kustomize/kustomize:v3.8.7", ttyEnabled: true, alwaysPullImage: false, command: 'cat'),
