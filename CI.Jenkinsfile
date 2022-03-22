@@ -30,6 +30,7 @@ podTemplate(
               stage('CI - Validate K8s manifests') {
                 sh("/kubeval --ignore-missing-schemas k8s/*.yaml")
               } // stage end
+            }
             container('builder') {
               stage('CI - Run Tests') {
                 sh("npm ci")
