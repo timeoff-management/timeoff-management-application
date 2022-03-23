@@ -1,5 +1,5 @@
 resources:
-- certificate.yaml
+#- certificate.yaml
 - deployment.yaml
 - service.yaml
 - ingressroute.yaml
