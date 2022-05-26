@@ -1,0 +1,13 @@
+version: 0.1
+
+phases:
+  pre_build:
+    commands:
+      - pip install docker-compose
+  build:
+    commands:
+      - docker build -t $APP_IMAGE .
+      - COMPOSE_HTTP_TIMEOUT=200 docker-compose run --rm test
+  post_build:
+    commands:
+      - echo Build completed on `date`
