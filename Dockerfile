@@ -14,12 +14,16 @@
 # 4. Login to running container (to update config (vi config/app.json): 
 #	docker exec -ti --user root alpine_timeoff /bin/sh
 # --------------------------------------------------------------------
-FROM alpine:latest as dependencies
+FROM node:10-alpine as dependencies
+
+COPY package.json  .
+
+ENV PYTHONUNBUFFERED=1
+RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
 
 RUN apk add --no-cache \
     nodejs npm 
-
-COPY package.json  .
+        
 RUN npm install 
 
 FROM alpine:latest
