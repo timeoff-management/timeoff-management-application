@@ -7,7 +7,6 @@ phases:
   build:
     commands:
       - docker build .
-      - COMPOSE_HTTP_TIMEOUT=200 docker-compose run --rm test
   post_build:
     commands:
       - echo Build completed on `date`
