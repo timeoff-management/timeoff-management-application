@@ -5,5 +5,5 @@ Resources:
       Properties:
         TaskDefinition: <TASK_DEFINITION>
         LoadBalancerInfo:
-          ContainerName: "sample-website"
-          ContainerPort: 80
+          ContainerName: "timeoff-app"
+          ContainerPort: 3000
