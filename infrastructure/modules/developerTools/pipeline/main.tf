@@ -1,16 +1,12 @@
 
-resource "aws_codepipeline" "codepipeline" {
-  name     = "tf-test-pipeline"
+resource "aws_codepipeline" "build" {
+  name     = var.application_name
   role_arn = aws_iam_role.codepipeline_role.arn
 
   artifact_store {
-    location = aws_s3_bucket.codepipeline_bucket.bucket
+    location = "bucket"
     type     = "S3"
 
-    encryption_key {
-      id   = data.aws_kms_alias.s3kmskey.arn
-      type = "KMS"
-    }
   }
 
   stage {
@@ -20,14 +16,14 @@ resource "aws_codepipeline" "codepipeline" {
       name             = "Source"
       category         = "Source"
       owner            = "AWS"
-      provider         = "CodeStarSourceConnection"
+      provider         = "GitHub"
       version          = "1"
       output_artifacts = ["source_output"]
 
       configuration = {
-        ConnectionArn    = aws_codestarconnections_connection.example.arn
-        FullRepositoryId = "my-organization/example"
-        BranchName       = "main"
+        ConnectionArn    = var.codestar_connection
+        FullRepositoryId = var.repository_id
+        BranchName       = var.source_branch
       }
     }
   }
@@ -45,7 +41,37 @@ resource "aws_codepipeline" "codepipeline" {
       version          = "1"
 
       configuration = {
-        ProjectName = "test"
+        ProjectName = var.codebuid_project_name
+      }
+    }
+  }
+
+}
+
+resource "aws_codepipeline" "deploy" {
+  name     = var.application_name
+  role_arn = aws_iam_role.codepipeline_role.arn
+
+  artifact_store {
+    location = "bucket"
+    type     = "S3"
+
+  }
+  stage {
+    name = "Source"
+
+    action {
+      name             = "Source"
+      category         = "Source"
+      owner            = "AWS"
+      provider         = "GitHub"
+      version          = "1"
+      output_artifacts = ["source_output"]
+
+      configuration = {
+        ConnectionArn    = var.codestar_connection
+        FullRepositoryId = var.repository_id
+        BranchName       = var.source_branch
       }
     }
   }
@@ -54,20 +80,46 @@ resource "aws_codepipeline" "codepipeline" {
     name = "Deploy"
 
     action {
-      name            = "Deploy"
-      category        = "Deploy"
-      owner           = "AWS"
-      provider        = "CloudFormation"
-      input_artifacts = ["build_output"]
-      version         = "1"
+      name             = "Build"
+      category         = "Build"
+      owner            = "AWS"
+      provider         = "CodeDeploy"
+      input_artifacts  = ["source_output"]
+      output_artifacts = ["build_output"]
+      version          = "1"
 
       configuration = {
-        ActionMode     = "REPLACE_ON_FAILURE"
-        Capabilities   = "CAPABILITY_AUTO_EXPAND,CAPABILITY_IAM"
-        OutputFileName = "CreateStackOutput.json"
-        StackName      = "MyStack"
-        TemplatePath   = "build_output::sam-templated.yaml"
+        ProjectName = var.codedeploy_app_name
       }
     }
   }
+
+}
+
+
+
+
+resource "aws_iam_role" "codepipeline_role" {
+  name = "${var.application_name}-CodePipeline"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "codepipeline.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy" "code_deploy" {
+  role = aws_iam_role.codepipeline_role.name
+
+  policy = file("${path.module}/codePipeline.json")
 }

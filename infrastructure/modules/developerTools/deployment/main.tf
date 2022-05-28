@@ -1,19 +1,15 @@
-resource "aws_codedeploy_app" "example" {
+resource "aws_codedeploy_app" "app" {
   compute_platform = "ECS"
-  name             = "example"
+  name             = var.application_name
 }
 
+resource "aws_codedeploy_deployment_group" "app" {
+  app_name               = aws_codedeploy_app.app.name
+  deployment_config_name = "CodeDeployDefault.ECSCanary10Percent5Minutes"
+  deployment_group_name  = "DgpECS-core-timeoff-http-3000-deploy"
 
-resource "aws_codedeploy_app" "example" {
-  compute_platform = "ECS"
-  name             = "example"
-}
-
-resource "aws_codedeploy_deployment_group" "example" {
-  app_name               = aws_codedeploy_app.example.name
-  deployment_config_name = "CodeDeployDefault.ECSAllAtOnce"
-  deployment_group_name  = "example"
-  service_role_arn       = aws_iam_role.example.arn
+  #deployment_group_name  = "${var.application_name}-dpg"
+  service_role_arn = aws_iam_role.code_deploy.arn
 
   auto_rollback_configuration {
     enabled = true
@@ -37,23 +33,49 @@ resource "aws_codedeploy_deployment_group" "example" {
   }
 
   ecs_service {
-    cluster_name = aws_ecs_cluster.example.name
-    service_name = aws_ecs_service.example.name
+    cluster_name = var.ecs_cluster
+    service_name = var.ecs_service
   }
 
   load_balancer_info {
     target_group_pair_info {
       prod_traffic_route {
-        listener_arns = [aws_lb_listener.example.arn]
+        listener_arns = var.listener_arns
       }
 
       target_group {
-        name = aws_lb_target_group.blue.name
+        name = var.primary_target_group
       }
 
       target_group {
-        name = aws_lb_target_group.green.name
+        name = var.secondary_target_group
       }
     }
   }
 }
+
+
+resource "aws_iam_role" "code_deploy" {
+  name = "${var.application_name}-CodeDeploy"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "codedeploy.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "base_policy" {
+  role       = aws_iam_role.code_deploy.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSCodeDeployRoleForECS"
+}
+

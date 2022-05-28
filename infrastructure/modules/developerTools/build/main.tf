@@ -1,16 +1,16 @@
 # CODE BUILD
 
-resource "aws_s3_bucket" "example" {
-  bucket = "example"
+resource "aws_s3_bucket" "artifacts" {
+  bucket = "${var.application_name}-artifacts"
 }
 
-resource "aws_s3_bucket_acl" "example" {
-  bucket = aws_s3_bucket.example.id
+resource "aws_s3_bucket_acl" "artifacts" {
+  bucket = aws_s3_bucket.artifacts.id
   acl    = "private"
 }
 
-resource "aws_iam_role" "example" {
-  name = "example"
+resource "aws_iam_role" "code_build" {
+  name = "${var.application_name}-codeBuild"
 
   assume_role_policy = <<EOF
 {
@@ -28,182 +28,88 @@ resource "aws_iam_role" "example" {
 EOF
 }
 
-resource "aws_iam_role_policy" "example" {
-  role = aws_iam_role.example.name
+resource "aws_iam_role_policy" "code_build" {
+  role = aws_iam_role.code_build.name
 
-  policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Resource": [
-        "*"
-      ],
-      "Action": [
-        "logs:CreateLogGroup",
-        "logs:CreateLogStream",
-        "logs:PutLogEvents"
-      ]
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "ec2:CreateNetworkInterface",
-        "ec2:DescribeDhcpOptions",
-        "ec2:DescribeNetworkInterfaces",
-        "ec2:DeleteNetworkInterface",
-        "ec2:DescribeSubnets",
-        "ec2:DescribeSecurityGroups",
-        "ec2:DescribeVpcs"
-      ],
-      "Resource": "*"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "ec2:CreateNetworkInterfacePermission"
-      ],
-      "Resource": [
-        "arn:aws:ec2:us-east-1:123456789012:network-interface/*"
-      ],
-      "Condition": {
-        "StringEquals": {
-          "ec2:Subnet": [
-            "${aws_subnet.example1.arn}",
-            "${aws_subnet.example2.arn}"
-          ],
-          "ec2:AuthorizedService": "codebuild.amazonaws.com"
-        }
-      }
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "s3:*"
-      ],
-      "Resource": [
-        "${aws_s3_bucket.example.arn}",
-        "${aws_s3_bucket.example.arn}/*"
-      ]
-    }
-  ]
-}
-POLICY
+  policy = file("${path.module}/codeBuild.json")
 }
 
-resource "aws_codebuild_project" "example" {
-  name          = "test-project"
-  description   = "test_codebuild_project"
+resource "aws_codebuild_project" "app" {
+  name = var.application_name
+
+  #name          = "${var.application_name}-build"
+
+  description   = "Build Pipeline for ${var.application_name}"
   build_timeout = "5"
-  service_role  = aws_iam_role.example.arn
+  service_role  = aws_iam_role.code_build.arn
 
   artifacts {
-    type = "NO_ARTIFACTS"
+    type           = "S3"
+    location       = "codepipeline-us-east-1-595656245264"
+    name           = "timeoff-app"
+    namespace_type = "NONE"
+    packaging      = "NONE"
   }
 
   cache {
-    type     = "S3"
-    location = aws_s3_bucket.example.bucket
+    type     = "NO_CACHE"
+    location = aws_s3_bucket.artifacts.arn
   }
-
   environment {
     compute_type                = "BUILD_GENERAL1_SMALL"
-    image                       = "aws/codebuild/standard:1.0"
+    image                       = "aws/codebuild/standard:5.0"
     type                        = "LINUX_CONTAINER"
     image_pull_credentials_type = "CODEBUILD"
+    privileged_mode             = true
 
-    environment_variable {
-      name  = "SOME_KEY1"
-      value = "SOME_VALUE1"
-    }
 
-    environment_variable {
-      name  = "SOME_KEY2"
-      value = "SOME_VALUE2"
-      type  = "PARAMETER_STORE"
+    dynamic "environment_variable" {
+      for_each = var.environment_variables
+      content {
+        type  = environment_variable.value["type"]
+        name  = environment_variable.value["name"]
+        value = environment_variable.value["value"]
+      }
+
     }
   }
 
   logs_config {
     cloudwatch_logs {
-      group_name  = "log-group"
-      stream_name = "log-stream"
+
     }
 
     s3_logs {
-      status   = "ENABLED"
-      location = "${aws_s3_bucket.example.id}/build-log"
+      status = "DISABLED"
     }
   }
 
   source {
     type            = "GITHUB"
-    location        = "https://github.com/mitchellh/packer.git"
+    location        = var.github_repository_url
     git_clone_depth = 1
 
+    insecure_ssl        = false
+    report_build_status = false
     git_submodules_config {
-      fetch_submodules = true
+      fetch_submodules = false
     }
   }
 
-  source_version = "master"
-
-  vpc_config {
-    vpc_id = aws_vpc.example.id
-
-    subnets = [
-      aws_subnet.example1.id,
-      aws_subnet.example2.id,
-    ]
-
-    security_group_ids = [
-      aws_security_group.example1.id,
-      aws_security_group.example2.id,
-    ]
-  }
+  source_version = var.source_version
 
   tags = {
     Environment = "Test"
   }
 }
 
-resource "aws_codebuild_project" "project-with-cache" {
-  name           = "test-project-cache"
-  description    = "test_codebuild_project_cache"
-  build_timeout  = "5"
-  queued_timeout = "5"
+resource "aws_codebuild_source_credential" "code_build" {
+  auth_type   = "PERSONAL_ACCESS_TOKEN"
+  server_type = "GITHUB"
+  token       = data.aws_ssm_parameter.github_token.value
+}
 
-  service_role = aws_iam_role.example.arn
+data "aws_ssm_parameter" "github_token" {
+  name = var.github_token_ssm_path
 
-  artifacts {
-    type = "NO_ARTIFACTS"
-  }
-
-  cache {
-    type  = "LOCAL"
-    modes = ["LOCAL_DOCKER_LAYER_CACHE", "LOCAL_SOURCE_CACHE"]
-  }
-
-  environment {
-    compute_type                = "BUILD_GENERAL1_SMALL"
-    image                       = "aws/codebuild/standard:1.0"
-    type                        = "LINUX_CONTAINER"
-    image_pull_credentials_type = "CODEBUILD"
-
-    environment_variable {
-      name  = "SOME_KEY1"
-      value = "SOME_VALUE1"
-    }
-  }
-
-  source {
-    type            = "GITHUB"
-    location        = "https://github.com/mitchellh/packer.git"
-    git_clone_depth = 1
-  }
-
-  tags = {
-    Environment = "Test"
-  }
 }

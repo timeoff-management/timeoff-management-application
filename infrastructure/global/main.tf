@@ -175,16 +175,42 @@ resource "aws_lb_listener" "https" {
   load_balancer_arn = aws_lb.this.arn
   port              = "444"
   protocol          = "HTTPS"
-  certificate_arn   = "arn:aws:acm:us-east-1:150068533141:certificate/aa7e4852-b847-4a23-b2c4-30c0a6c406fe"
+  certificate_arn   = aws_acm_certificate.main.arn
   ssl_policy        = "ELBSecurityPolicy-2016-08"
   default_action {
     type = "fixed-response"
 
     fixed_response {
       content_type = "text/plain"
-      message_body = "Bad Request"
-      status_code  = "400"
+      status_code  = "503"
     }
   }
 }
 
+
+resource "aws_acm_certificate" "main" {
+  domain_name       = "dereedere.link"
+  validation_method = "DNS"
+}
+
+# ECS
+
+resource "aws_ecs_cluster" "core" {
+  name = "core"
+
+}
+
+
+# ECR
+resource "aws_ecr_repository" "main" {
+  name                 = "core"
+  image_tag_mutability = "MUTABLE"
+
+}
+
+# CodeStar
+
+resource "aws_codestarconnections_connection" "main" {
+  name          = "timeoff"
+  provider_type = "GitHub"
+}

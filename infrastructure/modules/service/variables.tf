@@ -23,11 +23,19 @@ variable "container_name" {
 variable "container_port" {
 }
 
+variable "http_alb_listener_arn" {
+
+}
+
+variable "https_alb_listener_arn" {
+
+}
+
 variable "protocol" {
 }
 
 variable "subnets" {
 }
 
-variable "security_groups" {
+variable "alb_security_group_id" {
 }

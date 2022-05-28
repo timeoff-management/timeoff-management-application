@@ -3,7 +3,7 @@ data "aws_ecs_cluster" "service" {
 }
 
 resource "aws_lb_target_group" "primary" {
-  name     = "${var.service_name}-main-tg"
+  name        = "${var.service_name}-main-tg"
   port        = var.container_port
   protocol    = var.protocol
   vpc_id      = var.vpc_id
@@ -31,7 +31,7 @@ resource "aws_lb_target_group" "primary" {
 }
 
 resource "aws_lb_target_group" "secondary" {
-  name     = "${var.service_name}-main-tg"
+  name        = "${var.service_name}-main-tg"
   port        = var.container_port
   protocol    = var.protocol
   vpc_id      = var.vpc_id
@@ -56,6 +56,39 @@ resource "aws_lb_target_group" "secondary" {
   }
 }
 
+resource "aws_lb_listener_rule" "main_http" {
+  listener_arn = var.http_alb_listener_arn
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.primary.arn
+  }
+
+  condition {
+    host_header {
+      values = ["timeoff.dereedere.link"]
+    }
+  }
+}
+
+resource "aws_lb_listener_rule" "main_https" {
+  listener_arn = var.https_alb_listener_arn
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.primary.arn
+  }
+
+  condition {
+    host_header {
+      values = ["timeoff.dereedere.link"]
+    }
+  }
+}
+
+# TO-DO:
+# Figure out how the manage the secondary needed target group
+
 resource "aws_ecs_service" "main" {
   name            = var.service_name
   cluster         = data.aws_ecs_cluster.service.arn
@@ -74,7 +107,7 @@ resource "aws_ecs_service" "main" {
 
   network_configuration {
     assign_public_ip = true
-    security_groups  = var.security_groups
+    security_groups  = [module.sg.security_group_id]
     subnets          = var.subnets
   }
 
@@ -85,4 +118,30 @@ resource "aws_ecs_service" "main" {
     ]
   }
 
+}
+
+module "sg" {
+  source      = "terraform-aws-modules/security-group/aws"
+  version     = "4.9.0"
+  name        = "${var.service_name}-sg"
+  description = "Security Group for ${var.service_name}"
+  vpc_id      = var.vpc_id
+  ingress_with_source_security_group_id = [
+    {
+      from_port                = 0
+      to_port                  = 65535
+      protocol                 = "tcp"
+      description              = "From ALB"
+      source_security_group_id = var.alb_security_group_id
+    }
+  ]
+  egress_with_cidr_blocks = [
+    {
+      from_port   = 0
+      to_port     = 65535
+      protocol    = "tcp"
+      description = "All ports"
+      cidr_blocks = "0.0.0.0/0"
+    },
+  ]
 }
