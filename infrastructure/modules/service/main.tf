@@ -94,10 +94,10 @@ resource "aws_ecs_service" "main" {
   cluster         = data.aws_ecs_cluster.service.arn
   task_definition = var.task_definition_name
   desired_count   = var.desired_count
-  iam_role        = var.iam_role
   deployment_controller {
     type = "CODE_DEPLOY"
   }
+  launch_type = "FARGATE"
 
   load_balancer {
     target_group_arn = aws_lb_target_group.primary.arn
@@ -106,7 +106,6 @@ resource "aws_ecs_service" "main" {
   }
 
   network_configuration {
-    assign_public_ip = true
     security_groups  = [module.sg.security_group_id]
     subnets          = var.subnets
   }

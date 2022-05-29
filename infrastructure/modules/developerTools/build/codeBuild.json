@@ -74,14 +74,13 @@
              "codebuild:BatchPutCodeCoverages"
           ],
           "Resource":[
-             "arn:aws:codebuild:us-east-1:150068533141:report-group/timeoff-management-application-*"
+             "*"
           ]
        },
        {
           "Effect":"Allow",
           "Resource":[
-             "arn:aws:logs:us-east-1:150068533141:log-group:/aws/codebuild/timeoff-management-application",
-             "arn:aws:logs:us-east-1:150068533141:log-group:/aws/codebuild/timeoff-management-application:*"
+             "*"
           ],
           "Action":[
              "logs:CreateLogGroup",

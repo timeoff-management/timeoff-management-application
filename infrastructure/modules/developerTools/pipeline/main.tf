@@ -1,6 +1,6 @@
 
 resource "aws_codepipeline" "build" {
-  name     = var.application_name
+  name     = "${var.application_name}-build"
   role_arn = aws_iam_role.codepipeline_role.arn
 
   artifact_store {
@@ -52,7 +52,7 @@ resource "aws_codepipeline" "build" {
 }
 
 resource "aws_codepipeline" "deploy" {
-  name     = var.application_name
+  name     = "${var.application_name}-deploy"
   role_arn = aws_iam_role.codepipeline_role.arn
 
   artifact_store {
@@ -125,7 +125,7 @@ resource "aws_codepipeline" "deploy" {
         "Image1ArtifactName"             = "MyImage"
         "Image1ContainerName"            = "IMAGE_NAME"
         "TaskDefinitionTemplateArtifact" = "SourceArtifact"
-        "TaskDefinitionTemplatePath"     = "infrastrucure/timeoff-app/taskdef.json"
+        "TaskDefinitionTemplatePath"     = "taskdef.json"
       }
     }
   }
