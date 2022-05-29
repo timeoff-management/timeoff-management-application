@@ -62,12 +62,12 @@ module "timeoff_deploy" {
 }
 
 module "timeoff_pipeline" {
-  source              = "../modules/developerTools/pipeline"
-  application_name    = local.name
-  codestar_connection = data.terraform_remote_state.global.outputs.codestar_connection_arn
-  repository_id       = "jimenamorazu/timeoff-management-application"
-  source_branch       = "develop"
-  ecr_repository_name = data.terraform_remote_state.global.outputs.ecr_repo_name
+  source                = "../modules/developerTools/pipeline"
+  application_name      = local.name
+  codestar_connection   = data.terraform_remote_state.global.outputs.codestar_connection_arn
+  repository_id         = "jimenamorazu/timeoff-management-application"
+  source_branch         = "develop"
+  ecr_repository_name   = data.terraform_remote_state.global.outputs.ecr_repo_name
   codebuid_project_name = module.timeoff_build.project_name
   codedeploy_app_name   = module.timeoff_deploy.deployment_application_name
   codedeploy_group_name = module.timeoff_deploy.deployment_group_name

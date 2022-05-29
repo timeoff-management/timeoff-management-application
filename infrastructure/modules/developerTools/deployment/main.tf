@@ -7,7 +7,7 @@ resource "aws_codedeploy_deployment_group" "app" {
   app_name               = aws_codedeploy_app.app.name
   deployment_config_name = "CodeDeployDefault.ECSCanary10Percent5Minutes"
   deployment_group_name  = "${var.application_name}-dpg"
-  service_role_arn = aws_iam_role.code_deploy.arn
+  service_role_arn       = aws_iam_role.code_deploy.arn
 
   auto_rollback_configuration {
     enabled = true

@@ -69,6 +69,12 @@ resource "aws_lb_listener_rule" "main_http" {
       values = ["${var.service_name}.dereedere.link"]
     }
   }
+
+  lifecycle {
+    ignore_changes = [
+      action
+    ]
+  }
 }
 
 resource "aws_lb_listener_rule" "main_https" {
@@ -83,6 +89,12 @@ resource "aws_lb_listener_rule" "main_https" {
     host_header {
       values = ["${var.service_name}.dereedere.link"]
     }
+  }
+
+  lifecycle {
+    ignore_changes = [
+      action
+    ]
   }
 }
 
@@ -106,8 +118,8 @@ resource "aws_ecs_service" "main" {
   }
 
   network_configuration {
-    security_groups  = [module.sg.security_group_id]
-    subnets          = var.subnets
+    security_groups = [module.sg.security_group_id]
+    subnets         = var.subnets
   }
 
   lifecycle {

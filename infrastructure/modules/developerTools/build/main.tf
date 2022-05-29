@@ -35,7 +35,7 @@ resource "aws_iam_role_policy" "code_build" {
 }
 
 resource "aws_codebuild_project" "app" {
-  name          = "${var.application_name}-build"
+  name = "${var.application_name}-build"
 
   description   = "Build Pipeline for ${var.application_name}"
   build_timeout = "5"
