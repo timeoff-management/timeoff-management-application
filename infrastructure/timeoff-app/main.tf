@@ -32,7 +32,7 @@ module "timeoff_build" {
     {
       name  = "ecr_repo_name"
       type  = "PLAINTEXT"
-      value = data.terraform_remote_state.global.outputs.ecr_repo_arn
+      value = data.terraform_remote_state.global.outputs.ecr_repo_url
     },
     {
       name  = "image_tag"
