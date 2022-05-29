@@ -38,9 +38,11 @@ resource "aws_codedeploy_deployment_group" "app" {
   load_balancer_info {
     target_group_pair_info {
       prod_traffic_route {
+        listener_arns = [var.production_listener_arn]
+      }
+      test_traffic_route {
         listener_arns = var.listener_arns
       }
-
       target_group {
         name = var.primary_target_group
       }

@@ -117,6 +117,12 @@ resource "aws_ecs_service" "main" {
     container_port   = var.container_port
   }
 
+  load_balancer {
+    target_group_arn = aws_lb_target_group.secondary.arn
+    container_name   = var.container_name
+    container_port   = var.container_port
+  }
+
   network_configuration {
     security_groups = [module.sg.security_group_id]
     subnets         = var.subnets

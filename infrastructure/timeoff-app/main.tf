@@ -54,6 +54,7 @@ module "timeoff_deploy" {
   source = "../modules/developerTools/deployment"
 
   application_name       = local.name
+  production_listener_arn = data.terraform_remote_state.global.outputs.https_listener_arn
   listener_arns          = [data.terraform_remote_state.global.outputs.http_listener_arn]
   primary_target_group   = module.timeoff_service.primary_target_group
   secondary_target_group = module.timeoff_service.secondary_target_group
