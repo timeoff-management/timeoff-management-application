@@ -1,9 +1,45 @@
-
 # TimeOff.Management
 
 Web application for managing employee absences.
 
 <a href="https://travis-ci.org/timeoff-management/timeoff-management-application"><img align="right" src="https://travis-ci.org/timeoff-management/timeoff-management-application.svg?branch=master" alt="Build status" /></a>
+
+
+# Some notes for this project
+
+Here are some details on the solution implemented with this application:
+
+* **Cloud provider**: AWS
+* **IaC solution**: Terraform
+* **Container orchestration service**: ECS 
+* **CI/CD Pipeline**: GitHub, AWS CodeBuild, AWS CodeDeploy and AWS CodePipeline
+
+Here you can see a diagram describing the different services used to run this application:
+![Architecture Diagram](timeoff-app.png)
+
+As shown in the diagram, the application sits behind an AWS Application Load Balancer and is higly available thanks to the Elastic Container Service and runs on Fargate instances as containers. These containers are located under the VPC's private subnets so the actual application is protected and only reachable via the load balancer.
+
+Every time a commit is pushed to the develop branch, a build process will start using AWS CodeBuild and this service will push the containerized image to a private ECR Repository. Once the new image is pushed, this will trigger a deployment via AWS CodeDeploy, in this case we are leveraging a canary deployment using Codedeploy.
+ 
+The application is currently accesible via the following addresses (one with HTTPS support from my understanding of application requirements)
+* https://timeoff-app.dereedere.link:444/login/
+* http://timeoff-app.dereedere.link/login/
+
+An /infrastructure in the repositoy's branch subfolder holds all the Terraform configuration files used. Additionally, the configuration has some rough modularization to set the tone for reusable configuration hopefully in the future, either via workspaces or module usage.
+
+Below are some generic details about changes made to the application and the infrastructure:
+
+*Changes*
+- Removed multicontainer from Dockerfile
+- Change on sqllite3 version - pined to 5.0.0
+- Change on node-sass version - upgraded to "^5.0.0" due to unsupported compatibility with gyp and python3
+
+
+*Recomendations*
+- Pin version of source image
+- Use public-ecr or private-ecr-repository to prevent rate limiting without  requiring Docker Hub Authentication
+
+
 
 ## Features
 
