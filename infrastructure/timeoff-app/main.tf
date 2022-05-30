@@ -2,7 +2,7 @@ module "timeoff_service_http" {
   source                = "../modules/service"
   vpc_id                = data.terraform_remote_state.global.outputs.vpc_id
   cluster_name          = "core"
-  service_name          ="${local.name}-http"
+  service_name          = local.name
   task_definition_name  = "timeoff:8"
   desired_count         = 1
   container_name        = local.name
@@ -37,49 +37,45 @@ module "timeoff_build" {
 
 resource "aws_codedeploy_app" "app" {
   compute_platform = "ECS"
-  name             = local.name
+  name             = "AppECS-core-${local.name}"
 }
 
 module "timeoff_deploy_http" {
   source = "../modules/developerTools/deployment"
 
-  application_name        = local.name
+  application_name       = local.name
   listener_arn           = [data.terraform_remote_state.global.outputs.http_listener_arn]
-  primary_target_group    = module.timeoff_service_http.primary_target_group
-  secondary_target_group  = module.timeoff_service_http.secondary_target_group
-  ecs_cluster             = "core"
-  ecs_service             = module.timeoff_service_http.service_name
-  codedeploy_app_name     = aws_codedeploy_app.app.name
-  identifier              = "http"
-
+  primary_target_group   = module.timeoff_service_http.primary_target_group
+  secondary_target_group = module.timeoff_service_http.secondary_target_group
+  ecs_cluster            = "core"
+  ecs_service            = module.timeoff_service_http.service_name
+  codedeploy_app_name    = aws_codedeploy_app.app.name
 }
 
 module "timeoff_deploy_https" {
   source = "../modules/developerTools/deployment"
 
-  application_name        = local.name
+  application_name       = local.name
   listener_arn           = [data.terraform_remote_state.global.outputs.https_listener_arn]
-  primary_target_group    = module.timeoff_service_https.primary_target_group
-  secondary_target_group  = module.timeoff_service_https.secondary_target_group
-  ecs_cluster             = "core"
-  ecs_service             = module.timeoff_service_https.service_name
-  codedeploy_app_name     = aws_codedeploy_app.app.name
-  identifier              = "https"
+  primary_target_group   = module.timeoff_service_https.primary_target_group
+  secondary_target_group = module.timeoff_service_https.secondary_target_group
+  ecs_cluster            = "core"
+  ecs_service            = module.timeoff_service_https.service_name
+  codedeploy_app_name    = aws_codedeploy_app.app.name
 }
 
 module "timeoff_pipeline" {
   source = "../modules/developerTools/pipeline"
 
+  codedeploy_app_name    = aws_codedeploy_app.app.name
   application_name       = local.name
   codestar_connection    = data.terraform_remote_state.global.outputs.codestar_connection_arn
   repository_id          = "jimenamorazu/timeoff-management-application"
   source_branch          = "develop"
   ecr_repository_name    = data.terraform_remote_state.global.outputs.ecr_repo_name
   codebuid_project_name  = module.timeoff_build.project_name
-  codedeploy_app_name    = aws_codedeploy_app.app.name
   codedeploy_group_names = [module.timeoff_deploy_http.deployment_group_name, module.timeoff_deploy_https.deployment_group_name]
 }
-
 
 data "terraform_remote_state" "global" {
   backend = "s3"

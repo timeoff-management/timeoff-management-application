@@ -1,3 +1,3 @@
 output "deployment_group_name" {
-  value = "${var.application_name}-${var.identifier}"
+  value = "AppECS-${var.ecs_cluster}-${var.ecs_service}"
 }

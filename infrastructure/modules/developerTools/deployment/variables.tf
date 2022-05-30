@@ -22,6 +22,4 @@ variable "ecs_service" {
 
 }
 
-variable "identifier" {}
-
 variable "codedeploy_app_name" {}

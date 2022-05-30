@@ -3,8 +3,8 @@ data "aws_ecs_cluster" "service" {
 }
 
 resource "aws_lb_target_group" "primary" {
-  name        = "${var.service_name}-main-tg"
-  port        = var.container_port
+  name        = "tg-${var.cluster_name}-${var.service_name}-1"
+  port        = 80
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
   target_type = "ip"
@@ -27,12 +27,11 @@ resource "aws_lb_target_group" "primary" {
     type            = "lb_cookie"
   }
 
-
 }
 
 resource "aws_lb_target_group" "secondary" {
-  name        = "${var.service_name}-scd-tg"
-  port        = var.container_port
+  name        = "tg-${var.cluster_name}-${var.service_name}-2"
+  port        = 80
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
   target_type = "ip"

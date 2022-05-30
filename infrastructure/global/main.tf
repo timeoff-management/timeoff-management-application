@@ -157,6 +157,8 @@ module "web_security_group" {
   ]
 }
 
+
+## Application Listeners
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.this.arn
   port              = "80"
@@ -171,11 +173,12 @@ resource "aws_lb_listener" "http" {
     }
   }
 }
-resource "aws_lb_listener" "https" {
+
+resource "aws_lb_listener" "app" {
   load_balancer_arn = aws_lb.this.arn
   port              = "444"
   protocol          = "HTTPS"
-  certificate_arn   = aws_acm_certificate.main.arn
+  certificate_arn   = var.acm_certificate
   ssl_policy        = "ELBSecurityPolicy-2016-08"
   default_action {
     type = "fixed-response"
@@ -186,7 +189,6 @@ resource "aws_lb_listener" "https" {
     }
   }
 }
-
 
 resource "aws_acm_certificate" "main" {
   domain_name       = "dereedere.link"

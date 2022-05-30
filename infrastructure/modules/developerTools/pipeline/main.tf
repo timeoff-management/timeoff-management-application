@@ -104,8 +104,8 @@ resource "aws_codepipeline" "deploy" {
   stage {
     name = "Deploy"
     dynamic "action" {
-    for_each = var.codedeploy_group_names
-    content {
+      for_each = var.codedeploy_group_names
+      content {
         name     = "Deploy${index(var.codedeploy_group_names, action.value) + 1}"
         category = "Deploy"
         owner    = "AWS"
@@ -126,11 +126,11 @@ resource "aws_codepipeline" "deploy" {
           "TaskDefinitionTemplateArtifact" = "SourceArtifact"
           "TaskDefinitionTemplatePath"     = "taskdef.json"
         }
+      }
     }
-  }
 
   }
-  
+
 
 }
 

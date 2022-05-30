@@ -1,12 +1,12 @@
 resource "aws_codedeploy_deployment_group" "app" {
   app_name               = var.codedeploy_app_name
   deployment_config_name = "CodeDeployDefault.ECSCanary10Percent5Minutes"
-  deployment_group_name  = "${var.application_name}-${var.identifier}"
+  deployment_group_name  = "AppECS-${var.ecs_cluster}-${var.ecs_service}"
   service_role_arn       = aws_iam_role.code_deploy.arn
 
   auto_rollback_configuration {
     enabled = true
-    events  = ["DEPLOYMENT_FAILURE"]
+    events  = ["DEPLOYMENT_FAILURE", "DEPLOYMENT_STOP_ON_REQUEST", ]
   }
 
   blue_green_deployment_config {
@@ -48,7 +48,7 @@ resource "aws_codedeploy_deployment_group" "app" {
 
 
 resource "aws_iam_role" "code_deploy" {
-  name = "${var.application_name}-${var.identifier}-CodeDeploy"
+  name = "${var.ecs_cluster}-${var.ecs_service}-CodeDeploy"
 
   assume_role_policy = <<EOF
 {
