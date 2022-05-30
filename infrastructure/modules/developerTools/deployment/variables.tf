@@ -2,7 +2,7 @@ variable "application_name" {
 
 }
 
-variable "listener_arns" {
+variable "listener_arn" {
 
 }
 
@@ -22,4 +22,6 @@ variable "ecs_service" {
 
 }
 
-variable "production_listener_arn" {}
+variable "identifier" {}
+
+variable "codedeploy_app_name" {}

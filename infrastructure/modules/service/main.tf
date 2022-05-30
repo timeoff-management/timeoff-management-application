@@ -5,7 +5,7 @@ data "aws_ecs_cluster" "service" {
 resource "aws_lb_target_group" "primary" {
   name        = "${var.service_name}-main-tg"
   port        = var.container_port
-  protocol    = var.protocol
+  protocol    = "HTTP"
   vpc_id      = var.vpc_id
   target_type = "ip"
 
@@ -33,7 +33,7 @@ resource "aws_lb_target_group" "primary" {
 resource "aws_lb_target_group" "secondary" {
   name        = "${var.service_name}-scd-tg"
   port        = var.container_port
-  protocol    = var.protocol
+  protocol    = "HTTP"
   vpc_id      = var.vpc_id
   target_type = "ip"
 
@@ -56,8 +56,8 @@ resource "aws_lb_target_group" "secondary" {
   }
 }
 
-resource "aws_lb_listener_rule" "main_http" {
-  listener_arn = var.http_alb_listener_arn
+resource "aws_lb_listener_rule" "main" {
+  listener_arn = var.alb_listener_arn
 
   action {
     type             = "forward"
@@ -66,28 +66,7 @@ resource "aws_lb_listener_rule" "main_http" {
 
   condition {
     host_header {
-      values = ["${var.service_name}.dereedere.link"]
-    }
-  }
-
-  lifecycle {
-    ignore_changes = [
-      action
-    ]
-  }
-}
-
-resource "aws_lb_listener_rule" "main_https" {
-  listener_arn = var.https_alb_listener_arn
-
-  action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.primary.arn
-  }
-
-  condition {
-    host_header {
-      values = ["${var.service_name}.dereedere.link"]
+      values = ["timeoff-app.dereedere.link"]
     }
   }
 
@@ -113,12 +92,6 @@ resource "aws_ecs_service" "main" {
 
   load_balancer {
     target_group_arn = aws_lb_target_group.primary.arn
-    container_name   = var.container_name
-    container_port   = var.container_port
-  }
-
-  load_balancer {
-    target_group_arn = aws_lb_target_group.secondary.arn
     container_name   = var.container_name
     container_port   = var.container_port
   }

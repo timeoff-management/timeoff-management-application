@@ -101,34 +101,36 @@ resource "aws_codepipeline" "deploy" {
     }
   }
 
-
-
   stage {
     name = "Deploy"
+    dynamic "action" {
+    for_each = var.codedeploy_group_names
+    content {
+        name     = "Deploy${index(var.codedeploy_group_names, action.value) + 1}"
+        category = "Deploy"
+        owner    = "AWS"
+        provider = "CodeDeployToECS"
+        input_artifacts = [
+          "SourceArtifact",
+          "MyImage"
+        ]
+        version = "1"
 
-    action {
-      name     = "Deploy"
-      category = "Deploy"
-      owner    = "AWS"
-      provider = "CodeDeployToECS"
-      input_artifacts = [
-        "SourceArtifact",
-        "MyImage"
-      ]
-      version = "1"
-
-      configuration = {
-        "AppSpecTemplateArtifact"        = "SourceArtifact"
-        "AppSpecTemplatePath"            = "appspec.yml"
-        "ApplicationName"                = var.codedeploy_app_name
-        "DeploymentGroupName"            = var.codedeploy_group_name
-        "Image1ArtifactName"             = "MyImage"
-        "Image1ContainerName"            = "IMAGE_NAME"
-        "TaskDefinitionTemplateArtifact" = "SourceArtifact"
-        "TaskDefinitionTemplatePath"     = "taskdef.json"
-      }
+        configuration = {
+          "AppSpecTemplateArtifact"        = "SourceArtifact"
+          "AppSpecTemplatePath"            = "appspec.yml"
+          "ApplicationName"                = var.codedeploy_app_name
+          "DeploymentGroupName"            = action.value
+          "Image1ArtifactName"             = "MyImage"
+          "Image1ContainerName"            = "IMAGE_NAME"
+          "TaskDefinitionTemplateArtifact" = "SourceArtifact"
+          "TaskDefinitionTemplatePath"     = "taskdef.json"
+        }
     }
   }
+
+  }
+  
 
 }
 
