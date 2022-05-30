@@ -68,12 +68,6 @@ resource "aws_lb_listener_rule" "main" {
       values = ["timeoff-app.dereedere.link"]
     }
   }
-
-  lifecycle {
-    ignore_changes = [
-      action
-    ]
-  }
 }
 
 # TO-DO:
@@ -96,7 +90,7 @@ resource "aws_ecs_service" "main" {
   }
 
   network_configuration {
-    security_groups = [module.sg.security_group_id]
+    security_groups = var.security_group_ids
     subnets         = var.subnets
   }
 
@@ -107,30 +101,4 @@ resource "aws_ecs_service" "main" {
     ]
   }
 
-}
-
-module "sg" {
-  source      = "terraform-aws-modules/security-group/aws"
-  version     = "4.9.0"
-  name        = "${var.service_name}-sg"
-  description = "Security Group for ${var.service_name}"
-  vpc_id      = var.vpc_id
-  ingress_with_source_security_group_id = [
-    {
-      from_port                = 0
-      to_port                  = 65535
-      protocol                 = "tcp"
-      description              = "From ALB"
-      source_security_group_id = var.alb_security_group_id
-    }
-  ]
-  egress_with_cidr_blocks = [
-    {
-      from_port   = 0
-      to_port     = 65535
-      protocol    = "tcp"
-      description = "All ports"
-      cidr_blocks = "0.0.0.0/0"
-    },
-  ]
 }

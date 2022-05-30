@@ -1,29 +1,30 @@
 module "timeoff_service_http" {
-  source                = "../modules/service"
-  vpc_id                = data.terraform_remote_state.global.outputs.vpc_id
-  cluster_name          = "core"
-  service_name          = local.name
-  task_definition_name  = "timeoff:8"
-  desired_count         = 1
-  container_name        = local.name
-  container_port        = 3000
-  alb_security_group_id = data.terraform_remote_state.global.outputs.alb_security_group
-  subnets               = data.terraform_remote_state.global.outputs.private_subnets
-  alb_listener_arn      = data.terraform_remote_state.global.outputs.http_listener_arn
+  source               = "../modules/service"
+  vpc_id               = data.terraform_remote_state.global.outputs.vpc_id
+  cluster_name         = "core"
+  service_name         = "${local.name}-main"
+  task_definition_name = "timeoff:8"
+  desired_count        = 1
+  container_name       = local.name
+  container_port       = 3000
+  subnets              = data.terraform_remote_state.global.outputs.private_subnets
+  security_group_ids   = ["sg-00f162201a3a6f11f"]
+  alb_listener_arn     = data.terraform_remote_state.global.outputs.http_listener_arn
+
 }
 
 module "timeoff_service_https" {
-  source                = "../modules/service"
-  vpc_id                = data.terraform_remote_state.global.outputs.vpc_id
-  cluster_name          = "core"
-  service_name          = "${local.name}-https"
-  task_definition_name  = "timeoff:8"
-  desired_count         = 1
-  container_name        = local.name
-  container_port        = 3000
-  alb_security_group_id = data.terraform_remote_state.global.outputs.alb_security_group
-  subnets               = data.terraform_remote_state.global.outputs.private_subnets
-  alb_listener_arn      = data.terraform_remote_state.global.outputs.https_listener_arn
+  source               = "../modules/service"
+  vpc_id               = data.terraform_remote_state.global.outputs.vpc_id
+  cluster_name         = "core"
+  service_name         = "${local.name}-https"
+  task_definition_name = "timeoff:8"
+  desired_count        = 1
+  container_name       = local.name
+  container_port       = 3000
+  subnets              = data.terraform_remote_state.global.outputs.private_subnets
+  security_group_ids   = ["sg-00f162201a3a6f11f"]
+  alb_listener_arn     = data.terraform_remote_state.global.outputs.http_listener_arn
 }
 
 module "timeoff_build" {

@@ -30,5 +30,4 @@ variable "alb_listener_arn" {
 variable "subnets" {
 }
 
-variable "alb_security_group_id" {
-}
+variable "security_group_ids" {}
