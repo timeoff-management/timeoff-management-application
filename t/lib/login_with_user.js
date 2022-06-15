@@ -102,7 +102,7 @@ var login_with_user_func = Promise.promisify(function(args, callback){
     // Make sure login was successful, check that we landed on user account page
     driver.getTitle()
       .then(function(title){
-          expect(title).to.be.equal('Calendar');
+          expect(title).to.match(/Calendar/);
       });
 
     driver
