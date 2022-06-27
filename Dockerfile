@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------
-# Minimal dockerfile from alpine base
+# Minimal dockerfile from ubuntu base
 #
 # Instructions:
 # =============
@@ -9,27 +9,36 @@
 #	docker build --tag timeoff:latest .
 #
 # 3. Run with: 
-#	docker run -d -p 3000:3000 --name alpine_timeoff timeoff
+#	docker run -d -p 3000:3000 --name ubuntu_timeoff timeoff
 #
 # 4. Login to running container (to update config (vi config/app.json): 
-#	docker exec -ti --user root alpine_timeoff /bin/sh
+#	docker exec -ti --user root ubuntu_timeoff /bin/sh
 # --------------------------------------------------------------------
-FROM alpine:latest as dependencies
+FROM ubuntu:focal as dependencies
 
-RUN apk add --no-cache \
-    nodejs npm 
+RUN apt update && apt install -y \
+    curl && \
+    curl -sL https://deb.nodesource.com/setup_13.x | bash - && \
+    apt install -y nodejs && \
+    apt clean autoclean && \
+    apt autoremove --yes && \
+    rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 COPY package.json  .
 RUN npm install 
 
-FROM alpine:latest
+FROM ubuntu:focal
 
 LABEL org.label-schema.schema-version="1.0"
 LABEL org.label-schema.docker.cmd="docker run -d -p 3000:3000 --name alpine_timeoff"
 
-RUN apk add --no-cache \
-    nodejs npm \
-    vim
+RUN apt update && apt install -y \
+    curl && \
+    curl -sL https://deb.nodesource.com/setup_13.x | bash - && \
+    apt install -y nodejs vim && \
+    apt clean autoclean && \
+    apt autoremove --yes && \
+    rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 RUN adduser --system app --home /app
 USER app
@@ -37,6 +46,6 @@ WORKDIR /app
 COPY . /app
 COPY --from=dependencies node_modules ./node_modules
 
-CMD npm start
-
 EXPOSE 3000
+
+ENTRYPOINT ["npm", "start"]
