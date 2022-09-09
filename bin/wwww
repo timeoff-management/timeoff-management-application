@@ -3,7 +3,7 @@
 var debug = require('debug')('vacation-tracker');
 var app   = require('../app');
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 80);
 
 app.get('db_model').sequelize.sync().then(function () {
   var server = app.listen(app.get('port'), function() {
