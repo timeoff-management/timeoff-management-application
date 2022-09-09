@@ -45,4 +45,4 @@ COPY --from=dependencies node_modules ./node_modules
 
 CMD npm start
 
-EXPOSE 8080
+EXPOSE 80
