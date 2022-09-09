@@ -1,0 +1,37 @@
+name: CD - TIMEOFF
+
+on:
+  push:
+    branches: [ "master"]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Pull source code
+      uses: actions/checkout@v3
+
+    - name: Configure aws credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-west-2
+
+    - name: Login to ECR repository
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v
+
+    - name: Build Docker image
+      run: docker build . --file Dockerfile --tag timeoff-management-app:latest
+
+    - name: Tag Docker image
+      run: docker tag timeoff-management-app:latest 980952865757.dkr.ecr.us-west-2.amazonaws.com/timeoff-management-app:latest
+
+    - name: Push Docker image to ECR
+      run: docker push 980952865757.dkr.ecr.us-west-2.amazonaws.com/timeoff-management-app:latest
