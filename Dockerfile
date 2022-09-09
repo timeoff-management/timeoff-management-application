@@ -19,6 +19,12 @@ FROM alpine:latest as dependencies
 RUN apk add --no-cache \
     nodejs npm 
 
+RUN apk --update add --no-cache python3
+
+#RUN apk add --no-cache sqlite
+RUN npm install --global yarn
+RUN yarn add sqlite3
+
 COPY package.json  .
 RUN npm install 
 
