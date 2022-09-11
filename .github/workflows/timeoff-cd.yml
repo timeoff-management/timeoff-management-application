@@ -28,6 +28,7 @@ jobs:
       uses: aws-actions/amazon-ecr-login@v1
 
     - name: Build Docker image
+      working-directory: ./timeoff-app
       run: docker build . --file Dockerfile --tag timeoff-management-app:latest
 
     - name: Tag Docker image

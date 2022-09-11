@@ -37,7 +37,7 @@ resource "aws_ecs_task_definition" "gorilla_task" {
         {
             name            = "${var.app_name}-container"
             image           = join("",[aws_ecr_repository.gorilla_ecs_repository.repository_url, ":last"])
-            cpu             = 0.5
+            cpu             = 1
             memory          = 2
             essential       = true
             portMappings    = [{
@@ -82,12 +82,12 @@ resource "aws_ecs_service" "gorilla_service" {
 
     load_balancer {
       target_group_arn = "${var.target_group_arn}"
-      container_name   = "${local.base-name}"
-      container_port   = "${var.container_port}"
+      container_name   = "${var.app_name}-container"
+      container_port   = "3000"
     }
 
     network_configuration {
-      assign_public_ip  = var.assign_public_ip
+      assign_public_ip  = true
       subnets           = var.subnets
       security_groups   = var.security_groups
     }

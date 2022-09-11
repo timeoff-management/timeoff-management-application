@@ -79,3 +79,46 @@ resource "aws_vpc_endpoint_route_table_association" "gorilla_vpc_endp_as" {
   route_table_id  = aws_route_table.gorilla_rtb_pri.id
   vpc_endpoint_id = aws_vpc_endpoint.gorilla_s3_endpoint.id
 }
+
+resource "aws_security_group" "gorilla_sg" {
+    name        = "gorilla_sg"
+    description = "Allow traffic in Gorilla vpc"
+    vpc_id      = aws_vpc.gorilla_vpc.id
+    tags        = merge(var.tags, {Name= "${var.app_name}-sg"})
+
+    ingress {
+        description      = "All"
+        from_port        = 0
+        to_port          = 0
+        protocol         = "-1"
+        cidr_blocks      = ["0.0.0.0/0"]
+    }
+
+    egress {
+        from_port        = 0
+        to_port          = 0
+        protocol         = "-1"
+        cidr_blocks      = ["0.0.0.0/0"]
+    }
+}
+
+#------------------------------------------------------------------------------
+output "out_vpc" {
+  value = aws_vpc.gorilla_vpc.id
+}
+
+output "out_subnets" {
+  value = [ aws_subnet.gorilla_pri_subnet.id, aws_subnet.gorilla_pub_subnet.id ]
+}
+
+output "out_pub_subnet" {
+  value = aws_subnet.gorilla_pub_subnet.id
+}
+
+output "out_pri_subnet" {
+  value = aws_subnet.gorilla_pri_subnet.id
+}
+
+output "out_sg" {
+  value = aws_security_group.gorilla_sg.id
+}

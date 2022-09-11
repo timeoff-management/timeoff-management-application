@@ -2,8 +2,12 @@ variable "app_name" {
     description = "App name"
 }
 
-variable "target_group_arn" {
-    description = "Load balancer target group arn"
+variable "tags" {
+    type = map(string)
+}
+
+variable "vpc_id" {
+    description = "Vpc id"
 }
 
 variable "subnets" {
@@ -14,8 +18,4 @@ variable "subnets" {
 variable "security_groups" {
     description = "The vpc security group"
     type = list(string)
-}
-
-variable "tags" {
-    type = map(string)
 }

@@ -1,15 +1,29 @@
 #Init Terraform modules------------------------------------------------------------------
 
 module "vpc" {
-  source            = "../modules/ec2/vpc"
-  app_name          = "${var.app_name}"
-  tags              = var.tags
+  source    = "../modules/ec2/vpc"
+  app_name  = "${var.app_name}"
+  tags      = var.tags
+}
+
+module "alb" {
+  source          = "../modules/ec2/alb"
+  app_name        = "${var.app_name}"
+  vpc_id          = module.vpc.out_vpc
+  subnets         = module.vpc.out_subnets
+  security_groups = [module.vpc.out_sg]
+  tags            = var.tags
+  depends_on      = [module.vpc]   
 }
 
 module "ecs" {
-  source            = "../modules/ecs"
-  app_name          = "${var.app_name}"
-  tags              = var.tags
+  source          = "../modules/ecs"
+  app_name        = "${var.app_name}"
+  subnets         = module.vpc.out_subnets
+  security_groups = [module.vpc.out_sg]
+  target_group_arn= module.alb.out_lbtg_arn
+  tags            = var.tags
+  depends_on      = [module.alb] 
 }
 
 #Init Terraform configuration-----------------------------------------------------------
