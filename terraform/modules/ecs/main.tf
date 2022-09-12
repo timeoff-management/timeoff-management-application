@@ -36,9 +36,9 @@ resource "aws_ecs_task_definition" "gorilla_task" {
     container_definitions       = jsonencode([
         {
             name            = "${var.app_name}-container"
-            image           = join("",[aws_ecr_repository.gorilla_ecs_repository.repository_url, ":last"])
-            cpu             = 1
-            memory          = 2
+            image           = aws_ecr_repository.gorilla_ecs_repository.repository_url
+            cpu             = 500
+            memory          = 1000
             essential       = true
             portMappings    = [{
                                 containerPort = 3000
@@ -87,7 +87,7 @@ resource "aws_ecs_service" "gorilla_service" {
     }
 
     network_configuration {
-      assign_public_ip  = true
+      assign_public_ip  = false
       subnets           = var.subnets
       security_groups   = var.security_groups
     }

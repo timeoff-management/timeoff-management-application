@@ -1,0 +1,27 @@
+name: CI - TIMEOFF
+
+on:
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Pull source code
+      uses: actions/checkout@v3
+
+    - name: Build app
+      working-directory: ./timeoff-app
+      run: npm install
+
+    - name: Run tests
+      working-directory: ./timeoff-app
+      run: npm test
+
+    - name: Check Docker image generation
+      working-directory: ./timeoff-app
+      run: docker build . --file Dockerfile --tag gorilla-timeoff-repo:latest
