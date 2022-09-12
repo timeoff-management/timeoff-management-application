@@ -25,8 +25,8 @@ resource "aws_ecs_task_definition" "gorilla_task" {
     task_role_arn               = "arn:aws:iam::980952865757:role/ecsTaskExecutionRole"
     execution_role_arn          = "arn:aws:iam::980952865757:role/ecsTaskExecutionRole"
     network_mode                = "awsvpc"
-    cpu                         = 1
-    memory                      = 2
+    cpu                         = 1024
+    memory                      = 2048
     tags                        = merge(var.tags, {Name= "${var.app_name}-task"})
     
     runtime_platform {
@@ -62,7 +62,7 @@ resource "aws_ecs_service" "gorilla_service" {
     cluster                             = aws_ecs_cluster.gorilla_cluster.name
     task_definition                     = aws_ecs_task_definition.gorilla_task.arn
     launch_type                         = "FARGATE"
-    desired_count                       = 1
+    desired_count                       = 0
     deployment_maximum_percent          = 200
     deployment_minimum_healthy_percent  = 100
     scheduling_strategy                 = "REPLICA"

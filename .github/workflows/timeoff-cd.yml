@@ -29,10 +29,10 @@ jobs:
 
     - name: Build Docker image
       working-directory: ./timeoff-app
-      run: docker build . --file Dockerfile --tag timeoff-management-app:latest
+      run: docker build . --file Dockerfile --tag gorilla-timeoff-repo:latest
 
     - name: Tag Docker image
-      run: docker tag timeoff-management-app:latest 980952865757.dkr.ecr.us-west-2.amazonaws.com/timeoff-management-app:latest
+      run: docker tag gorilla-timeoff-repo:latest 980952865757.dkr.ecr.us-west-2.amazonaws.com/gorilla-timeoff-repo:latest
 
     - name: Push Docker image to ECR
-      run: docker push 980952865757.dkr.ecr.us-west-2.amazonaws.com/timeoff-management-app:latest
+      run: docker push 980952865757.dkr.ecr.us-west-2.amazonaws.com/gorilla-timeoff-repo:latest
