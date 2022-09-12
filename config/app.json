@@ -21,5 +21,6 @@
   "crypto_secret" : "!2~`HswpPPLa22+=±§sdq qwe,appp qwwokDF_",
   "application_domain" : "http://app.timeoff.management",
   "promotion_website_domain" : "http://timeoff.management",
-  "locale_code_for_sorting": "en"
+  "locale_code_for_sorting": "en",
+  "force_to_explicitly_select_type_when_requesting_new_leave": false
 }
