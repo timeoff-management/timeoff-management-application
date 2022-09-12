@@ -141,6 +141,14 @@ respect the alphabet while sorting customer entered content.
 For that purpose the application config file has `locale_code_for_sorting` entry.
 By default the value is `en` (English). One can override it with other locales such as `cs`, `fr`, `de` etc.
 
+### Force employees to pick type each time new leave is booked
+
+Some organizations require employees to explicitly pick the type of leave when booking time off. So employee makes a choice rather than relying on default settings.
+That reduce number of "mistaken" leaves, which are cancelled after.
+
+In order to force employee to explicitly pick the leave type of the booked time off, change `is_force_to_explicitly_select_type_when_requesting_new_leave`
+flag to be `true` in the `config/app.json` file.
+
 ## Use Redis as a sessions storage
 
 Follow instructions on [this page](docs/SessionStoreInRedis.md).
