@@ -117,6 +117,8 @@ app.use(
   require('./lib/route/calendar')
 );
 
+app.use('/teams/', require('./lib/route/teams'))
+
 app.use(
   '/settings/',
   require('./lib/route/settings')
