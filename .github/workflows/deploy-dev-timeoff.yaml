@@ -27,3 +27,6 @@ jobs:
         registry: gcr.io
         username: oauth2accesstoken
         password: ${{ steps.auth.outputs.access_token }}
+    
+    - name: Building image
+      run: docker
