@@ -37,7 +37,7 @@ jobs:
       run: docker build --tag ${{ env.DOCKER_IMAGE }}:latest .
 
     - name: Tag image 
-      run: docker tag timeoff gcr.io/${{ env.PROJECT_ID }}/${{ env.DOCKER_IMAGE }}:${{ env.GITHUB_SHA }}
+      run: docker tag timeoff gcr.io/${{ env.PROJECT_ID }}/${{ env.DOCKER_IMAGE }}:$GITHUB_SHA
 
     - name: Push image to registry
       run: docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.DOCKER_IMAGE }}:$GITHUB_SHA
