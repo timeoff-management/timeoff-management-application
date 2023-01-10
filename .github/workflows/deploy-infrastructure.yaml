@@ -1,0 +1,9 @@
+name: DEPLOY_Infrastructure
+
+on: [push]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: date
