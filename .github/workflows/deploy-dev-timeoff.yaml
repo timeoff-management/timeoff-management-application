@@ -2,7 +2,7 @@ name: DEPLOY_Dev_tiemoff
 
 on:
   push:
-    branches: main
+    branches: ["**"]
 
 jobs:
   login:
