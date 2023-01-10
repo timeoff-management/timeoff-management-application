@@ -8,9 +8,8 @@ jobs:
   login:
     runs-on: ubuntu-latest
     permissions:
-      actions: 
-        - write
-        - read
+      contents: 'read'
+      id-token: 'write'
     steps:
     - id: 'auth'
       name: 'Authenticate to Google Cloud'
