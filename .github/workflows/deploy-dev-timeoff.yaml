@@ -29,4 +29,4 @@ jobs:
         password: ${{ steps.auth.outputs.access_token }}
     
     - name: Building image
-      run: docker
+      run: docker build --tag timeoff:latest .
