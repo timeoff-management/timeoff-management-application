@@ -11,6 +11,8 @@ jobs:
       contents: 'read'
       id-token: 'write'
     steps:
+    - name: Downloading code
+      uses: actions/checkout@v3
     - id: 'auth'
       name: 'Authenticate to Google Cloud'
       uses: 'google-github-actions/auth@v0'
