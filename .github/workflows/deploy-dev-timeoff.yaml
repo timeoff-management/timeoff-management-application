@@ -10,6 +10,7 @@ jobs:
     permissions:
       contents: 'read'
       id-token: 'write'
+      actions: 'read'
     steps:
     - name: Downloading code
       uses: actions/checkout@v3
@@ -18,7 +19,7 @@ jobs:
       uses: 'google-github-actions/auth@v0'
       with:
         token_format: 'access_token'
-        workload_identity_provider: 'principalSet://iam.googleapis.com/projects/448231748581/locations/global/workloadIdentityPools/github-actions/*'
+        workload_identity_provider: 'projects/448231748581/locations/global/workloadIdentityPools/github-actions/providers/github-actions'
         service_account: 'svc-github-actions@big-liberty-373120.iam.gserviceaccount.com'
 
     - name: Login to GCR
