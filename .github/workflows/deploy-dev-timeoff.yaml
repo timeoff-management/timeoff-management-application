@@ -4,6 +4,10 @@ on:
   push:
     branches: ["**"]
 
+env:
+  PROJECT_ID: big-liberty-373120
+  DOCKER_IMAGE: timeoff
+
 jobs:
   login:
     runs-on: ubuntu-latest
@@ -14,6 +18,7 @@ jobs:
     steps:
     - name: Downloading code
       uses: actions/checkout@v3
+
     - id: 'auth'
       name: 'Authenticate to Google Cloud'
       uses: 'google-github-actions/auth@v1'
@@ -29,4 +34,10 @@ jobs:
         password: ${{ steps.auth.outputs.access_token }}
     
     - name: Building image
-      run: docker build --tag timeoff:latest .
+      run: docker build --tag ${{ env.DOCKER_IMAGE }}:latest .
+
+    - name: Tag image 
+      run: docker tag timeoff gcr.io/${{ env.PROJECT_ID }}/${{ env.DOCKER_IMAGE }}:${{ env.GITHUB_SHA }}
+
+    - name: Push image to registry
+      run: docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.DOCKER_IMAGE }}:${{ env.GITHUB_SHA }}
