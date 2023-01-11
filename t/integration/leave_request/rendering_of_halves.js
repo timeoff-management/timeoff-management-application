@@ -25,7 +25,7 @@ describe('Ensure that leaves with not full days are rendered properly', function
 
   var non_admin_user_email, new_user_email, driver;
 
-  test.it('Create new company', done => {
+  it('Create new company', done => {
     register_new_user_func({
       application_host : application_host,
     })
