@@ -3,13 +3,15 @@ name: DEPLOY_Dev_tiemoff
 on:
   push:
     branches: ["**"]
+    paths:
+      - .github/workflows/deploy-dev-timeoff.yaml
 
 env:
   PROJECT_ID: big-liberty-373120
   DOCKER_IMAGE: timeoff
 
 jobs:
-  login:
+  build:
     runs-on: ubuntu-latest
     permissions:
       contents: 'read'

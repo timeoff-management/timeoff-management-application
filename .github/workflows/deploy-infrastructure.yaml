@@ -1,6 +1,10 @@
 name: DEPLOY_Infrastructure
 
-on: [push]
+on:
+  push:
+    branches: ["**"]
+    paths:
+      - .github/workflows/deploy-infrastructure.yaml
 jobs:
   deploy:
     runs-on: ubuntu-latest
