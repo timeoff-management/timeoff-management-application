@@ -162,8 +162,24 @@ List of required resources:
 * GKE Kubernetes cluster
 * GCP Container Registry  
 
-This repo is currently configured with a CI/CD process to automatically deploy the app to the cloud whenever a change happen to the code, this is the diagram of this architecture
+This repo is currently configured with a CI/CD process to either automatically deploy the app to the cloud whenever a change happen to the code, or execute a manual deploy of the app if needed, this is the diagram of this architecture
 ![CI/CD Process](images/Diagram.png?raw=true "CI/CD Process")
+
+Before executing the workflow for the deployment of the timeoff app, we need to provision the required resources mentioned previously, to do that, we can make use of the other workflow called deply-infrastructure.yaml which is in charge to provision all the necesary resources for the app to work, that wokrflow as also the ability to be executed either with the change of any file included in the infrastructure folder or by manually executing it, please follow the next steps to trigger it:
+
+* Go to the Actions tab on you repo
+* Click on the DEPLOY_Infrastructure link
+* On the right side, select the option Run workflow
+* A little modal will be displayed, select the master that you want and click on Run workflow
+
+Once the steps above mentioned are completed, the deployment of the infrastructure is going to happent thanks to the help of terraform and because terraform is configures with the backed on GCP Cloud storage, we can guarantee that the state of this infrastructure will not be lost
+
+After deploying the infrastructure, you can deploy the app by following the next steps:
+* Go to the Actions tab on you repo
+* Click on the DEPLOY_Dev/Prod_timeoff link
+* On the right side, select the option Run workflow
+* A little modal will be displayed, select the master that you want and click on Run workflow
+* If you are developing a new feature to the app, you just have to push your changes to github and the workflow will be automatically triggered
 
 ## Feedback
 

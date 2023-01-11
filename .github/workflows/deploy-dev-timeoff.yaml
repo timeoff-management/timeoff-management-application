@@ -1,6 +1,7 @@
 name: DEPLOY_Dev_tiemoff
 
 on:
+  workflow_dispatch:
   push:
     branches: ["**"]
     paths:
