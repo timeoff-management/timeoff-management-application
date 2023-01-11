@@ -5,9 +5,25 @@ on:
     branches: ["**"]
     paths:
       - .github/workflows/deploy-infrastructure.yaml
+      - infrastructure/**
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - run: date
+      - name: Download code 
+        uses: actions/checkout@v3
+
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+          token_format: 'access_token'
+      
+      - name: Configure terraform 
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Init terraform modules
+        run: terraform init
+        working-directory: infrastructure
+      
