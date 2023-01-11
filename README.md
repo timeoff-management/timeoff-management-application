@@ -165,7 +165,7 @@ List of required resources:
 This repo is currently configured with a CI/CD process to either automatically deploy the app to the cloud whenever a change happen to the code, or execute a manual deploy of the app if needed, this is the diagram of this architecture
 ![CI/CD Process](images/Diagram.png?raw=true "CI/CD Process")
 
-Before executing the workflow for the deployment of the timeoff app, we need to provision the required resources mentioned previously, to do that, we can make use of the other workflow called deploy-infrastructure.yaml which is in charge to provision all the necesary resources for the app to work, that wokrflow as also the ability to be executed either with the change of any file included in the infrastructure folder or by manually executing it, please follow the next steps to trigger it:
+Before executing the workflow for the deployment of the timeoff app, we need to provision the required resources mentioned previously, to do that, we can make use of the other workflow called deploy-infrastructure.yaml which is in charge to provision all the necesary resources for the app to work, that wokrflow has also the ability to be executed either with the change of any file included in the infrastructure folder or by manually executing it, please follow the next steps to trigger it:
 
 * Go to the Actions tab on you repo
 * Click on the DEPLOY_Infrastructure link
