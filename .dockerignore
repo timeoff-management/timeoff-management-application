@@ -1,0 +1,10 @@
+.github/
+.git/
+.codeclimate.yml
+.dockerignore
+.npmrc
+.travis.yml
+Dockerfile
+infrastructure
+package-lock.json
+*.sqlite
