@@ -4,7 +4,7 @@ metadata:
     name: timeoff-certificate
 spec:
     dnsNames:
-        - timeoff.develcloud.net
+        - develcloud.net
     secretName: timeoff-tls
     issuerRef:
         name: letsencrypt-cluster-issuer

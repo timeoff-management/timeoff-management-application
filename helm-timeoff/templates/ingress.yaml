@@ -8,10 +8,10 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - timeoff.develcloud.net
+    - develcloud.net
     secretName: timeoff-tls
   rules:
-    - host: timeoff.develcloud.net
+    - host: develcloud.net
       http:
         paths:
           - path: /

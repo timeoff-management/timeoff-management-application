@@ -153,6 +153,18 @@ flag to be `true` in the `config/app.json` file.
 
 Follow instructions on [this page](docs/SessionStoreInRedis.md).
 
+## Deploying timeoff app to the cloud
+
+In order to deploy the timeoff application to the cloud, we need the next resources available on the Cloud provider of your preference,
+for this example we are using Google Cloud provider.
+List of required resources:
+* Cloud SQL Database
+* GKE Kubernetes cluster
+* GCP Container Registry  
+
+This repo is currently configured with a CI/CD process to automatically deploy the app to the cloud whenever a change happen to the code, this is the diagram of this architecture
+![CI/CD Process](images/Diagram.png?raw=true "CI/CD Process")
+
 ## Feedback
 
 Please report any issues or feedback to <a href="https://twitter.com/FreeTimeOffApp">twitter</a> or Email: pavlo at timeoff.management
