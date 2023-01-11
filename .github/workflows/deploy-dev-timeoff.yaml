@@ -15,7 +15,6 @@ on:
       - helm-tiemoff/**
       - views/**
 
-
 env:
   PROJECT_ID: big-liberty-373120
   DOCKER_IMAGE: timeoff
