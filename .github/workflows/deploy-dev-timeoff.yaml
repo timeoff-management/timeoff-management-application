@@ -5,6 +5,15 @@ on:
     branches: ["**"]
     paths:
       - .github/workflows/deploy-dev-timeoff.yaml
+      - bin/**
+      - config/**
+      - helm-tiemoff/**
+      - lib/**
+      - migrations/**
+      - public/**
+      - scss/**
+      - helm-tiemoff/**
+      - views/**
 
 
 env:
