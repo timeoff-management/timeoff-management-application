@@ -42,7 +42,7 @@ describe('Overlapping leaverequest (with halfs)', function(){
 
   var non_admin_user_email, new_user_email, driver;
 
-  test.it('Create new company', function(done){
+  it('Create new company', function(done){
     register_new_user_func({
       application_host : application_host,
     })
