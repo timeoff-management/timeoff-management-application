@@ -86,3 +86,10 @@ jobs:
       with:
         cluster_name: '${{ env.CLUSTER_NAME }}'
         location: '${{ env.CLUSTER_LOCATION }}'
+    
+    - name: Configure helm 
+      uses: Azure/setup-helm@v3
+
+    - name: Deploy application
+      run: helm
+
