@@ -11,7 +11,20 @@ env:
   DOCKER_IMAGE: timeoff
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+      steps:
+      - name: Downloading code
+        uses: actions/checkout@v3
+      
+      - name: Installing node dependencies
+        run: npm install
+
+      - name: Running tests
+        run: npm test
+
   build:
+    needs: test
     runs-on: ubuntu-latest
     permissions:
       contents: 'read'
