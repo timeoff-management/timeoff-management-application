@@ -92,7 +92,7 @@ jobs:
 
     - name: Deploy application
       run: |
-        helm install timeoff helm-timeoff/ \
+        helm update --install timeoff helm-timeoff/ \
         --set image.repository=gcr.io/${{ env.PROJECT_ID }}/${{ env.DOCKER_IMAGE }} \
         --set image.tag=$GITHUB_SHA
 
