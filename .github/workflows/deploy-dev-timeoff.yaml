@@ -13,7 +13,7 @@ env:
 jobs:
   test:
     runs-on: ubuntu-latest
-      steps:
+    steps:
       - name: Downloading code
         uses: actions/checkout@v3
       
