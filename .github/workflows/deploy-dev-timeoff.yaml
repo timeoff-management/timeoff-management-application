@@ -91,5 +91,8 @@ jobs:
       uses: Azure/setup-helm@v3
 
     - name: Deploy application
-      run: helm
+      run: |
+        helm install timeoff helm-timeoff/ \
+        --set image.repository=gcr.io/${{ env.PROJECT_ID }}/${{ env.DOCKER_IMAGE }} \
+        --set image.tag=$GITHUB_SHA
 
