@@ -26,4 +26,12 @@ jobs:
       - name: Init terraform modules
         run: terraform init
         working-directory: infrastructure
+
+      - name: Execute a plan for terraform
+        run: terraform plan
+        working-directory: infrastructure
+
+      - name: Apply terraform manifests
+        run: terraform apply -auto-approve
+        working-directory: infrastructure
       
