@@ -5,6 +5,7 @@ metadata:
     kubernetes.io/ingress.class: "nginx"
   name: timeoff-ingress
 spec:
+  ingressClassName: nginx
   tls:
   - hosts:
     - timeoff.develcloud.net
