@@ -280,10 +280,19 @@ $(document).ready(function() {
  */
  $(document).ready(function(){
   $('.single-click').on('click', function(e) {
-    e.stopPropagation();
+    var form = $(e.target).closest('form');
+
+    // Ensure "required" fields are populated
+    var formIsValid = true;
+    $(form).find('[required]').each(function(el){formIsValid = formIsValid && !! el.val()});
+    if (formIsValid) {
+      e.stopPropagation();
+    } else {
+      return;
+    }
 
     $(e.target).prop('disabled', true);
-    var form = $(e.target).closest('form');
+
     var submitName = $(e.target).attr('name');
     if (submitName !== undefined) {
       $('<input>').attr({type: 'hidden', name: submitName, value: '1'}).appendTo(form);

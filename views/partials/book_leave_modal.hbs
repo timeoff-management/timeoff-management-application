@@ -22,7 +22,7 @@
 
           <div class="form-group">
             <label for="leave_type" class="control-label">Leave type:</label>
-            <select class="form-control" id="leave_type" name="leave_type">
+            <select class="form-control" id="leave_type" name="leave_type" required>
             {{# is_force_to_explicitly_select_type_when_requesting_new_leave}}
               <option disabled selected value>-- select an option --</option>
             {{/ is_force_to_explicitly_select_type_when_requesting_new_leave}}
