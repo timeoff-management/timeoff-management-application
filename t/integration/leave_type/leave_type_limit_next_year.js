@@ -115,10 +115,10 @@ describe('Leave type limits for next year: ' + next_year, function(){
           driver      : driver,
           form_params : [{
             selector : 'input#from',
-            value : next_year + '-05-11',
+            value : next_year + '-05-10',
           },{
             selector : 'input#to',
-            value : next_year + '-05-11',
+            value : next_year + '-05-10',
           }],
           message : /New leave request was added/,
         })
@@ -126,7 +126,7 @@ describe('Leave type limits for next year: ' + next_year, function(){
         .then(function(){
           check_booking_func({
             driver    : driver,
-            full_days : [moment(next_year + '-05-11')],
+            full_days : [moment(next_year + '-05-10')],
             type      : 'pended',
           })
           .then(function(){ done() });
