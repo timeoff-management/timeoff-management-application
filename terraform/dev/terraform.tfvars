@@ -1,0 +1,9 @@
+project_id = "timeoff-mgmt"
+region = "us-central1"
+cluster_name = "timeoff-mgmt-cluster"
+pool_name = "timeoff-mgmt-pool"
+node_count = 1
+registry_name = "timeoff-mgmt-registry"
+port_name = "http"
+port = 80
+machine_type = "e2-micro"
