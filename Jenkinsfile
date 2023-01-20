@@ -9,15 +9,17 @@ pipeline {
         stage(build){
             steps{
                 echo 'Compiling app..'
+                sh 'npm install'
             }
-            sh 'npm install'
+            
         }
         stage(test){
             steps{
                 echo 'Testing app..'
+                sh 'npm install'
+                sh 'npm test'
             }
-            sh 'npm install'
-            sh 'npm test'
+
         }
     }
      post {
