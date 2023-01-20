@@ -4,21 +4,56 @@ pipeline {
     tools {
         nodejs 'nodejs'
     }
+    environment {
+        GOOGLE_PROJECT_ID = credentials('service-account-gorilla-logic')
+        GOOGLE_PROJECT_NAME = credentials('service-account-gorilla-logic')
+        GOOGLE_APPLICATION_CREDENTIALS = credentials('service-account-gorilla-logic')
+        GOOGLE_CLOUD_KEYFILE_JSON = credentials('service-account-gorilla-logic')
+    }
 
     stages {
-        stage(build){
+        stage('build'){
             steps{
                 echo 'Compiling app..'
                 sh 'npm install'
             }
             
         }
-        stage(test){
+        stage('test'){
             steps{
                 echo 'Testing app..'
                 sh 'npm install'
             }
+        }
 
+        stage('Clean Workspace'){
+            steps{
+                sh '../infra/terraform init'
+            }
+        }
+
+        stage('terraform init'){
+            steps{
+                sh '../infra/terraform init'
+            }
+        }
+
+        stage('terraform plan'){
+            steps{
+                sh '../infra/terraform plan -out=infra.out'
+            }
+        }
+
+        stage('Waiting for Approvals'){
+            steps{
+                input('Plan Validated? Please approve with "yes"' )
+            }
+        }
+
+        stage('terraform Apply'){
+            steps{
+                sh '../infra/terraform apply -out=infra.out'
+            }
         }
     }
      post {
