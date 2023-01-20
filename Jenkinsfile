@@ -27,33 +27,37 @@ pipeline {
         }
 
         stage('Clean Workspace'){
-            steps{
-                sh '../infra/terraform init'
+            steps{ 
+               cleanWs()
             }
         }
 
         stage('terraform init'){
             steps{
-                sh '../infra/terraform init'
-            }
+                 dir(infra){
+                sh './terraform init'
+            }}
         }
 
         stage('terraform plan'){
             steps{
-                sh '../infra/terraform plan -out=infra.out'
-            }
+                 dir(infra){
+                sh './terraform plan -out=infra.out'
+            }}
         }
 
         stage('Waiting for Approvals'){
             steps{
+                 dir(infra){
                 input('Plan Validated? Please approve with "yes"' )
-            }
+            }}
         }
 
         stage('terraform Apply'){
             steps{
-                sh '../infra/terraform apply -out=infra.out'
-            }
+                 dir(infra){
+                sh './terraform apply -out=infra.out'
+            }}
         }
     }
      post {
