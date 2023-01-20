@@ -12,6 +12,12 @@ pipeline {
     }
 
     stages {
+
+        stage('Clean Workspace'){
+            steps{ 
+               cleanWs()
+            }
+        }
         stage('build'){
             steps{
                 echo 'Compiling app..'
@@ -20,12 +26,6 @@ pipeline {
             
         }
         
-        // stage('Clean Workspace'){
-        //     steps{ 
-        //        cleanWs()
-        //     }
-        // }
-
         stage('terraform init'){
             steps{
                  dir(infra){
