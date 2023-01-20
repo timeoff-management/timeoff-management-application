@@ -19,18 +19,12 @@ pipeline {
             }
             
         }
-        stage('test'){
-            steps{
-                echo 'Testing app..'
-                sh 'npm install'
-            }
-        }
-
-        stage('Clean Workspace'){
-            steps{ 
-               cleanWs()
-            }
-        }
+        
+        // stage('Clean Workspace'){
+        //     steps{ 
+        //        cleanWs()
+        //     }
+        // }
 
         stage('terraform init'){
             steps{
