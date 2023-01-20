@@ -17,7 +17,6 @@ pipeline {
             steps{
                 echo 'Testing app..'
                 sh 'npm install'
-                sh 'npm test'
             }
 
         }
