@@ -28,28 +28,28 @@ pipeline {
         
         stage('terraform init'){
             steps{
-                 dir(infra){
+                 dir("infra"){
                 sh './terraform init'
             }}
         }
 
         stage('terraform plan'){
             steps{
-                 dir(infra){
+                 dir("infra"){
                 sh './terraform plan -out=infra.out'
             }}
         }
 
         stage('Waiting for Approvals'){
             steps{
-                 dir(infra){
+                 dir("infra"){
                 input('Plan Validated? Please approve with "yes"' )
             }}
         }
 
         stage('terraform Apply'){
             steps{
-                 dir(infra){
+                 dir("infra"){
                 sh './terraform apply -out=infra.out'
             }}
         }
