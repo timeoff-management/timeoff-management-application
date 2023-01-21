@@ -29,10 +29,10 @@ pipeline {
         
         stage('terraform init'){
             steps{
-                 dir ("infra"){
+                
                 sh 'ls -l'
                 sh 'terraform init'
-            }}
+            }
         }
 
         stage('terraform plan'){
