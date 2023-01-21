@@ -25,7 +25,6 @@ pipeline {
                 script {
                         docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin'){
                         def timeimage = docker.build("jlargaespada/timeapp:v${env.BUILD_ID}", ".")
-                        timeimage.run("-p 5001:3000 --rm --name time-app")
                 }
             } 
         }
