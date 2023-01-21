@@ -39,14 +39,14 @@ pipeline {
         stage('Waiting for Approvals'){
             steps{
                  dir ("infra"){
-                input('Plan Validated? Please approve with "yes"' )
+                input('Plan Validated? Please approve' )
             }}
         }
 
         stage('terraform Apply'){
             steps{
                  dir ("infra"){
-                sh 'terraform apply -out=infra.out'
+                sh 'terraform apply infra.out'
             }}
         }
     }
