@@ -45,6 +45,7 @@ pipeline {
                 }
             }
                 steps{
+                    sh 'sleep 60'
                     input message: 'The App is OK? (Click "Proceed" to continue)'
             }
         }
@@ -65,13 +66,16 @@ pipeline {
      post {
         always {
             echo "Pipeline for time-app run is complete.."
-            sh 'docker stop time-app'
         }
         failure {
 		slackSend (channel: "timeoff-management-application", message: "Build failure - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
         }
         success {
 		slackSend (channel: "timeoff-management-application", message: "Build succeeded - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+        }
+        cleanup{
+            sh 'docker stop time-app'
+            sh 'docker image prune -a -f'
         }
     }
 }

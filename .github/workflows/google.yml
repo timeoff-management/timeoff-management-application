@@ -20,7 +20,7 @@ env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   #GAR_LOCATION: us-central1 # TODO: update region of the Artifact Registry
   GKE_CLUSTER: gorillalogic-cluster-1    # TODO: update to cluster name
-  GKE_ZONE: us-central1-c   # TODO: update to cluster zone
+  GKE_ZONE: us-central1   # TODO: update to cluster zone
   DEPLOYMENT_NAME: production # TODO: update to deployment name
   #REPOSITORY: samples # TODO: update to Artifact Registry docker repository
   IMAGE: static-site
@@ -102,7 +102,7 @@ jobs:
         ./kustomize build . | kubectl apply -f -
         kubectl rollout status deployment/$DEPLOYMENT_NAME
         kubectl get services -o wide
-        
+
     # Build the Docker image
     # - name: Build
     #   run: |-
