@@ -31,8 +31,7 @@ pipeline {
         }
         stage('Approve'){
                 steps{
-                    input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                    sh 'docker stop time-app'
+                    input message: 'The App is OK? (Click "Proceed" to continue)'
             }
         }
         
