@@ -34,12 +34,11 @@ pipeline {
             }
             
         }
-        // stage('Finish') { 
-        //     steps {
-        //         input message: 'Finished using the web site? (Click "Proceed" to continue)' 
-        //         sh './jenkins/scripts/kill.sh' 
-        //     }
-        // }
+        stage('Finish') { 
+            steps {
+                input message: 'Finished using the web site? (Click "Proceed" to continue)' 
+            }
+        }
     //     stage('terraform init'){
     //         steps{
     //             dir ("infra"){
