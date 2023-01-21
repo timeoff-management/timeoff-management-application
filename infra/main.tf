@@ -8,6 +8,7 @@ terraform {
 }
 
 provider "google" {
+  project = "gorilla-logic"
   region  = "us-central1"
   zone    = "us-central1-c"
 }
