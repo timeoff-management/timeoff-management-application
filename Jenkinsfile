@@ -19,7 +19,6 @@ pipeline {
         }
 
         stage('Testing App'){
-                // agent any
                 steps{
                     echo 'Testing and Docker Package ..'
                     script {
@@ -31,7 +30,6 @@ pipeline {
             }
         }
         stage('Approve'){
-            // agent any
                 steps{
                     input message: 'Finished using the web site? (Click "Proceed" to continue)'
                     sh 'docker stop time-app'
@@ -39,7 +37,6 @@ pipeline {
         }
         
         stage('Docker Package'){
-                // agent any
                 steps{
                     echo 'Testing and Docker Package ..'
                     script {
@@ -55,6 +52,7 @@ pipeline {
      post {
         always {
             echo "Pipeline for time-app run is complete.."
+            sh 'docker stop time-app'
         }
         failure {
 		slackSend (channel: "timeoff-management-application", message: "Build failure - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
