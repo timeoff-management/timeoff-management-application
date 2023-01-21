@@ -31,13 +31,9 @@ pipeline {
                 echo 'Building to dev app..'
                 sh 'npm install'
                 sh 'npm start'
-            }
-            
-        }
-        stage('Finish') { 
-            steps {
                 input message: 'Finished using the web site? (Click "Proceed" to continue)' 
             }
+            
         }
     //     stage('terraform init'){
     //         steps{
