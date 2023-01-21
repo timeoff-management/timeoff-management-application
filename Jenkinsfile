@@ -29,7 +29,8 @@ pipeline {
         stage('Dev'){
             steps{
                 echo 'Building to dev app..'
-                sh 'npm start &'
+                sh 'npm install'
+                sh 'npm start'
             }
             
         }
