@@ -31,6 +31,7 @@ pipeline {
             }
         }
         stage('Approve'){
+            agent any
                 steps{
                     input message: 'Finished using the web site? (Click "Proceed" to continue)'
                     sh 'docker stop time-app'
@@ -50,13 +51,13 @@ pipeline {
             }
         }
 
-        stage('Cleaning environment'){
-                agent any
-                steps{
-                    echo 'Cleaning environment..'
-                    sh 'docker stop time-app'
-            }
-        }
+        // stage('Cleaning environment'){
+        //         agent any
+        //         steps{
+        //             echo 'Cleaning environment..'
+        //             sh 'docker stop time-app'
+        //     }
+        // }
 
     }
      post {
