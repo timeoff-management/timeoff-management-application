@@ -10,7 +10,7 @@ pipeline {
                     args '-p 5001:3000'   
                     }
                 }
-            }
+            
             steps{
                 echo 'Compiling app..'
                 sh 'npm install'
