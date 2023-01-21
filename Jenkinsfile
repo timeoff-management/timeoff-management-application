@@ -35,18 +35,18 @@ pipeline {
             }
         }
         
-        stage('Docker Package'){
-                steps{
-                    echo 'Testing and Docker Package ..'
-                    script {
-                            docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin'){
-                            def timeimage = docker.build("jlargaespada/timeapp:v${env.BUILD_ID}", ".")
-                            timeimage.push()
-                            timeimage.push("latest")
-                    }
-                } 
-            }
-        }
+        // stage('Docker Package'){
+        //         steps{
+        //             echo 'Testing and Docker Package ..'
+        //             script {
+        //                     docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin'){
+        //                     def timeimage = docker.build("jlargaespada/timeapp:v${env.BUILD_ID}", ".")
+        //                     timeimage.push()
+        //                     timeimage.push("latest")
+        //             }
+        //         } 
+        //     }
+        // }
     }
      post {
         always {
