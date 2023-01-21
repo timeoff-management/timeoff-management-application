@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: time-app
+  labels: 
+    app: gorilla-logic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gorilla-logic
+  template:
+    metadata:
+      labels:
+        app: gorilla-logic
+    spec:
+      containers:
+      - name: time-app
+        image: gcr.io/gorilla-logic/time-app-image
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000
