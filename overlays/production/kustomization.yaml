@@ -2,3 +2,4 @@ resources:
   - ../
 patchesStrategicMerge:
   - deployment.yaml
+namePrefix: production-
