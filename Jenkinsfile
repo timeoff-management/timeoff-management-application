@@ -17,10 +17,12 @@ pipeline {
             }
             
         }
+
     stage('Docker Package'){
             agent any
+
             steps{
-                echo 'Building dev app..'
+                echo 'Building app..'
                 script {
                         docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin'){
                         def timeimage = docker.build("jlargaespada/timeapp:v${env.BUILD_ID}", ".")
@@ -31,10 +33,33 @@ pipeline {
             } 
         }
     }
+    stage('Docker run'){
+        agent any
+        steps{
+            script{
+                dockerImage.run("-p 5001:3000 -rm -name time-app")
+            }
+        }
+    }
+            stage('Works?') { 
+            steps {
+                
+                input message: 'Finished using the web site? (Click "Proceed" to continue)' 
+                 
+            }
+        }
+            stage('Docker stop'){
+        agent any
+        steps{
+            script{
+                dockerImage.stop("-name time-app")
+            }
+        }
+    }
     }
      post {
         always {
-            echo "Pipeline for InstaApp run is complete.."
+            echo "Pipeline for time-app run is complete.."
         }
         failure {
 		slackSend (channel: "timeoff-management-application", message: "Build failure - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
