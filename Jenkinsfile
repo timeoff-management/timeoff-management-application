@@ -3,6 +3,16 @@ pipeline {
 
     stages {
 
+            stage('Clearning docker'){
+            agent any
+            steps{
+                echo 'Building app..'
+                script {
+                        docker.stop("--name time-app")
+            } 
+        }
+    }
+
         stage('build'){
             agent {
                 docker{
