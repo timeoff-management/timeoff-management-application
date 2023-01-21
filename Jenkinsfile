@@ -22,8 +22,7 @@ pipeline {
             steps{
                 echo 'Building dev app..'
                 script {
-                        docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin'){
-                        def timeimage = docker.build("jlargaespada/timeapp:v${env.BUILD_ID}", ".")
+                    timeimage = docker.build("jlargaespada/timeapp:v${env.BUILD_ID}", ".")
                 }
             } 
         }
@@ -47,6 +46,7 @@ pipeline {
                 echo 'Building dev app..'
                 script {
                         docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin'){
+                            def timeimage = docker.build("jlargaespada/timeapp:v${env.BUILD_ID}", ".")
                         timeimage.push()
                         timeimage.push("${env.BRANCH_NAME}")
                         timeimage.push("latest")
