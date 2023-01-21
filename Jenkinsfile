@@ -1,36 +1,35 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:13.0.1-buster-slim'
-            args '-p 5001:3000'
-        }
-    }
-
-    // tools {
-    //     nodejs 'nodejs'
-    //     terraform 'terraform'
-    // }
-    // environment {
-    //     GOOGLE_PROJECT_ID = credentials('service-account-gorilla-logic')
-    //     GOOGLE_PROJECT_NAME = credentials('service-account-gorilla-logic')
-    //     GOOGLE_APPLICATION_CREDENTIALS = credentials('service-account-gorilla-logic')
-    //     GOOGLE_CLOUD_KEYFILE_JSON = credentials('service-account-gorilla-logic')
-    // }
+    agent none
 
     stages {
 
         stage('build'){
+            agent {
+                docker{
+                    image 'node:13.0.1-buster-slim'
+                    args '-p 5001:3000'   
+                    }
+                }
+            }
             steps{
                 echo 'Compiling app..'
                 sh 'npm install'
             }
             
         }
-        stage('Dev'){
+        stage('Docker Package'){
+            agent any
             steps{
-                echo 'Building to dev app..'
+                echo 'Building dev app..'
+                script {
+                        docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin'){
+                        def timeimage = docker.build("jlargaespada/worker:v${env.BUILD_ID}", ".")
+                        timeimage.push()
+                        timeimage.push("${env.BRANCH_NAME}")
+                        timeimage.push("latest")
+                }
                 sh 'npm install'
-                sh 'npm start'
+                sh 'npm start &'
                 input message: 'Finished using the web site? (Click "Proceed" to continue)' 
             }
             
