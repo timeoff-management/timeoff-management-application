@@ -33,6 +33,7 @@ pipeline {
         stage('Approve'){
                 steps{
                     input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                    sh 'docker stop time-app'
             }
         }
                 stage('Docker Package'){
@@ -43,21 +44,19 @@ pipeline {
                             docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin'){
                             def timeimage = docker.build("jlargaespada/timeapp:v${env.BUILD_ID}", ".")
                             timeimage.push()
-                            timeimage.push("${env.BRANCH_NAME}")
                             timeimage.push("latest")
-                            timeimage.stop("--name time-app")
                     }
                 } 
             }
         }
 
-        // stage('Cleaning environment'){
-        //         agent any
-        //         steps{
-        //             echo 'Cleaning environment..'
-        //             sh 'docker stop time-app'
-        //     }
-        // }
+        stage('Cleaning environment'){
+                agent any
+                steps{
+                    echo 'Cleaning environment..'
+                    sh 'docker stop time-app'
+            }
+        }
 
     }
      post {
