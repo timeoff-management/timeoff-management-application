@@ -25,12 +25,9 @@ pipeline {
                         docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin'){
                         def timeimage = docker.build("jlargaespada/timeapp:v${env.BUILD_ID}", ".")
                         timeimage.push()
-                        timeimage.push("${env.BRANCH_NAME//\//-}")
+                        timeimage.push("${env.BRANCH_NAME}")
                         timeimage.push("latest")
                 }
-                // sh 'npm install'
-                // sh 'npm start &'
-                // input message: 'Finished using the web site? (Click "Proceed" to continue)' 
             }
             
         }
