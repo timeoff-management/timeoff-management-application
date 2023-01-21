@@ -17,27 +17,6 @@ pipeline {
             }
             
         }
-        stage('Docker Pre Package'){
-            agent any
-            steps{
-                echo 'Building dev app..'
-                script {
-                    timeimage = docker.build("jlargaespada/timeapp:v${env.BUILD_ID}", ".")
-                }
-            } 
-        }
-    stage('Test Image'){
-        steps{
-            sh "docker run -it -p 5001:3000 jlargaespada/timeapp:v${env.BUILD_ID}"
-        }
-    }
-    stage('Finish Test') {
-            steps {
-                input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                sh 'docker stop time-test'
-                sh 'docker rm time-test'
-            }
-        }
     stage('Docker Package'){
             agent any
             steps{
