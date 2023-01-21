@@ -20,7 +20,7 @@ env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: gorillalogic-cluster-1
   GKE_ZONE: us-central1
-  DEPLOYMENT_NAME: production
+  DEPLOYMENT_NAME: time-app
   IMAGE: time-app-image
 
 jobs:

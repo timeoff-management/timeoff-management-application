@@ -1,4 +1,0 @@
-resources:
-  - ../
-patchesStrategicMerge:
-  - deployment.yaml
