@@ -1,5 +1,5 @@
 pipeline {
-    agent none
+    agent any
 
     stages {
 
@@ -11,15 +11,15 @@ pipeline {
                     }
                 }
             
-            steps{
-                echo 'Compiling app..'
-                sh 'npm install'
-            }
+                steps{
+                    echo 'Compiling app..'
+                    sh 'npm install'
+                }
             
         }
 
         stage('Testing App'){
-                agent any
+                // agent any
                 steps{
                     echo 'Testing and Docker Package ..'
                     script {
@@ -31,14 +31,15 @@ pipeline {
             }
         }
         stage('Approve'){
-            agent any
+            // agent any
                 steps{
                     input message: 'Finished using the web site? (Click "Proceed" to continue)'
                     sh 'docker stop time-app'
             }
         }
-                stage('Docker Package'){
-                agent any
+        
+        stage('Docker Package'){
+                // agent any
                 steps{
                     echo 'Testing and Docker Package ..'
                     script {
@@ -50,15 +51,6 @@ pipeline {
                 } 
             }
         }
-
-        // stage('Cleaning environment'){
-        //         agent any
-        //         steps{
-        //             echo 'Cleaning environment..'
-        //             sh 'docker stop time-app'
-        //     }
-        // }
-
     }
      post {
         always {
