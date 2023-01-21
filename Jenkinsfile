@@ -34,33 +34,7 @@ pipeline {
             }
             
         }
-    //     stage('terraform init'){
-    //         steps{
-    //             dir ("infra"){
-    //             sh 'terraform init'
-    //         }}
-    //     }
-
-    //     stage('terraform plan'){
-    //         steps{
-    //              dir ("infra"){
-    //             sh 'terraform plan -out=infra.out'
-    //         }}
-    //     }
-
-    //     stage('Waiting for Approvals'){
-    //         steps{
-    //              dir ("infra"){
-    //             input('Plan Validated? Please approve' )
-    //         }}
-    //     }
-
-    //     stage('terraform Apply'){
-    //         steps{
-    //              dir ("infra"){
-    //             sh 'terraform apply infra.out'
-    //         }}
-    //     }
+    }
     }
      post {
         always {
