@@ -28,7 +28,7 @@ pipeline {
         }
     stage('Test Image'){
         steps{
-            sh "docker run -it -p 5001:3000 time-test jlargaespada/timeapp:v${env.BUILD_ID}"
+            sh "docker run -it -p 5001:3000 jlargaespada/timeapp:v${env.BUILD_ID}"
         }
     }
     stage('Finish Test') {
