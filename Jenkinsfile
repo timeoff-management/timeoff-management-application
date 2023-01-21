@@ -26,7 +26,6 @@ pipeline {
                 }
             } 
         }
-    }
     stage('Test Image'){
         steps{
             sh "docker run -it -p 5001:3000 time-test jlargaespada/timeapp:v${env.BUILD_ID} "
@@ -39,20 +38,20 @@ pipeline {
                 sh 'docker rm time-test'
             }
         }
-    }
     stage('Docker Package'){
             agent any
             steps{
                 echo 'Building dev app..'
                 script {
                         docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin'){
-                            def timeimage = docker.build("jlargaespada/timeapp:v${env.BUILD_ID}", ".")
+                        def timeimage = docker.build("jlargaespada/timeapp:v${env.BUILD_ID}", ".")
                         timeimage.push()
                         timeimage.push("${env.BRANCH_NAME}")
                         timeimage.push("latest")
                 }
             } 
         }
+    }
     }
      post {
         always {
