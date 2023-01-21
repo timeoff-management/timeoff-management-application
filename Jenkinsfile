@@ -29,14 +29,14 @@ pipeline {
         stage('terraform init'){
             steps{
                  dir("infra"){
-                sh './terraform init'
+                sh 'terraform init'
             }}
         }
 
         stage('terraform plan'){
             steps{
                  dir("infra"){
-                sh './terraform plan -out=infra.out'
+                sh 'terraform plan -out=infra.out'
             }}
         }
 
@@ -50,7 +50,7 @@ pipeline {
         stage('terraform Apply'){
             steps{
                  dir("infra"){
-                sh './terraform apply -out=infra.out'
+                sh 'terraform apply -out=infra.out'
             }}
         }
     }
