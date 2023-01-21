@@ -7,7 +7,8 @@ pipeline {
             agent any
             steps{
                 echo 'Building app..'
-                         docker.stop("--name time-app")
+                sh 'docker stop time-app'
+                sh 'docker rm time-app'
         }
     }
 
