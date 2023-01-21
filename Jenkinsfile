@@ -2,16 +2,6 @@ pipeline {
     agent none
 
     stages {
-
-            stage('Clearning docker'){
-            agent any
-            steps{
-                echo 'Building app..'
-                sh 'docker stop time-app'
-                sh 'docker rm time-app'
-        }
-    }
-
         stage('build'){
             agent {
                 docker{
@@ -27,49 +17,30 @@ pipeline {
             
         }
 
-    stage('Docker Package'){
-            agent any
-            steps{
-                echo 'Building app..'
-                script {
-                        docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin'){
-                        def timeimage = docker.build("jlargaespada/timeapp:v${env.BUILD_ID}", ".")
-                        timeimage.run("-p 5001:3000 --rm --name time-app")
-                        input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                        timeimage.stop("--name time-app")
-                        timeimage.push()
-                        timeimage.push("${env.BRANCH_NAME}")
-                        timeimage.push("latest")
-                }
-            } 
+        stage('Testing App and Docker Package'){
+                agent any
+                steps{
+                    echo 'Testing and Docker Package ..'
+                    script {
+                            docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin'){
+                            def timeimage = docker.build("jlargaespada/timeapp:v${env.BUILD_ID}", ".")
+                            timeimage.run("-p 5001:3000 --rm --name time-app")
+                            input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                            timeimage.stop("--name time-app")
+                            timeimage.push()
+                            timeimage.push("${env.BRANCH_NAME}")
+                            timeimage.push("latest")
+                    }
+                } 
+            }
         }
-    }
-    // stage('Docker run'){
-    //     steps{
-    //         script{
-    //             timeimage.run("-p 5001:3000 --rm --name time-app")
-    //         }
-    //     }
-    // }
-    //         stage('Package?') { 
-    //         steps {
-                
-    //             input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                 
-    //         }
-    //     }
-    //         stage('Docker stop'){
-    //     steps{
-    //         script{
-    //             docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin'){
-    //             timeimage.push()
-    //             timeimage.push("${env.BRANCH_NAME}")
-    //             timeimage.push("latest")
-    //             timeimage.stop("--name time-app")
-    //         }
-    //     }
-    // }
-    // }
+        stage('Cleaning environment'){
+                agent any
+                steps{
+                    echo 'Cleaning environment..'
+                    sh 'docker stop time-app'
+            }
+        }
     }
      post {
         always {
