@@ -3,7 +3,9 @@
 
 Web application for managing employee absences.
 
-<a href="https://travis-ci.org/timeoff-management/timeoff-management-application"><img align="right" src="https://travis-ci.org/timeoff-management/timeoff-management-application.svg?branch=master" alt="Build status" /></a>
+[![Build Status](http://34.123.237.22:8080/buildStatus/icon?job=timeoff-management-application%2Fmaster)](http://34.123.237.22:8080/job/timeoff-management-application/job/master/)
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jorgelargaespada_timeoff-management-application&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=jorgelargaespada_timeoff-management-application)
 
 ## Features
 
