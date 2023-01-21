@@ -6,16 +6,16 @@ pipeline {
         }
     }
 
-    tools {
-        nodejs 'nodejs'
-        terraform 'terraform'
-    }
-    environment {
-        GOOGLE_PROJECT_ID = credentials('service-account-gorilla-logic')
-        GOOGLE_PROJECT_NAME = credentials('service-account-gorilla-logic')
-        GOOGLE_APPLICATION_CREDENTIALS = credentials('service-account-gorilla-logic')
-        GOOGLE_CLOUD_KEYFILE_JSON = credentials('service-account-gorilla-logic')
-    }
+    // tools {
+    //     nodejs 'nodejs'
+    //     terraform 'terraform'
+    // }
+    // environment {
+    //     GOOGLE_PROJECT_ID = credentials('service-account-gorilla-logic')
+    //     GOOGLE_PROJECT_NAME = credentials('service-account-gorilla-logic')
+    //     GOOGLE_APPLICATION_CREDENTIALS = credentials('service-account-gorilla-logic')
+    //     GOOGLE_CLOUD_KEYFILE_JSON = credentials('service-account-gorilla-logic')
+    // }
 
     stages {
 
@@ -67,7 +67,7 @@ pipeline {
     //             sh 'terraform apply infra.out'
     //         }}
     //     }
-    // }
+    }
      post {
         always {
             echo "Pipeline for InstaApp run is complete.."
@@ -79,5 +79,4 @@ pipeline {
 		slackSend (channel: "timeoff-management-application", message: "Build succeeded - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
         }
     }
-}
 }
