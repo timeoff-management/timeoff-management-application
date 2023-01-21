@@ -3,6 +3,7 @@ pipeline {
 
     tools {
         nodejs 'nodejs'
+        terraform 'terraform'
     }
     environment {
         GOOGLE_PROJECT_ID = credentials('service-account-gorilla-logic')
