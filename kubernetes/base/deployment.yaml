@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: time-app
-        image: gcr.io/gorilla-logic/time-app-image:39e501a1272a9a2a8be524d61e6ae82b377be5f4
+        image: gcr.io/PROJECT_ID/IMAGE:TAG
         resources:
           limits:
             memory: "128Mi"
