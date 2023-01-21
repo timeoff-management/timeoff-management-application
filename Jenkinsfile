@@ -36,7 +36,7 @@ pipeline {
     stage('Docker run'){
         steps{
             script{
-                dockerImage.run("-p 5001:3000 -rm -name time-app")
+                timeimage.run("-p 5001:3000 -rm -name time-app")
             }
         }
     }
@@ -50,7 +50,7 @@ pipeline {
             stage('Docker stop'){
         steps{
             script{
-                dockerImage.stop("-name time-app")
+                timeimage.stop("-name time-app")
             }
         }
     }
