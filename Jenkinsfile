@@ -7,9 +7,7 @@ pipeline {
             agent any
             steps{
                 echo 'Building app..'
-                script {
-                        docker.stop("--name time-app")
-            } 
+                         docker.stop("--name time-app")
         }
     }
 
