@@ -10,6 +10,11 @@ pipeline {
                     args '-p 5001:3000'   
                     }
                 }
+             when {
+                not {
+                    branch 'master'
+                }
+            }
             steps{
                     echo 'Compiling app..'
                     sh 'npm install'
