@@ -29,7 +29,7 @@ pipeline {
                         timeimage.push()
                         timeimage.push("${env.BRANCH_NAME}")
                         timeimage.push("latest")
-                        timeimage.run("-p 5001:3000 -rm -name time-app")
+                        timeimage.run("-p 5001:3000 --rm -name time-app")
                 }
             } 
         }
@@ -37,7 +37,7 @@ pipeline {
     stage('Docker run'){
         steps{
             script{
-                timeimage.run("-p 5001:3000 -rm -name time-app")
+                timeimage.run("-p 5001:3000 --rm --name time-app")
             }
         }
     }
