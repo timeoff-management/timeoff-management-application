@@ -30,7 +30,7 @@ metadata:
   name: time-app-service
 spec:
   selector:
-    app.kubernetes.io/name: gorilla-logic
+    app.kubernetes.io/name: time-app
   ports:
     - protocol: TCP
       port: 80
