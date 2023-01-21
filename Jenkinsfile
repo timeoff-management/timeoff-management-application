@@ -25,36 +25,42 @@ pipeline {
                 script {
                         docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin'){
                         def timeimage = docker.build("jlargaespada/timeapp:v${env.BUILD_ID}", ".")
+                        timeimage.run("-p 5001:3000 --rm --name time-app")
+                        input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                        timeimage.stop("--name time-app")
+                        timeimage.push()
+                        timeimage.push("${env.BRANCH_NAME}")
+                        timeimage.push("latest")
                 }
             } 
         }
     }
-    stage('Docker run'){
-        steps{
-            script{
-                timeimage.run("-p 5001:3000 --rm --name time-app")
-            }
-        }
-    }
-            stage('Package?') { 
-            steps {
+    // stage('Docker run'){
+    //     steps{
+    //         script{
+    //             timeimage.run("-p 5001:3000 --rm --name time-app")
+    //         }
+    //     }
+    // }
+    //         stage('Package?') { 
+    //         steps {
                 
-                input message: 'Finished using the web site? (Click "Proceed" to continue)'
+    //             input message: 'Finished using the web site? (Click "Proceed" to continue)'
                  
-            }
-        }
-            stage('Docker stop'){
-        steps{
-            script{
-                docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin'){
-                timeimage.push()
-                timeimage.push("${env.BRANCH_NAME}")
-                timeimage.push("latest")
-                timeimage.stop("--name time-app")
-            }
-        }
-    }
-    }
+    //         }
+    //     }
+    //         stage('Docker stop'){
+    //     steps{
+    //         script{
+    //             docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin'){
+    //             timeimage.push()
+    //             timeimage.push("${env.BRANCH_NAME}")
+    //             timeimage.push("latest")
+    //             timeimage.stop("--name time-app")
+    //         }
+    //     }
+    // }
+    // }
     }
      post {
         always {
