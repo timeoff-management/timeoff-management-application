@@ -34,7 +34,6 @@ pipeline {
         }
     }
     stage('Docker run'){
-        agent any
         steps{
             script{
                 dockerImage.run("-p 5001:3000 -rm -name time-app")
@@ -49,7 +48,6 @@ pipeline {
             }
         }
             stage('Docker stop'){
-        agent any
         steps{
             script{
                 dockerImage.stop("-name time-app")
