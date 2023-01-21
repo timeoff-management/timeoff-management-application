@@ -20,14 +20,14 @@ env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: gorillalogic-cluster-1
   GKE_ZONE: us-central1
-  DEPLOYMENT_NAME: production1
+  DEPLOYMENT_NAME: production
   IMAGE: time-app-image
 
 jobs:
   setup-build-publish-deploy:
     name: Setup, Build, Publish, and Deploy
     runs-on: ubuntu-latest
-    environment: production2
+    environment: production
 
 
     steps:
