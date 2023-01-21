@@ -18,12 +18,10 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
-  #GAR_LOCATION: us-central1 # TODO: update region of the Artifact Registry
-  GKE_CLUSTER: gorillalogic-cluster-1    # TODO: update to cluster name
-  GKE_ZONE: us-central1   # TODO: update to cluster zone
-  DEPLOYMENT_NAME: production # TODO: update to deployment name
-  #REPOSITORY: samples # TODO: update to Artifact Registry docker repository
-  IMAGE: static-site
+  GKE_CLUSTER: gorillalogic-cluster-1
+  GKE_ZONE: us-central1
+  DEPLOYMENT_NAME: production
+  IMAGE: time-app-image
 
 jobs:
   setup-build-publish-deploy:
@@ -31,9 +29,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
 
-    # permissions:
-    #   contents: 'read'
-    #   id-token: 'write'
 
     steps:
     - name: Checkout
@@ -44,22 +39,6 @@ jobs:
       with:
         service_account_key: ${{ secrets.GKE_SA_KEY }}
         project_id: ${{ secrets.GKE_PROJECT }}
-
-    # Alternative option - authentication via credentials json
-    # - id: 'auth'
-    #   uses: 'google-github-actions/auth@v0'
-    #   with:
-    #     credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
-
-    # - name: Docker configuration
-    #   run: |-
-    #     echo ${{steps.auth.outputs.access_token}} | docker login -u oauth2accesstoken --password-stdin https://$GAR_LOCATION-docker.pkg.dev
-    # # Get the GKE credentials so we can deploy to the cluster
-    # - name: Set up GKE credentials
-    #   uses: google-github-actions/get-gke-credentials@v0
-    #   with:
-    #     cluster_name: ${{ env.GKE_CLUSTER }}
-    #     location: ${{ env.GKE_ZONE }}
 
     # Configure Docker to use the gcloud command-line tool as a credential
     # helper for authentication
@@ -72,8 +51,6 @@ jobs:
         cluster_name: ${{ env.GKE_CLUSTER }}
         location: ${{ env.GKE_ZONE }}
         credentials: ${{ secrets.GKE_SA_KEY }}
-
-
 
     # Build the Docker image
     - name: Build

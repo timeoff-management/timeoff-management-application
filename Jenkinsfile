@@ -45,7 +45,7 @@ pipeline {
                 }
             }
                 steps{
-                    sh 'sleep 60'
+                    sh 'sleep 10'
                     input message: 'The App is OK? (Click "Proceed" to continue)'
             }
         }
