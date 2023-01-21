@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-
+        
         stage('build'){
             agent {
                 docker{
@@ -10,8 +10,12 @@ pipeline {
                     args '-p 5001:3000'   
                     }
                 }
-            
-                steps{
+            when {
+                not {
+                    branch 'master'
+                }
+            }    
+            steps{
                     echo 'Compiling app..'
                     sh 'npm install'
                 }
@@ -19,6 +23,11 @@ pipeline {
         }
 
         stage('Testing App'){
+            when {
+                not {
+                    branch 'master'
+                }
+            }
                 steps{
                     echo 'Testing and Docker Package ..'
                     script {
@@ -30,6 +39,11 @@ pipeline {
             }
         }
         stage('Approve'){
+            when {
+                not {
+                    branch 'master'
+                }
+            }
                 steps{
                     input message: 'The App is OK? (Click "Proceed" to continue)'
             }
