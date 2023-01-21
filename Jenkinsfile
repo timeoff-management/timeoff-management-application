@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:13.0.1-buster-slim'
+            args '-p 3000:50001'
+        }
+    }
 
     tools {
         nodejs 'nodejs'
@@ -21,35 +26,48 @@ pipeline {
             }
             
         }
-        
-        stage('terraform init'){
+        stage('Dev'){
             steps{
-                dir ("infra"){
-                sh 'terraform init'
-            }}
+                echo 'Building to dev app..'
+                sh 'npm run build'
+                sh 'npm start &'
+            }
+            
         }
+        // stage('Finish') { 
+        //     steps {
+        //         input message: 'Finished using the web site? (Click "Proceed" to continue)' 
+        //         sh './jenkins/scripts/kill.sh' 
+        //     }
+        // }
+    //     stage('terraform init'){
+    //         steps{
+    //             dir ("infra"){
+    //             sh 'terraform init'
+    //         }}
+    //     }
 
-        stage('terraform plan'){
-            steps{
-                 dir ("infra"){
-                sh 'terraform plan -out=infra.out'
-            }}
-        }
+    //     stage('terraform plan'){
+    //         steps{
+    //              dir ("infra"){
+    //             sh 'terraform plan -out=infra.out'
+    //         }}
+    //     }
 
-        stage('Waiting for Approvals'){
-            steps{
-                 dir ("infra"){
-                input('Plan Validated? Please approve' )
-            }}
-        }
+    //     stage('Waiting for Approvals'){
+    //         steps{
+    //              dir ("infra"){
+    //             input('Plan Validated? Please approve' )
+    //         }}
+    //     }
 
-        stage('terraform Apply'){
-            steps{
-                 dir ("infra"){
-                sh 'terraform apply infra.out'
-            }}
-        }
-    }
+    //     stage('terraform Apply'){
+    //         steps{
+    //              dir ("infra"){
+    //             sh 'terraform apply infra.out'
+    //         }}
+    //     }
+    // }
      post {
         always {
             echo "Pipeline for InstaApp run is complete.."
