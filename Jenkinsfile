@@ -3,11 +3,6 @@ pipeline {
 
     stages {
         stage('Linting'){
-            agent {
-                docker{
-                    image 'hadolint/hadolint:latest-debian'
-                    }
-                }
             when {
                 not {
                     branch 'master'
@@ -15,7 +10,7 @@ pipeline {
             }
             steps{
             echo 'Docker linting..'
-            sh 'hadolint < Dockerfile | tee -a hadolint_lint.txt'
+            sh 'docker run --rm -i hadolint/hadolint < Dockerfile | tee -a hadolint_lint.txt'
             }
         }
         stage('build'){
