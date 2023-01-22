@@ -12,6 +12,7 @@ pipeline {
                 not {
                     branch 'master'
                 }
+            }
             steps{
             echo 'Docker linting..'
             sh 'hadolint < Dockerfile | tee -a hadolint_lint.txt'
@@ -85,4 +86,3 @@ pipeline {
         sh 'docker image prune -a -f'
         }
     }
-}
