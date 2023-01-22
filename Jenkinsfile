@@ -13,7 +13,7 @@ pipeline {
             sh 'docker run --rm -i hadolint/hadolint < Dockerfile | tee -a hadolint_lint.txt'
             }
         }
-        stage('build'){
+        stage('Build'){
             agent {
                 docker{
                     image 'node:13.0.1-buster-slim'
