@@ -3,11 +3,6 @@ pipeline {
 
     stages {
         stage('Linting'){
-            when {
-                not {
-                    branch 'master'
-                }
-            }
             steps{
             echo 'Docker linting..'
             sh 'docker run --rm -i hadolint/hadolint < Dockerfile | tee -a hadolint_lint.txt'
@@ -20,11 +15,6 @@ pipeline {
                     args '-p 5001:3000'   
                     }
                 }
-             when {
-                not {
-                    branch 'master'
-                }
-            }
             steps{
                     echo 'Compiling app..'
                     sh 'npm install'
