@@ -47,21 +47,11 @@ pipeline {
                 steps{
                     sh 'sleep 10'
                     input message: 'The App is OK? (Click "Proceed" to continue)'
+                    sh 'docker stop time-app'
+                    sh 'docker image prune -a -f'
             }
         }
         
-        // stage('Docker Package'){
-        //         steps{
-        //             echo 'Testing and Docker Package ..'
-        //             script {
-        //                     docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin'){
-        //                     def timeimage = docker.build("jlargaespada/timeapp:v${env.BUILD_ID}", ".")
-        //                     timeimage.push()
-        //                     timeimage.push("latest")
-        //             }
-        //         } 
-        //     }
-        // }
     }
      post {
         always {
@@ -72,10 +62,6 @@ pipeline {
         }
         success {
 		slackSend (channel: "timeoff-management-application", message: "Build succeeded - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
-        }
-        cleanup{
-            sh 'docker stop time-app'
-            sh 'docker image prune -a -f'
         }
     }
 }
