@@ -45,7 +45,7 @@ pipeline {
                 }
             }
                 steps{
-                    sh 'sleep 10'
+                    sh 'sleep 20'
                     input message: 'The App is OK? (Click "Proceed" to continue)'
                     sh 'docker stop time-app'
                     sh 'docker image prune -a -f'
