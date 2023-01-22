@@ -46,7 +46,7 @@ pipeline {
             }
                 steps{
                     sh 'sleep 20'
-                    input message: 'The App is OK? (Click "Proceed" to continue)'
+                    input message: 'Delivery via http://34.123.237.22:5001 ,The App is OK? (Click "Proceed" to continue)'
             }
         }
         
