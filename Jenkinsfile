@@ -2,7 +2,22 @@ pipeline {
     agent any
 
     stages {
-        
+        stage('Linting'){
+            agent {
+                docker{
+                    image 'hadolint/hadolint:latest-debian'
+                    }
+                }
+            when {
+                not {
+                    branch 'master'
+                }
+            steps{
+            echo 'Docker linting..'
+            sh 'hadolint < Dockerfile | tee -a hadolint_lint.txt'
+            }
+        }
+        }
         stage('build'){
             agent {
                 docker{
@@ -54,6 +69,7 @@ pipeline {
      post {
         always {
             echo "Pipeline for time-app run is complete.."
+            archiveArtifacts 'hadolint_lint.txt'
         }
         failure {
 		slackSend (channel: "timeoff-management-application", message: "Build failure - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
