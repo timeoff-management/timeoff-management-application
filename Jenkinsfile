@@ -18,7 +18,6 @@ pipeline {
             sh 'hadolint < Dockerfile | tee -a hadolint_lint.txt'
             }
         }
-        }
         stage('build'){
             agent {
                 docker{
@@ -86,3 +85,4 @@ pipeline {
         sh 'docker image prune -a -f'
         }
     }
+}
