@@ -1,0 +1,8 @@
+apiVersion: v2
+name: timeoff-mgmt
+version: 0.1.0
+description: A Helm chart for deploying a Node.js application on GKE
+maintainers:
+  - name: Juan Pablo Rivas
+    email: juanpablo.rivas@outlook.com
+appVersion: 1.0.0
