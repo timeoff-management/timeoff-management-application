@@ -11,6 +11,7 @@ steps:
     --region=us-central1
     --source=./
     --images=image1=us-central1-docker.pkg.dev/gorilla-375616/time-off-gorilla/time-off-image:latest
+    
 images: ['us-central1-docker.pkg.dev/gorilla-375616/time-off-gorilla/time-off-image:latest']      
 
 
