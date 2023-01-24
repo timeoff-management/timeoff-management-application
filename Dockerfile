@@ -15,6 +15,8 @@
 #	docker exec -ti --user root alpine_timeoff /bin/sh
 # --------------------------------------------------------------------
 FROM alpine:latest as dependencies
+RUN apk upgrade
+RUN apk update
 
 RUN apk add --no-cache \
     nodejs npm 
