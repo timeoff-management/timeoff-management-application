@@ -2,15 +2,15 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: 'docker'
   args: [ 'build', '--builder=gcr.io/cloud-builders/docker', '--publish','us-central1-docker.pkg.dev/gorilla-375616/time-off-gorilla/time-off-image:latest' ]
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  entrypoint: 'bash'
-  args:
-  - '-c'
-  - > 
-    gcloud deploy releases create release-$BUILD_ID
-    --delivery-pipeline=time-off-app
-    --region=us-central1
-    --source=./
-    --images=image1=us-central1-docker.pkg.dev/gorilla-375616/time-off-gorilla/time-off-image:latest
+# - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+#   entrypoint: 'bash'
+#   args:
+#   - '-c'
+#   - > 
+#     gcloud deploy releases create release-$BUILD_ID
+#     --delivery-pipeline=time-off-app
+#     --region=us-central1
+#     --source=./
+#     --images=image1=us-central1-docker.pkg.dev/gorilla-375616/time-off-gorilla/time-off-image:latest
 
 
