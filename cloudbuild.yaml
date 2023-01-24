@@ -1,6 +1,7 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'us-central1-docker.pkg.dev/gorilla-375616/time-off-gorilla/time-off-image:latest', '.' ]
+images: [us-central1-docker.pkg.dev/gorilla-375616/time-off-gorilla/time-off-image:latest]  
 # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
 #   entrypoint: 'bash'
 #   args:
