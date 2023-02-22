@@ -35,7 +35,7 @@
     "passport-http-bearer": "^1.0.1",
     "passport-local": "^1.0.0",
     "redis": "^3.1.2",
-    "sequelize": "^3.19.2",
+    "sequelize": "^6.28.2",
     "sequelize-cli": "2.5.1",
     "serve-favicon": "^2.1.7",
     "sqlite3": "^4.0.1",
