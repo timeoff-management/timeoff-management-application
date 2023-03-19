@@ -59,6 +59,6 @@
     "preinstall": "npx npm-force-resolutions"
   },
   "resolutions": {
-    "graceful-fs": "^4.2.4"
+    "graceful-fs": "4.2.4"
   }
 }
