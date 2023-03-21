@@ -119,28 +119,6 @@ resource "aws_nat_gateway" "default" {
   )
 }
 
-# # Subnets for all AWS managed resources
-# resource "aws_subnet" "private_db_subnet" {
-#   count = length(local.private_db_subnet_cidr_blocks)
-
-#   vpc_id            = aws_vpc.default.id
-#   cidr_block        = local.private_db_subnet_cidr_blocks[count.index]
-#   availability_zone = var.availability_zones[count.index]
-#   tags = merge(
-#     {
-#       Name = "${var.environment_tag}-privatedbsubnet"
-#     },
-#     var.resource-tags
-#   )
-# }
-
-# resource "aws_route_table_association" "private_db" {
-#   count = length(local.private_db_subnet_cidr_blocks)
-
-#   subnet_id      = aws_subnet.private_db_subnet[count.index].id
-#   route_table_id = aws_route_table.public.id
-# }
-
 resource "aws_default_security_group" "default" {
   vpc_id = aws_vpc.default.id
   egress = [
