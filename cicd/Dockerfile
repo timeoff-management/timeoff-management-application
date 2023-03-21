@@ -3,11 +3,16 @@
 # TODO:
 #   Install aws cli   
 # --------------------------------------------------------------------
-FROM python:2.7-alpine
+FROM ubuntu:18.04
 
-RUN apk add --no-cache \
-    nodejs npm 
+RUN apt-get update && apt-get install -y software-properties-common gcc && \
+    add-apt-repository -y ppa:deadsnakes/ppa
 
-ENV PATH $PATH:/usr/local/bin/
-ENV PYTHON /usr/local/bin/
+RUN apt-get update && apt-get install -y python3.6 python3-distutils python3-pip python3-apt    
 
+# install docker
+
+# install aws cli
+# RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+#     unzip awscliv2.zip && \
+#     ./aws/install
