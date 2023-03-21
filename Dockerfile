@@ -39,8 +39,9 @@ RUN apk add --no-cache \
 RUN adduser --system app --home /app
 USER app
 WORKDIR /app
-COPY . /app
+COPY --chown=app . /app
 COPY --from=dependencies node_modules ./node_modules
+
 
 CMD npm start
 
