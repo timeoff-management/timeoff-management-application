@@ -32,6 +32,6 @@ locals {
       self             = false
       to_port          = 22
     },
-    
-  ]  
+
+  ]
 }

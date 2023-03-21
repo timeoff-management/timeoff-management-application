@@ -30,11 +30,6 @@ variable "ingress_blocks" {
   description = "IPs to be whitelisted by the ingress"
 }
 
-# variable "public_eip_ids" {
-#   type        = list(string)
-#   description = "List of Elastic IP address IDs"
-# }
-
 variable "num_of_nat_gw_eip" {
   description = "Number of Elastic IP addresses required for the Nat Gateway"
   type        = number

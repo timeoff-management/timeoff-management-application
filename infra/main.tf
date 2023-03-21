@@ -93,16 +93,16 @@ module "ecr" {
 # }
 
 module "fargate" {
-  source                       = "./modules/ecs/fargate"
-  aws_region                   = var.aws_region
-  app_image                    = "042112416138.dkr.ecr.us-east-1.amazonaws.com/timeoff:latest"
-  app_port                     = 3000
-  app_count                    = 2
-  vpc_id                       = module.vpc.vpc_id
-  vpc_public_subet_ids         = module.vpc.public_subnet_ids
-  vpc_private_subet_ids        = module.vpc.private_subnet_ids
-  task_family                  = "to-app-family"
-  ecs_cluster_name             = "${local.environment}-gorila"
-  ecs_cluster_service_name     = "time-off-srv"
-  vpc_default_sg_id = module.vpc.default_security_group_id
+  source                   = "./modules/ecs/fargate"
+  aws_region               = var.aws_region
+  app_image                = "042112416138.dkr.ecr.us-east-1.amazonaws.com/timeoff:latest"
+  app_port                 = 3000
+  app_count                = 2
+  vpc_id                   = module.vpc.vpc_id
+  vpc_public_subet_ids     = module.vpc.public_subnet_ids
+  vpc_private_subet_ids    = module.vpc.private_subnet_ids
+  task_family              = "to-app-family"
+  ecs_cluster_name         = "${local.environment}-gorila"
+  ecs_cluster_service_name = "time-off-srv"
+  vpc_default_sg_id        = module.vpc.default_security_group_id
 }

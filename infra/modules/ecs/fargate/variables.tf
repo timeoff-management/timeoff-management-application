@@ -6,7 +6,7 @@ variable "aws_region" {
 
 variable "ecs_task_execution_role_name" {
   description = "ECS task execution role name"
-  default = "EcsTaskExecutionRole"
+  default     = "EcsTaskExecutionRole"
 }
 
 variable "app_image" {
@@ -38,36 +38,36 @@ variable "fargate_memory" {
 }
 
 variable "vpc_id" {
-  type = string
-  description = "VPC Id" 
+  type        = string
+  description = "VPC Id"
 }
 
 variable "vpc_public_subet_ids" {
-  type = list
+  type        = list(any)
   description = "List of Public Subnets"
 }
 
 variable "vpc_private_subet_ids" {
-  type = list
+  type        = list(any)
   description = "List of Private Subnets"
 }
 
 variable "task_family" {
-  type = string
+  type        = string
   description = "Name of the task group"
 }
 
 variable "ecs_cluster_name" {
-  type = string
+  type        = string
   description = "ECS Cluster Name"
 }
 
 variable "ecs_cluster_service_name" {
-  type = string
+  type        = string
   description = "ECS Cluster Service Name"
 }
 
 variable "vpc_default_sg_id" {
   description = "ID for the default VPC Security Group"
-  type = string
+  type        = string
 }

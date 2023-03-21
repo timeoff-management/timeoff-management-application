@@ -7,7 +7,7 @@ resource "aws_kms_key" "default" {
   customer_master_key_spec = var.customer_master_key_spec
   multi_region             = var.multi_region
   tags                     = var.resource-tags
-  policy = <<EOF
+  policy                   = <<EOF
 {
   "Version" : "2012-10-17",
   "Id" : "key-default-1",
