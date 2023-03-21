@@ -5,3 +5,20 @@
 *.swm
 node_modules/
 *.sqlite
+
+.terraform*
+terraform/*
+
+# Local .terraform directories
+**/.terraform/*
+
+# Ignore local .git directories
+**/.git/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+**/out/*
+
+TODO.*
