@@ -1,0 +1,11 @@
+Hello *{{new_user.name}}*
+
+*{{#with admin_user}}{{this.full_name}}{{/with}}* just registered new account for you as an employee of *{{company.name}}*.
+
+Follow link below to set new password:
+
+{{# with new_user ~}}
+http://{{get_application_domain}}/reset-password/?t={{this.get_reset_password_token}} 
+{{/ with }}
+
+Thanks

@@ -1,7 +1,21 @@
 {
   "allow_create_new_accounts" : true,
   "send_emails"              : false,
+  "send_slacks": false,
+  "slack_settings":{
+    "token": "Get your Web API token from you Slack admin page.",
+    "icon_url": "The image can be hosted anywhere, but I would recoment to upload an icon to your Slack and use it's url.",
+    "bot_name": "The display name for the messages being sent."
+  },
   "application_sender_email" : "email@test.com",
+  "login": {
+    "default": true,
+    "google": ["hokify.com"]
+  },
+  "google": {
+    "clientID": "123",
+    "clientSecret": "123"
+  },
   "email_transporter" : {
     "host" : "localhost",
     "port" : 25,
@@ -18,6 +32,7 @@
     }
   },
   "ga_analytics_on" : false,
+  "ga_tracker": "UA-123456789",
   "crypto_secret" : "!2~`HswpPPLa22+=±§sdq qwe,appp qwwokDF_",
   "application_domain" : "http://app.timeoff.management",
   "promotion_website_domain" : "http://timeoff.management",
