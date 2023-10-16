@@ -34,11 +34,16 @@ WORKDIR /app
 LABEL org.label-schema.schema-version="1.0"
 LABEL org.label-schema.docker.cmd="docker run -d -p 3000:3000 --name alpine_timeoff"
 
-COPY . /app
+# Cache the docker layer with the node_modules
+COPY package.json /app/package.json
+COPY package-lock.json /app/package-lock.json
 
 RUN npm install -y
 
-#Add user so it doesn't run as root
+# Copy the application into the container.
+COPY . /app
+
+# Add user so it doesn't run as root
 RUN adduser --system app --home /app
 USER app
 
