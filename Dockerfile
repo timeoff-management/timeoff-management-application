@@ -38,9 +38,6 @@ WORKDIR /app
 LABEL org.label-schema.schema-version="1.0"
 LABEL org.label-schema.docker.cmd="docker run -d -p 3000:3000 --name alpine_timeoff"
 
-RUN adduser --system app --home /app
-USER app
-
 COPY . /app
 
 RUN npm install -y
