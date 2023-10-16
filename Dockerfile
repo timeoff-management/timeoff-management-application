@@ -5,38 +5,46 @@
 # =============
 # 1. Create an empty directory and copy this file into it.
 #
-# 2. Create image with: 
+# 2. Create image with:
 #	docker build --tag timeoff:latest .
 #
-# 3. Run with: 
+# 3. Run with:
 #	docker run -d -p 3000:3000 --name alpine_timeoff timeoff
 #
-# 4. Login to running container (to update config (vi config/app.json): 
+# 4. Login to running container (to update config (vi config/app.json):
 #	docker exec -ti --user root alpine_timeoff /bin/sh
 # --------------------------------------------------------------------
-FROM alpine:latest as dependencies
+FROM node:16-alpine
 
-RUN apk add --no-cache \
-    nodejs npm 
+RUN apk update
+#RUN apk upgrade
 
-COPY package.json  .
-RUN npm install 
+# Install dependencies
+RUN apk add \
+    git \
+    make \
+    python3 \
+    g++ \
+    gcc \
+    libc-dev \
+    clang
 
-FROM alpine:latest
+#Add user so it doesn't run as root
+RUN adduser --system app --home /app
+
+USER app
+WORKDIR /app
 
 LABEL org.label-schema.schema-version="1.0"
 LABEL org.label-schema.docker.cmd="docker run -d -p 3000:3000 --name alpine_timeoff"
 
-RUN apk add --no-cache \
-    nodejs npm \
-    vim
-
 RUN adduser --system app --home /app
 USER app
-WORKDIR /app
-COPY . /app
-COPY --from=dependencies node_modules ./node_modules
 
-CMD npm start
+COPY . /app
+
+RUN npm install -y
 
 EXPOSE 3000
+
+CMD npm start
