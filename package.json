@@ -8,7 +8,8 @@
   },
   "optionalDependencies": {
     "mysql2": "^1.6.4",
-    "sqlite3": "^5.1.6"
+    "sqlite3": "^5.1.6",
+    "redis": "^3.1.2"
   },
   "dependencies": {
     "@slack/client": "^4.1.0",
@@ -59,7 +60,8 @@
     "start": "node bin/wwww",
     "db-update": "node node_modules/.bin/sequelize db:migrate --config=config/db.json --models-path=lib/model/db/",
     "carry-over-allowance": "node bin/calculate_carry_over_allowance_for_all_users.js",
-    "compile-sass": "node node_modules/node-sass/bin/node-sass scss/main.scss public/css/style.css"
+    "compile-sass": "node node_modules/node-sass/bin/node-sass scss/main.scss public/css/style.css",
+    "preinstall": "npx npm-force-resolutions"
   },
   "resolutions": {
     "graceful-fs": "^4.2.4"
