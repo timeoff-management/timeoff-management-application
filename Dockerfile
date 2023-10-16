@@ -29,10 +29,6 @@ RUN apk add \
     libc-dev \
     clang
 
-#Add user so it doesn't run as root
-RUN adduser --system app --home /app
-
-USER app
 WORKDIR /app
 
 LABEL org.label-schema.schema-version="1.0"
@@ -41,6 +37,10 @@ LABEL org.label-schema.docker.cmd="docker run -d -p 3000:3000 --name alpine_time
 COPY . /app
 
 RUN npm install -y
+
+#Add user so it doesn't run as root
+RUN adduser --system app --home /app
+USER app
 
 EXPOSE 3000
 
