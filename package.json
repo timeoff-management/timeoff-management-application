@@ -4,7 +4,7 @@
   "private": false,
   "description": "Simple yet powerful absence management software for small and medium size business",
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=16.0.0"
   },
   "optionalDependencies": {
     "mysql2": "^1.6.4",
@@ -52,10 +52,12 @@
     "chai": "^4.1.2",
     "mocha": "^6.2.2",
     "node-sass": "^8.0.0",
+    "prettier": "1.17.0",
     "request-promise": "^4.2.2",
     "selenium-webdriver": "3.6.0"
   },
   "scripts": {
+    "prettier": "prettier --write \"**/*.js\"",
     "test": "node node_modules/mocha/bin/mocha --recursive t",
     "start": "node bin/wwww",
     "db-update": "node node_modules/.bin/sequelize db:migrate --config=config/db.json --models-path=lib/model/db/",
