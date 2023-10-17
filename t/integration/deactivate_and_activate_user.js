@@ -1,19 +1,18 @@
+"use strict";
 
-'use strict';
-
-var test                 = require('selenium-webdriver/testing'),
-  By                     = require('selenium-webdriver').By,
-  expect                 = require('chai').expect,
-  moment                 = require('moment'),
-  register_new_user_func = require('../lib/register_new_user'),
-  login_user_func        = require('../lib/login_with_user'),
-  open_page_func         = require('../lib/open_page'),
-  submit_form_func       = require('../lib/submit_form'),
-  add_new_user_func      = require('../lib/add_new_user'),
-  logout_user_func       = require('../lib/logout_user'),
-  user_info_func         = require('../lib/user_info'),
-  config                 = require('../lib/config'),
-  application_host       = config.get_application_host();
+var test = require("selenium-webdriver/testing"),
+  By = require("selenium-webdriver").By,
+  expect = require("chai").expect,
+  moment = require("moment"),
+  register_new_user_func = require("../lib/register_new_user"),
+  login_user_func = require("../lib/login_with_user"),
+  open_page_func = require("../lib/open_page"),
+  submit_form_func = require("../lib/submit_form"),
+  add_new_user_func = require("../lib/add_new_user"),
+  logout_user_func = require("../lib/logout_user"),
+  user_info_func = require("../lib/user_info"),
+  config = require("../lib/config"),
+  application_host = config.get_application_host();
 
 /*
  * Scenario to check:
@@ -28,170 +27,186 @@ var test                 = require('selenium-webdriver/testing'),
  *
  * */
 
-describe('Deactivate and activate user', function(){
-
-  this.timeout( config.get_execution_timeout() );
+describe("Deactivate and activate user", function () {
+  this.timeout(config.get_execution_timeout());
 
   var email_admin, email_employee, employee_id, driver;
 
-  it('Create new company', function(done){
+  it("Create new company", function (done) {
     register_new_user_func({
-      application_host : application_host,
-    })
-    .then(function(data){
+      application_host: application_host,
+    }).then(function (data) {
       email_admin = data.email;
       driver = data.driver;
       done();
     });
   });
 
-  it("Create EMPLOYEE", function(done){
+  it("Create EMPLOYEE", function (done) {
     add_new_user_func({
-      application_host : application_host,
-      driver           : driver,
-    })
-    .then(function(data){
+      application_host: application_host,
+      driver: driver,
+    }).then(function (data) {
       email_employee = data.new_user_email;
       done();
     });
   });
 
-  it("Obtain information about employee", function(done){
+  it("Obtain information about employee", function (done) {
     user_info_func({
-      driver : driver,
-      email  : email_employee,
-    })
-    .then(function(data){
+      driver: driver,
+      email: email_employee,
+    }).then(function (data) {
       employee_id = data.user.id;
       done();
     });
   });
 
-  it('Check that the deactivated badge is not displayed', function(done){
-    driver.findElements(By.className('badge alert-warning'))
-    .then(els => {
-      if (els.length > 0){
-        throw new Error('The badge was found')
+  it("Check that the deactivated badge is not displayed", function (done) {
+    driver.findElements(By.className("badge alert-warning")).then((els) => {
+      if (els.length > 0) {
+        throw new Error("The badge was found");
       } else {
         done();
       }
-    })
-  });
-
-  it('Mark EMPLOYEE as inactive by specifying end date to be in past', function(done){
-    open_page_func({
-      url    : application_host + 'users/edit/'+employee_id+'/',
-      driver : driver,
-    })
-    .then(function(){
-      submit_form_func({
-        driver      : driver,
-        form_params : [{
-          selector : 'input#end_date_inp',
-          value    : moment().subtract(1, 'days').format('YYYY-MM-DD'),
-        }],
-        submit_button_selector : 'button#save_changes_btn',
-        message : /Details for .+ were updated/,
-        should_be_successful : true,
-      })
-      .then(function(){ done() });
     });
   });
 
-  it('Check that the deactivated badge is displayed', function(done){
-    driver.findElements(By.className('badge alert-warning'))
-    .then(els => {expect(els.length).to.be.eql(1, 'No badge visible');
-    return els[0].getText();
-    })
-    .then(val => {
-      expect(val).to.be.eql('Deactivated', 'It is not the deactivated badge');
+  it("Mark EMPLOYEE as inactive by specifying end date to be in past", function (done) {
+    open_page_func({
+      url: application_host + "users/edit/" + employee_id + "/",
+      driver: driver,
+    }).then(function () {
+      submit_form_func({
+        driver: driver,
+        form_params: [
+          {
+            selector: "input#end_date_inp",
+            value: moment().subtract(1, "days").format("YYYY-MM-DD"),
+          },
+        ],
+        submit_button_selector: "button#save_changes_btn",
+        message: /Details for .+ were updated/,
+        should_be_successful: true,
+      }).then(function () {
+        done();
+      });
+    });
+  });
+
+  it("Check that the deactivated badge is displayed", function (done) {
+    driver
+      .findElements(By.className("badge alert-warning"))
+      .then((els) => {
+        expect(els.length).to.be.eql(1, "No badge visible");
+        return els[0].getText();
+      })
+      .then((val) => {
+        expect(val).to.be.eql("Deactivated", "It is not the deactivated badge");
+        done();
+      });
+  });
+
+  it("Logout from ADMIN", function (done) {
+    logout_user_func({
+      application_host: application_host,
+      driver: driver,
+    }).then(function () {
       done();
     });
   });
 
-  it("Logout from ADMIN", function(done){
-    logout_user_func({
-      application_host : application_host,
-      driver           : driver,
-    })
-    .then(function(){ done() });
-  });
-
-  it('Create another company for EMPLOYEE email', function(done){
+  it("Create another company for EMPLOYEE email", function (done) {
     register_new_user_func({
-      application_host : application_host,
-      user_email       : email_employee,
-      driver           : driver,
-    })
-    .then(function(){ done() });
+      application_host: application_host,
+      user_email: email_employee,
+      driver: driver,
+    }).then(function () {
+      done();
+    });
   });
 
-  it("Logout from new company created by EMPLOYEE", function(done){
+  it("Logout from new company created by EMPLOYEE", function (done) {
     logout_user_func({
-      application_host : application_host,
-      driver           : driver,
-    })
-    .then(function(){ done() });
+      application_host: application_host,
+      driver: driver,
+    }).then(function () {
+      done();
+    });
   });
 
-  it("Login back as ADMIN", function(done){
+  it("Login back as ADMIN", function (done) {
     login_user_func({
-      application_host : application_host,
-      user_email       : email_admin,
-      driver           : driver,
-    })
-    .then(function(){ done() });
+      application_host: application_host,
+      user_email: email_admin,
+      driver: driver,
+    }).then(function () {
+      done();
+    });
   });
 
-  it("Try to activate EMPLOYEE back. Open details page", function(done){
+  it("Try to activate EMPLOYEE back. Open details page", function (done) {
     open_page_func({
-      url    : application_host + 'users/edit/'+employee_id+'/',
-      driver : driver,
-    })
-    .then(function(){ done() });
+      url: application_host + "users/edit/" + employee_id + "/",
+      driver: driver,
+    }).then(function () {
+      done();
+    });
   });
 
-  it('... use end_date in future', function(done){
+  it("... use end_date in future", function (done) {
     submit_form_func({
-      driver      : driver,
-      form_params : [{
-        selector : 'input#end_date_inp',
-        value    : moment().add(1, 'days').format('YYYY-MM-DD'),
-      }],
-      submit_button_selector : 'button#save_changes_btn',
-      message : /There is an active account with similar email somewhere within system/,
-    })
-    .then(function(){ done() });
+      driver: driver,
+      form_params: [
+        {
+          selector: "input#end_date_inp",
+          value: moment().add(1, "days").format("YYYY-MM-DD"),
+        },
+      ],
+      submit_button_selector: "button#save_changes_btn",
+      message:
+        /There is an active account with similar email somewhere within system/,
+    }).then(function () {
+      done();
+    });
   });
 
-  it("... use empty end_date", function(done){
+  it("... use empty end_date", function (done) {
     submit_form_func({
-      driver      : driver,
-      form_params : [{
-        selector : 'input#end_date_inp',
-        value    : '',
-      }],
-      submit_button_selector : 'button#save_changes_btn',
-      message : /There is an active account with similar email somewhere within system/,
-    })
-    .then(function(){ done() });
+      driver: driver,
+      form_params: [
+        {
+          selector: "input#end_date_inp",
+          value: "",
+        },
+      ],
+      submit_button_selector: "button#save_changes_btn",
+      message:
+        /There is an active account with similar email somewhere within system/,
+    }).then(function () {
+      done();
+    });
   });
 
-  it('Although setting end_date to some value in past still works', function(done){
+  it("Although setting end_date to some value in past still works", function (done) {
     submit_form_func({
-      driver      : driver,
-      form_params : [{
-        selector : 'input#end_date_inp',
-        value    : moment().subtract(3, 'days').format('YYYY-MM-DD'),
-      }],
-      submit_button_selector : 'button#save_changes_btn',
-      message : /Details for .+ were updated/,
-    })
-    .then(function(){ done() });
+      driver: driver,
+      form_params: [
+        {
+          selector: "input#end_date_inp",
+          value: moment().subtract(3, "days").format("YYYY-MM-DD"),
+        },
+      ],
+      submit_button_selector: "button#save_changes_btn",
+      message: /Details for .+ were updated/,
+    }).then(function () {
+      done();
+    });
   });
 
-
-  after(function(done){
-    driver.quit().then(function(){ done(); });
+  after(function (done) {
+    driver.quit().then(function () {
+      done();
+    });
   });
 });
