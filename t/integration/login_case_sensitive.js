@@ -1,14 +1,14 @@
-'use strict'
+"use strict"
 
-var test = require('selenium-webdriver/testing'),
-  By = require('selenium-webdriver').By,
-  expect = require('chai').expect,
-  _ = require('underscore'),
-  Promise = require('bluebird'),
-  login_user_func = require('../lib/login_with_user'),
-  register_new_user_func = require('../lib/register_new_user'),
-  logout_user_func = require('../lib/logout_user'),
-  config = require('../lib/config'),
+var test = require("selenium-webdriver/testing"),
+  By = require("selenium-webdriver").By,
+  expect = require("chai").expect,
+  _ = require("underscore"),
+  Promise = require("bluebird"),
+  login_user_func = require("../lib/login_with_user"),
+  register_new_user_func = require("../lib/register_new_user"),
+  logout_user_func = require("../lib/logout_user"),
+  config = require("../lib/config"),
   application_host = config.get_application_host()
 
 /*
@@ -21,15 +21,15 @@ var test = require('selenium-webdriver/testing'),
 
 */
 
-describe('Emails are case insensitive', function() {
+describe("Emails are case insensitive", function() {
   this.timeout(config.get_execution_timeout())
 
   var admin_email, driver
 
-  it('Register an account useing upper case letters', function(done) {
+  it("Register an account useing upper case letters", function(done) {
     register_new_user_func({
       application_host: application_host,
-      user_email: new Date().getTime() + 'John.Smith@TEST.com'
+      user_email: new Date().getTime() + "John.Smith@TEST.com"
     }).then(function(data) {
       admin_email = data.email
       driver = data.driver
@@ -37,7 +37,7 @@ describe('Emails are case insensitive', function() {
     })
   })
 
-  it('Logount from current session', function(done) {
+  it("Logount from current session", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
@@ -46,7 +46,7 @@ describe('Emails are case insensitive', function() {
     })
   })
 
-  it('Login with lower case email', function(done) {
+  it("Login with lower case email", function(done) {
     login_user_func({
       application_host: application_host,
       user_email: admin_email.toLowerCase(),
@@ -56,7 +56,7 @@ describe('Emails are case insensitive', function() {
     })
   })
 
-  it('Logout', function(done) {
+  it("Logout", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
@@ -65,7 +65,7 @@ describe('Emails are case insensitive', function() {
     })
   })
 
-  it('Try to login with upper case email', function(done) {
+  it("Try to login with upper case email", function(done) {
     login_user_func({
       application_host: application_host,
       user_email: admin_email.toUpperCase(),

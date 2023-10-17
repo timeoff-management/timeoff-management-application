@@ -1,23 +1,23 @@
-'use strict'
+"use strict"
 
-const test = require('selenium-webdriver/testing'),
-  By = require('selenium-webdriver').By,
-  expect = require('chai').expect,
-  _ = require('underscore'),
-  moment = require('moment'),
-  Promise = require('bluebird'),
-  until = require('selenium-webdriver').until,
-  register_new_user_func = require('../../lib/register_new_user'),
-  login_user_func = require('../../lib/login_with_user'),
-  open_page_func = require('../../lib/open_page'),
-  submit_form_func = require('../../lib/submit_form'),
-  add_new_user_func = require('../../lib/add_new_user'),
-  logout_user_func = require('../../lib/logout_user'),
-  check_booking_func = require('../../lib/check_booking_on_calendar'),
-  check_elements_func = require('../../lib/check_elements'),
-  config = require('../../lib/config'),
+const test = require("selenium-webdriver/testing"),
+  By = require("selenium-webdriver").By,
+  expect = require("chai").expect,
+  _ = require("underscore"),
+  moment = require("moment"),
+  Promise = require("bluebird"),
+  until = require("selenium-webdriver").until,
+  register_new_user_func = require("../../lib/register_new_user"),
+  login_user_func = require("../../lib/login_with_user"),
+  open_page_func = require("../../lib/open_page"),
+  submit_form_func = require("../../lib/submit_form"),
+  add_new_user_func = require("../../lib/add_new_user"),
+  logout_user_func = require("../../lib/logout_user"),
+  check_booking_func = require("../../lib/check_booking_on_calendar"),
+  check_elements_func = require("../../lib/check_elements"),
+  config = require("../../lib/config"),
   application_host = config.get_application_host(),
-  department_edit_form_id = '#department_edit_form',
+  department_edit_form_id = "#department_edit_form",
   currentYear = moment.utc().year()
 
 /*
@@ -39,12 +39,12 @@ const test = require('selenium-webdriver/testing'),
  *
  * */
 
-describe('Revoke leave request', function() {
+describe("Revoke leave request", function() {
   this.timeout(config.get_execution_timeout())
 
   let email_admin, email_manager_a, email_manager_b, email_employee, driver
 
-  it('Create new company', function(done) {
+  it("Create new company", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(function(data) {
@@ -54,7 +54,7 @@ describe('Revoke leave request', function() {
     })
   })
 
-  it('Create MANAGER_A-to-be user', function(done) {
+  it("Create MANAGER_A-to-be user", function(done) {
     add_new_user_func({
       application_host: application_host,
       driver: driver
@@ -64,7 +64,7 @@ describe('Revoke leave request', function() {
     })
   })
 
-  it('Create MANAGER_A-to-be user', function(done) {
+  it("Create MANAGER_A-to-be user", function(done) {
     add_new_user_func({
       application_host: application_host,
       driver: driver
@@ -74,7 +74,7 @@ describe('Revoke leave request', function() {
     })
   })
 
-  it('Create EMPLOYEE-to-be user', function(done) {
+  it("Create EMPLOYEE-to-be user", function(done) {
     add_new_user_func({
       application_host: application_host,
       driver: driver
@@ -84,18 +84,18 @@ describe('Revoke leave request', function() {
     })
   })
 
-  it('Open department management page', function(done) {
+  it("Open department management page", function(done) {
     open_page_func({
-      url: application_host + 'settings/departments/',
+      url: application_host + "settings/departments/",
       driver: driver
     }).then(function() {
       done()
     })
   })
 
-  it('Update department to be supervised by MANAGER_A', function(done) {
+  it("Update department to be supervised by MANAGER_A", function(done) {
     open_page_func({
-      url: application_host + 'settings/departments/',
+      url: application_host + "settings/departments/",
       driver: driver
     })
       .then(() =>
@@ -110,12 +110,12 @@ describe('Revoke leave request', function() {
             {
               selector: 'input[name="name"]',
               // Just to make sure it is always first in the lists
-              value: 'AAAAA'
+              value: "AAAAA"
             },
             {
               selector: 'select[name="allowance"]',
               option_selector: 'option[value="15"]',
-              value: '15'
+              value: "15"
             },
             {
               selector: 'select[name="boss_id"]',
@@ -130,7 +130,7 @@ describe('Revoke leave request', function() {
       .then(() => done())
   })
 
-  it('Logout from admin account', function(done) {
+  it("Logout from admin account", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
@@ -139,7 +139,7 @@ describe('Revoke leave request', function() {
     })
   })
 
-  it('Login as EMPLOYEE user', function(done) {
+  it("Login as EMPLOYEE user", function(done) {
     login_user_func({
       application_host: application_host,
       user_email: email_employee,
@@ -149,25 +149,25 @@ describe('Revoke leave request', function() {
     })
   })
 
-  it('Open calendar page', function(done) {
+  it("Open calendar page", function(done) {
     open_page_func({
-      url: application_host + 'calendar/?show_full_year=1',
+      url: application_host + "calendar/?show_full_year=1",
       driver: driver
     }).then(function() {
       done()
     })
   })
 
-  it('And make sure that it is calendar indeed', function(done) {
+  it("And make sure that it is calendar indeed", function(done) {
     driver.getTitle().then(function(title) {
-      expect(title).to.be.equal('Calendar')
+      expect(title).to.be.equal("Calendar")
       done()
     })
   })
 
-  it('Request new leave', function(done) {
+  it("Request new leave", function(done) {
     driver
-      .findElement(By.css('#book_time_off_btn'))
+      .findElement(By.css("#book_time_off_btn"))
       .then(function(el) {
         return el.click()
       })
@@ -182,14 +182,14 @@ describe('Revoke leave request', function() {
             {
               selector: 'select[name="from_date_part"]',
               option_selector: 'option[value="2"]',
-              value: '2'
+              value: "2"
             },
             {
-              selector: 'input#from',
+              selector: "input#from",
               value: `${currentYear}-05-11`
             },
             {
-              selector: 'input#to',
+              selector: "input#to",
               value: `${currentYear}-05-12`
             }
           ],
@@ -200,18 +200,18 @@ describe('Revoke leave request', function() {
       })
   })
 
-  it('Check that all days are marked as pended', function(done) {
+  it("Check that all days are marked as pended", function(done) {
     check_booking_func({
       driver: driver,
       full_days: [moment.utc(`${currentYear}-05-12`)],
       halfs_1st_days: [moment.utc(`${currentYear}-05-11`)],
-      type: 'pended'
+      type: "pended"
     }).then(function() {
       done()
     })
   })
 
-  it('Logout from EMPLOYEE account', function(done) {
+  it("Logout from EMPLOYEE account", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
@@ -220,7 +220,7 @@ describe('Revoke leave request', function() {
     })
   })
 
-  it('Login as MANAGER_A user', function(done) {
+  it("Login as MANAGER_A user", function(done) {
     login_user_func({
       application_host: application_host,
       user_email: email_manager_a,
@@ -230,23 +230,23 @@ describe('Revoke leave request', function() {
     })
   })
 
-  it('Open requests page', function(done) {
+  it("Open requests page", function(done) {
     open_page_func({
-      url: application_host + 'requests/',
+      url: application_host + "requests/",
       driver: driver
     }).then(function() {
       done()
     })
   })
 
-  it('Make sure that newly created request is waiting for approval', function(done) {
+  it("Make sure that newly created request is waiting for approval", function(done) {
     check_elements_func({
       driver: driver,
       elements_to_check: [
         {
           selector:
             'tr[vpp="pending_for__' + email_employee + '"] .btn-warning',
-          value: 'Reject'
+          value: "Reject"
         }
       ]
     }).then(function() {
@@ -254,7 +254,7 @@ describe('Revoke leave request', function() {
     })
   })
 
-  it('Approve newly added leave request', function(done) {
+  it("Approve newly added leave request", function(done) {
     driver
       .findElement(
         By.css('tr[vpp="pending_for__' + email_employee + '"] .btn-success')
@@ -264,14 +264,14 @@ describe('Revoke leave request', function() {
       })
       .then(function() {
         // Wait until page properly is reloaded
-        return driver.wait(until.elementLocated(By.css('h1')), 1000)
+        return driver.wait(until.elementLocated(By.css("h1")), 1000)
       })
       .then(function() {
         done()
       })
   })
 
-  it('Logout from MANAGER_A account', function(done) {
+  it("Logout from MANAGER_A account", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
@@ -280,7 +280,7 @@ describe('Revoke leave request', function() {
     })
   })
 
-  it('Login as ADMIN user', function(done) {
+  it("Login as ADMIN user", function(done) {
     login_user_func({
       application_host: application_host,
       user_email: email_admin,
@@ -290,18 +290,18 @@ describe('Revoke leave request', function() {
     })
   })
 
-  it('Open department management page', function(done) {
+  it("Open department management page", function(done) {
     open_page_func({
-      url: application_host + 'settings/departments/',
+      url: application_host + "settings/departments/",
       driver: driver
     }).then(function() {
       done()
     })
   })
 
-  it('Update department to be supervised by MANAGER_B', function(done) {
+  it("Update department to be supervised by MANAGER_B", function(done) {
     open_page_func({
-      url: application_host + 'settings/departments/',
+      url: application_host + "settings/departments/",
       driver: driver
     })
       .then(() =>
@@ -316,12 +316,12 @@ describe('Revoke leave request', function() {
             {
               selector: 'input[name="name"]',
               // Just to make sure it is always first in the lists
-              value: 'AAAAA'
+              value: "AAAAA"
             },
             {
               selector: 'select[name="allowance"]',
               option_selector: 'option[value="15"]',
-              value: '15'
+              value: "15"
             },
             {
               selector: 'select[name="boss_id"]',
@@ -336,7 +336,7 @@ describe('Revoke leave request', function() {
       .then(() => done())
   })
 
-  it('Logout from admin account', function(done) {
+  it("Logout from admin account", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
@@ -345,7 +345,7 @@ describe('Revoke leave request', function() {
     })
   })
 
-  it('Login as EMPLOYEE user', function(done) {
+  it("Login as EMPLOYEE user", function(done) {
     login_user_func({
       application_host: application_host,
       user_email: email_employee,
@@ -355,31 +355,31 @@ describe('Revoke leave request', function() {
     })
   })
 
-  it('Open requests page', function(done) {
+  it("Open requests page", function(done) {
     open_page_func({
-      url: application_host + 'requests/',
+      url: application_host + "requests/",
       driver: driver
     }).then(function() {
       done()
     })
   })
 
-  it('Revoke request', function(done) {
+  it("Revoke request", function(done) {
     driver
-      .findElement(By.css('button.revoke-btn'))
+      .findElement(By.css("button.revoke-btn"))
       .then(function(el) {
         return el.click()
       })
       .then(function() {
         // Wait until page properly is reloaded
-        return driver.wait(until.elementLocated(By.css('h1')), 1000)
+        return driver.wait(until.elementLocated(By.css("h1")), 1000)
       })
       .then(function() {
         done()
       })
   })
 
-  it('Logout from EMPLOYEE account', function(done) {
+  it("Logout from EMPLOYEE account", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
@@ -388,7 +388,7 @@ describe('Revoke leave request', function() {
     })
   })
 
-  it('Login as MANAGER_B user', function(done) {
+  it("Login as MANAGER_B user", function(done) {
     login_user_func({
       application_host: application_host,
       user_email: email_manager_b,
@@ -398,23 +398,23 @@ describe('Revoke leave request', function() {
     })
   })
 
-  it('Open requests page', function(done) {
+  it("Open requests page", function(done) {
     open_page_func({
-      url: application_host + 'requests/',
+      url: application_host + "requests/",
       driver: driver
     }).then(function() {
       done()
     })
   })
 
-  it('Make sure newly revoked request is shown for approval', function(done) {
+  it("Make sure newly revoked request is shown for approval", function(done) {
     check_elements_func({
       driver: driver,
       elements_to_check: [
         {
           selector:
             'tr[vpp="pending_for__' + email_employee + '"] .btn-warning',
-          value: 'Reject'
+          value: "Reject"
         }
       ]
     }).then(function() {
@@ -422,7 +422,7 @@ describe('Revoke leave request', function() {
     })
   })
 
-  it('Approve revoke request', function(done) {
+  it("Approve revoke request", function(done) {
     driver
       .findElement(
         By.css('tr[vpp="pending_for__' + email_employee + '"] .btn-success')
@@ -432,7 +432,7 @@ describe('Revoke leave request', function() {
       })
       .then(function() {
         // Wait until page properly is reloaded
-        return driver.wait(until.elementLocated(By.css('h1')), 1000)
+        return driver.wait(until.elementLocated(By.css("h1")), 1000)
       })
       .then(function() {
         done()

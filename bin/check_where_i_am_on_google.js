@@ -1,21 +1,21 @@
 // Usage:
 //  node  bin/check_where_i_am_on_google.js --domain="nixieshop.com" --query="nixie shop"
 
-'use strict'
+"use strict"
 
-var optimist = require('optimist').argv,
-  search_query = optimist.query || 'time off manager',
-  web_site_domain = optimist.domain || 'timeoffmanager.com',
+var optimist = require("optimist").argv,
+  search_query = optimist.query || "time off manager",
+  web_site_domain = optimist.domain || "timeoffmanager.com",
   stop_on_first = true
 
-console.log('-----------------------------------')
-console.log('  Cheking query string : ' + search_query)
-console.log('  Look for domain      : ' + web_site_domain)
-console.log('-----------------------------------')
+console.log("-----------------------------------")
+console.log("  Cheking query string : " + search_query)
+console.log("  Look for domain      : " + web_site_domain)
+console.log("-----------------------------------")
 
-var webdriver = require('selenium-webdriver'),
-  _ = require('underscore'),
-  google_url = 'https://www.google.com/search?q=' + search_query + '&start=',
+var webdriver = require("selenium-webdriver"),
+  _ = require("underscore"),
+  google_url = "https://www.google.com/search?q=" + search_query + "&start=",
   driver
 
 // Instantiate new driver object
@@ -89,15 +89,15 @@ _.map(
     driver.get(google_url + i)
 
     driver.getPageSource().then(function(source) {
-      if (source.match(new RegExp('http(s)?://(www.)?' + web_site_domain))) {
-        console.log('>>>>>>> Found on ' + (1 + i / 10) + ' page')
+      if (source.match(new RegExp("http(s)?://(www.)?" + web_site_domain))) {
+        console.log(">>>>>>> Found on " + (1 + i / 10) + " page")
         if (stop_on_first) {
           driver.quit().then(function() {
             process.exit()
           })
         }
       } else {
-        console.log(1 + i / 10 + '...')
+        console.log(1 + i / 10 + "...")
       }
     })
   }

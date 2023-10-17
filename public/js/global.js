@@ -6,23 +6,23 @@ $(document).ready(function() {
   /*
    *  When FROM field in New absense form chnages: update TO one if necessary
    */
-  $('input.book-leave-from-input').on('change', function(e) {
+  $("input.book-leave-from-input").on("change", function(e) {
     e.stopPropagation()
 
-    var from_date = $('input.book-leave-from-input').datepicker('getDate')
+    var from_date = $("input.book-leave-from-input").datepicker("getDate")
 
     if (!from_date) {
       // no new value for FROM part, do nothing
-      console.log('No from date')
+      console.log("No from date")
       return
     }
 
-    var to_date = $('input.book-leave-to-input').datepicker('getDate')
+    var to_date = $("input.book-leave-to-input").datepicker("getDate")
 
     if (!to_date || (to_date && to_date.getTime() < from_date.getTime())) {
-      $('input.book-leave-to-input').datepicker(
-        'setDate',
-        $('input.book-leave-from-input').datepicker('getFormattedDate')
+      $("input.book-leave-to-input").datepicker(
+        "setDate",
+        $("input.book-leave-from-input").datepicker("getFormattedDate")
       )
     }
   })
@@ -33,51 +33,51 @@ $(document).ready(function() {
  *
  * */
 !(function(a) {
-  a.fn.datepicker.dates['en-GB'] = {
+  a.fn.datepicker.dates["en-GB"] = {
     days: [
-      'Sunday',
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday'
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
     ],
-    daysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-    daysMin: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+    daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
     months: [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December'
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
     ],
     monthsShort: [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec'
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
     ],
-    today: 'Today',
-    monthsTitle: 'Months',
-    clear: 'Clear',
+    today: "Today",
+    monthsTitle: "Months",
+    clear: "Clear",
     weekStart: 1,
-    format: 'dd/mm/yyyy'
+    format: "dd/mm/yyyy"
   }
 })(jQuery)
 
@@ -94,27 +94,27 @@ $(function() {
  *
  * */
 
-$('#add_secondary_supervisers_modal').on('show.bs.modal', function(event) {
+$("#add_secondary_supervisers_modal").on("show.bs.modal", function(event) {
   var button = $(event.relatedTarget),
-    department_name = button.data('department_name'),
-    department_id = button.data('department_id')
+    department_name = button.data("department_name"),
+    department_id = button.data("department_id")
 
   var modal = $(this)
 
-  modal.find('.modal-title strong').text(department_name)
+  modal.find(".modal-title strong").text(department_name)
 
   // Make modal window to be no hiegher then window and its content
   // scrollable
-  $('.modal .modal-body').css('overflow-y', 'auto')
-  $('.modal .modal-body').css('max-height', $(window).height() * 0.7)
+  $(".modal .modal-body").css("overflow-y", "auto")
+  $(".modal .modal-body").css("max-height", $(window).height() * 0.7)
 
   $(this)
-    .find('.modal-body')
+    .find(".modal-body")
     // Show "loading" icon while content of modal is loaded
     .html(
       '<p class="text-center"><i class="fa fa-refresh fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span></p>'
     )
-    .load('/settings/departments/available-supervisors/' + department_id + '/')
+    .load("/settings/departments/available-supervisors/" + department_id + "/")
 })
 
 /*
@@ -129,9 +129,9 @@ function getUrlVars(url) {
   }
   var vars = {},
     hash
-  var hashes = url.slice(url.indexOf('?') + 1).split('&')
+  var hashes = url.slice(url.indexOf("?") + 1).split("&")
   for (var i = 0; i < hashes.length; i++) {
-    hash = hashes[i].split('=')
+    hash = hashes[i].split("=")
     vars[hash[0]] = hash[1]
   }
   return vars
@@ -143,24 +143,24 @@ function getUrlVars(url) {
  * */
 
 $(document).ready(function() {
-  $('#team_view_month_select_btn')
+  $("#team_view_month_select_btn")
     .datepicker()
-    .on('changeDate', function(e) {
-      var url = $(e.currentTarget).data('tom')
+    .on("changeDate", function(e) {
+      var url = $(e.currentTarget).data("tom")
 
-      var form = document.createElement('form')
-      form.method = 'GET'
+      var form = document.createElement("form")
+      form.method = "GET"
       form.action = url
 
       var url_params = getUrlVars(url)
-      url_params['date'] = e.format('yyyy-mm')
+      url_params["date"] = e.format("yyyy-mm")
 
       // Move query parameters into the form
       $.each(url_params, function(key, val) {
-        var inp = document.createElement('input')
+        var inp = document.createElement("input")
         inp.name = key
         inp.value = val
-        inp.type = 'hidden'
+        inp.type = "hidden"
         form.appendChild(inp)
       })
 
@@ -171,53 +171,53 @@ $(document).ready(function() {
 })
 
 $(document).ready(function() {
-  $('[data-tom-color-picker] a').on('click', function(e) {
+  $("[data-tom-color-picker] a").on("click", function(e) {
     e.stopPropagation()
 
     // Close dropdown
     $(e.target)
-      .closest('.dropdown-menu')
-      .dropdown('toggle')
+      .closest(".dropdown-menu")
+      .dropdown("toggle")
 
-    var new_class_name = $(e.target).data('tom-color-picker-css-class')
+    var new_class_name = $(e.target).data("tom-color-picker-css-class")
 
     // Ensure newly selected color is on triggering element
     $(e.target)
-      .closest('[data-tom-color-picker]')
-      .find('button.dropdown-toggle')
-      .attr('class', function(idx, c) {
-        return c.replace(/leave_type_color_\d+/g, '')
+      .closest("[data-tom-color-picker]")
+      .find("button.dropdown-toggle")
+      .attr("class", function(idx, c) {
+        return c.replace(/leave_type_color_\d+/g, "")
       })
       .addClass(new_class_name)
 
     // Capture newly picked up color in hidden input for submission
     $(e.target)
-      .closest('[data-tom-color-picker]')
+      .closest("[data-tom-color-picker]")
       .find('input[type="hidden"]')
-      .attr('value', new_class_name)
+      .attr("value", new_class_name)
 
     return false
   })
 })
 
 $(document).ready(function() {
-  $('.user-details-summary-trigger').popover({
-    title: 'Employee summary',
+  $(".user-details-summary-trigger").popover({
+    title: "Employee summary",
     html: true,
-    trigger: 'hover',
-    placement: 'auto',
+    trigger: "hover",
+    placement: "auto",
     delay: { show: 1000, hide: 10 },
     content: function() {
-      var divId = 'tmp-id-' + $.now()
-      return detailsInPopup($(this).attr('data-user-id'), divId)
+      var divId = "tmp-id-" + $.now()
+      return detailsInPopup($(this).attr("data-user-id"), divId)
     }
   })
 
   function detailsInPopup(userId, divId) {
     $.ajax({
-      url: '/users/summary/' + userId + '/',
+      url: "/users/summary/" + userId + "/",
       success: function(response) {
-        $('#' + divId).html(response)
+        $("#" + divId).html(response)
       }
     })
 
@@ -226,23 +226,23 @@ $(document).ready(function() {
 })
 
 $(document).ready(function() {
-  $('.leave-details-summary-trigger').popover({
-    title: 'Leave summary',
+  $(".leave-details-summary-trigger").popover({
+    title: "Leave summary",
     html: true,
-    trigger: 'hover',
-    placement: 'auto',
+    trigger: "hover",
+    placement: "auto",
     delay: { show: 1000, hide: 10 },
     content: function() {
-      var divId = 'tmp-id-' + $.now()
-      return detailsInPopup($(this).attr('data-leave-id'), divId)
+      var divId = "tmp-id-" + $.now()
+      return detailsInPopup($(this).attr("data-leave-id"), divId)
     }
   })
 
   function detailsInPopup(leaveId, divId) {
     $.ajax({
-      url: '/calendar/leave-summary/' + leaveId + '/',
+      url: "/calendar/leave-summary/" + leaveId + "/",
       success: function(response) {
-        $('#' + divId).html(response)
+        $("#" + divId).html(response)
       }
     })
     return '<div id="' + divId + '">Loading...</div>'
@@ -251,27 +251,27 @@ $(document).ready(function() {
 
 $(document).ready(function() {
   const fetchNotifications = () => {
-    if (typeof $.ajax === 'function') {
+    if (typeof $.ajax === "function") {
       $.ajax({
-        url: '/api/v1/notifications/',
+        url: "/api/v1/notifications/",
         success: function(args) {
           const error = args.error
           const data = args.data
 
           if (error) {
-            console.log('Failed to fetch notifications')
+            console.log("Failed to fetch notifications")
             return
           }
 
-          const dropDown = $('#header-notification-dropdown ul.dropdown-menu')
-          const badge = $('#header-notification-dropdown .notification-badge')
+          const dropDown = $("#header-notification-dropdown ul.dropdown-menu")
+          const badge = $("#header-notification-dropdown .notification-badge")
 
           if (!data || !data.length) {
-            badge.addClass('hidden')
+            badge.addClass("hidden")
             dropDown.empty()
             dropDown.append('<li class="dropdown-header">No notifications</li>')
 
-            document.title = document.title.replace(/\(\d+\)\s*/, '')
+            document.title = document.title.replace(/\(\d+\)\s*/, "")
 
             return
           }
@@ -284,14 +284,14 @@ $(document).ready(function() {
               return acc + it
             }, 0)
 
-          badge.removeClass('hidden').html(numberOfNotifications)
+          badge.removeClass("hidden").html(numberOfNotifications)
 
-          if (!document.title.startsWith('(')) {
-            document.title = '(' + numberOfNotifications + ') ' + document.title
+          if (!document.title.startsWith("(")) {
+            document.title = "(" + numberOfNotifications + ") " + document.title
           } else {
             document.title = document.title.replace(
               /\(\d+\)/,
-              '(' + numberOfNotifications + ')'
+              "(" + numberOfNotifications + ")"
             )
           }
 
@@ -304,7 +304,7 @@ $(document).ready(function() {
                 notification.link +
                 '">' +
                 notification.label +
-                '</a></li>'
+                "</a></li>"
             )
           }
         }
@@ -321,13 +321,13 @@ $(document).ready(function() {
  * Prevent for double submission.
  */
 $(document).ready(function() {
-  $('.single-click').on('click', function(e) {
-    var form = $(e.target).closest('form')
+  $(".single-click").on("click", function(e) {
+    var form = $(e.target).closest("form")
 
     // Ensure "required" fields are populated
     var formIsValid = true
     $(form)
-      .find('[required]')
+      .find("[required]")
       .each(function(el) {
         formIsValid = formIsValid && !!el.val()
       })
@@ -337,12 +337,12 @@ $(document).ready(function() {
       return
     }
 
-    $(e.target).prop('disabled', true)
+    $(e.target).prop("disabled", true)
 
-    var submitName = $(e.target).attr('name')
+    var submitName = $(e.target).attr("name")
     if (submitName !== undefined) {
-      $('<input>')
-        .attr({ type: 'hidden', name: submitName, value: '1' })
+      $("<input>")
+        .attr({ type: "hidden", name: submitName, value: "1" })
         .appendTo(form)
     }
     form.submit()

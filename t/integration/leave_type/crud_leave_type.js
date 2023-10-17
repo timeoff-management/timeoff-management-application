@@ -1,24 +1,24 @@
-'use strict'
+"use strict"
 
-const test = require('selenium-webdriver/testing'),
-  register_new_user_func = require('../../lib/register_new_user'),
-  open_page_func = require('../../lib/open_page'),
-  submit_form_func = require('../../lib/submit_form'),
-  check_elements_func = require('../../lib/check_elements'),
-  By = require('selenium-webdriver').By,
-  config = require('../../lib/config'),
-  Bluebird = require('bluebird'),
-  expect = require('chai').expect,
+const test = require("selenium-webdriver/testing"),
+  register_new_user_func = require("../../lib/register_new_user"),
+  open_page_func = require("../../lib/open_page"),
+  submit_form_func = require("../../lib/submit_form"),
+  check_elements_func = require("../../lib/check_elements"),
+  By = require("selenium-webdriver").By,
+  config = require("../../lib/config"),
+  Bluebird = require("bluebird"),
+  expect = require("chai").expect,
   application_host = config.get_application_host(),
-  leave_type_edit_form_id = '#leave_type_edit_form',
-  leave_type_new_form_id = '#leave_type_new_form'
+  leave_type_edit_form_id = "#leave_type_edit_form",
+  leave_type_new_form_id = "#leave_type_new_form"
 
-describe('CRUD for leave types', function() {
+describe("CRUD for leave types", function() {
   var driver
 
   this.timeout(config.get_execution_timeout())
 
-  it('Performing registration process', function(done) {
+  it("Performing registration process", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(function(data) {
@@ -27,16 +27,16 @@ describe('CRUD for leave types', function() {
     })
   })
 
-  it('Open page with leave types', function(done) {
+  it("Open page with leave types", function(done) {
     open_page_func({
-      url: application_host + 'settings/general/',
+      url: application_host + "settings/general/",
       driver: driver
     }).then(function() {
       done()
     })
   })
 
-  it('Check if there are default leave types', function(done) {
+  it("Check if there are default leave types", function(done) {
     check_elements_func({
       driver: driver,
       elements_to_check: [
@@ -44,13 +44,13 @@ describe('CRUD for leave types', function() {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="name_0"]',
-          value: 'Holiday'
+          value: "Holiday"
         },
         {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="name_1"]',
-          value: 'Sick Leave'
+          value: "Sick Leave"
         }
       ]
     }).then(function() {
@@ -58,30 +58,30 @@ describe('CRUD for leave types', function() {
     })
   })
 
-  it('Make sure default colours are set for leave types', done => {
+  it("Make sure default colours are set for leave types", done => {
     driver
-      .findElements(By.css('form#leave_type_edit_form [data-tom-color-picker]'))
+      .findElements(By.css("form#leave_type_edit_form [data-tom-color-picker]"))
       .then(els => {
         expect(
           els.length,
-          'Ensure number of colour pickers is the same as leave types'
+          "Ensure number of colour pickers is the same as leave types"
         ).to.be.equal(2)
 
         return Bluebird.map(els, el =>
           el.findElement(By.css('input[type="hidden"]'))
         )
       })
-      .then(els => Bluebird.map(els, el => el.getAttribute('value')))
+      .then(els => Bluebird.map(els, el => el.getAttribute("value")))
       .then(colours => {
-        expect(colours.sort(), 'Check default colour values').to.be.deep.equal([
-          'leave_type_color_1',
-          'leave_type_color_1'
+        expect(colours.sort(), "Check default colour values").to.be.deep.equal([
+          "leave_type_color_1",
+          "leave_type_color_1"
         ])
         done()
       })
   })
 
-  it('Change Sick leave type to be non-default colour', done => {
+  it("Change Sick leave type to be non-default colour", done => {
     submit_form_func({
       driver: driver,
       form_params: [
@@ -100,18 +100,18 @@ describe('CRUD for leave types', function() {
     }).then(() => done())
   })
 
-  it('Ensure that color class for Sick days was updated to be non-default', done => {
+  it("Ensure that color class for Sick days was updated to be non-default", done => {
     driver
       .findElements(
         By.css(
           'form#leave_type_edit_form [data-tom-color-picker] input[type="hidden"]'
         )
       )
-      .then(els => Bluebird.map(els, el => el.getAttribute('value')))
+      .then(els => Bluebird.map(els, el => el.getAttribute("value")))
       .then(colours => {
-        expect(colours.sort(), 'Check default colour values').to.be.deep.equal([
-          'leave_type_color_1',
-          'leave_type_color_2'
+        expect(colours.sort(), "Check default colour values").to.be.deep.equal([
+          "leave_type_color_1",
+          "leave_type_color_2"
         ])
         done()
       })
@@ -126,14 +126,14 @@ describe('CRUD for leave types', function() {
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="allowance_0"]',
           tick: true,
-          value: 'on'
+          value: "on"
         },
         {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="allowance_1"]',
           tick: true,
-          value: 'off'
+          value: "off"
         }
       ]
     }).then(function() {
@@ -150,7 +150,7 @@ describe('CRUD for leave types', function() {
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="allowance_1"]',
           tick: true,
-          value: 'on'
+          value: "on"
         }
       ],
       should_be_successful: true,
@@ -170,14 +170,14 @@ describe('CRUD for leave types', function() {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="allowance_0"]',
-          value: 'on',
+          value: "on",
           tick: true
         },
         {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="allowance_1"]',
-          value: 'on',
+          value: "on",
           tick: true
         }
       ]
@@ -186,7 +186,7 @@ describe('CRUD for leave types', function() {
     })
   })
 
-  it('Check that it is possible to update Limits', function(done) {
+  it("Check that it is possible to update Limits", function(done) {
     submit_form_func({
       driver: driver,
       form_params: [
@@ -194,13 +194,13 @@ describe('CRUD for leave types', function() {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="limit_0"]',
-          value: '0'
+          value: "0"
         },
         {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="limit_1"]',
-          value: '5'
+          value: "5"
         }
       ],
       submit_button_selector:
@@ -212,7 +212,7 @@ describe('CRUD for leave types', function() {
     })
   })
 
-  it('Make sure that Limit cannot be negative', function(done) {
+  it("Make sure that Limit cannot be negative", function(done) {
     submit_form_func({
       driver: driver,
       form_params: [
@@ -220,7 +220,7 @@ describe('CRUD for leave types', function() {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="limit_0"]',
-          value: '-1'
+          value: "-1"
         }
       ],
       submit_button_selector:
@@ -231,9 +231,9 @@ describe('CRUD for leave types', function() {
     })
   })
 
-  it('Add new leave type', function(done) {
+  it("Add new leave type", function(done) {
     driver
-      .findElement(By.css('#add_new_leave_type_btn'))
+      .findElement(By.css("#add_new_leave_type_btn"))
       .then(function(el) {
         return el.click()
       })
@@ -246,12 +246,12 @@ describe('CRUD for leave types', function() {
           form_params: [
             {
               selector: leave_type_new_form_id + ' input[name="name__new"]',
-              value: 'AAAAA'
+              value: "AAAAA"
             },
             {
               selector:
                 leave_type_new_form_id + ' input[name="use_allowance__new"]',
-              value: 'on',
+              value: "on",
               tick: true
             }
           ],
@@ -272,19 +272,19 @@ describe('CRUD for leave types', function() {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="name_0"]',
-          value: 'AAAAA'
+          value: "AAAAA"
         },
         {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="name_1"]',
-          value: 'Holiday'
+          value: "Holiday"
         },
         {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="name_2"]',
-          value: 'Sick Leave'
+          value: "Sick Leave"
         }
       ]
     }).then(function() {
@@ -300,7 +300,7 @@ describe('CRUD for leave types', function() {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="name_0"]',
-          value: 'MM'
+          value: "MM"
         }
       ],
       submit_button_selector:
@@ -311,7 +311,7 @@ describe('CRUD for leave types', function() {
     })
   })
 
-  it('Make sure that updated new leave type was moved into second position', function(done) {
+  it("Make sure that updated new leave type was moved into second position", function(done) {
     check_elements_func({
       driver: driver,
       elements_to_check: [
@@ -319,19 +319,19 @@ describe('CRUD for leave types', function() {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="name_0"]',
-          value: 'Holiday'
+          value: "Holiday"
         },
         {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="name_1"]',
-          value: 'MM'
+          value: "MM"
         },
         {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="name_2"]',
-          value: 'Sick Leave'
+          value: "Sick Leave"
         }
       ]
     }).then(function() {
@@ -339,7 +339,7 @@ describe('CRUD for leave types', function() {
     })
   })
 
-  it('Remove empty newly added leave type', function(done) {
+  it("Remove empty newly added leave type", function(done) {
     submit_form_func({
       driver: driver,
       elements_to_check: [
@@ -347,13 +347,13 @@ describe('CRUD for leave types', function() {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="name_0"]',
-          value: 'Holiday'
+          value: "Holiday"
         },
         {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="name_1"]',
-          value: 'Sick Leave'
+          value: "Sick Leave"
         }
       ],
       submit_button_selector:
@@ -365,7 +365,7 @@ describe('CRUD for leave types', function() {
     })
   })
 
-  it('And make sure only two old leave types are left', function(done) {
+  it("And make sure only two old leave types are left", function(done) {
     check_elements_func({
       driver: driver,
       elements_to_check: [
@@ -373,13 +373,13 @@ describe('CRUD for leave types', function() {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="name_0"]',
-          value: 'Holiday'
+          value: "Holiday"
         },
         {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="name_1"]',
-          value: 'Sick Leave'
+          value: "Sick Leave"
         }
       ]
     }).then(function() {
@@ -387,9 +387,9 @@ describe('CRUD for leave types', function() {
     })
   })
 
-  it('Add AAA and ZZZ leave types', function(done) {
+  it("Add AAA and ZZZ leave types", function(done) {
     driver
-      .findElement(By.css('#add_new_leave_type_btn'))
+      .findElement(By.css("#add_new_leave_type_btn"))
       .then(el => el.click())
       // This is very important line when working with Bootstrap modals!
       .then(() => driver.sleep(1000))
@@ -399,12 +399,12 @@ describe('CRUD for leave types', function() {
           form_params: [
             {
               selector: leave_type_new_form_id + ' input[name="name__new"]',
-              value: 'ZZZ'
+              value: "ZZZ"
             },
             {
               selector:
                 leave_type_new_form_id + ' input[name="use_allowance__new"]',
-              value: 'on',
+              value: "on",
               tick: true
             }
           ],
@@ -413,7 +413,7 @@ describe('CRUD for leave types', function() {
           message: /Changes to leave types were saved/
         })
       )
-      .then(() => driver.findElement(By.css('#add_new_leave_type_btn')))
+      .then(() => driver.findElement(By.css("#add_new_leave_type_btn")))
       .then(el => el.click())
       .then(() => driver.sleep(1000))
       .then(() =>
@@ -422,12 +422,12 @@ describe('CRUD for leave types', function() {
           form_params: [
             {
               selector: leave_type_new_form_id + ' input[name="name__new"]',
-              value: 'AAA'
+              value: "AAA"
             },
             {
               selector:
                 leave_type_new_form_id + ' input[name="use_allowance__new"]',
-              value: 'on',
+              value: "on",
               tick: true
             }
           ],
@@ -439,7 +439,7 @@ describe('CRUD for leave types', function() {
       .then(() => done())
   })
 
-  it('Ensure AAA is first and ZZZ is last in the list (general settings page)', function(done) {
+  it("Ensure AAA is first and ZZZ is last in the list (general settings page)", function(done) {
     check_elements_func({
       driver: driver,
       elements_to_check: [
@@ -447,66 +447,66 @@ describe('CRUD for leave types', function() {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="name_0"]',
-          value: 'AAA'
+          value: "AAA"
         },
         {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="name_1"]',
-          value: 'Holiday'
+          value: "Holiday"
         },
         {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="name_2"]',
-          value: 'Sick Leave'
+          value: "Sick Leave"
         },
         {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="name_3"]',
-          value: 'ZZZ'
+          value: "ZZZ"
         }
       ]
     }).then(() => done())
   })
 
-  it('Ensure AAA is a first and ZZZ is a last in a list on book holiday modal', function(done) {
+  it("Ensure AAA is a first and ZZZ is a last in a list on book holiday modal", function(done) {
     driver
-      .findElements(By.css('select#leave_type option'))
+      .findElements(By.css("select#leave_type option"))
       .then(options =>
         Bluebird.map(options, option => {
           let option_info = {}
           return option
-            .getAttribute('data-tom-index')
+            .getAttribute("data-tom-index")
             .then(val => Bluebird.resolve((option_info.value = val)))
-            .then(() => option.getAttribute('data-tom'))
+            .then(() => option.getAttribute("data-tom"))
             .then(txt => Bluebird.resolve((option_info.text = txt)))
             .then(() => Bluebird.resolve(option_info))
         })
       )
       .then(option_infos => {
-        expect(option_infos[0], 'AAA is first').to.include({
-          value: '0',
-          text: 'AAA'
+        expect(option_infos[0], "AAA is first").to.include({
+          value: "0",
+          text: "AAA"
         })
-        expect(option_infos[3], 'ZZZ is last').to.include({
-          value: '3',
-          text: 'ZZZ'
+        expect(option_infos[3], "ZZZ is last").to.include({
+          value: "3",
+          text: "ZZZ"
         })
         done()
       })
   })
 
-  it('Mark ZZZ as one to be default one', function(done) {
+  it("Mark ZZZ as one to be default one", function(done) {
     driver
       .findElement(
         By.css(
           leave_type_edit_form_id + ' input[data-tom-leave-type-order="name_3"]'
         )
       )
-      .then(inp => inp.getAttribute('name'))
-      .then(name => Bluebird.resolve(name.split('__')[1]))
+      .then(inp => inp.getAttribute("name"))
+      .then(name => Bluebird.resolve(name.split("__")[1]))
       .then(id =>
         submit_form_func({
           driver: driver,
@@ -518,7 +518,7 @@ describe('CRUD for leave types', function() {
                 id +
                 '"]',
               tick: true,
-              value: 'on'
+              value: "on"
             }
           ],
           submit_button_selector:
@@ -529,7 +529,7 @@ describe('CRUD for leave types', function() {
       .then(() => done())
   })
 
-  it('Ensure AAA is first and ZZZ is last in the list (general settings page)', function(done) {
+  it("Ensure AAA is first and ZZZ is last in the list (general settings page)", function(done) {
     check_elements_func({
       driver: driver,
       elements_to_check: [
@@ -537,52 +537,52 @@ describe('CRUD for leave types', function() {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="name_0"]',
-          value: 'AAA'
+          value: "AAA"
         },
         {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="name_1"]',
-          value: 'Holiday'
+          value: "Holiday"
         },
         {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="name_2"]',
-          value: 'Sick Leave'
+          value: "Sick Leave"
         },
         {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="name_3"]',
-          value: 'ZZZ'
+          value: "ZZZ"
         }
       ]
     }).then(() => done())
   })
 
-  it('Ensure ZZZ is a first and AAA is a second in a list on book holiday modal', function(done) {
+  it("Ensure ZZZ is a first and AAA is a second in a list on book holiday modal", function(done) {
     driver
-      .findElements(By.css('select#leave_type option'))
+      .findElements(By.css("select#leave_type option"))
       .then(options =>
         Bluebird.map(options, option => {
           let option_info = {}
           return option
-            .getAttribute('data-tom-index')
+            .getAttribute("data-tom-index")
             .then(val => Bluebird.resolve((option_info.value = val)))
-            .then(() => option.getAttribute('data-tom'))
+            .then(() => option.getAttribute("data-tom"))
             .then(txt => Bluebird.resolve((option_info.text = txt)))
             .then(() => Bluebird.resolve(option_info))
         })
       )
       .then(option_infos => {
-        expect(option_infos[0], 'ZZZ is first').to.include({
-          value: '0',
-          text: 'ZZZ'
+        expect(option_infos[0], "ZZZ is first").to.include({
+          value: "0",
+          text: "ZZZ"
         })
-        expect(option_infos[1], 'AAA is last').to.include({
-          value: '1',
-          text: 'AAA'
+        expect(option_infos[1], "AAA is last").to.include({
+          value: "1",
+          text: "AAA"
         })
         done()
       })

@@ -1,13 +1,13 @@
-'use strict'
+"use strict"
 
-var webdriver = require('selenium-webdriver'),
-  By = require('selenium-webdriver').By,
-  Key = require('selenium-webdriver').Key,
-  expect = require('chai').expect,
-  _ = require('underscore'),
-  Promise = require('bluebird'),
-  until = require('selenium-webdriver').until,
-  check_elements = require('./check_elements')
+var webdriver = require("selenium-webdriver"),
+  By = require("selenium-webdriver").By,
+  Key = require("selenium-webdriver").Key,
+  expect = require("chai").expect,
+  _ = require("underscore"),
+  Promise = require("bluebird"),
+  until = require("selenium-webdriver").until,
+  check_elements = require("./check_elements")
 
 var submit_form_func = Promise.promisify(function(args, callback) {
   var driver = args.driver,
@@ -41,18 +41,18 @@ var submit_form_func = Promise.promisify(function(args, callback) {
         }
 
         driver.findElement(By.css(test_case.selector)).then(function(el) {
-          if (test_case.hasOwnProperty('option_selector')) {
+          if (test_case.hasOwnProperty("option_selector")) {
             el.click()
             return el
               .findElement(By.css(test_case.option_selector))
               .then(function(el) {
                 return el.click()
               })
-          } else if (test_case.hasOwnProperty('tick')) {
+          } else if (test_case.hasOwnProperty("tick")) {
             return el.click()
           } else if (test_case.file) {
             return Promise.resolve().then(() => el.sendKeys(test_case.value))
-          } else if (test_case.hasOwnProperty('dropdown_option')) {
+          } else if (test_case.hasOwnProperty("dropdown_option")) {
             return el
               .click()
               .then(() => driver.findElement(By.css(test_case.dropdown_option)))
@@ -77,14 +77,14 @@ var submit_form_func = Promise.promisify(function(args, callback) {
 
   // Accept the confirm dialog
   if (confirm_dialog) {
-    driver.executeScript('window.confirm = function(msg) { return true; }')
+    driver.executeScript("window.confirm = function(msg) { return true; }")
   }
 
   // Submit the form
   driver.findElement(By.css(submit_button_selector)).then(function(el) {
     el.click()
 
-    driver.wait(until.elementLocated(By.css('title')), 1000)
+    driver.wait(until.elementLocated(By.css("title")), 1000)
   })
 
   // TODO this is not doing what it supposed to be doing
@@ -103,7 +103,7 @@ var submit_form_func = Promise.promisify(function(args, callback) {
 
   // Check that message is as expected
   if (multi_line_message) {
-    driver.findElements(By.css('div.alert')).then(function(els) {
+    driver.findElements(By.css("div.alert")).then(function(els) {
       return Promise.all(
         _.map(els, function(el) {
           return el.getText()
@@ -123,7 +123,7 @@ var submit_form_func = Promise.promisify(function(args, callback) {
     })
   } else {
     driver
-      .findElement(By.css('div.alert'))
+      .findElement(By.css("div.alert"))
       .then(function(el) {
         return el.getText()
       })

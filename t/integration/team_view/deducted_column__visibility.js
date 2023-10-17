@@ -1,4 +1,4 @@
-'use strict'
+"use strict"
 
 /*
  *  Scenario:
@@ -22,29 +22,29 @@
  *
  * */
 
-const test = require('selenium-webdriver/testing'),
-  By = require('selenium-webdriver').By,
-  Promise = require('bluebird'),
-  expect = require('chai').expect,
-  add_new_user_func = require('../../lib/add_new_user'),
-  check_elements_func = require('../../lib/check_elements'),
-  config = require('../../lib/config'),
-  login_user_func = require('../../lib/login_with_user'),
-  logout_user_func = require('../../lib/logout_user'),
-  open_page_func = require('../../lib/open_page'),
-  register_new_user_func = require('../../lib/register_new_user'),
-  submit_form_func = require('../../lib/submit_form'),
-  user_info_func = require('../../lib/user_info'),
+const test = require("selenium-webdriver/testing"),
+  By = require("selenium-webdriver").By,
+  Promise = require("bluebird"),
+  expect = require("chai").expect,
+  add_new_user_func = require("../../lib/add_new_user"),
+  check_elements_func = require("../../lib/check_elements"),
+  config = require("../../lib/config"),
+  login_user_func = require("../../lib/login_with_user"),
+  logout_user_func = require("../../lib/logout_user"),
+  open_page_func = require("../../lib/open_page"),
+  register_new_user_func = require("../../lib/register_new_user"),
+  submit_form_func = require("../../lib/submit_form"),
+  user_info_func = require("../../lib/user_info"),
   application_host = config.get_application_host(),
-  new_department_form_id = '#add_new_department_form',
-  company_edit_form_id = '#company_edit_form'
+  new_department_form_id = "#add_new_department_form",
+  company_edit_form_id = "#company_edit_form"
 
-describe('Check that values for new columns are shown only for employess currently login user can supervise', function() {
+describe("Check that values for new columns are shown only for employess currently login user can supervise", function() {
   this.timeout(config.get_execution_timeout())
 
   let driver, email_A, user_id_A, email_B, user_id_B, email_C, user_id_C
 
-  it('Register new company as admin user A', function(done) {
+  it("Register new company as admin user A", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(data => {
@@ -54,7 +54,7 @@ describe('Check that values for new columns are shown only for employess current
     })
   })
 
-  it('Create second user B', function(done) {
+  it("Create second user B", function(done) {
     add_new_user_func({
       application_host: application_host,
       driver: driver
@@ -64,7 +64,7 @@ describe('Check that values for new columns are shown only for employess current
     })
   })
 
-  it('Create second user C', function(done) {
+  it("Create second user C", function(done) {
     add_new_user_func({
       application_host: application_host,
       driver: driver
@@ -74,7 +74,7 @@ describe('Check that values for new columns are shown only for employess current
     })
   })
 
-  it('Obtain information about user A', function(done) {
+  it("Obtain information about user A", function(done) {
     user_info_func({
       driver: driver,
       email: email_A
@@ -84,7 +84,7 @@ describe('Check that values for new columns are shown only for employess current
     })
   })
 
-  it('Obtain information about user B', function(done) {
+  it("Obtain information about user B", function(done) {
     user_info_func({
       driver: driver,
       email: email_B
@@ -94,7 +94,7 @@ describe('Check that values for new columns are shown only for employess current
     })
   })
 
-  it('Obtain information about user C', function(done) {
+  it("Obtain information about user C", function(done) {
     user_info_func({
       driver: driver,
       email: email_C
@@ -104,9 +104,9 @@ describe('Check that values for new columns are shown only for employess current
     })
   })
 
-  it('Open page for editing company details', function(done) {
+  it("Open page for editing company details", function(done) {
     open_page_func({
-      url: application_host + 'settings/general/',
+      url: application_host + "settings/general/",
       driver: driver
     }).then(() => done())
   })
@@ -117,21 +117,21 @@ describe('Check that values for new columns are shown only for employess current
       elements_to_check: [
         {
           selector: company_edit_form_id + ' input[name="share_all_absences"]',
-          value: 'off',
+          value: "off",
           tick: true
         }
       ]
     }).then(() => done())
   })
 
-  it('... and tick that box ON', function(done) {
+  it("... and tick that box ON", function(done) {
     submit_form_func({
       driver: driver,
       form_params: [
         {
           selector: company_edit_form_id + ' input[name="share_all_absences"]',
           tick: true,
-          value: 'on'
+          value: "on"
         }
       ],
       submit_button_selector: company_edit_form_id + ' button[type="submit"]',
@@ -140,16 +140,16 @@ describe('Check that values for new columns are shown only for employess current
     }).then(() => done())
   })
 
-  it('Open department management page', function(done) {
+  it("Open department management page", function(done) {
     open_page_func({
-      url: application_host + 'settings/departments/',
+      url: application_host + "settings/departments/",
       driver: driver
     }).then(() => done())
   })
 
-  it('Add new department and make its approver to be user B', function(done) {
+  it("Add new department and make its approver to be user B", function(done) {
     driver
-      .findElement(By.css('#add_new_department_btn'))
+      .findElement(By.css("#add_new_department_btn"))
       .then(el => el.click())
       .then(function() {
         // This is very important line when working with Bootstrap modals!
@@ -161,12 +161,12 @@ describe('Check that values for new columns are shown only for employess current
             {
               selector: `${new_department_form_id} input[name="name__new"]`,
               // Just to make sure it is always first in the lists
-              value: 'AAAAA'
+              value: "AAAAA"
             },
             {
               selector: `${new_department_form_id} select[name="allowance__new"]`,
               option_selector: 'option[value="15"]',
-              value: '15'
+              value: "15"
             },
             {
               selector: `${new_department_form_id} select[name="boss_id__new"]`,
@@ -181,16 +181,16 @@ describe('Check that values for new columns are shown only for employess current
       })
   })
 
-  it('Open user editing page for user B', function(done) {
+  it("Open user editing page for user B", function(done) {
     open_page_func({
       url: `${application_host}users/edit/${user_id_C}/`,
       driver: driver
     }).then(() => done())
   })
 
-  it('And make sure it is part of the newly added department', function(done) {
+  it("And make sure it is part of the newly added department", function(done) {
     submit_form_func({
-      submit_button_selector: 'button#save_changes_btn',
+      submit_button_selector: "button#save_changes_btn",
       driver: driver,
       form_params: [
         {
@@ -206,7 +206,7 @@ describe('Check that values for new columns are shown only for employess current
     })
   })
 
-  it('As user A ensure team view shows deducted values for all three users', function(done) {
+  it("As user A ensure team view shows deducted values for all three users", function(done) {
     open_page_func({
       url: `${application_host}calendar/teamview/`,
       driver: driver
@@ -220,7 +220,7 @@ describe('Check that values for new columns are shown only for employess current
       )
       .then(el => el.getText())
       .then(txt => {
-        expect(txt).to.be.eql('0')
+        expect(txt).to.be.eql("0")
         return Promise.resolve(1)
       })
 
@@ -233,7 +233,7 @@ describe('Check that values for new columns are shown only for employess current
       )
       .then(el => el.getText())
       .then(txt => {
-        expect(txt).to.be.eql('0')
+        expect(txt).to.be.eql("0")
         return Promise.resolve(1)
       })
 
@@ -246,7 +246,7 @@ describe('Check that values for new columns are shown only for employess current
       )
       .then(el => el.getText())
       .then(txt => {
-        expect(txt).to.be.eql('0')
+        expect(txt).to.be.eql("0")
         return Promise.resolve(1)
       })
 
@@ -255,14 +255,14 @@ describe('Check that values for new columns are shown only for employess current
       })
   })
 
-  it('Logout from user A (admin)', function(done) {
+  it("Logout from user A (admin)", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(() => done())
   })
 
-  it('Login as user B', function(done) {
+  it("Login as user B", function(done) {
     login_user_func({
       application_host: application_host,
       user_email: email_B,
@@ -270,7 +270,7 @@ describe('Check that values for new columns are shown only for employess current
     }).then(() => done())
   })
 
-  it('Login as user B and ensure she sees deducted days only for user B (self) and user C but not for user A', function(done) {
+  it("Login as user B and ensure she sees deducted days only for user B (self) and user C but not for user A", function(done) {
     open_page_func({
       url: `${application_host}calendar/teamview/`,
       driver: driver
@@ -284,7 +284,7 @@ describe('Check that values for new columns are shown only for employess current
       )
       .then(el => el.getText())
       .then(txt => {
-        expect(txt).to.be.eql('')
+        expect(txt).to.be.eql("")
         return Promise.resolve(1)
       })
 
@@ -297,7 +297,7 @@ describe('Check that values for new columns are shown only for employess current
       )
       .then(el => el.getText())
       .then(txt => {
-        expect(txt).to.be.eql('0')
+        expect(txt).to.be.eql("0")
         return Promise.resolve(1)
       })
 
@@ -310,7 +310,7 @@ describe('Check that values for new columns are shown only for employess current
       )
       .then(el => el.getText())
       .then(txt => {
-        expect(txt).to.be.eql('0')
+        expect(txt).to.be.eql("0")
         return Promise.resolve(1)
       })
 
@@ -319,14 +319,14 @@ describe('Check that values for new columns are shown only for employess current
       })
   })
 
-  it('Logout from user B', function(done) {
+  it("Logout from user B", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(() => done())
   })
 
-  it('Login as user C', function(done) {
+  it("Login as user C", function(done) {
     login_user_func({
       application_host: application_host,
       user_email: email_C,
@@ -334,7 +334,7 @@ describe('Check that values for new columns are shown only for employess current
     }).then(() => done())
   })
 
-  it('Login as user C and ensure she sees only values for her account', function(done) {
+  it("Login as user C and ensure she sees only values for her account", function(done) {
     open_page_func({
       url: `${application_host}calendar/teamview/`,
       driver: driver
@@ -348,7 +348,7 @@ describe('Check that values for new columns are shown only for employess current
       )
       .then(el => el.getText())
       .then(txt => {
-        expect(txt).to.be.eql('')
+        expect(txt).to.be.eql("")
         return Promise.resolve(1)
       })
 
@@ -361,7 +361,7 @@ describe('Check that values for new columns are shown only for employess current
       )
       .then(el => el.getText())
       .then(txt => {
-        expect(txt).to.be.eql('')
+        expect(txt).to.be.eql("")
         return Promise.resolve(1)
       })
 
@@ -374,7 +374,7 @@ describe('Check that values for new columns are shown only for employess current
       )
       .then(el => el.getText())
       .then(txt => {
-        expect(txt).to.be.eql('0')
+        expect(txt).to.be.eql("0")
         return Promise.resolve(1)
       })
 

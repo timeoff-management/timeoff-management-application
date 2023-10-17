@@ -1,15 +1,15 @@
-'use strict'
+"use strict"
 
-var test = require('selenium-webdriver/testing'),
-  register_new_user_func = require('../lib/register_new_user'),
-  login_user_func = require('../lib/login_with_user'),
-  add_new_user_func = require('../lib/add_new_user'),
-  By = require('selenium-webdriver').By,
-  bluebird = require('bluebird'),
-  expect = require('chai').expect,
-  _ = require('underscore'),
-  logout_user_func = require('../lib/logout_user'),
-  config = require('../lib/config'),
+var test = require("selenium-webdriver/testing"),
+  register_new_user_func = require("../lib/register_new_user"),
+  login_user_func = require("../lib/login_with_user"),
+  add_new_user_func = require("../lib/add_new_user"),
+  By = require("selenium-webdriver").By,
+  bluebird = require("bluebird"),
+  expect = require("chai").expect,
+  _ = require("underscore"),
+  logout_user_func = require("../lib/logout_user"),
+  config = require("../lib/config"),
   application_host = config.get_application_host()
 
 /*
@@ -25,12 +25,12 @@ var test = require('selenium-webdriver/testing'),
  *
  * */
 
-describe('Menu bar reflect permissions of logged in user', function() {
+describe("Menu bar reflect permissions of logged in user", function() {
   this.timeout(config.get_execution_timeout())
 
   var ordinary_user_email, driver
 
-  it('Create new company', function(done) {
+  it("Create new company", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(function(data) {
@@ -39,7 +39,7 @@ describe('Menu bar reflect permissions of logged in user', function() {
     })
   })
 
-  it('Check that all necessary menus are shown', function(done) {
+  it("Check that all necessary menus are shown", function(done) {
     var promises_to_check = check_presense_promises({
       driver: driver,
       presense: true,
@@ -60,7 +60,7 @@ describe('Menu bar reflect permissions of logged in user', function() {
     })
   })
 
-  it('Create non-admin user', function(done) {
+  it("Create non-admin user", function(done) {
     add_new_user_func({
       application_host: application_host,
       driver: driver
@@ -70,7 +70,7 @@ describe('Menu bar reflect permissions of logged in user', function() {
     })
   })
 
-  it('Logout from admin acount', function(done) {
+  it("Logout from admin acount", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
@@ -79,7 +79,7 @@ describe('Menu bar reflect permissions of logged in user', function() {
     })
   })
 
-  it('Login as ordinary user', function(done) {
+  it("Login as ordinary user", function(done) {
     login_user_func({
       application_host: application_host,
       user_email: ordinary_user_email,
@@ -89,7 +89,7 @@ describe('Menu bar reflect permissions of logged in user', function() {
     })
   })
 
-  it('Check that limited links are there', function(done) {
+  it("Check that limited links are there", function(done) {
     var promises_to_check = check_presense_promises({
       driver: driver,
       presense: true,
@@ -107,7 +107,7 @@ describe('Menu bar reflect permissions of logged in user', function() {
     })
   })
 
-  it('Check that admin links are not shown', function(done) {
+  it("Check that admin links are not shown", function(done) {
     var promises_to_check = check_presense_promises({
       driver: driver,
       presense: false,

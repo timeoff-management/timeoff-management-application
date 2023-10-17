@@ -1,20 +1,20 @@
-'use strict'
+"use strict"
 
-const test = require('selenium-webdriver/testing'),
-  By = require('selenium-webdriver').By,
-  expect = require('chai').expect,
-  _ = require('underscore'),
-  Promise = require('bluebird'),
-  fs = Promise.promisifyAll(require('fs')),
-  csv = Promise.promisifyAll(require('csv')),
-  register_new_user_func = require('../lib/register_new_user'),
-  login_user_func = require('../lib/login_with_user'),
-  logout_user_func = require('../lib/logout_user'),
-  open_page_func = require('../lib/open_page'),
-  submit_form_func = require('../lib/submit_form'),
-  add_new_user_func = require('../lib/add_new_user'),
-  config = require('../lib/config'),
-  user_info_func = require('../lib/user_info'),
+const test = require("selenium-webdriver/testing"),
+  By = require("selenium-webdriver").By,
+  expect = require("chai").expect,
+  _ = require("underscore"),
+  Promise = require("bluebird"),
+  fs = Promise.promisifyAll(require("fs")),
+  csv = Promise.promisifyAll(require("csv")),
+  register_new_user_func = require("../lib/register_new_user"),
+  login_user_func = require("../lib/login_with_user"),
+  logout_user_func = require("../lib/logout_user"),
+  open_page_func = require("../lib/open_page"),
+  submit_form_func = require("../lib/submit_form"),
+  add_new_user_func = require("../lib/add_new_user"),
+  config = require("../lib/config"),
+  user_info_func = require("../lib/user_info"),
   application_host = config.get_application_host()
 
 /*
@@ -30,16 +30,16 @@ const test = require('selenium-webdriver/testing'),
  *
  * */
 
-describe('Bulk import of users', function() {
+describe("Bulk import of users", function() {
   this.timeout(config.get_execution_timeout())
 
   let email_admin,
     driver,
     csv_data,
     sample_email,
-    test_users_filename = __dirname + '/test.csv'
+    test_users_filename = __dirname + "/test.csv"
 
-  it('Create new company', function(done) {
+  it("Create new company", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(data => {
@@ -48,25 +48,25 @@ describe('Bulk import of users', function() {
     })
   })
 
-  it('Navigate to bulk upload page', function(done) {
+  it("Navigate to bulk upload page", function(done) {
     open_page_func({
-      url: application_host + 'users/import/',
+      url: application_host + "users/import/",
       driver: driver
     }).then(function() {
       done()
     })
   })
 
-  it('Create test .CSV file for the test', function(done) {
-    csv_data = [['email', 'name', 'lastname', 'department']]
+  it("Create test .CSV file for the test", function(done) {
+    csv_data = [["email", "name", "lastname", "department"]]
 
     let token = new Date().getTime()
     for (let i = 0; i < 10; i++) {
       csv_data.push([
-        'test_csv_' + i + '_' + token + '@test.com',
-        'name_csv_' + i + '_' + token + '@test.com',
-        'lastname_csv_' + i + '_' + token + '@test.com',
-        'Sales'
+        "test_csv_" + i + "_" + token + "@test.com",
+        "name_csv_" + i + "_" + token + "@test.com",
+        "lastname_csv_" + i + "_" + token + "@test.com",
+        "Sales"
       ])
     }
 
@@ -81,22 +81,22 @@ describe('Bulk import of users', function() {
       .then(() => done())
   })
 
-  it('Upload user import file', function(done) {
+  it("Upload user import file", function(done) {
     let regex = new RegExp(
-      'Successfully imported users with following emails: ' +
+      "Successfully imported users with following emails: " +
         csv_data
           .slice(1)
           .map(it => it[0])
           .sort()
-          .join(', ')
+          .join(", ")
     )
 
     submit_form_func({
-      submit_button_selector: '#submit_users_btn',
+      submit_button_selector: "#submit_users_btn",
       driver: driver,
       form_params: [
         {
-          selector: '#users_input_inp',
+          selector: "#users_input_inp",
           value: test_users_filename,
           file: true
         }
@@ -105,7 +105,7 @@ describe('Bulk import of users', function() {
     }).then(() => done())
   })
 
-  it('Ensure that imported users are in the system', function(done) {
+  it("Ensure that imported users are in the system", function(done) {
     let users_ids
     // Get IDs of newly added users
     Promise.map(csv_data.slice(1).map(it => it[0]), email => {
@@ -119,7 +119,7 @@ describe('Bulk import of users', function() {
         users_ids = ids
 
         return open_page_func({
-          url: application_host + 'users/',
+          url: application_host + "users/",
           driver: driver
         })
       })
@@ -132,9 +132,9 @@ describe('Bulk import of users', function() {
             .then(el => {
               expect(
                 el,
-                'Ensure that newly added user ID ' +
+                "Ensure that newly added user ID " +
                   id +
-                  ' exists on Users page'
+                  " exists on Users page"
               ).to.exists
               return Promise.resolve()
             })
@@ -144,7 +144,7 @@ describe('Bulk import of users', function() {
       .then(() => done())
   })
 
-  it('Logout from admin account', function(done) {
+  it("Logout from admin account", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
@@ -158,7 +158,7 @@ describe('Bulk import of users', function() {
       application_host: application_host,
       user_email: sample_email,
       driver: driver,
-      password: 'undefined',
+      password: "undefined",
       should_fail: true
     }).then(() => done())
   })

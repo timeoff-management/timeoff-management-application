@@ -5,9 +5,9 @@
  *
  * */
 
-'use strict'
+"use strict"
 
-var bluebird = require('bluebird')
+var bluebird = require("bluebird")
 
 // Function that is executed on the client,
 // it relies on presence of jQuery and window.VPP_email
@@ -15,15 +15,15 @@ var func_to_inject = function() {
   var callback = arguments[arguments.length - 1]
 
   $.ajax({
-    url: '/users/search/',
-    type: 'post',
+    url: "/users/search/",
+    type: "post",
     data: {
       email: window.VPP_email
     },
     headers: {
-      Accept: 'application/json'
+      Accept: "application/json"
     },
-    dataType: 'json',
+    dataType: "json",
     success: function(data) {
       callback(data)
     }

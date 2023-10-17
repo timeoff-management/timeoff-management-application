@@ -1,21 +1,21 @@
-'use strict'
+"use strict"
 
-var test = require('selenium-webdriver/testing'),
-  By = require('selenium-webdriver').By,
-  expect = require('chai').expect,
-  _ = require('underscore'),
-  Promise = require('bluebird'),
-  moment = require('moment'),
-  login_user_func = require('../../lib/login_with_user'),
-  register_new_user_func = require('../../lib/register_new_user'),
-  logout_user_func = require('../../lib/logout_user'),
-  open_page_func = require('../../lib/open_page'),
-  submit_form_func = require('../../lib/submit_form'),
-  check_elements_func = require('../../lib/check_elements'),
-  check_booking_func = require('../../lib/check_booking_on_calendar'),
-  add_new_user_func = require('../../lib/add_new_user'),
-  leave_type_edit_form_id = '#leave_type_edit_form',
-  config = require('../../lib/config'),
+var test = require("selenium-webdriver/testing"),
+  By = require("selenium-webdriver").By,
+  expect = require("chai").expect,
+  _ = require("underscore"),
+  Promise = require("bluebird"),
+  moment = require("moment"),
+  login_user_func = require("../../lib/login_with_user"),
+  register_new_user_func = require("../../lib/register_new_user"),
+  logout_user_func = require("../../lib/logout_user"),
+  open_page_func = require("../../lib/open_page"),
+  submit_form_func = require("../../lib/submit_form"),
+  check_elements_func = require("../../lib/check_elements"),
+  check_booking_func = require("../../lib/check_booking_on_calendar"),
+  add_new_user_func = require("../../lib/add_new_user"),
+  leave_type_edit_form_id = "#leave_type_edit_form",
+  config = require("../../lib/config"),
   application_host = config.get_application_host()
 
 /*
@@ -31,12 +31,12 @@ var test = require('selenium-webdriver/testing'),
  *
  * */
 
-describe('Leave type limits in actoion', function() {
+describe("Leave type limits in actoion", function() {
   this.timeout(config.get_execution_timeout())
 
   var non_admin_user_email, driver
 
-  it('Create new company', function(done) {
+  it("Create new company", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(function(data) {
@@ -45,16 +45,16 @@ describe('Leave type limits in actoion', function() {
     })
   })
 
-  it('Open page with leave types', function(done) {
+  it("Open page with leave types", function(done) {
     open_page_func({
-      url: application_host + 'settings/general/',
+      url: application_host + "settings/general/",
       driver: driver
     }).then(function() {
       done()
     })
   })
 
-  it('Check that it is possible to update Limits', function(done) {
+  it("Check that it is possible to update Limits", function(done) {
     submit_form_func({
       driver: driver,
       form_params: [
@@ -62,7 +62,7 @@ describe('Leave type limits in actoion', function() {
           selector:
             leave_type_edit_form_id +
             ' input[data-tom-leave-type-order="limit_0"]',
-          value: '3'
+          value: "3"
         }
       ],
       submit_button_selector:
@@ -74,7 +74,7 @@ describe('Leave type limits in actoion', function() {
     })
   })
 
-  it('Create new non-admin user', function(done) {
+  it("Create new non-admin user", function(done) {
     add_new_user_func({
       application_host: application_host,
       driver: driver
@@ -84,7 +84,7 @@ describe('Leave type limits in actoion', function() {
     })
   })
 
-  it('Logout from admin account', function(done) {
+  it("Logout from admin account", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
@@ -93,7 +93,7 @@ describe('Leave type limits in actoion', function() {
     })
   })
 
-  it('Login as non-admin user', function(done) {
+  it("Login as non-admin user", function(done) {
     login_user_func({
       application_host: application_host,
       user_email: non_admin_user_email,
@@ -103,25 +103,25 @@ describe('Leave type limits in actoion', function() {
     })
   })
 
-  it('Open calendar page', function(done) {
+  it("Open calendar page", function(done) {
     open_page_func({
-      url: application_host + 'calendar/?year=2015&show_full_year=1',
+      url: application_host + "calendar/?year=2015&show_full_year=1",
       driver: driver
     }).then(function() {
       done()
     })
   })
 
-  it('And make sure that it is calendar indeed', function(done) {
+  it("And make sure that it is calendar indeed", function(done) {
     driver.getTitle().then(function(title) {
-      expect(title).to.be.equal('Calendar')
+      expect(title).to.be.equal("Calendar")
       done()
     })
   })
 
-  it('Try to request new leave that exceed the limit', function(done) {
+  it("Try to request new leave that exceed the limit", function(done) {
     driver
-      .findElement(By.css('#book_time_off_btn'))
+      .findElement(By.css("#book_time_off_btn"))
       .then(function(el) {
         return el.click()
       })
@@ -133,12 +133,12 @@ describe('Leave type limits in actoion', function() {
           driver: driver,
           form_params: [
             {
-              selector: 'input#from',
-              value: '2015-06-15'
+              selector: "input#from",
+              value: "2015-06-15"
             },
             {
-              selector: 'input#to',
-              value: '2015-06-18'
+              selector: "input#to",
+              value: "2015-06-18"
             }
           ],
           message: /Adding requested .* absence would exceed maximum allowed for such type by 1/,
@@ -149,9 +149,9 @@ describe('Leave type limits in actoion', function() {
       })
   })
 
-  it('Add a request that fits under the limit', function(done) {
+  it("Add a request that fits under the limit", function(done) {
     driver
-      .findElement(By.css('#book_time_off_btn'))
+      .findElement(By.css("#book_time_off_btn"))
       .then(function(el) {
         return el.click()
       })
@@ -163,12 +163,12 @@ describe('Leave type limits in actoion', function() {
           driver: driver,
           form_params: [
             {
-              selector: 'input#from',
-              value: '2015-06-15'
+              selector: "input#from",
+              value: "2015-06-15"
             },
             {
-              selector: 'input#to',
-              value: '2015-06-17'
+              selector: "input#to",
+              value: "2015-06-17"
             }
           ],
           message: /New leave request was added/
@@ -178,11 +178,11 @@ describe('Leave type limits in actoion', function() {
             check_booking_func({
               driver: driver,
               full_days: [
-                moment('2015-06-16'),
-                moment('2015-06-16'),
-                moment('2015-06-17')
+                moment("2015-06-16"),
+                moment("2015-06-16"),
+                moment("2015-06-17")
               ],
-              type: 'pended'
+              type: "pended"
             }).then(function() {
               done()
             })

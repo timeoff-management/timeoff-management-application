@@ -1,10 +1,10 @@
-'use strict'
+"use strict"
 
-var webdriver = require('selenium-webdriver'),
-  By = require('selenium-webdriver').By,
-  expect = require('chai').expect,
-  _ = require('underscore'),
-  Promise = require('bluebird')
+var webdriver = require("selenium-webdriver"),
+  By = require("selenium-webdriver").By,
+  expect = require("chai").expect,
+  _ = require("underscore"),
+  Promise = require("bluebird")
 
 var check_elements_func = Promise.promisify(function(args, callback) {
   var driver = args.driver,
@@ -16,12 +16,12 @@ var check_elements_func = Promise.promisify(function(args, callback) {
       driver
         .findElement(By.css(test_case.selector))
         .then(function(el) {
-          if (test_case.hasOwnProperty('tick')) {
+          if (test_case.hasOwnProperty("tick")) {
             return el.isSelected().then(function(yes) {
-              return Promise.resolve(yes ? 'on' : 'off')
+              return Promise.resolve(yes ? "on" : "off")
             })
           } else {
-            return el.getAttribute('value')
+            return el.getAttribute("value")
           }
         })
         .then(function(text) {

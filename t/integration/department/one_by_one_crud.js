@@ -1,20 +1,20 @@
-'use strict'
+"use strict"
 
-var test = require('selenium-webdriver/testing'),
-  register_new_user_func = require('../../lib/register_new_user'),
-  login_user_func = require('../../lib/login_with_user'),
-  open_page_func = require('../../lib/open_page'),
-  submit_form_func = require('../../lib/submit_form'),
-  check_elements_func = require('../../lib/check_elements'),
-  By = require('selenium-webdriver').By,
-  config = require('../../lib/config'),
+var test = require("selenium-webdriver/testing"),
+  register_new_user_func = require("../../lib/register_new_user"),
+  login_user_func = require("../../lib/login_with_user"),
+  open_page_func = require("../../lib/open_page"),
+  submit_form_func = require("../../lib/submit_form"),
+  check_elements_func = require("../../lib/check_elements"),
+  By = require("selenium-webdriver").By,
+  config = require("../../lib/config"),
   application_host = config.get_application_host(),
-  expect = require('chai').expect,
-  Bluebird = require('bluebird'),
-  add_new_user_func = require('../../lib/add_new_user'),
-  user_info_func = require('../../lib/user_info'),
-  new_department_form_id = '#add_new_department_form',
-  department_edit_form_id = '#department_edit_form'
+  expect = require("chai").expect,
+  Bluebird = require("bluebird"),
+  add_new_user_func = require("../../lib/add_new_user"),
+  user_info_func = require("../../lib/user_info"),
+  new_department_form_id = "#add_new_department_form",
+  department_edit_form_id = "#department_edit_form"
 
 /*
  *  Scenario:
@@ -32,12 +32,12 @@ var test = require('selenium-webdriver/testing'),
  *
  * */
 
-describe('Check departments list page', function() {
+describe("Check departments list page", function() {
   var driver
 
   this.timeout(config.get_execution_timeout())
 
-  it('Register new account', function(done) {
+  it("Register new account", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(function(data) {
@@ -46,9 +46,9 @@ describe('Check departments list page', function() {
     })
   })
 
-  it('Open page with department list and ensure it has read-only list', function(done) {
+  it("Open page with department list and ensure it has read-only list", function(done) {
     open_page_func({
-      url: application_host + 'settings/departments/',
+      url: application_host + "settings/departments/",
       driver: driver
     })
       .then(function() {
@@ -62,32 +62,32 @@ describe('Check departments list page', function() {
       })
   })
 
-  it('Ensure list of departments has links for editing each individual one', function(done) {
+  it("Ensure list of departments has links for editing each individual one", function(done) {
     driver
       .findElements(By.css('a[href*="/settings/departments/edit/"]'))
       .then(function(links) {
         expect(links.length).to.be.eql(
           2,
-          'We expect to have two edit links per department'
+          "We expect to have two edit links per department"
         )
         done()
       })
   })
 
-  it('Ensure department has a link to its Manager edit page', function(done) {
+  it("Ensure department has a link to its Manager edit page", function(done) {
     driver
       .findElements(By.css('a[href*="/users/edit/"]'))
       .then(function(links) {
         expect(links.length).to.be.eql(
           1,
-          'There exist one link to manager per department'
+          "There exist one link to manager per department"
         )
-        return links[0].getAttribute('href')
+        return links[0].getAttribute("href")
       })
       .then(function(href) {
         expect(href).to.match(
           /\/users\/edit\/\d+\/$/,
-          'Link to manager indeed contains ID'
+          "Link to manager indeed contains ID"
         )
         done()
       })
@@ -95,7 +95,7 @@ describe('Check departments list page', function() {
 
   it('Add new "AAA" department', function(done) {
     driver
-      .findElement(By.css('#add_new_department_btn'))
+      .findElement(By.css("#add_new_department_btn"))
       .then(function(el) {
         return el.click()
       })
@@ -108,13 +108,13 @@ describe('Check departments list page', function() {
           form_params: [
             {
               selector: new_department_form_id + ' input[name="name__new"]',
-              value: 'AAA'
+              value: "AAA"
             },
             {
               selector:
                 new_department_form_id + ' select[name="allowance__new"]',
               option_selector: 'option[value="15"]',
-              value: '15'
+              value: "15"
             }
           ],
           submit_button_selector:
@@ -126,17 +126,17 @@ describe('Check departments list page', function() {
       })
   })
 
-  it('Ensure that user is landed on department read only list page', function(done) {
+  it("Ensure that user is landed on department read only list page", function(done) {
     driver.getCurrentUrl().then(function(url) {
       expect(url).to.match(
         /\/settings\/departments\/$/,
-        'Ensure the landing page is department list'
+        "Ensure the landing page is department list"
       )
       done()
     })
   })
 
-  it('Ensure that newly added department AAA is on top of the list', function(done) {
+  it("Ensure that newly added department AAA is on top of the list", function(done) {
     driver
       .findElements(By.css('a[data-vpp-department-name="1"]'))
       .then(function(els) {
@@ -145,14 +145,14 @@ describe('Check departments list page', function() {
         })
       })
       .then(function(texts) {
-        expect(texts).to.have.eql(['AAA', 'Sales'], 'Check the order of names')
+        expect(texts).to.have.eql(["AAA", "Sales"], "Check the order of names")
         done()
       })
   })
 
   it('Add new "ZZZ" department', function(done) {
     driver
-      .findElement(By.css('#add_new_department_btn'))
+      .findElement(By.css("#add_new_department_btn"))
       .then(function(el) {
         return el.click()
       })
@@ -165,13 +165,13 @@ describe('Check departments list page', function() {
           form_params: [
             {
               selector: new_department_form_id + ' input[name="name__new"]',
-              value: 'ZZZ'
+              value: "ZZZ"
             },
             {
               selector:
                 new_department_form_id + ' select[name="allowance__new"]',
               option_selector: 'option[value="15"]',
-              value: '15'
+              value: "15"
             }
           ],
           submit_button_selector:
@@ -183,7 +183,7 @@ describe('Check departments list page', function() {
       })
   })
 
-  it('Ensure that departments respect alphabetical order', function(done) {
+  it("Ensure that departments respect alphabetical order", function(done) {
     driver
       .findElements(By.css('a[data-vpp-department-name="1"]'))
       .then(function(els) {
@@ -193,8 +193,8 @@ describe('Check departments list page', function() {
       })
       .then(function(texts) {
         expect(texts).to.have.eql(
-          ['AAA', 'Sales', 'ZZZ'],
-          'Check the order of names'
+          ["AAA", "Sales", "ZZZ"],
+          "Check the order of names"
         )
         done()
       })
@@ -223,7 +223,7 @@ describe('Check departments list page', function() {
  *
  * */
 
-describe('Edit individual department via department details page', function() {
+describe("Edit individual department via department details page", function() {
   var driver,
     email_A,
     email_B,
@@ -234,7 +234,7 @@ describe('Edit individual department via department details page', function() {
 
   this.timeout(config.get_execution_timeout())
 
-  it('Register new account', function(done) {
+  it("Register new account", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(function(data) {
@@ -244,7 +244,7 @@ describe('Edit individual department via department details page', function() {
     })
   })
 
-  it('Create second user B', function(done) {
+  it("Create second user B", function(done) {
     add_new_user_func({
       application_host: application_host,
       driver: driver
@@ -254,7 +254,7 @@ describe('Edit individual department via department details page', function() {
     })
   })
 
-  it('Obtain information about user A', function(done) {
+  it("Obtain information about user A", function(done) {
     user_info_func({
       driver: driver,
       email: email_A
@@ -264,7 +264,7 @@ describe('Edit individual department via department details page', function() {
     })
   })
 
-  it('Obtain information about user B', function(done) {
+  it("Obtain information about user B", function(done) {
     user_info_func({
       driver: driver,
       email: email_B
@@ -274,9 +274,9 @@ describe('Edit individual department via department details page', function() {
     })
   })
 
-  it('Open page with department list and click first department in the list', function(done) {
+  it("Open page with department list and click first department in the list", function(done) {
     open_page_func({
-      url: application_host + 'settings/departments/',
+      url: application_host + "settings/departments/",
       driver: driver
     }).then(function() {
       driver
@@ -290,25 +290,25 @@ describe('Edit individual department via department details page', function() {
     })
   })
 
-  it('... save edit page URL', function(done) {
+  it("... save edit page URL", function(done) {
     driver.getCurrentUrl().then(function(url) {
       department_edit_page_url = url
       done()
     })
   })
 
-  it('Edit department', function(done) {
+  it("Edit department", function(done) {
     submit_form_func({
       driver: driver,
       form_params: [
         {
           selector: department_edit_form_id + ' input[name="name"]',
-          value: 'Fantastic name'
+          value: "Fantastic name"
         },
         {
           selector: department_edit_form_id + ' select[name="allowance"]',
           option_selector: 'option[value="5"]',
-          value: '5'
+          value: "5"
         },
         {
           selector: department_edit_form_id + ' select[name="boss_id"]',
@@ -318,7 +318,7 @@ describe('Edit individual department via department details page', function() {
         {
           selector: 'input[name="include_public_holidays"]',
           tick: true,
-          value: 'on'
+          value: "on"
         }
       ],
       submit_button_selector:
@@ -329,28 +329,28 @@ describe('Edit individual department via department details page', function() {
     })
   })
 
-  it('Ensure that chnages were applied', function(done) {
+  it("Ensure that chnages were applied", function(done) {
     check_elements_func({
       driver: driver,
       elements_to_check: [
         {
           selector: department_edit_form_id + ' input[name="name"]',
-          value: 'Fantastic name'
+          value: "Fantastic name"
         },
         {
           selector: department_edit_form_id + ' select[name="allowance"]',
           option_selector: 'option[value="5"]',
-          value: '5'
+          value: "5"
         },
         {
           selector: department_edit_form_id + ' select[name="boss_id"]',
           option_selector: 'option[value="' + user_id_B + '"]',
-          value: user_id_B + ''
+          value: user_id_B + ""
         },
         {
           selector: 'input[name="include_public_holidays"]',
           tick: false,
-          value: 'off'
+          value: "off"
         }
       ]
     }).then(function() {
@@ -358,16 +358,16 @@ describe('Edit individual department via department details page', function() {
     })
   })
 
-  it('Ensure that user stays on the same page after updating department details', function(done) {
+  it("Ensure that user stays on the same page after updating department details", function(done) {
     driver.getCurrentUrl().then(function(url) {
       expect(url).to.be.eql(department_edit_page_url)
       done()
     })
   })
 
-  it('Try to remove the department by pressing Delete button on current page', function(done) {
+  it("Try to remove the department by pressing Delete button on current page", function(done) {
     driver
-      .findElement(By.css('button#remove_btn'))
+      .findElement(By.css("button#remove_btn"))
       .then(function(btn) {
         return btn.click()
       })
@@ -376,22 +376,22 @@ describe('Edit individual department via department details page', function() {
       })
   })
 
-  it('Ensure that system prevents deleting department', function(done) {
+  it("Ensure that system prevents deleting department", function(done) {
     driver
-      .findElement(By.css('div.alert'))
+      .findElement(By.css("div.alert"))
       .then(function(el) {
         return el.getText()
       })
       .then(function(txt) {
         expect(txt).to.match(
           /Cannot remove department .+ as it still has 2 users/,
-          'App complains about non empty department'
+          "App complains about non empty department"
         )
         done()
       })
   })
 
-  it('Go to departments list by clicking on corresponding link', function(done) {
+  it("Go to departments list by clicking on corresponding link", function(done) {
     driver
       .findElement(By.css('a[data-vpp-all-departments-link="1"]'))
       .then(function(link) {
@@ -404,7 +404,7 @@ describe('Edit individual department via department details page', function() {
 
   it('Add new "AAA" department', function(done) {
     driver
-      .findElement(By.css('#add_new_department_btn'))
+      .findElement(By.css("#add_new_department_btn"))
       .then(function(el) {
         return el.click()
       })
@@ -417,13 +417,13 @@ describe('Edit individual department via department details page', function() {
           form_params: [
             {
               selector: new_department_form_id + ' input[name="name__new"]',
-              value: 'AAA'
+              value: "AAA"
             },
             {
               selector:
                 new_department_form_id + ' select[name="allowance__new"]',
               option_selector: 'option[value="15"]',
-              value: '15'
+              value: "15"
             }
           ],
           submit_button_selector:
@@ -435,12 +435,12 @@ describe('Edit individual department via department details page', function() {
       })
   })
 
-  it('Fetch newly added department ID', function(done) {
+  it("Fetch newly added department ID", function(done) {
     driver
       .findElements(By.css('a[data-vpp-department-name="1"]'))
       // We know that newly added attribute is in the top of the list as it starts with "A"
       .then(function(links) {
-        return links[0].getAttribute('href')
+        return links[0].getAttribute("href")
       })
       .then(function(href) {
         new_department_id = href.match(
@@ -448,22 +448,22 @@ describe('Edit individual department via department details page', function() {
         )[1]
         expect(new_department_id).to.match(
           /^\d+$/,
-          'The department ID is number'
+          "The department ID is number"
         )
         done()
       })
   })
 
-  it('Open user A details page', function(done) {
+  it("Open user A details page", function(done) {
     open_page_func({
-      url: application_host + 'users/edit/' + user_id_A + '/',
+      url: application_host + "users/edit/" + user_id_A + "/",
       driver: driver
     }).then(function() {
       done()
     })
   })
 
-  it('... and move her to newly added department', function(done) {
+  it("... and move her to newly added department", function(done) {
     submit_form_func({
       driver: driver,
       form_params: [
@@ -473,14 +473,14 @@ describe('Edit individual department via department details page', function() {
           value: new_department_id
         }
       ],
-      submit_button_selector: 'button#save_changes_btn',
+      submit_button_selector: "button#save_changes_btn",
       message: /Details for .+ were updated/
     }).then(function() {
       done()
     })
   })
 
-  it('Ensure that chnages were applied', function(done) {
+  it("Ensure that chnages were applied", function(done) {
     check_elements_func({
       driver: driver,
       elements_to_check: [
@@ -494,16 +494,16 @@ describe('Edit individual department via department details page', function() {
     })
   })
 
-  it('Open user B details page', function(done) {
+  it("Open user B details page", function(done) {
     open_page_func({
-      url: application_host + 'users/edit/' + user_id_B + '/',
+      url: application_host + "users/edit/" + user_id_B + "/",
       driver: driver
     }).then(function() {
       done()
     })
   })
 
-  it('... and move her to newly added department', function(done) {
+  it("... and move her to newly added department", function(done) {
     submit_form_func({
       driver: driver,
       form_params: [
@@ -513,14 +513,14 @@ describe('Edit individual department via department details page', function() {
           value: new_department_id
         }
       ],
-      submit_button_selector: 'button#save_changes_btn',
+      submit_button_selector: "button#save_changes_btn",
       message: /Details for .+ were updated/
     }).then(function() {
       done()
     })
   })
 
-  it('Ensure that chnages were applied', function(done) {
+  it("Ensure that chnages were applied", function(done) {
     check_elements_func({
       driver: driver,
       elements_to_check: [
@@ -534,7 +534,7 @@ describe('Edit individual department via department details page', function() {
     })
   })
 
-  it('Go to the very first department details page', function(done) {
+  it("Go to the very first department details page", function(done) {
     open_page_func({
       url: department_edit_page_url,
       driver: driver
@@ -543,14 +543,14 @@ describe('Edit individual department via department details page', function() {
     })
   })
 
-  it('Remove the department by pressing Delete button', function(done) {
+  it("Remove the department by pressing Delete button", function(done) {
     driver
-      .findElement(By.css('button#remove_btn'))
+      .findElement(By.css("button#remove_btn"))
       .then(function(btn) {
         return btn.click()
       })
       .then(function() {
-        return driver.findElement(By.css('div.alert'))
+        return driver.findElement(By.css("div.alert"))
       })
       .then(function(el) {
         return el.getText()
@@ -561,11 +561,11 @@ describe('Edit individual department via department details page', function() {
       })
   })
 
-  it('Ensure that we have landed on correct page', function(done) {
+  it("Ensure that we have landed on correct page", function(done) {
     driver.getCurrentUrl().then(function(url) {
       expect(url).to.match(
         /\/settings\/departments\/$/,
-        'The URL points to departments page'
+        "The URL points to departments page"
       )
       done()
     })
@@ -599,7 +599,7 @@ describe('Edit individual department via department details page', function() {
  *
  * */
 
-describe('CRUD for department secondary supervisers', function() {
+describe("CRUD for department secondary supervisers", function() {
   var driver,
     email_A,
     email_B,
@@ -611,7 +611,7 @@ describe('CRUD for department secondary supervisers', function() {
 
   this.timeout(config.get_execution_timeout())
 
-  it('Register new account', function(done) {
+  it("Register new account", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(function(data) {
@@ -621,7 +621,7 @@ describe('CRUD for department secondary supervisers', function() {
     })
   })
 
-  it('Obtain information about user A', function(done) {
+  it("Obtain information about user A", function(done) {
     user_info_func({
       driver: driver,
       email: email_A
@@ -631,9 +631,9 @@ describe('CRUD for department secondary supervisers', function() {
     })
   })
 
-  it('Go to departments details page', function(done) {
+  it("Go to departments details page", function(done) {
     open_page_func({
-      url: application_host + 'settings/departments/',
+      url: application_host + "settings/departments/",
       driver: driver
     }).then(function() {
       driver
@@ -648,7 +648,7 @@ describe('CRUD for department secondary supervisers', function() {
     })
   })
 
-  it('... save edit page URL', function(done) {
+  it("... save edit page URL", function(done) {
     driver.getCurrentUrl().then(function(url) {
       department_edit_page_url = url
       done()
@@ -676,7 +676,7 @@ describe('CRUD for department secondary supervisers', function() {
       })
   })
 
-  it('Create second user B', function(done) {
+  it("Create second user B", function(done) {
     add_new_user_func({
       application_host: application_host,
       driver: driver
@@ -686,7 +686,7 @@ describe('CRUD for department secondary supervisers', function() {
     })
   })
 
-  it('Obtain information about user B', function(done) {
+  it("Obtain information about user B", function(done) {
     user_info_func({
       driver: driver,
       email: email_B
@@ -696,7 +696,7 @@ describe('CRUD for department secondary supervisers', function() {
     })
   })
 
-  it('Create second user C', function(done) {
+  it("Create second user C", function(done) {
     add_new_user_func({
       application_host: application_host,
       driver: driver
@@ -706,7 +706,7 @@ describe('CRUD for department secondary supervisers', function() {
     })
   })
 
-  it('Obtain information about user C', function(done) {
+  it("Obtain information about user C", function(done) {
     user_info_func({
       driver: driver,
       email: email_C
@@ -716,7 +716,7 @@ describe('CRUD for department secondary supervisers', function() {
     })
   })
 
-  it('Go to any department details page', function(done) {
+  it("Go to any department details page", function(done) {
     open_page_func({
       url: department_edit_page_url,
       driver: driver
@@ -725,12 +725,12 @@ describe('CRUD for department secondary supervisers', function() {
     })
   })
 
-  it('... and ensure that user A is its manager', function(done) {
+  it("... and ensure that user A is its manager", function(done) {
     check_elements_func({
       driver: driver,
       elements_to_check: [
         {
-          selector: 'select#manager_id',
+          selector: "select#manager_id",
           value: String(user_id_A)
         }
       ]
@@ -745,7 +745,7 @@ describe('CRUD for department secondary supervisers', function() {
       .then(function(els) {
         expect(els.length).to.be.eql(
           0,
-          'No remove buttons for supervisers as there are not any'
+          "No remove buttons for supervisers as there are not any"
         )
         done()
       })
@@ -753,7 +753,7 @@ describe('CRUD for department secondary supervisers', function() {
 
   it(
     'click "add supervisers" button and ensure that popup witndow ' +
-      'has only user B and C in the list',
+      "has only user B and C in the list",
     function(done) {
       driver
         .findElement(By.css('a[data-vpp-add-new-secondary-supervisor="1"]'))
@@ -766,7 +766,7 @@ describe('CRUD for department secondary supervisers', function() {
         })
         .then(function(els) {
           return Bluebird.map(els, function(el) {
-            return el.getAttribute('value')
+            return el.getAttribute("value")
           })
         })
         .then(function(vals) {
@@ -776,21 +776,21 @@ describe('CRUD for department secondary supervisers', function() {
                 return String(e)
               })
               .sort(),
-            'User list is expected'
+            "User list is expected"
           )
           done()
         })
     }
   )
 
-  it('tick user B and save changes', function(done) {
+  it("tick user B and save changes", function(done) {
     submit_form_func({
       driver: driver,
       form_params: [
         {
           selector: 'input[name="supervisor_id"][value="' + user_id_B + '"]',
           tick: true,
-          value: 'on'
+          value: "on"
         }
       ],
       submit_button_selector: 'button[name="do_add_supervisors"]',
@@ -800,18 +800,18 @@ describe('CRUD for department secondary supervisers', function() {
     })
   })
 
-  it('Observe that user B appeares on the list of secondary supervisers', function(done) {
+  it("Observe that user B appeares on the list of secondary supervisers", function(done) {
     driver
       .findElements(By.css('button[name="remove_supervisor_id"]'))
       .then(function(els) {
         expect(els.length).to.be.eql(
           1,
-          'No remove buttons for supervisers as there are not any'
+          "No remove buttons for supervisers as there are not any"
         )
-        return els[0].getAttribute('value')
+        return els[0].getAttribute("value")
       })
       .then(function(val) {
-        expect(val).to.be.eql(String(user_id_B), 'It is indeed user B')
+        expect(val).to.be.eql(String(user_id_B), "It is indeed user B")
         done()
       })
   })
@@ -828,7 +828,7 @@ describe('CRUD for department secondary supervisers', function() {
             {
               selector: `input[name="supervisor_id"][value="${user_id_B}"]`,
               tick: true,
-              value: 'on'
+              value: "on"
             }
           ]
         })
@@ -840,7 +840,7 @@ describe('CRUD for department secondary supervisers', function() {
             {
               selector: `input[name="supervisor_id"][value="${user_id_C}"]`,
               tick: true,
-              value: 'off'
+              value: "off"
             }
           ]
         })
@@ -848,7 +848,7 @@ describe('CRUD for department secondary supervisers', function() {
       .then(() => done())
   })
 
-  it('Tick user C and un-tick user B and save changes', function(done) {
+  it("Tick user C and un-tick user B and save changes", function(done) {
     submit_form_func({
       driver: driver,
       form_params: [
@@ -872,12 +872,12 @@ describe('CRUD for department secondary supervisers', function() {
       .then(els => {
         expect(els.length).to.be.eql(
           1,
-          'No remove buttons for supervisers as there are not any'
+          "No remove buttons for supervisers as there are not any"
         )
-        return els[0].getAttribute('value')
+        return els[0].getAttribute("value")
       })
       .then(val => {
-        expect(val).to.be.eql(String(user_id_C), 'It is indeed user C')
+        expect(val).to.be.eql(String(user_id_C), "It is indeed user C")
         done()
       })
   })
@@ -894,7 +894,7 @@ describe('CRUD for department secondary supervisers', function() {
       .then(els => {
         expect(
           els.length,
-          'There is no users in secondary supervisers section'
+          "There is no users in secondary supervisers section"
         ).to.be.eql(0)
         done()
       })

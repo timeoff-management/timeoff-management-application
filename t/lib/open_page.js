@@ -1,7 +1,7 @@
-'use strict'
+"use strict"
 
-var webdriver = require('selenium-webdriver'),
-  Promise = require('bluebird')
+var webdriver = require("selenium-webdriver"),
+  Promise = require("bluebird")
 
 module.exports = Promise.promisify(function(args, callback) {
   var url = args.url,

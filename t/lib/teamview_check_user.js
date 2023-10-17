@@ -6,13 +6,13 @@
  *
  * */
 
-'use strict'
+"use strict"
 
-var By = require('selenium-webdriver').By,
-  expect = require('chai').expect,
-  open_page_func = require('./open_page'),
-  config = require('./config'),
-  bluebird = require('bluebird')
+var By = require("selenium-webdriver").By,
+  expect = require("chai").expect,
+  open_page_func = require("./open_page"),
+  config = require("./config"),
+  bluebird = require("bluebird")
 
 module.exports = bluebird.promisify(function(args, callback) {
   var result_callback = callback,
@@ -26,15 +26,15 @@ module.exports = bluebird.promisify(function(args, callback) {
   }
 
   return open_page_func({
-    url: application_host + 'calendar/teamview/',
+    url: application_host + "calendar/teamview/",
     driver: driver
   })
     .then(function(data) {
       return data.driver
         .findElements(
           By.css(
-            'tr.teamview-user-list-row > td.cross-link > ' +
-              (is_link ? 'a' : 'span')
+            "tr.teamview-user-list-row > td.cross-link > " +
+              (is_link ? "a" : "span")
           )
         )
         .then(function(elements) {

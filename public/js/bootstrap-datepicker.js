@@ -5,10 +5,10 @@
  * Improvements by Andrew Rowls
  * Licensed under the Apache License v2.0 (http://www.apache.org/licenses/LICENSE-2.0)
  */ ;(function(factory) {
-  if (typeof define === 'function' && define.amd) {
-    define(['jquery'], factory)
-  } else if (typeof exports === 'object') {
-    factory(require('jquery'))
+  if (typeof define === "function" && define.amd) {
+    define(["jquery"], factory)
+  } else if (typeof exports === "object") {
+    factory(require("jquery"))
   } else {
     factory(jQuery)
   }
@@ -79,7 +79,7 @@
   // Picker object
 
   var Datepicker = function(element, options) {
-    $(element).data('datepicker', this)
+    $(element).data("datepicker", this)
     this._process_options(options)
 
     this.dates = new DateArray()
@@ -88,11 +88,11 @@
 
     this.element = $(element)
     this.isInline = false
-    this.isInput = this.element.is('input')
-    this.component = this.element.hasClass('date')
-      ? this.element.find('.add-on, .input-group-addon, .btn')
+    this.isInput = this.element.is("input")
+    this.component = this.element.hasClass("date")
+      ? this.element.find(".add-on, .input-group-addon, .btn")
       : false
-    this.hasInput = this.component && this.element.find('input').length
+    this.hasInput = this.component && this.element.find("input").length
     if (this.component && this.component.length === 0) this.component = false
 
     this.picker = $(DPGlobal.template)
@@ -100,21 +100,21 @@
     this._attachEvents()
 
     if (this.isInline) {
-      this.picker.addClass('datepicker-inline').appendTo(this.element)
+      this.picker.addClass("datepicker-inline").appendTo(this.element)
     } else {
-      this.picker.addClass('datepicker-dropdown dropdown-menu')
+      this.picker.addClass("datepicker-dropdown dropdown-menu")
     }
 
     if (this.o.rtl) {
-      this.picker.addClass('datepicker-rtl')
+      this.picker.addClass("datepicker-rtl")
     }
 
     this.viewMode = this.o.startView
 
     if (this.o.calendarWeeks)
       this.picker
-        .find('thead .datepicker-title, tfoot .today, tfoot .clear')
-        .attr('colspan', function(i, val) {
+        .find("thead .datepicker-title, tfoot .today, tfoot .clear")
+        .attr("colspan", function(i, val) {
           return parseInt(val) + 1
         })
 
@@ -152,18 +152,18 @@
       // fallback to 2 letter code eg "de"
       var lang = o.language
       if (!dates[lang]) {
-        lang = lang.split('-')[0]
+        lang = lang.split("-")[0]
         if (!dates[lang]) lang = defaults.language
       }
       o.language = lang
 
       switch (o.startView) {
         case 2:
-        case 'decade':
+        case "decade":
           o.startView = 2
           break
         case 1:
-        case 'year':
+        case "year":
           o.startView = 1
           break
         default:
@@ -172,11 +172,11 @@
 
       switch (o.minViewMode) {
         case 1:
-        case 'months':
+        case "months":
           o.minViewMode = 1
           break
         case 2:
-        case 'years':
+        case "years":
           o.minViewMode = 2
           break
         default:
@@ -185,11 +185,11 @@
 
       switch (o.maxViewMode) {
         case 0:
-        case 'days':
+        case "days":
           o.maxViewMode = 0
           break
         case 1:
-        case 'months':
+        case "months":
           o.maxViewMode = 1
           break
         default:
@@ -262,17 +262,17 @@
       plc = $.grep(plc, function(word) {
         return /^auto|left|right|top|bottom$/.test(word)
       })
-      o.orientation = { x: 'auto', y: 'auto' }
-      if (!_plc || _plc === 'auto');
+      o.orientation = { x: "auto", y: "auto" }
+      if (!_plc || _plc === "auto");
       else if (plc.length === 1) {
         // no action
         switch (plc[0]) {
-          case 'top':
-          case 'bottom':
+          case "top":
+          case "bottom":
             o.orientation.y = plc[0]
             break
-          case 'left':
-          case 'right':
+          case "left":
+          case "right":
             o.orientation.x = plc[0]
             break
         }
@@ -280,12 +280,12 @@
         _plc = $.grep(plc, function(word) {
           return /^left|right$/.test(word)
         })
-        o.orientation.x = _plc[0] || 'auto'
+        o.orientation.x = _plc[0] || "auto"
 
         _plc = $.grep(plc, function(word) {
           return /^top|bottom$/.test(word)
         })
-        o.orientation.y = _plc[0] || 'auto'
+        o.orientation.y = _plc[0] || "auto"
       }
       if (o.defaultViewDate) {
         var year = o.defaultViewDate.year || new Date().getFullYear()
@@ -345,7 +345,7 @@
         // component: input + button
         this._events = [
           // For components that are not readonly, allow keyboard nav
-          [this.element.find('input'), events],
+          [this.element.find("input"), events],
           [
             this.component,
             {
@@ -353,7 +353,7 @@
             }
           ]
         ]
-      } else if (this.element.is('div')) {
+      } else if (this.element.is("div")) {
         // inline datepicker
         this.isInline = true
       } else {
@@ -370,7 +370,7 @@
         // Component: listen for blur on element descendants
         [
           this.element,
-          '*',
+          "*",
           {
             blur: $.proxy(function(e) {
               this._focused_from = e.target
@@ -393,7 +393,7 @@
         this._events.push([
           this.element,
           {
-            'changeYear changeMonth': $.proxy(function(e) {
+            "changeYear changeMonth": $.proxy(function(e) {
               this.update(e.date)
             }, this)
           }
@@ -424,7 +424,7 @@
                   this.element.find(e.target).length ||
                   this.picker.is(e.target) ||
                   this.picker.find(e.target).length ||
-                  this.picker.hasClass('datepicker-inline')
+                  this.picker.hasClass("datepicker-inline")
                 )
               ) {
                 this.hide()
@@ -460,7 +460,7 @@
           if (arguments.length === 0) {
             ix = this.dates.length - 1
             format = this.o.format
-          } else if (typeof ix === 'string') {
+          } else if (typeof ix === "string") {
             format = ix
             ix = this.dates.length - 1
           }
@@ -472,15 +472,15 @@
     },
 
     show: function() {
-      var element = this.component ? this.element.find('input') : this.element
-      if (element.attr('readonly') && this.o.enableOnReadonly === false) return
+      var element = this.component ? this.element.find("input") : this.element
+      if (element.attr("readonly") && this.o.enableOnReadonly === false) return
       if (!this.isInline) this.picker.appendTo(this.o.container)
       this.place()
       this.picker.show()
       this._attachSecondaryEvents()
-      this._trigger('show')
+      this._trigger("show")
       if (
-        (window.navigator.msMaxTouchPoints || 'ontouchstart' in document) &&
+        (window.navigator.msMaxTouchPoints || "ontouchstart" in document) &&
         this.o.disableTouchKeyboard
       ) {
         $(this.element).blur()
@@ -490,7 +490,7 @@
 
     hide: function() {
       if (this.isInline) return this
-      if (!this.picker.is(':visible')) return this
+      if (!this.picker.is(":visible")) return this
       this.focusDate = null
       this.picker.hide().detach()
       this._detachSecondaryEvents()
@@ -500,10 +500,10 @@
       if (
         this.o.forceParse &&
         ((this.isInput && this.element.val()) ||
-          (this.hasInput && this.element.find('input').val()))
+          (this.hasInput && this.element.find("input").val()))
       )
         this.setValue()
-      this._trigger('hide')
+      this._trigger("hide")
       return this
     },
 
@@ -524,11 +524,11 @@
       if (
         evt.originalEvent.clipboardData &&
         evt.originalEvent.clipboardData.types &&
-        $.inArray('text/plain', evt.originalEvent.clipboardData.types) !== -1
+        $.inArray("text/plain", evt.originalEvent.clipboardData.types) !== -1
       ) {
-        dateString = evt.originalEvent.clipboardData.getData('text/plain')
+        dateString = evt.originalEvent.clipboardData.getData("text/plain")
       } else if (window.clipboardData) {
-        dateString = window.clipboardData.getData('Text')
+        dateString = window.clipboardData.getData("Text")
       } else {
         return
       }
@@ -576,7 +576,7 @@
 
     getUTCDate: function() {
       var selected_date = this.dates.get(-1)
-      if (typeof selected_date !== 'undefined') {
+      if (typeof selected_date !== "undefined") {
         return new Date(selected_date)
       } else {
         return null
@@ -588,15 +588,15 @@
       if (this.isInput) {
         element = this.element
       } else if (this.component) {
-        element = this.element.find('input')
+        element = this.element.find("input")
       }
 
       if (element) {
-        element.val('')
+        element.val("")
       }
 
       this.update()
-      this._trigger('changeDate')
+      this._trigger("changeDate")
 
       if (this.o.autoclose) {
         this.hide()
@@ -605,7 +605,7 @@
     setDates: function() {
       var args = $.isArray(arguments[0]) ? arguments[0] : arguments
       this.update.apply(this, args)
-      this._trigger('changeDate')
+      this._trigger("changeDate")
       this.setValue()
       return this
     },
@@ -613,19 +613,19 @@
     setUTCDates: function() {
       var args = $.isArray(arguments[0]) ? arguments[0] : arguments
       this.update.apply(this, $.map(args, this._utc_to_local))
-      this._trigger('changeDate')
+      this._trigger("changeDate")
       this.setValue()
       return this
     },
 
-    setDate: alias('setDates'),
-    setUTCDate: alias('setUTCDates'),
+    setDate: alias("setDates"),
+    setUTCDate: alias("setUTCDates"),
 
     setValue: function() {
       var formatted = this.getFormattedDate()
       if (!this.isInput) {
         if (this.component) {
-          this.element.find('input').val(formatted)
+          this.element.find("input").val(formatted)
         }
       } else {
         this.element.val(formatted)
@@ -683,15 +683,15 @@
         container = $(this.o.container),
         windowWidth = container.width(),
         scrollTop =
-          this.o.container === 'body'
+          this.o.container === "body"
             ? $(document).scrollTop()
             : container.scrollTop(),
         appendOffset = container.offset()
 
       var parentsZindex = []
       this.element.parents().each(function() {
-        var itemZIndex = $(this).css('z-index')
-        if (itemZIndex !== 'auto' && itemZIndex !== 0)
+        var itemZIndex = $(this).css("z-index")
+        if (itemZIndex !== "auto" && itemZIndex !== 0)
           parentsZindex.push(parseInt(itemZIndex))
       })
       var zIndex = Math.max.apply(Math, parentsZindex) + this.o.zIndexOffset
@@ -707,33 +707,33 @@
       var left = offset.left - appendOffset.left,
         top = offset.top - appendOffset.top
 
-      if (this.o.container !== 'body') {
+      if (this.o.container !== "body") {
         top += scrollTop
       }
 
       this.picker.removeClass(
-        'datepicker-orient-top datepicker-orient-bottom ' +
-          'datepicker-orient-right datepicker-orient-left'
+        "datepicker-orient-top datepicker-orient-bottom " +
+          "datepicker-orient-right datepicker-orient-left"
       )
 
-      if (this.o.orientation.x !== 'auto') {
-        this.picker.addClass('datepicker-orient-' + this.o.orientation.x)
-        if (this.o.orientation.x === 'right') left -= calendarWidth - width
+      if (this.o.orientation.x !== "auto") {
+        this.picker.addClass("datepicker-orient-" + this.o.orientation.x)
+        if (this.o.orientation.x === "right") left -= calendarWidth - width
       }
       // auto x orientation is best-placement: if it crosses a window
       // edge, fudge it sideways
       else {
         if (offset.left < 0) {
           // component is outside the window on the left side. Move it into visible range
-          this.picker.addClass('datepicker-orient-left')
+          this.picker.addClass("datepicker-orient-left")
           left -= offset.left - visualPadding
         } else if (left + calendarWidth > windowWidth) {
           // the calendar passes the widow right edge. Align it to component right side
-          this.picker.addClass('datepicker-orient-right')
+          this.picker.addClass("datepicker-orient-right")
           left += width - calendarWidth
         } else {
           // Default to left
-          this.picker.addClass('datepicker-orient-left')
+          this.picker.addClass("datepicker-orient-left")
         }
       }
 
@@ -741,14 +741,14 @@
       // decision based on which shows more of the calendar
       var yorient = this.o.orientation.y,
         top_overflow
-      if (yorient === 'auto') {
+      if (yorient === "auto") {
         top_overflow = -scrollTop + top - calendarHeight
-        yorient = top_overflow < 0 ? 'bottom' : 'top'
+        yorient = top_overflow < 0 ? "bottom" : "top"
       }
 
-      this.picker.addClass('datepicker-orient-' + yorient)
-      if (yorient === 'top')
-        top -= calendarHeight + parseInt(this.picker.css('padding-top'))
+      this.picker.addClass("datepicker-orient-" + yorient)
+      if (yorient === "top")
+        top -= calendarHeight + parseInt(this.picker.css("padding-top"))
       else top += height
 
       if (this.o.rtl) {
@@ -787,7 +787,7 @@
       } else {
         dates = this.isInput
           ? this.element.val()
-          : this.element.data('date') || this.element.find('input').val()
+          : this.element.data("date") || this.element.find("input").val()
         if (dates && this.o.multidate)
           dates = dates.split(this.o.multidateSeparator)
         else dates = [dates]
@@ -821,9 +821,9 @@
         this.setValue()
       } else if (dates.length) {
         // setting date by typing
-        if (String(oldDates) !== String(this.dates)) this._trigger('changeDate')
+        if (String(oldDates) !== String(this.dates)) this._trigger("changeDate")
       }
-      if (!this.dates.length && oldDates.length) this._trigger('clearDate')
+      if (!this.dates.length && oldDates.length) this._trigger("clearDate")
 
       this.fill()
       this.element.change()
@@ -832,11 +832,11 @@
 
     fillDow: function() {
       var dowCnt = this.o.weekStart,
-        html = '<tr>'
+        html = "<tr>"
       if (this.o.calendarWeeks) {
         this.picker
-          .find('.datepicker-days .datepicker-switch')
-          .attr('colspan', function(i, val) {
+          .find(".datepicker-days .datepicker-switch")
+          .attr("colspan", function(i, val) {
             return parseInt(val) + 1
           })
         html += '<th class="cw">&#160;</th>'
@@ -845,22 +845,22 @@
         html +=
           '<th class="dow">' +
           dates[this.o.language].daysMin[dowCnt++ % 7] +
-          '</th>'
+          "</th>"
       }
-      html += '</tr>'
-      this.picker.find('.datepicker-days thead').append(html)
+      html += "</tr>"
+      this.picker.find(".datepicker-days thead").append(html)
     },
 
     fillMonths: function() {
-      var html = '',
+      var html = "",
         i = 0
       while (i < 12) {
         html +=
           '<span class="month">' +
           dates[this.o.language].monthsShort[i++] +
-          '</span>'
+          "</span>"
       }
-      this.picker.find('.datepicker-months td').html(html)
+      this.picker.find(".datepicker-months td").html(html)
     },
 
     setRange: function(range) {
@@ -881,15 +881,15 @@
         date.getUTCFullYear() < year ||
         (date.getUTCFullYear() === year && date.getUTCMonth() < month)
       ) {
-        cls.push('old')
+        cls.push("old")
       } else if (
         date.getUTCFullYear() > year ||
         (date.getUTCFullYear() === year && date.getUTCMonth() > month)
       ) {
-        cls.push('new')
+        cls.push("new")
       }
       if (this.focusDate && date.valueOf() === this.focusDate.valueOf())
-        cls.push('focused')
+        cls.push("focused")
       // Compare internal UTC date with local today, not UTC today
       if (
         this.o.todayHighlight &&
@@ -897,28 +897,28 @@
         date.getUTCMonth() === today.getMonth() &&
         date.getUTCDate() === today.getDate()
       ) {
-        cls.push('today')
+        cls.push("today")
       }
-      if (this.dates.contains(date) !== -1) cls.push('active')
+      if (this.dates.contains(date) !== -1) cls.push("active")
       if (!this.dateWithinRange(date) || this.dateIsDisabled(date)) {
-        cls.push('disabled')
+        cls.push("disabled")
       }
       if ($.inArray(date.getUTCDay(), this.o.daysOfWeekHighlighted) !== -1) {
-        cls.push('highlighted')
+        cls.push("highlighted")
       }
 
       if (this.range) {
         if (date > this.range[0] && date < this.range[this.range.length - 1]) {
-          cls.push('range')
+          cls.push("range")
         }
         if ($.inArray(date.valueOf(), this.range) !== -1) {
-          cls.push('selected')
+          cls.push("selected")
         }
         if (date.valueOf() === this.range[0]) {
-          cls.push('range-start')
+          cls.push("range-start")
         }
         if (date.valueOf() === this.range[this.range.length - 1]) {
-          cls.push('range-end')
+          cls.push("range-end")
         }
       }
       return cls
@@ -942,14 +942,14 @@
             : Infinity,
         endMonth =
           this.o.endDate !== Infinity ? this.o.endDate.getUTCMonth() : Infinity,
-        todaytxt = dates[this.o.language].today || dates['en'].today || '',
-        cleartxt = dates[this.o.language].clear || dates['en'].clear || '',
+        todaytxt = dates[this.o.language].today || dates["en"].today || "",
+        cleartxt = dates[this.o.language].clear || dates["en"].clear || "",
         titleFormat =
-          dates[this.o.language].titleFormat || dates['en'].titleFormat,
+          dates[this.o.language].titleFormat || dates["en"].titleFormat,
         tooltip
       if (isNaN(year) || isNaN(month)) return
       this.picker
-        .find('.datepicker-days thead .datepicker-switch')
+        .find(".datepicker-days thead .datepicker-switch")
         .text(
           DPGlobal.formatDate(
             new UTCDate(year, month),
@@ -958,17 +958,17 @@
           )
         )
       this.picker
-        .find('tfoot .today')
+        .find("tfoot .today")
         .text(todaytxt)
         .toggle(this.o.todayBtn !== false)
       this.picker
-        .find('tfoot .clear')
+        .find("tfoot .clear")
         .text(cleartxt)
         .toggle(this.o.clearBtn !== false)
       this.picker
-        .find('thead .datepicker-title')
+        .find("thead .datepicker-title")
         .text(this.o.title)
-        .toggle(this.o.title !== '')
+        .toggle(this.o.title !== "")
       this.updateNavArrows()
       this.fillMonths()
       var prevMonth = UTCDate(year, month - 1, 28),
@@ -990,7 +990,7 @@
       var clsName
       while (prevMonth.valueOf() < nextMonth) {
         if (prevMonth.getUTCDay() === this.o.weekStart) {
-          html.push('<tr>')
+          html.push("<tr>")
           if (this.o.calendarWeeks) {
             // ISO 8601: First week contains first thursday.
             // ISO also states week starts on Monday, but we can be more abstract here.
@@ -1010,18 +1010,18 @@
               ),
               // Calendar week: ms between thursdays, div ms per day, div 7 days
               calWeek = (th - yth) / 864e5 / 7 + 1
-            html.push('<td class="cw">' + calWeek + '</td>')
+            html.push('<td class="cw">' + calWeek + "</td>")
           }
         }
         clsName = this.getClassNames(prevMonth)
-        clsName.push('day')
+        clsName.push("day")
 
         if (this.o.beforeShowDay !== $.noop) {
           var before = this.o.beforeShowDay(this._utc_to_local(prevMonth))
           if (before === undefined) before = {}
-          else if (typeof before === 'boolean') before = { enabled: before }
-          else if (typeof before === 'string') before = { classes: before }
-          if (before.enabled === false) clsName.push('disabled')
+          else if (typeof before === "boolean") before = { enabled: before }
+          else if (typeof before === "string") before = { classes: before }
+          if (before.enabled === false) clsName.push("disabled")
           if (before.classes)
             clsName = clsName.concat(before.classes.split(/\s+/))
           if (before.tooltip) tooltip = before.tooltip
@@ -1030,92 +1030,92 @@
         clsName = $.unique(clsName)
         html.push(
           '<td class="' +
-            clsName.join(' ') +
+            clsName.join(" ") +
             '"' +
-            (tooltip ? ' title="' + tooltip + '"' : '') +
-            '>' +
+            (tooltip ? ' title="' + tooltip + '"' : "") +
+            ">" +
             prevMonth.getUTCDate() +
-            '</td>'
+            "</td>"
         )
         tooltip = null
         if (prevMonth.getUTCDay() === this.o.weekEnd) {
-          html.push('</tr>')
+          html.push("</tr>")
         }
         prevMonth.setUTCDate(prevMonth.getUTCDate() + 1)
       }
       this.picker
-        .find('.datepicker-days tbody')
+        .find(".datepicker-days tbody")
         .empty()
-        .append(html.join(''))
+        .append(html.join(""))
 
       var monthsTitle =
         dates[this.o.language].monthsTitle ||
-        dates['en'].monthsTitle ||
-        'Months'
+        dates["en"].monthsTitle ||
+        "Months"
       var months = this.picker
-        .find('.datepicker-months')
-        .find('.datepicker-switch')
+        .find(".datepicker-months")
+        .find(".datepicker-switch")
         .text(this.o.maxViewMode < 2 ? monthsTitle : year)
         .end()
-        .find('span')
-        .removeClass('active')
+        .find("span")
+        .removeClass("active")
 
       $.each(this.dates, function(i, d) {
         if (d.getUTCFullYear() === year)
-          months.eq(d.getUTCMonth()).addClass('active')
+          months.eq(d.getUTCMonth()).addClass("active")
       })
 
       if (year < startYear || year > endYear) {
-        months.addClass('disabled')
+        months.addClass("disabled")
       }
       if (year === startYear) {
-        months.slice(0, startMonth).addClass('disabled')
+        months.slice(0, startMonth).addClass("disabled")
       }
       if (year === endYear) {
-        months.slice(endMonth + 1).addClass('disabled')
+        months.slice(endMonth + 1).addClass("disabled")
       }
 
       if (this.o.beforeShowMonth !== $.noop) {
         var that = this
         $.each(months, function(i, month) {
-          if (!$(month).hasClass('disabled')) {
+          if (!$(month).hasClass("disabled")) {
             var moDate = new Date(year, i, 1)
             var before = that.o.beforeShowMonth(moDate)
-            if (before === false) $(month).addClass('disabled')
+            if (before === false) $(month).addClass("disabled")
           }
         })
       }
 
-      html = ''
+      html = ""
       year = parseInt(year / 10, 10) * 10
       var yearCont = this.picker
-        .find('.datepicker-years')
-        .find('.datepicker-switch')
-        .text(year + '-' + (year + 9))
+        .find(".datepicker-years")
+        .find(".datepicker-switch")
+        .text(year + "-" + (year + 9))
         .end()
-        .find('td')
+        .find("td")
       year -= 1
       var years = $.map(this.dates, function(d) {
           return d.getUTCFullYear()
         }),
         classes
       for (var i = -1; i < 11; i++) {
-        classes = ['year']
+        classes = ["year"]
         tooltip = null
 
-        if (i === -1) classes.push('old')
-        else if (i === 10) classes.push('new')
-        if ($.inArray(year, years) !== -1) classes.push('active')
-        if (year < startYear || year > endYear) classes.push('disabled')
+        if (i === -1) classes.push("old")
+        else if (i === 10) classes.push("new")
+        if ($.inArray(year, years) !== -1) classes.push("active")
+        if (year < startYear || year > endYear) classes.push("disabled")
 
         if (this.o.beforeShowYear !== $.noop) {
           var yrBefore = this.o.beforeShowYear(new Date(year, 0, 1))
           if (yrBefore === undefined) yrBefore = {}
-          else if (typeof yrBefore === 'boolean')
+          else if (typeof yrBefore === "boolean")
             yrBefore = { enabled: yrBefore }
-          else if (typeof yrBefore === 'string')
+          else if (typeof yrBefore === "string")
             yrBefore = { classes: yrBefore }
-          if (yrBefore.enabled === false) classes.push('disabled')
+          if (yrBefore.enabled === false) classes.push("disabled")
           if (yrBefore.classes)
             classes = classes.concat(yrBefore.classes.split(/\s+/))
           if (yrBefore.tooltip) tooltip = yrBefore.tooltip
@@ -1123,12 +1123,12 @@
 
         html +=
           '<span class="' +
-          classes.join(' ') +
+          classes.join(" ") +
           '"' +
-          (tooltip ? ' title="' + tooltip + '"' : '') +
-          '>' +
+          (tooltip ? ' title="' + tooltip + '"' : "") +
+          ">" +
           year +
-          '</span>'
+          "</span>"
         year += 1
       }
       yearCont.html(html)
@@ -1147,18 +1147,18 @@
             year <= this.o.startDate.getUTCFullYear() &&
             month <= this.o.startDate.getUTCMonth()
           ) {
-            this.picker.find('.prev').css({ visibility: 'hidden' })
+            this.picker.find(".prev").css({ visibility: "hidden" })
           } else {
-            this.picker.find('.prev').css({ visibility: 'visible' })
+            this.picker.find(".prev").css({ visibility: "visible" })
           }
           if (
             this.o.endDate !== Infinity &&
             year >= this.o.endDate.getUTCFullYear() &&
             month >= this.o.endDate.getUTCMonth()
           ) {
-            this.picker.find('.next').css({ visibility: 'hidden' })
+            this.picker.find(".next").css({ visibility: "hidden" })
           } else {
-            this.picker.find('.next').css({ visibility: 'visible' })
+            this.picker.find(".next").css({ visibility: "visible" })
           }
           break
         case 1:
@@ -1168,18 +1168,18 @@
               year <= this.o.startDate.getUTCFullYear()) ||
             this.o.maxViewMode < 2
           ) {
-            this.picker.find('.prev').css({ visibility: 'hidden' })
+            this.picker.find(".prev").css({ visibility: "hidden" })
           } else {
-            this.picker.find('.prev').css({ visibility: 'visible' })
+            this.picker.find(".prev").css({ visibility: "visible" })
           }
           if (
             (this.o.endDate !== Infinity &&
               year >= this.o.endDate.getUTCFullYear()) ||
             this.o.maxViewMode < 2
           ) {
-            this.picker.find('.next').css({ visibility: 'hidden' })
+            this.picker.find(".next").css({ visibility: "hidden" })
           } else {
-            this.picker.find('.next').css({ visibility: 'visible' })
+            this.picker.find(".next").css({ visibility: "visible" })
           }
           break
       }
@@ -1188,58 +1188,58 @@
     click: function(e) {
       e.preventDefault()
       e.stopPropagation()
-      var target = $(e.target).closest('span, td, th'),
+      var target = $(e.target).closest("span, td, th"),
         year,
         month,
         day
       if (target.length === 1) {
         switch (target[0].nodeName.toLowerCase()) {
-          case 'th':
+          case "th":
             switch (target[0].className) {
-              case 'datepicker-switch':
+              case "datepicker-switch":
                 this.showMode(1)
                 break
-              case 'prev':
-              case 'next':
+              case "prev":
+              case "next":
                 var dir =
                   DPGlobal.modes[this.viewMode].navStep *
-                  (target[0].className === 'prev' ? -1 : 1)
+                  (target[0].className === "prev" ? -1 : 1)
                 switch (this.viewMode) {
                   case 0:
                     this.viewDate = this.moveMonth(this.viewDate, dir)
-                    this._trigger('changeMonth', this.viewDate)
+                    this._trigger("changeMonth", this.viewDate)
                     break
                   case 1:
                   case 2:
                     this.viewDate = this.moveYear(this.viewDate, dir)
                     if (this.viewMode === 1)
-                      this._trigger('changeYear', this.viewDate)
+                      this._trigger("changeYear", this.viewDate)
                     break
                 }
                 this.fill()
                 break
-              case 'today':
+              case "today":
                 this.showMode(-2)
-                var which = this.o.todayBtn === 'linked' ? null : 'view'
+                var which = this.o.todayBtn === "linked" ? null : "view"
                 this._setDate(UTCToday(), which)
                 break
-              case 'clear':
+              case "clear":
                 this.clearDates()
                 break
             }
             break
-          case 'span':
-            if (!target.hasClass('disabled')) {
+          case "span":
+            if (!target.hasClass("disabled")) {
               this.viewDate.setUTCDate(1)
-              if (target.hasClass('month')) {
+              if (target.hasClass("month")) {
                 day = 1
                 month = target
                   .parent()
-                  .find('span')
+                  .find("span")
                   .index(target)
                 year = this.viewDate.getUTCFullYear()
                 this.viewDate.setUTCMonth(month)
-                this._trigger('changeMonth', this.viewDate)
+                this._trigger("changeMonth", this.viewDate)
                 if (this.o.minViewMode === 1) {
                   this._setDate(UTCDate(year, month, day))
                   this.showMode()
@@ -1251,7 +1251,7 @@
                 month = 0
                 year = parseInt(target.text(), 10) || 0
                 this.viewDate.setUTCFullYear(year)
-                this._trigger('changeYear', this.viewDate)
+                this._trigger("changeYear", this.viewDate)
                 if (this.o.minViewMode === 2) {
                   this._setDate(UTCDate(year, month, day))
                 }
@@ -1260,19 +1260,19 @@
               this.fill()
             }
             break
-          case 'td':
-            if (target.hasClass('day') && !target.hasClass('disabled')) {
+          case "td":
+            if (target.hasClass("day") && !target.hasClass("disabled")) {
               day = parseInt(target.text(), 10) || 1
               year = this.viewDate.getUTCFullYear()
               month = this.viewDate.getUTCMonth()
-              if (target.hasClass('old')) {
+              if (target.hasClass("old")) {
                 if (month === 0) {
                   month = 11
                   year -= 1
                 } else {
                   month -= 1
                 }
-              } else if (target.hasClass('new')) {
+              } else if (target.hasClass("new")) {
                 if (month === 11) {
                   month = 0
                   year += 1
@@ -1285,7 +1285,7 @@
             break
         }
       }
-      if (this.picker.is(':visible') && this._focused_from) {
+      if (this.picker.is(":visible") && this._focused_from) {
         $(this._focused_from).focus()
       }
       delete this._focused_from
@@ -1312,30 +1312,30 @@
         this.dates.push(date)
       }
 
-      if (typeof this.o.multidate === 'number')
+      if (typeof this.o.multidate === "number")
         while (this.dates.length > this.o.multidate) this.dates.remove(0)
     },
 
     _setDate: function(date, which) {
-      if (!which || which === 'date')
+      if (!which || which === "date")
         this._toggle_multidate(date && new Date(date))
-      if (!which || which === 'view') this.viewDate = date && new Date(date)
+      if (!which || which === "view") this.viewDate = date && new Date(date)
 
       this.fill()
       this.setValue()
-      if (!which || which !== 'view') {
-        this._trigger('changeDate')
+      if (!which || which !== "view") {
+        this._trigger("changeDate")
       }
       var element
       if (this.isInput) {
         element = this.element
       } else if (this.component) {
-        element = this.element.find('input')
+        element = this.element.find("input")
       }
       if (element) {
         element.change()
       }
-      if (this.o.autoclose && (!which || which === 'date')) {
+      if (this.o.autoclose && (!which || which === "date")) {
         this.hide()
       }
     },
@@ -1409,7 +1409,7 @@
 
         if (!this.dateWithinRange(date)) return false
 
-        fn = 'moveDay'
+        fn = "moveDay"
       } while (this.dateIsDisabled(date))
 
       return date
@@ -1433,7 +1433,7 @@
     },
 
     keydown: function(e) {
-      if (!this.picker.is(':visible')) {
+      if (!this.picker.is(":visible")) {
         if (e.keyCode === 40 || e.keyCode === 27) {
           // allow down to re-show picker
           this.show()
@@ -1466,17 +1466,17 @@
             break
           dir = e.keyCode === 37 || e.keyCode === 38 ? -1 : 1
           if (e.ctrlKey) {
-            newViewDate = this.moveAvailableDate(focusDate, dir, 'moveYear')
+            newViewDate = this.moveAvailableDate(focusDate, dir, "moveYear")
 
-            if (newViewDate) this._trigger('changeYear', this.viewDate)
+            if (newViewDate) this._trigger("changeYear", this.viewDate)
           } else if (e.shiftKey) {
-            newViewDate = this.moveAvailableDate(focusDate, dir, 'moveMonth')
+            newViewDate = this.moveAvailableDate(focusDate, dir, "moveMonth")
 
-            if (newViewDate) this._trigger('changeMonth', this.viewDate)
+            if (newViewDate) this._trigger("changeMonth", this.viewDate)
           } else if (e.keyCode === 37 || e.keyCode === 39) {
-            newViewDate = this.moveAvailableDate(focusDate, dir, 'moveDay')
+            newViewDate = this.moveAvailableDate(focusDate, dir, "moveDay")
           } else if (!this.weekOfDateIsDisabled(focusDate)) {
-            newViewDate = this.moveAvailableDate(focusDate, dir, 'moveWeek')
+            newViewDate = this.moveAvailableDate(focusDate, dir, "moveWeek")
           }
           if (newViewDate) {
             this.focusDate = this.viewDate = newViewDate
@@ -1496,7 +1496,7 @@
           this.viewDate = this.dates.get(-1) || this.viewDate
           this.setValue()
           this.fill()
-          if (this.picker.is(':visible')) {
+          if (this.picker.is(":visible")) {
             e.preventDefault()
             e.stopPropagation()
             if (this.o.autoclose) this.hide()
@@ -1510,13 +1510,13 @@
           break
       }
       if (dateChanged) {
-        if (this.dates.length) this._trigger('changeDate')
-        else this._trigger('clearDate')
+        if (this.dates.length) this._trigger("changeDate")
+        else this._trigger("clearDate")
         var element
         if (this.isInput) {
           element = this.element
         } else if (this.component) {
-          element = this.element.find('input')
+          element = this.element.find("input")
         }
         if (element) {
           element.change()
@@ -1532,16 +1532,16 @@
         )
       }
       this.picker
-        .children('div')
+        .children("div")
         .hide()
-        .filter('.datepicker-' + DPGlobal.modes[this.viewMode].clsName)
+        .filter(".datepicker-" + DPGlobal.modes[this.viewMode].clsName)
         .show()
       this.updateNavArrows()
     }
   }
 
   var DateRangePicker = function(element, options) {
-    $(element).data('datepicker', this)
+    $(element).data("datepicker", this)
     this.element = $(element)
     this.inputs = $.map(options.inputs, function(i) {
       return i.jquery ? i[0] : i
@@ -1550,10 +1550,10 @@
 
     datepickerPlugin
       .call($(this.inputs), options)
-      .on('changeDate', $.proxy(this.dateUpdated, this))
+      .on("changeDate", $.proxy(this.dateUpdated, this))
 
     this.pickers = $.map(this.inputs, function(i) {
-      return $(i).data('datepicker')
+      return $(i).data("datepicker")
     })
     this.updateDates()
   }
@@ -1579,9 +1579,9 @@
       if (this.updating) return
       this.updating = true
 
-      var dp = $(e.target).data('datepicker')
+      var dp = $(e.target).data("datepicker")
 
-      if (typeof dp === 'undefined') {
+      if (typeof dp === "undefined") {
         return
       }
 
@@ -1624,8 +1624,8 @@
     var data = $(el).data(),
       out = {},
       inkey,
-      replace = new RegExp('^' + prefix.toLowerCase() + '([A-Z])')
-    prefix = new RegExp('^' + prefix.toLowerCase())
+      replace = new RegExp("^" + prefix.toLowerCase() + "([A-Z])")
+    prefix = new RegExp("^" + prefix.toLowerCase())
     function re_lower(_, a) {
       return a.toLowerCase()
     }
@@ -1643,7 +1643,7 @@
     // Check if "de-DE" style date is available, if not language should
     // fallback to 2 letter code eg "de"
     if (!dates[lang]) {
-      lang = lang.split('-')[0]
+      lang = lang.split("-")[0]
       if (!dates[lang]) return
     }
     var d = dates[lang]
@@ -1660,26 +1660,26 @@
     var internal_return
     this.each(function() {
       var $this = $(this),
-        data = $this.data('datepicker'),
-        options = typeof option === 'object' && option
+        data = $this.data("datepicker"),
+        options = typeof option === "object" && option
       if (!data) {
-        var elopts = opts_from_el(this, 'date'),
+        var elopts = opts_from_el(this, "date"),
           // Preliminary otions
           xopts = $.extend({}, defaults, elopts, options),
           locopts = opts_from_locale(xopts.language),
           // Options priority: js args, data-attrs, locales, defaults
           opts = $.extend({}, defaults, locopts, elopts, options)
-        if ($this.hasClass('input-daterange') || opts.inputs) {
+        if ($this.hasClass("input-daterange") || opts.inputs) {
           $.extend(opts, {
-            inputs: opts.inputs || $this.find('input').toArray()
+            inputs: opts.inputs || $this.find("input").toArray()
           })
           data = new DateRangePicker(this, opts)
         } else {
           data = new Datepicker(this, opts)
         }
-        $this.data('datepicker', data)
+        $this.data("datepicker", data)
       }
-      if (typeof option === 'string' && typeof data[option] === 'function') {
+      if (typeof option === "string" && typeof data[option] === "function") {
         internal_return = data[option].apply(data, args)
       }
     })
@@ -1693,9 +1693,9 @@
 
     if (this.length > 1)
       throw new Error(
-        'Using only allowed for the collection of a single element (' +
+        "Using only allowed for the collection of a single element (" +
           option +
-          ' function)'
+          " function)"
       )
     else return internal_return
   }
@@ -1714,14 +1714,14 @@
     datesDisabled: [],
     endDate: Infinity,
     forceParse: true,
-    format: 'mm/dd/yyyy',
+    format: "mm/dd/yyyy",
     keyboardNavigation: true,
-    language: 'en',
+    language: "en",
     minViewMode: 0,
     maxViewMode: 2,
     multidate: false,
-    multidateSeparator: ',',
-    orientation: 'auto',
+    multidateSeparator: ",",
+    orientation: "auto",
     rtl: false,
     startDate: -Infinity,
     startView: 0,
@@ -1732,78 +1732,78 @@
     enableOnReadonly: true,
     showOnFocus: true,
     zIndexOffset: 10,
-    container: 'body',
+    container: "body",
     immediateUpdates: false,
-    title: ''
+    title: ""
   })
   var locale_opts = ($.fn.datepicker.locale_opts = [
-    'format',
-    'rtl',
-    'weekStart'
+    "format",
+    "rtl",
+    "weekStart"
   ])
   $.fn.datepicker.Constructor = Datepicker
   var dates = ($.fn.datepicker.dates = {
     en: {
       days: [
-        'Sunday',
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday'
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
       ],
-      daysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-      daysMin: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+      daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+      daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
       months: [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December'
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
       ],
       monthsShort: [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec'
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
       ],
-      today: 'Today',
-      clear: 'Clear',
-      titleFormat: 'MM yyyy'
+      today: "Today",
+      clear: "Clear",
+      titleFormat: "MM yyyy"
     }
   })
 
   var DPGlobal = {
     modes: [
       {
-        clsName: 'days',
-        navFnc: 'Month',
+        clsName: "days",
+        navFnc: "Month",
         navStep: 1
       },
       {
-        clsName: 'months',
-        navFnc: 'FullYear',
+        clsName: "months",
+        navFnc: "FullYear",
         navStep: 1
       },
       {
-        clsName: 'years',
-        navFnc: 'FullYear',
+        clsName: "years",
+        navFnc: "FullYear",
         navStep: 10
       }
     ],
@@ -1830,31 +1830,31 @@
     nonpunctuation: /[^ -\/:-@\[\u3400-\u9fff-`{-~\t\n\r]+/g,
     parseFormat: function(format) {
       if (
-        typeof format.toValue === 'function' &&
-        typeof format.toDisplay === 'function'
+        typeof format.toValue === "function" &&
+        typeof format.toDisplay === "function"
       )
         return format
       // IE treats \0 as a string end in inputs (truncating the value),
       // so it's a bad format delimiter, anyway
-      var separators = format.replace(this.validParts, '\0').split('\0'),
+      var separators = format.replace(this.validParts, "\0").split("\0"),
         parts = format.match(this.validParts)
       if (!separators || !separators.length || !parts || parts.length === 0) {
-        throw new Error('Invalid date format.')
+        throw new Error("Invalid date format.")
       }
       return { separators: separators, parts: parts }
     },
     parseDate: function(date, format, language) {
       if (!date) return undefined
       if (date instanceof Date) return date
-      if (typeof format === 'string') format = DPGlobal.parseFormat(format)
+      if (typeof format === "string") format = DPGlobal.parseFormat(format)
       if (format.toValue) return format.toValue(date, format, language)
       var part_re = /([\-+]\d+)([dmwy])/,
         parts = date.match(/([\-+]\d+)([dmwy])/g),
         fn_map = {
-          d: 'moveDay',
-          m: 'moveMonth',
-          w: 'moveWeek',
-          y: 'moveYear'
+          d: "moveDay",
+          m: "moveMonth",
+          w: "moveWeek",
+          y: "moveYear"
         },
         part,
         dir,
@@ -1877,7 +1877,7 @@
       parts = (date && date.match(this.nonpunctuation)) || []
       date = new Date()
       var parsed = {},
-        setters_order = ['yyyy', 'yy', 'M', 'MM', 'm', 'mm', 'd', 'dd'],
+        setters_order = ["yyyy", "yy", "M", "MM", "m", "mm", "d", "dd"],
         setters_map = {
           yyyy: function(d, v) {
             return d.setUTCFullYear(v)
@@ -1900,9 +1900,9 @@
         },
         val,
         filtered
-      setters_map['M'] = setters_map['MM'] = setters_map['mm'] =
-        setters_map['m']
-      setters_map['dd'] = setters_map['d']
+      setters_map["M"] = setters_map["MM"] = setters_map["mm"] =
+        setters_map["m"]
+      setters_map["dd"] = setters_map["d"]
       date = UTCToday()
       var fparts = format.parts.slice()
       // Remove noop parts
@@ -1926,11 +1926,11 @@
           part = fparts[i]
           if (isNaN(val)) {
             switch (part) {
-              case 'MM':
+              case "MM":
                 filtered = $(dates[language].months).filter(match_part)
                 val = $.inArray(filtered[0], dates[language].months) + 1
                 break
-              case 'M':
+              case "M":
                 filtered = $(dates[language].monthsShort).filter(match_part)
                 val = $.inArray(filtered[0], dates[language].monthsShort) + 1
                 break
@@ -1951,8 +1951,8 @@
       return date
     },
     formatDate: function(date, format, language) {
-      if (!date) return ''
-      if (typeof format === 'string') format = DPGlobal.parseFormat(format)
+      if (!date) return ""
+      if (typeof format === "string") format = DPGlobal.parseFormat(format)
       if (format.toDisplay) return format.toDisplay(date, format, language)
       var val = {
         d: date.getUTCDate(),
@@ -1967,62 +1967,62 @@
           .substring(2),
         yyyy: date.getUTCFullYear()
       }
-      val.dd = (val.d < 10 ? '0' : '') + val.d
-      val.mm = (val.m < 10 ? '0' : '') + val.m
+      val.dd = (val.d < 10 ? "0" : "") + val.d
+      val.mm = (val.m < 10 ? "0" : "") + val.m
       date = []
       var seps = $.extend([], format.separators)
       for (var i = 0, cnt = format.parts.length; i <= cnt; i++) {
         if (seps.length) date.push(seps.shift())
         date.push(val[format.parts[i]])
       }
-      return date.join('')
+      return date.join("")
     },
     headTemplate:
-      '<thead>' +
-      '<tr>' +
+      "<thead>" +
+      "<tr>" +
       '<th colspan="7" class="datepicker-title"></th>' +
-      '</tr>' +
-      '<tr>' +
+      "</tr>" +
+      "<tr>" +
       '<th class="prev">&#171;</th>' +
       '<th colspan="5" class="datepicker-switch"></th>' +
       '<th class="next">&#187;</th>' +
-      '</tr>' +
-      '</thead>',
+      "</tr>" +
+      "</thead>",
     contTemplate: '<tbody><tr><td colspan="7"></td></tr></tbody>',
     footTemplate:
-      '<tfoot>' +
-      '<tr>' +
+      "<tfoot>" +
+      "<tr>" +
       '<th colspan="7" class="today"></th>' +
-      '</tr>' +
-      '<tr>' +
+      "</tr>" +
+      "<tr>" +
       '<th colspan="7" class="clear"></th>' +
-      '</tr>' +
-      '</tfoot>'
+      "</tr>" +
+      "</tfoot>"
   }
   DPGlobal.template =
     '<div class="datepicker">' +
     '<div class="datepicker-days">' +
     '<table class=" table-condensed">' +
     DPGlobal.headTemplate +
-    '<tbody></tbody>' +
+    "<tbody></tbody>" +
     DPGlobal.footTemplate +
-    '</table>' +
-    '</div>' +
+    "</table>" +
+    "</div>" +
     '<div class="datepicker-months">' +
     '<table class="table-condensed">' +
     DPGlobal.headTemplate +
     DPGlobal.contTemplate +
     DPGlobal.footTemplate +
-    '</table>' +
-    '</div>' +
+    "</table>" +
+    "</div>" +
     '<div class="datepicker-years">' +
     '<table class="table-condensed">' +
     DPGlobal.headTemplate +
     DPGlobal.contTemplate +
     DPGlobal.footTemplate +
-    '</table>' +
-    '</div>' +
-    '</div>'
+    "</table>" +
+    "</div>" +
+    "</div>"
 
   $.fn.datepicker.DPGlobal = DPGlobal
 
@@ -2036,20 +2036,20 @@
 
   /* DATEPICKER VERSION
    * =================== */
-  $.fn.datepicker.version = '1.5.1'
+  $.fn.datepicker.version = "1.5.1"
 
   /* DATEPICKER DATA-API
    * ================== */
 
   $(document).on(
-    'focus.datepicker.data-api click.datepicker.data-api',
+    "focus.datepicker.data-api click.datepicker.data-api",
     '[data-provide="datepicker"]',
     function(e) {
       var $this = $(this)
-      if ($this.data('datepicker')) return
+      if ($this.data("datepicker")) return
       e.preventDefault()
       // component click requires us to explicitly show it
-      datepickerPlugin.call($this, 'show')
+      datepickerPlugin.call($this, "show")
     }
   )
   $(function() {

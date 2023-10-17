@@ -1,15 +1,15 @@
-'use strict'
+"use strict"
 
-const register_new_user_func = require('../../lib/register_new_user'),
-  open_page_func = require('../../lib/open_page'),
-  submit_form_func = require('../../lib/submit_form'),
-  expect = require('chai').expect,
-  By = require('selenium-webdriver').By,
-  config = require('../../lib/config'),
+const register_new_user_func = require("../../lib/register_new_user"),
+  open_page_func = require("../../lib/open_page"),
+  submit_form_func = require("../../lib/submit_form"),
+  expect = require("chai").expect,
+  By = require("selenium-webdriver").By,
+  config = require("../../lib/config"),
   application_host = config.get_application_host(),
-  bankholiday_form_id = '#update_bankholiday_form',
-  new_bankholiday_form_id = '#add_new_bank_holiday_form',
-  company_edit_form_id = '#company_edit_form'
+  bankholiday_form_id = "#update_bankholiday_form",
+  new_bankholiday_form_id = "#add_new_bank_holiday_form",
+  company_edit_form_id = "#company_edit_form"
 
 /*
  * This is a regressiopn for https://github.com/timeoff-management/application/issues/103
@@ -24,29 +24,29 @@ const register_new_user_func = require('../../lib/register_new_user'),
  *
  * */
 
-describe('Try to manage Bank holidays with non-default date format', function() {
+describe("Try to manage Bank holidays with non-default date format", function() {
   this.timeout(config.get_execution_timeout())
 
   var driver
 
-  it('Register new company and ensure it has non-default date format', function(done) {
+  it("Register new company and ensure it has non-default date format", function(done) {
     register_new_user_func({
       application_host: application_host,
-      default_date_format: 'DD/MM/YYYY'
+      default_date_format: "DD/MM/YYYY"
     }).then(function(data) {
       driver = data.driver
       done()
     })
   })
 
-  it('Open page with bank holidays', function(done) {
+  it("Open page with bank holidays", function(done) {
     open_page_func({
       driver,
-      url: application_host + 'settings/bankholidays/?year=2015'
+      url: application_host + "settings/bankholidays/?year=2015"
     }).then(() => done())
   })
 
-  it('Remove default predefined bank holidays', function(done) {
+  it("Remove default predefined bank holidays", function(done) {
     submit_form_func({
       driver,
       message: /Bank holiday was successfully removed/,
@@ -55,9 +55,9 @@ describe('Try to manage Bank holidays with non-default date format', function() 
     }).then(() => done())
   })
 
-  it('And make sure that no bank holidays are shown', function(done) {
+  it("And make sure that no bank holidays are shown", function(done) {
     driver
-      .findElement(By.css('div.tst-no-bank-holidays'))
+      .findElement(By.css("div.tst-no-bank-holidays"))
       .then(function(el) {
         return el.getText()
       })
@@ -67,9 +67,9 @@ describe('Try to manage Bank holidays with non-default date format', function() 
       })
   })
 
-  it('Add New year', function(done) {
+  it("Add New year", function(done) {
     driver
-      .findElement(By.css('#add_new_bank_holiday_btn'))
+      .findElement(By.css("#add_new_bank_holiday_btn"))
       .then(function(el) {
         return el.click()
       })
@@ -82,11 +82,11 @@ describe('Try to manage Bank holidays with non-default date format', function() 
           form_params: [
             {
               selector: new_bankholiday_form_id + ' input[name="name__new"]',
-              value: 'New Year'
+              value: "New Year"
             },
             {
               selector: new_bankholiday_form_id + ' input[name="date__new"]',
-              value: '01/01/2015'
+              value: "01/01/2015"
             }
           ],
           submit_button_selector:
@@ -98,9 +98,9 @@ describe('Try to manage Bank holidays with non-default date format', function() 
       })
   })
 
-  it('Add Second day of New year', function(done) {
+  it("Add Second day of New year", function(done) {
     driver
-      .findElement(By.css('#add_new_bank_holiday_btn'))
+      .findElement(By.css("#add_new_bank_holiday_btn"))
       .then(function(el) {
         return el.click()
       })
@@ -113,11 +113,11 @@ describe('Try to manage Bank holidays with non-default date format', function() 
           form_params: [
             {
               selector: new_bankholiday_form_id + ' input[name="name__new"]',
-              value: 'Second day of New Year'
+              value: "Second day of New Year"
             },
             {
               selector: new_bankholiday_form_id + ' input[name="date__new"]',
-              value: '02/01/2015'
+              value: "02/01/2015"
             }
           ],
           submit_button_selector:
@@ -129,9 +129,9 @@ describe('Try to manage Bank holidays with non-default date format', function() 
       })
   })
 
-  it('Add Add Labour day', function(done) {
+  it("Add Add Labour day", function(done) {
     driver
-      .findElement(By.css('#add_new_bank_holiday_btn'))
+      .findElement(By.css("#add_new_bank_holiday_btn"))
       .then(function(el) {
         return el.click()
       })
@@ -144,11 +144,11 @@ describe('Try to manage Bank holidays with non-default date format', function() 
           form_params: [
             {
               selector: new_bankholiday_form_id + ' input[name="name__new"]',
-              value: 'Labour day'
+              value: "Labour day"
             },
             {
               selector: new_bankholiday_form_id + ' input[name="date__new"]',
-              value: '01/05/2015'
+              value: "01/05/2015"
             }
           ],
           submit_button_selector:
@@ -160,35 +160,35 @@ describe('Try to manage Bank holidays with non-default date format', function() 
       })
   })
 
-  it('Rename Christmas to have proper name', function(done) {
+  it("Rename Christmas to have proper name", function(done) {
     submit_form_func({
       driver: driver,
       form_params: [
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="name__0"]',
-          value: 'NOTHING'
+          value: "NOTHING"
         },
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="name__1"]',
-          value: 'NOTHING'
+          value: "NOTHING"
         },
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="name__2"]',
-          value: 'NOTHING'
+          value: "NOTHING"
         }
       ],
       elements_to_check: [
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="date__0"]',
-          value: '01/01/2015'
+          value: "01/01/2015"
         },
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="date__1"]',
-          value: '02/01/2015'
+          value: "02/01/2015"
         },
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="date__2"]',
-          value: '01/05/2015'
+          value: "01/05/2015"
         }
       ],
       submit_button_selector: bankholiday_form_id + ' button[type="submit"]',
@@ -206,31 +206,31 @@ describe('Try to manage Bank holidays with non-default date format', function() 
   })
 })
 
-describe('Try to use DD/MM/YY and some missleading date', function() {
+describe("Try to use DD/MM/YY and some missleading date", function() {
   this.timeout(config.get_execution_timeout())
 
   var driver
 
-  it('Register new company with default date to be DD/MM/YY', function(done) {
+  it("Register new company with default date to be DD/MM/YY", function(done) {
     register_new_user_func({
       application_host: application_host,
-      default_date_format: 'DD/MM/YY'
+      default_date_format: "DD/MM/YY"
     }).then(function(data) {
       driver = data.driver
       done()
     })
   })
 
-  it('Open page with bank holidays', function(done) {
+  it("Open page with bank holidays", function(done) {
     open_page_func({
       driver,
-      url: application_host + 'settings/bankholidays/'
+      url: application_host + "settings/bankholidays/"
     }).then(() => done())
   })
 
-  it('Try to add new bank holiday with date that was reported to be problematic', function(done) {
+  it("Try to add new bank holiday with date that was reported to be problematic", function(done) {
     driver
-      .findElement(By.css('#add_new_bank_holiday_btn'))
+      .findElement(By.css("#add_new_bank_holiday_btn"))
       .then(function(el) {
         return el.click()
       })
@@ -243,11 +243,11 @@ describe('Try to use DD/MM/YY and some missleading date', function() {
           form_params: [
             {
               selector: new_bankholiday_form_id + ' input[name="name__new"]',
-              value: 'Problematic date'
+              value: "Problematic date"
             },
             {
               selector: new_bankholiday_form_id + ' input[name="date__new"]',
-              value: '22/08/17'
+              value: "22/08/17"
             }
           ],
           submit_button_selector:

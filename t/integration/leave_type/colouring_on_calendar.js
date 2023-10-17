@@ -1,18 +1,18 @@
-'use strict'
+"use strict"
 
-const test = require('selenium-webdriver/testing'),
-  until = require('selenium-webdriver').until,
-  register_new_user_func = require('../../lib/register_new_user'),
-  open_page_func = require('../../lib/open_page'),
-  submit_form_func = require('../../lib/submit_form'),
-  user_info_func = require('../../lib/user_info'),
-  By = require('selenium-webdriver').By,
-  config = require('../../lib/config'),
-  Bluebird = require('bluebird'),
-  expect = require('chai').expect,
+const test = require("selenium-webdriver/testing"),
+  until = require("selenium-webdriver").until,
+  register_new_user_func = require("../../lib/register_new_user"),
+  open_page_func = require("../../lib/open_page"),
+  submit_form_func = require("../../lib/submit_form"),
+  user_info_func = require("../../lib/user_info"),
+  By = require("selenium-webdriver").By,
+  config = require("../../lib/config"),
+  Bluebird = require("bluebird"),
+  expect = require("chai").expect,
   application_host = config.get_application_host(),
-  leave_type_edit_form_id = '#leave_type_edit_form',
-  userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year')
+  leave_type_edit_form_id = "#leave_type_edit_form",
+  userStartsAtTheBeginingOfYear = require("../../lib/set_user_to_start_at_the_beginning_of_the_year")
 
 /*
  *  Aim of the scenario: to ensure that half a days are highlighted correctly
@@ -40,12 +40,12 @@ const test = require('selenium-webdriver/testing'),
  *
  * */
 
-describe('Coloring of half days', function() {
+describe("Coloring of half days", function() {
   let driver, user_email, user_id, leave_type_holiday_id, leave_type_sick_id
 
   this.timeout(config.get_execution_timeout())
 
-  it('Performing registration process', function(done) {
+  it("Performing registration process", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(data => {
@@ -55,7 +55,7 @@ describe('Coloring of half days', function() {
     })
   })
 
-  it('Obtain information user', function(done) {
+  it("Obtain information user", function(done) {
     user_info_func({
       driver: driver,
       email: user_email
@@ -65,7 +65,7 @@ describe('Coloring of half days', function() {
     })
   })
 
-  it('Ensure user starts at the very beginning of current year', done => {
+  it("Ensure user starts at the very beginning of current year", done => {
     userStartsAtTheBeginingOfYear({ driver, email: user_email, year: 2018 })
       .then(() => open_page_func({ url: application_host, driver }))
       .then(() => done())
@@ -73,7 +73,7 @@ describe('Coloring of half days', function() {
 
   it('Changes default color for Sick days to be "color 3"', done => {
     open_page_func({
-      url: application_host + 'settings/general/',
+      url: application_host + "settings/general/",
       driver: driver
     })
       .then(() =>
@@ -96,8 +96,8 @@ describe('Coloring of half days', function() {
       )
 
       // Capture Leave type IDs while we are on this page
-      .then(() => driver.findElements(By.css('button.leavetype-remove-btn')))
-      .then(btns => Bluebird.map(btns, btn => btn.getAttribute('value')))
+      .then(() => driver.findElements(By.css("button.leavetype-remove-btn")))
+      .then(btns => Bluebird.map(btns, btn => btn.getAttribute("value")))
       .then(ids => {
         leave_type_holiday_id = ids[0]
         leave_type_sick_id = ids[1]
@@ -106,16 +106,16 @@ describe('Coloring of half days', function() {
       })
   })
 
-  it('Go Calendar page', done => {
+  it("Go Calendar page", done => {
     open_page_func({
       url: application_host,
       driver: driver
     }).then(() => done())
   })
 
-  it('Add absence: 2018-02-01 (afternoon) - 2018-02-02 (morning) Sick', done => {
+  it("Add absence: 2018-02-01 (afternoon) - 2018-02-02 (morning) Sick", done => {
     driver
-      .findElement(By.css('#book_time_off_btn'))
+      .findElement(By.css("#book_time_off_btn"))
       .then(el => el.click())
       .then(() => driver.sleep(1000))
       .then(() =>
@@ -127,19 +127,19 @@ describe('Coloring of half days', function() {
               option_selector: 'option[value="3"]'
             },
             {
-              selector: 'input#from',
-              value: '2018-02-01'
+              selector: "input#from",
+              value: "2018-02-01"
             },
             {
               selector: 'select[name="to_date_part"]',
               option_selector: 'option[value="2"]'
             },
             {
-              selector: 'input#to',
-              value: '2018-02-02'
+              selector: "input#to",
+              value: "2018-02-02"
             },
             {
-              selector: 'select#leave_type',
+              selector: "select#leave_type",
               option_selector: '[data-tom="Sick Leave"]'
             }
           ],
@@ -149,9 +149,9 @@ describe('Coloring of half days', function() {
       .then(() => done())
   })
 
-  it('Add absence: 2018-02-02 (afternoon) - 2018-02-02 (afternnon) : Holiday', done => {
+  it("Add absence: 2018-02-02 (afternoon) - 2018-02-02 (afternnon) : Holiday", done => {
     driver
-      .findElement(By.css('#book_time_off_btn'))
+      .findElement(By.css("#book_time_off_btn"))
       .then(el => el.click())
       .then(() => driver.sleep(1000))
       .then(() =>
@@ -163,19 +163,19 @@ describe('Coloring of half days', function() {
               option_selector: 'option[value="3"]'
             },
             {
-              selector: 'input#from',
-              value: '2018-02-02'
+              selector: "input#from",
+              value: "2018-02-02"
             },
             {
               selector: 'select[name="to_date_part"]',
               option_selector: 'option[value="3"]'
             },
             {
-              selector: 'input#to',
-              value: '2018-02-02'
+              selector: "input#to",
+              value: "2018-02-02"
             },
             {
-              selector: 'select#leave_type',
+              selector: "select#leave_type",
               option_selector: '[data-tom="Holiday"]'
             }
           ],
@@ -186,9 +186,9 @@ describe('Coloring of half days', function() {
       .then(() => done())
   })
 
-  it('Add absence: 2018-02-08 (morning) - 2018-02-08 (morning) : Holiday (0.5 days)', done => {
+  it("Add absence: 2018-02-08 (morning) - 2018-02-08 (morning) : Holiday (0.5 days)", done => {
     driver
-      .findElement(By.css('#book_time_off_btn'))
+      .findElement(By.css("#book_time_off_btn"))
       .then(el => el.click())
       .then(() => driver.sleep(1000))
       .then(() =>
@@ -200,19 +200,19 @@ describe('Coloring of half days', function() {
               option_selector: 'option[value="2"]'
             },
             {
-              selector: 'input#from',
-              value: '2018-02-08'
+              selector: "input#from",
+              value: "2018-02-08"
             },
             {
               selector: 'select[name="to_date_part"]',
               option_selector: 'option[value="2"]'
             },
             {
-              selector: 'input#to',
-              value: '2018-02-08'
+              selector: "input#to",
+              value: "2018-02-08"
             },
             {
-              selector: 'select#leave_type',
+              selector: "select#leave_type",
               option_selector: '[data-tom="Holiday"]'
             }
           ],
@@ -223,9 +223,9 @@ describe('Coloring of half days', function() {
       .then(() => done())
   })
 
-  it('Add absence: 2018-02-13 (afternoon) - 2018-02-14 (morning) : Sick', done => {
+  it("Add absence: 2018-02-13 (afternoon) - 2018-02-14 (morning) : Sick", done => {
     driver
-      .findElement(By.css('#book_time_off_btn'))
+      .findElement(By.css("#book_time_off_btn"))
       .then(el => el.click())
       .then(() => driver.sleep(1000))
       .then(() =>
@@ -237,19 +237,19 @@ describe('Coloring of half days', function() {
               option_selector: 'option[value="3"]'
             },
             {
-              selector: 'input#from',
-              value: '2018-02-13'
+              selector: "input#from",
+              value: "2018-02-13"
             },
             {
               selector: 'select[name="to_date_part"]',
               option_selector: 'option[value="2"]'
             },
             {
-              selector: 'input#to',
-              value: '2018-02-14'
+              selector: "input#to",
+              value: "2018-02-14"
             },
             {
-              selector: 'select#leave_type',
+              selector: "select#leave_type",
               option_selector: '[data-tom="Sick Leave"]'
             }
           ],
@@ -260,9 +260,9 @@ describe('Coloring of half days', function() {
       .then(() => done())
   })
 
-  it('Add absence: 2018-02-14 (afternoon) - 2018-02-15 (morning) : Holiday', done => {
+  it("Add absence: 2018-02-14 (afternoon) - 2018-02-15 (morning) : Holiday", done => {
     driver
-      .findElement(By.css('#book_time_off_btn'))
+      .findElement(By.css("#book_time_off_btn"))
       .then(el => el.click())
       .then(() => driver.sleep(1000))
       .then(() =>
@@ -274,19 +274,19 @@ describe('Coloring of half days', function() {
               option_selector: 'option[value="3"]'
             },
             {
-              selector: 'input#from',
-              value: '2018-02-14'
+              selector: "input#from",
+              value: "2018-02-14"
             },
             {
               selector: 'select[name="to_date_part"]',
               option_selector: 'option[value="2"]'
             },
             {
-              selector: 'input#to',
-              value: '2018-02-15'
+              selector: "input#to",
+              value: "2018-02-15"
             },
             {
-              selector: 'select#leave_type',
+              selector: "select#leave_type",
               option_selector: '[data-tom="Holiday"]'
             }
           ],
@@ -297,50 +297,50 @@ describe('Coloring of half days', function() {
       .then(() => done())
   })
 
-  it('Open requests page', function(done) {
+  it("Open requests page", function(done) {
     open_page_func({
-      url: application_host + 'requests/',
+      url: application_host + "requests/",
       driver: driver
     }).then(() => done())
   })
 
-  it('Ensure that all absences are approved', function(done) {
+  it("Ensure that all absences are approved", function(done) {
     driver
-      .findElement(By.css('tr[vpp] .btn-success'))
+      .findElement(By.css("tr[vpp] .btn-success"))
       .then(el => el.click())
-      .then(() => driver.wait(until.elementLocated(By.css('h1')), 1000))
+      .then(() => driver.wait(until.elementLocated(By.css("h1")), 1000))
 
-      .then(() => driver.findElement(By.css('tr[vpp] .btn-success')))
+      .then(() => driver.findElement(By.css("tr[vpp] .btn-success")))
       .then(el => el.click())
-      .then(() => driver.wait(until.elementLocated(By.css('h1')), 1000))
+      .then(() => driver.wait(until.elementLocated(By.css("h1")), 1000))
 
-      .then(() => driver.findElement(By.css('tr[vpp] .btn-success')))
+      .then(() => driver.findElement(By.css("tr[vpp] .btn-success")))
       .then(el => el.click())
-      .then(() => driver.wait(until.elementLocated(By.css('h1')), 1000))
+      .then(() => driver.wait(until.elementLocated(By.css("h1")), 1000))
 
-      .then(() => driver.findElement(By.css('tr[vpp] .btn-success')))
+      .then(() => driver.findElement(By.css("tr[vpp] .btn-success")))
       .then(el => el.click())
-      .then(() => driver.wait(until.elementLocated(By.css('h1')), 1000))
+      .then(() => driver.wait(until.elementLocated(By.css("h1")), 1000))
 
-      .then(() => driver.findElement(By.css('tr[vpp] .btn-success')))
+      .then(() => driver.findElement(By.css("tr[vpp] .btn-success")))
       .then(el => el.click())
-      .then(() => driver.wait(until.elementLocated(By.css('h1')), 1000))
+      .then(() => driver.wait(until.elementLocated(By.css("h1")), 1000))
 
       .then(() => done())
   })
 
-  it('Go to callendar page and ensure that all half days cells have correct color classes', done => {
+  it("Go to callendar page and ensure that all half days cells have correct color classes", done => {
     open_page_func({
-      url: application_host + 'calendar/?year=2018&show_full_year=1',
+      url: application_host + "calendar/?year=2018&show_full_year=1",
       driver: driver
     })
       // Check Feb 1
       .then(() =>
         driver.findElement(
-          By.css('table.month_February td.calendar_cell.day_1.half_1st')
+          By.css("table.month_February td.calendar_cell.day_1.half_1st")
         )
       )
-      .then(el => el.getAttribute('class'))
+      .then(el => el.getAttribute("class"))
       .then(cls => {
         expect(cls).not.to.match(/leave_type_color_/)
         return Bluebird.resolve()
@@ -348,10 +348,10 @@ describe('Coloring of half days', function() {
 
       .then(() =>
         driver.findElement(
-          By.css('table.month_February td.calendar_cell.day_1.half_2nd')
+          By.css("table.month_February td.calendar_cell.day_1.half_2nd")
         )
       )
-      .then(el => el.getAttribute('class'))
+      .then(el => el.getAttribute("class"))
       .then(cls => {
         expect(cls).to.match(/leave_type_color_3/)
         return Bluebird.resolve()
@@ -360,10 +360,10 @@ describe('Coloring of half days', function() {
       // Check Feb 2
       .then(() =>
         driver.findElement(
-          By.css('table.month_February td.calendar_cell.day_2.half_1st')
+          By.css("table.month_February td.calendar_cell.day_2.half_1st")
         )
       )
-      .then(el => el.getAttribute('class'))
+      .then(el => el.getAttribute("class"))
       .then(cls => {
         expect(cls).to.match(/leave_type_color_3/)
         return Bluebird.resolve()
@@ -371,10 +371,10 @@ describe('Coloring of half days', function() {
 
       .then(() =>
         driver.findElement(
-          By.css('table.month_February td.calendar_cell.day_2.half_2nd')
+          By.css("table.month_February td.calendar_cell.day_2.half_2nd")
         )
       )
-      .then(el => el.getAttribute('class'))
+      .then(el => el.getAttribute("class"))
       .then(cls => {
         expect(cls).to.match(/leave_type_color_1/)
         return Bluebird.resolve()
@@ -383,10 +383,10 @@ describe('Coloring of half days', function() {
       // Check Feb 8
       .then(() =>
         driver.findElement(
-          By.css('table.month_February td.calendar_cell.day_8.half_1st')
+          By.css("table.month_February td.calendar_cell.day_8.half_1st")
         )
       )
-      .then(el => el.getAttribute('class'))
+      .then(el => el.getAttribute("class"))
       .then(cls => {
         expect(cls).to.match(/leave_type_color_1/)
         return Bluebird.resolve()
@@ -394,10 +394,10 @@ describe('Coloring of half days', function() {
 
       .then(() =>
         driver.findElement(
-          By.css('table.month_February td.calendar_cell.day_8.half_2nd')
+          By.css("table.month_February td.calendar_cell.day_8.half_2nd")
         )
       )
-      .then(el => el.getAttribute('class'))
+      .then(el => el.getAttribute("class"))
       .then(cls => {
         expect(cls).not.to.match(/leave_type_color_/)
         return Bluebird.resolve()
@@ -406,10 +406,10 @@ describe('Coloring of half days', function() {
       // Check Feb 13
       .then(() =>
         driver.findElement(
-          By.css('table.month_February td.calendar_cell.day_13.half_1st')
+          By.css("table.month_February td.calendar_cell.day_13.half_1st")
         )
       )
-      .then(el => el.getAttribute('class'))
+      .then(el => el.getAttribute("class"))
       .then(cls => {
         expect(cls).not.to.match(/leave_type_color_/)
         return Bluebird.resolve()
@@ -417,10 +417,10 @@ describe('Coloring of half days', function() {
 
       .then(() =>
         driver.findElement(
-          By.css('table.month_February td.calendar_cell.day_13.half_2nd')
+          By.css("table.month_February td.calendar_cell.day_13.half_2nd")
         )
       )
-      .then(el => el.getAttribute('class'))
+      .then(el => el.getAttribute("class"))
       .then(cls => {
         expect(cls).to.match(/leave_type_color_3/)
         return Bluebird.resolve()
@@ -429,10 +429,10 @@ describe('Coloring of half days', function() {
       // Check Feb 14
       .then(() =>
         driver.findElement(
-          By.css('table.month_February td.calendar_cell.day_14.half_1st')
+          By.css("table.month_February td.calendar_cell.day_14.half_1st")
         )
       )
-      .then(el => el.getAttribute('class'))
+      .then(el => el.getAttribute("class"))
       .then(cls => {
         expect(cls).to.match(/leave_type_color_3/)
         return Bluebird.resolve()
@@ -440,10 +440,10 @@ describe('Coloring of half days', function() {
 
       .then(() =>
         driver.findElement(
-          By.css('table.month_February td.calendar_cell.day_14.half_2nd')
+          By.css("table.month_February td.calendar_cell.day_14.half_2nd")
         )
       )
-      .then(el => el.getAttribute('class'))
+      .then(el => el.getAttribute("class"))
       .then(cls => {
         expect(cls).to.match(/leave_type_color_1/)
         return Bluebird.resolve()
@@ -452,10 +452,10 @@ describe('Coloring of half days', function() {
       // Check Feb 15
       .then(() =>
         driver.findElement(
-          By.css('table.month_February td.calendar_cell.day_15.half_1st')
+          By.css("table.month_February td.calendar_cell.day_15.half_1st")
         )
       )
-      .then(el => el.getAttribute('class'))
+      .then(el => el.getAttribute("class"))
       .then(cls => {
         expect(cls).to.match(/leave_type_color_1/)
         return Bluebird.resolve()
@@ -463,10 +463,10 @@ describe('Coloring of half days', function() {
 
       .then(() =>
         driver.findElement(
-          By.css('table.month_February td.calendar_cell.day_15.half_2nd')
+          By.css("table.month_February td.calendar_cell.day_15.half_2nd")
         )
       )
-      .then(el => el.getAttribute('class'))
+      .then(el => el.getAttribute("class"))
       .then(cls => {
         expect(cls).not.to.match(/leave_type_color_/)
         return Bluebird.resolve()
@@ -475,9 +475,9 @@ describe('Coloring of half days', function() {
       .then(() => done())
   })
 
-  it('Go to Team view page and ensure that all half a day cells have correct color classes', done => {
+  it("Go to Team view page and ensure that all half a day cells have correct color classes", done => {
     open_page_func({
-      url: application_host + 'calendar/teamview/?date=2018-02',
+      url: application_host + "calendar/teamview/?date=2018-02",
       driver: driver
     })
       // Check Feb 1
@@ -490,7 +490,7 @@ describe('Coloring of half days', function() {
           )
         )
       )
-      .then(el => el.getAttribute('class'))
+      .then(el => el.getAttribute("class"))
       .then(cls => {
         expect(cls).not.to.match(/leave_type_color_/)
         return Bluebird.resolve()
@@ -505,7 +505,7 @@ describe('Coloring of half days', function() {
           )
         )
       )
-      .then(el => el.getAttribute('class'))
+      .then(el => el.getAttribute("class"))
       .then(cls => {
         expect(cls).to.match(/leave_type_color_3/)
         return Bluebird.resolve()
@@ -521,7 +521,7 @@ describe('Coloring of half days', function() {
           )
         )
       )
-      .then(el => el.getAttribute('class'))
+      .then(el => el.getAttribute("class"))
       .then(cls => {
         expect(cls).to.match(/leave_type_color_3/)
         return Bluebird.resolve()
@@ -536,7 +536,7 @@ describe('Coloring of half days', function() {
           )
         )
       )
-      .then(el => el.getAttribute('class'))
+      .then(el => el.getAttribute("class"))
       .then(cls => {
         expect(cls).to.match(/leave_type_color_1/)
         return Bluebird.resolve()
@@ -552,7 +552,7 @@ describe('Coloring of half days', function() {
           )
         )
       )
-      .then(el => el.getAttribute('class'))
+      .then(el => el.getAttribute("class"))
       .then(cls => {
         expect(cls).to.match(/leave_type_color_1/)
         return Bluebird.resolve()
@@ -567,7 +567,7 @@ describe('Coloring of half days', function() {
           )
         )
       )
-      .then(el => el.getAttribute('class'))
+      .then(el => el.getAttribute("class"))
       .then(cls => {
         expect(cls).not.to.match(/leave_type_color_/)
         return Bluebird.resolve()
@@ -583,7 +583,7 @@ describe('Coloring of half days', function() {
           )
         )
       )
-      .then(el => el.getAttribute('class'))
+      .then(el => el.getAttribute("class"))
       .then(cls => {
         expect(cls).not.to.match(/leave_type_color_/)
         return Bluebird.resolve()
@@ -598,7 +598,7 @@ describe('Coloring of half days', function() {
           )
         )
       )
-      .then(el => el.getAttribute('class'))
+      .then(el => el.getAttribute("class"))
       .then(cls => {
         expect(cls).to.match(/leave_type_color_3/)
         return Bluebird.resolve()
@@ -614,7 +614,7 @@ describe('Coloring of half days', function() {
           )
         )
       )
-      .then(el => el.getAttribute('class'))
+      .then(el => el.getAttribute("class"))
       .then(cls => {
         expect(cls).to.match(/leave_type_color_3/)
         return Bluebird.resolve()
@@ -629,7 +629,7 @@ describe('Coloring of half days', function() {
           )
         )
       )
-      .then(el => el.getAttribute('class'))
+      .then(el => el.getAttribute("class"))
       .then(cls => {
         expect(cls).to.match(/leave_type_color_1/)
         return Bluebird.resolve()
@@ -645,7 +645,7 @@ describe('Coloring of half days', function() {
           )
         )
       )
-      .then(el => el.getAttribute('class'))
+      .then(el => el.getAttribute("class"))
       .then(cls => {
         expect(cls).to.match(/leave_type_color_1/)
         return Bluebird.resolve()
@@ -660,7 +660,7 @@ describe('Coloring of half days', function() {
           )
         )
       )
-      .then(el => el.getAttribute('class'))
+      .then(el => el.getAttribute("class"))
       .then(cls => {
         expect(cls).not.to.match(/leave_type_color_/)
         return Bluebird.resolve()
@@ -669,9 +669,9 @@ describe('Coloring of half days', function() {
       .then(() => done())
   })
 
-  it('On Team view page ensure that days deducted from allowance are stated correctly', done => {
+  it("On Team view page ensure that days deducted from allowance are stated correctly", done => {
     open_page_func({
-      url: application_host + 'calendar/teamview/?date=2018-02',
+      url: application_host + "calendar/teamview/?date=2018-02",
       driver: driver
     })
       .then(() =>
@@ -683,18 +683,18 @@ describe('Coloring of half days', function() {
       )
       .then(el => el.getText())
       .then(txt => {
-        expect(txt, 'Ensure that system shows 2 days as deducted').to.be.eql(
-          '2'
+        expect(txt, "Ensure that system shows 2 days as deducted").to.be.eql(
+          "2"
         )
         done()
       })
   })
 
-  it('Go to report page and for 2018-02 ensure that report contains correct summaries', done => {
+  it("Go to report page and for 2018-02 ensure that report contains correct summaries", done => {
     open_page_func({
       url:
         application_host +
-        'reports/allowancebytime/?start_date=2018-02&end_date=2018-02',
+        "reports/allowancebytime/?start_date=2018-02&end_date=2018-02",
       driver: driver
     })
       .then(() =>
@@ -719,8 +719,8 @@ describe('Coloring of half days', function() {
       .then(stat => {
         expect(
           stat,
-          'Ensure that report shows correct deducted days'
-        ).to.be.deep.equal(['2', '2', '2'])
+          "Ensure that report shows correct deducted days"
+        ).to.be.deep.equal(["2", "2", "2"])
         done()
       })
   })
