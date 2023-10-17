@@ -46,47 +46,85 @@ module.exports = {
       }
 
       if (attributes.DepartmentId) {
-        await queryInterface.renameColumn("Company", "DepartmentId", "department_id");
+        await queryInterface.renameColumn(
+          "Company",
+          "DepartmentId",
+          "department_id"
+        );
       }
     });
 
     await queryInterface.describeTable("Department").then(async attributes => {
       if (attributes.companyId) {
-        await queryInterface.renameColumn("Department", "companyId", "company_id");
+        await queryInterface.renameColumn(
+          "Department",
+          "companyId",
+          "company_id"
+        );
       }
 
       if (attributes.DepartmentId) {
-        await queryInterface.renameColumn("Department", "DepartmentId", "department_id");
+        await queryInterface.renameColumn(
+          "Department",
+          "DepartmentId",
+          "department_id"
+        );
       }
     });
 
     await queryInterface.describeTable("BankHoliday").then(async attributes => {
       if (attributes.companyId) {
-        await queryInterface.renameColumn("BankHoliday", "companyId", "company_id");
+        await queryInterface.renameColumn(
+          "BankHoliday",
+          "companyId",
+          "company_id"
+        );
       }
 
       if (attributes.DepartmentId) {
-        await queryInterface.renameColumn("BankHoliday", "DepartmentId", "department_id");
+        await queryInterface.renameColumn(
+          "BankHoliday",
+          "DepartmentId",
+          "department_id"
+        );
       }
     });
 
-    await queryInterface.describeTable("DepartmentSupervisor").then(async attributes => {
-      if (attributes.companyId) {
-        await queryInterface.renameColumn("DepartmentSupervisor", "companyId", "company_id");
-      }
+    await queryInterface
+      .describeTable("DepartmentSupervisor")
+      .then(async attributes => {
+        if (attributes.companyId) {
+          await queryInterface.renameColumn(
+            "DepartmentSupervisor",
+            "companyId",
+            "company_id"
+          );
+        }
 
-      if (attributes.DepartmentId) {
-        await queryInterface.renameColumn("DepartmentSupervisor", "DepartmentId", "department_id");
-      }
-    });
+        if (attributes.DepartmentId) {
+          await queryInterface.renameColumn(
+            "DepartmentSupervisor",
+            "DepartmentId",
+            "department_id"
+          );
+        }
+      });
 
     await queryInterface.describeTable("EmailAudit").then(async attributes => {
       if (attributes.companyId) {
-        await queryInterface.renameColumn("EmailAudit", "companyId", "company_id");
+        await queryInterface.renameColumn(
+          "EmailAudit",
+          "companyId",
+          "company_id"
+        );
       }
 
       if (attributes.DepartmentId) {
-        await queryInterface.renameColumn("EmailAudit", "DepartmentId", "department_id");
+        await queryInterface.renameColumn(
+          "EmailAudit",
+          "DepartmentId",
+          "department_id"
+        );
       }
     });
 
@@ -96,27 +134,47 @@ module.exports = {
       }
 
       if (attributes.DepartmentId) {
-        await queryInterface.renameColumn("Leave", "DepartmentId", "department_id");
+        await queryInterface.renameColumn(
+          "Leave",
+          "DepartmentId",
+          "department_id"
+        );
       }
     });
 
     await queryInterface.describeTable("LeaveType").then(async attributes => {
       if (attributes.companyId) {
-        await queryInterface.renameColumn("LeaveType", "companyId", "company_id");
+        await queryInterface.renameColumn(
+          "LeaveType",
+          "companyId",
+          "company_id"
+        );
       }
 
       if (attributes.DepartmentId) {
-        await queryInterface.renameColumn("LeaveType", "DepartmentId", "department_id");
+        await queryInterface.renameColumn(
+          "LeaveType",
+          "DepartmentId",
+          "department_id"
+        );
       }
     });
 
     await queryInterface.describeTable("Schedule").then(async attributes => {
       if (attributes.companyId) {
-        await queryInterface.renameColumn("Schedule", "companyId", "company_id");
+        await queryInterface.renameColumn(
+          "Schedule",
+          "companyId",
+          "company_id"
+        );
       }
 
       if (attributes.DepartmentId) {
-        await queryInterface.renameColumn("Schedule", "DepartmentId", "department_id");
+        await queryInterface.renameColumn(
+          "Schedule",
+          "DepartmentId",
+          "department_id"
+        );
       }
     });
 
@@ -126,19 +184,33 @@ module.exports = {
       }
 
       if (attributes.DepartmentId) {
-        await queryInterface.renameColumn("User", "DepartmentId", "department_id");
+        await queryInterface.renameColumn(
+          "User",
+          "DepartmentId",
+          "department_id"
+        );
       }
     });
 
-    await queryInterface.describeTable("UserAllowanceAdjustment").then(async attributes => {
-      if (attributes.companyId) {
-        await queryInterface.renameColumn("UserAllowanceAdjustment", "companyId", "company_id");
-      }
+    await queryInterface
+      .describeTable("UserAllowanceAdjustment")
+      .then(async attributes => {
+        if (attributes.companyId) {
+          await queryInterface.renameColumn(
+            "UserAllowanceAdjustment",
+            "companyId",
+            "company_id"
+          );
+        }
 
-      if (attributes.DepartmentId) {
-        await queryInterface.renameColumn("UserAllowanceAdjustment", "DepartmentId", "department_id");
-      }
-    });
+        if (attributes.DepartmentId) {
+          await queryInterface.renameColumn(
+            "UserAllowanceAdjustment",
+            "DepartmentId",
+            "department_id"
+          );
+        }
+      });
   },
 
   down: function(queryInterface, Sequelize) {

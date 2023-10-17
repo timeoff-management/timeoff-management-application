@@ -1,229 +1,229 @@
-'use strict'
+"use strict";
 
-const register_new_user_func = require('../../lib/register_new_user'),
-  open_page_func = require('../../lib/open_page'),
-  submit_form_func = require('../../lib/submit_form'),
-  check_elements_func = require('../../lib/check_elements'),
-  moment = require('moment'),
-  By = require('selenium-webdriver').By,
-  config = require('../../lib/config'),
+const register_new_user_func = require("../../lib/register_new_user"),
+  open_page_func = require("../../lib/open_page"),
+  submit_form_func = require("../../lib/submit_form"),
+  check_elements_func = require("../../lib/check_elements"),
+  moment = require("moment"),
+  By = require("selenium-webdriver").By,
+  config = require("../../lib/config"),
   application_host = config.get_application_host(),
-  bankholiday_form_id = '#update_bankholiday_form',
-  new_bankholiday_form_id = '#add_new_bank_holiday_form'
+  bankholiday_form_id = "#update_bankholiday_form",
+  new_bankholiday_form_id = "#add_new_bank_holiday_form";
 
-describe('CRUD for bank holidays', function() {
-  let driver
+describe("CRUD for bank holidays", function() {
+  let driver;
 
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
-  it('Performing registration process', function(done) {
+  it("Performing registration process", function(done) {
     register_new_user_func({ application_host }).then(data => {
-      driver = data.driver
-      done()
-    })
-  })
+      driver = data.driver;
+      done();
+    });
+  });
 
-  it('Open page with bank holidays', done => {
+  it("Open page with bank holidays", done => {
     open_page_func({
       driver,
-      url: application_host + 'settings/bankholidays/?year=2015'
-    }).then(() => done())
-  })
+      url: application_host + "settings/bankholidays/?year=2015"
+    }).then(() => done());
+  });
 
-  it('Check if there are default bank holidays', function(done) {
+  it("Check if there are default bank holidays", function(done) {
     check_elements_func({
       driver,
       elements_to_check: [
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="name__0"]',
-          value: 'Early May bank holiday'
+          value: "Early May bank holiday"
         },
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="date__0"]',
-          value: '2015-05-04'
+          value: "2015-05-04"
         }
       ]
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
-  it('Try to submit form with incorrect date', function(done) {
+  it("Try to submit form with incorrect date", function(done) {
     submit_form_func({
       driver,
       form_params: [
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="date__0"]',
-          value: 'crap'
+          value: "crap"
         }
       ],
       submit_button_selector: bankholiday_form_id + ' button[type="submit"]',
       message: /Changes to bank holidays were saved/
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
-  it('Go back to current year page of bank holidays', done => {
+  it("Go back to current year page of bank holidays", done => {
     open_page_func({
       driver,
       url: `${application_host}settings/bankholidays/?year=${moment().year()}`
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
-  it('Check that after some crappy input was provided into the date, it falls back to the current date', function(done) {
+  it("Check that after some crappy input was provided into the date, it falls back to the current date", function(done) {
     check_elements_func({
       driver,
       elements_to_check: [
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="name__0"]',
-          value: 'Early May bank holiday'
+          value: "Early May bank holiday"
         },
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="date__0"]',
-          value: moment().format('YYYY-MM-DD')
+          value: moment().format("YYYY-MM-DD")
         }
       ]
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
-  it('Update Early spring holiday to be 4th of May', function(done) {
+  it("Update Early spring holiday to be 4th of May", function(done) {
     submit_form_func({
       driver: driver,
       form_params: [
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="date__0"]',
-          value: '2015-05-04'
+          value: "2015-05-04"
         }
       ],
       submit_button_selector: bankholiday_form_id + ' button[type="submit"]',
       message: /Changes to bank holidays were saved/
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
-  it('Go back to 2015', done => {
+  it("Go back to 2015", done => {
     open_page_func({
       driver,
-      url: application_host + 'settings/bankholidays/?year=2015'
-    }).then(() => done())
-  })
+      url: application_host + "settings/bankholidays/?year=2015"
+    }).then(() => done());
+  });
 
-  it('Add new bank holiday to be in the beginning of the list', function(done) {
+  it("Add new bank holiday to be in the beginning of the list", function(done) {
     driver
-      .findElement(By.css('#add_new_bank_holiday_btn'))
+      .findElement(By.css("#add_new_bank_holiday_btn"))
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function() {
         // This is very important line when working with Bootstrap modals!
-        driver.sleep(1000)
+        driver.sleep(1000);
 
         submit_form_func({
           driver: driver,
           form_params: [
             {
               selector: new_bankholiday_form_id + ' input[name="name__new"]',
-              value: 'Z New Year'
+              value: "Z New Year"
             },
             {
               selector: new_bankholiday_form_id + ' input[name="date__new"]',
-              value: '2015-01-01'
+              value: "2015-01-01"
             }
           ],
           submit_button_selector:
             new_bankholiday_form_id + ' button[type="submit"]',
           message: /Changes to bank holidays were saved/
         }).then(function() {
-          done()
-        })
-      })
-  })
+          done();
+        });
+      });
+  });
 
-  it('Add new bank holiday to be in the end of the list', function(done) {
+  it("Add new bank holiday to be in the end of the list", function(done) {
     driver
-      .findElement(By.css('#add_new_bank_holiday_btn'))
+      .findElement(By.css("#add_new_bank_holiday_btn"))
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function() {
         // This is very important line when working with Bootstrap modals!
-        driver.sleep(1000)
+        driver.sleep(1000);
 
         submit_form_func({
           driver: driver,
           form_params: [
             {
               selector: new_bankholiday_form_id + ' input[name="name__new"]',
-              value: 'Xmas'
+              value: "Xmas"
             },
             {
               selector: new_bankholiday_form_id + ' input[name="date__new"]',
-              value: '2015-12-25'
+              value: "2015-12-25"
             }
           ],
           submit_button_selector:
             new_bankholiday_form_id + ' button[type="submit"]',
           message: /Changes to bank holidays were saved/
         }).then(function() {
-          done()
-        })
-      })
-  })
+          done();
+        });
+      });
+  });
 
-  it('Check that the order of all three holidays is based on dates rather than names', function(done) {
+  it("Check that the order of all three holidays is based on dates rather than names", function(done) {
     check_elements_func({
       driver: driver,
       elements_to_check: [
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="name__0"]',
-          value: 'Z New Year'
+          value: "Z New Year"
         },
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="date__0"]',
-          value: '2015-01-01'
+          value: "2015-01-01"
         },
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="name__1"]',
-          value: 'Early May bank holiday'
+          value: "Early May bank holiday"
         },
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="date__1"]',
-          value: '2015-05-04'
+          value: "2015-05-04"
         },
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="name__2"]',
-          value: 'Xmas'
+          value: "Xmas"
         },
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="date__2"]',
-          value: '2015-12-25'
+          value: "2015-12-25"
         }
       ]
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
-  it('Rename Christmas to have proper name', function(done) {
+  it("Rename Christmas to have proper name", function(done) {
     submit_form_func({
       driver: driver,
       form_params: [
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="name__2"]',
-          value: 'Christmas'
+          value: "Christmas"
         }
       ],
       elements_to_check: [
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="name__2"]',
-          value: 'Christmas'
+          value: "Christmas"
         },
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="date__2"]',
-          value: '2015-12-25'
+          value: "2015-12-25"
         }
       ],
       should_be_successful: true,
       submit_button_selector: bankholiday_form_id + ' button[type="submit"]',
       message: /Changes to bank holidays were saved/
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
-  it('Remove Spring bank holiday', function(done) {
+  it("Remove Spring bank holiday", function(done) {
     submit_form_func({
       driver,
       submit_button_selector:
@@ -233,27 +233,27 @@ describe('CRUD for bank holidays', function() {
       elements_to_check: [
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="name__0"]',
-          value: 'Z New Year'
+          value: "Z New Year"
         },
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="date__0"]',
-          value: '2015-01-01'
+          value: "2015-01-01"
         },
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="name__1"]',
-          value: 'Christmas'
+          value: "Christmas"
         },
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="date__1"]',
-          value: '2015-12-25'
+          value: "2015-12-25"
         }
       ]
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   after(function(done) {
     driver.quit().then(function() {
-      done()
-    })
-  })
-})
+      done();
+    });
+  });
+});
