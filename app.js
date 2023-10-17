@@ -5,7 +5,6 @@ var logger = require("morgan");
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var moment = require("moment");
-const createSessionMiddleware = require("./lib/middleware/withSession");
 
 var app = express();
 
@@ -34,9 +33,17 @@ app.use(express.static(path.join(__dirname, "public")));
 // Setup authentication mechanism
 const passport = require("./lib/passport")();
 
+var session = require("express-session");
+// initalize sequelize with session store
+var SequelizeStore = require("connect-session-sequelize")(session.Store);
 app.use(
-  createSessionMiddleware({
-    sequelizeDb: app.get("db_model").sequelize
+  session({
+    secret: "my dirty secret ;khjsdkjahsdajhasdam,nnsnad,",
+    resave: false,
+    saveUninitialized: false,
+    store: new SequelizeStore({
+      db: app.get("db_model").sequelize
+    })
   })
 );
 app.use(passport.initialize());
@@ -60,13 +67,13 @@ app.use(function(req, res, next) {
   res.locals.url_to_the_site_root = "/";
   res.locals.requested_path = req.originalUrl;
   // For book leave request modal
-  (res.locals.booking_start = today),
-    (res.locals.booking_end = today),
-    (res.locals.keep_team_view_hidden = !!(
+  res.locals.booking_start = today;
+  res.locals.booking_end = today;
+  res.locals.keep_team_view_hidden = !!(
       req.user &&
       req.user.company.is_team_view_hidden &&
       !req.user.admin
-    ));
+    );
 
   next();
 });
@@ -77,7 +84,6 @@ app.use(function(req, res, next) {
     "/js/global.js"
   ];
   res.locals.custom_css = ["/css/bootstrap-datepicker3.standalone.css"];
-
   next();
 });
 
@@ -134,6 +140,7 @@ app.use(function(req, res, next) {
 // will print stacktrace
 if (app.get("env") === "development") {
   app.use(function(err, req, res, next) {
+    console.error(err);
     res.status(err.status || 500);
     res.render("error", {
       message: err.message,
@@ -145,6 +152,7 @@ if (app.get("env") === "development") {
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
+  console.error(err);
   res.status(err.status || 500);
   res.render("error", {
     message: err.message,

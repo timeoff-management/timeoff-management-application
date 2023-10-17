@@ -6,14 +6,14 @@ var app = require("../app");
 var cluster = require("cluster");
 
 if (cluster.isMaster) {
-  cluster.on("exit", function (worker, code) {
+  cluster.on("exit", function(worker, code) {
     if (code != 0 && !worker.suicide) {
       console.log(">>>>>> Worker crashed. Starting a new worker");
       cluster.fork();
     }
   });
 
-  [1, 2].forEach(function () {
+  [1, 2].forEach(function() {
     cluster.fork();
   });
 } else {
@@ -22,8 +22,8 @@ if (cluster.isMaster) {
   app
     .get("db_model")
     .sequelize.sync()
-    .then(function () {
-      var server = app.listen(app.get("port"), function () {
+    .then(function() {
+      var server = app.listen(app.get("port"), function() {
         console.log("Started to listen on port " + server.address().port);
       });
     });

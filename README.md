@@ -1,4 +1,3 @@
-
 # TimeOff.Management
 
 Web application for managing employee absences.
@@ -51,9 +50,9 @@ Ability to back up entire company leave data into CSV file. So it could be used 
 
 The most used customer paths are mobile friendly:
 
-* employee is able to request new leave from mobile device
+- employee is able to request new leave from mobile device
 
-* supervisor is able to record decision from the mobile as well.
+- supervisor is able to record decision from the mobile as well.
 
 **Lots of other little things that would make life easier**
 
@@ -90,6 +89,7 @@ cd timeoff-management
 npm install
 npm start
 ```
+
 Open http://localhost:3000/ in your browser.
 
 ## Run tests
@@ -156,4 +156,3 @@ Follow instructions on [this page](docs/SessionStoreInRedis.md).
 ## Feedback
 
 Please report any issues or feedback to <a href="https://twitter.com/FreeTimeOffApp">twitter</a> or Email: pavlo at timeoff.management
-
