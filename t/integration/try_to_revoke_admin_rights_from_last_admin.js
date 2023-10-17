@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 var test = require("selenium-webdriver/testing"),
   By = require("selenium-webdriver").By,
@@ -13,7 +13,7 @@ var test = require("selenium-webdriver/testing"),
   add_new_user_func = require("../lib/add_new_user"),
   config = require("../lib/config"),
   user_info_func = require("../lib/user_info"),
-  application_host = config.get_application_host()
+  application_host = config.get_application_host();
 
 /*
  * Scenario to ensure system prevent revocking admin rights from very last admin within company.
@@ -27,28 +27,28 @@ var test = require("selenium-webdriver/testing"),
  * */
 
 describe("System prevent revoking admin rights from very last admin within company", function() {
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
-  var email_admin, secondary_user, driver
+  var email_admin, secondary_user, driver;
 
   it("Create new company", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(function(data) {
-      driver = data.driver
-      email_admin = data.email
-      done()
-    })
-  })
+      driver = data.driver;
+      email_admin = data.email;
+      done();
+    });
+  });
 
   it("Create second user", function(done) {
     add_new_user_func({
       application_host: application_host,
       driver: driver
     }).then(function(data) {
-      ;(secondary_user = data.new_user_email), done()
-    })
-  })
+      (secondary_user = data.new_user_email), done();
+    });
+  });
 
   it("Open Admin user edit details page", function(done) {
     user_info_func({
@@ -59,12 +59,12 @@ describe("System prevent revoking admin rights from very last admin within compa
         return open_page_func({
           driver: driver,
           url: application_host + "users/edit/" + data.user.id + "/"
-        })
+        });
       })
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   it("Ensure that Admin tickbox is checked", function(done) {
     check_elements_func({
@@ -77,9 +77,9 @@ describe("System prevent revoking admin rights from very last admin within compa
         }
       ]
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Try to untick the Is Admin flag and make sure system prevent from doing it", function(done) {
     submit_form_func({
@@ -94,9 +94,9 @@ describe("System prevent revoking admin rights from very last admin within compa
       submit_button_selector: "button#save_changes_btn",
       message: /This is last admin within company. Cannot revoke admin rights./
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open detail page for second employee", function(done) {
     user_info_func({
@@ -107,12 +107,12 @@ describe("System prevent revoking admin rights from very last admin within compa
         return open_page_func({
           driver: driver,
           url: application_host + "users/edit/" + data.user.id + "/"
-        })
+        });
       })
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   it("Ensure that Admin tickbox is not checked", function(done) {
     check_elements_func({
@@ -125,9 +125,9 @@ describe("System prevent revoking admin rights from very last admin within compa
         }
       ]
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Make secondary user to be admin", function(done) {
     submit_form_func({
@@ -142,9 +142,9 @@ describe("System prevent revoking admin rights from very last admin within compa
       submit_button_selector: "button#save_changes_btn",
       message: /Details for .* were updated/
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Ensure that secondary user bacame admin", function(done) {
     check_elements_func({
@@ -157,9 +157,9 @@ describe("System prevent revoking admin rights from very last admin within compa
         }
       ]
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Revoke admin rights from secondary user", function(done) {
     submit_form_func({
@@ -174,13 +174,13 @@ describe("System prevent revoking admin rights from very last admin within compa
       submit_button_selector: "button#save_changes_btn",
       message: /Details for .* were updated/
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   after(function(done) {
     driver.quit().then(function() {
-      done()
-    })
-  })
-})
+      done();
+    });
+  });
+});

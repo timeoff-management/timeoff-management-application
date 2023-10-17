@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const test = require("selenium-webdriver/testing"),
   By = require("selenium-webdriver").By,
@@ -12,7 +12,7 @@ const test = require("selenium-webdriver/testing"),
   userInfoFunc = require("../../lib/user_info"),
   applicationHost = config.get_application_host(),
   companyEditFormId = "#company_edit_form",
-  userStartsAtTheBeginingOfYear = require("../../lib/set_user_to_start_at_the_beginning_of_the_year")
+  userStartsAtTheBeginingOfYear = require("../../lib/set_user_to_start_at_the_beginning_of_the_year");
 
 /*
  * Scenario:
@@ -27,44 +27,44 @@ const test = require("selenium-webdriver/testing"),
  * */
 
 describe("Carry over issue for users started in current year", function() {
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
-  let driver, email, userId
+  let driver, email, userId;
 
   it("Register new company", done => {
     registerNewUserFunc({ applicationHost }).then(data => {
-      ;({ driver, email } = data)
-      done()
-    })
-  })
+      ({ driver, email } = data);
+      done();
+    });
+  });
 
   it("Obtain information about admin user", done => {
     userInfoFunc({ driver, email }).then(data => {
-      userId = data.user.id
-      done()
-    })
-  })
+      userId = data.user.id;
+      done();
+    });
+  });
 
   it("Update admin details to have start date at very beginig of this year", done => {
-    userStartsAtTheBeginingOfYear({ driver, email }).then(() => done())
-  })
+    userStartsAtTheBeginingOfYear({ driver, email }).then(() => done());
+  });
 
   it("Open user details page (abcenses section)", function(done) {
     openPageFunc({
       driver,
       url: `${applicationHost}users/edit/${userId}/absences/`
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Ensure user does not have anything carried over from previous year", done => {
     driver
       .findElement(By.css("#allowanceCarriedOverPart"))
       .then(span => span.getText())
       .then(text => {
-        expect(text).to.be.eq("0")
-        done()
-      })
-  })
+        expect(text).to.be.eq("0");
+        done();
+      });
+  });
 
   it("Update copany configuration to carry over all unused allowance from previous year", done => {
     openPageFunc({
@@ -86,8 +86,8 @@ describe("Carry over issue for users started in current year", function() {
           should_be_successful: true
         })
       )
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Recalculate carried over allowance for the company", done => {
     submitFormFunc({
@@ -96,8 +96,8 @@ describe("Carry over issue for users started in current year", function() {
         '#calculate_carry_over_form button[type="submit"]',
       message: /allowance was successfully carried over/i,
       should_be_successful: true
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Ensure that newly created user's carried over still remains 0", done => {
     openPageFunc({
@@ -107,12 +107,12 @@ describe("Carry over issue for users started in current year", function() {
       .then(() => driver.findElement(By.css("#allowanceCarriedOverPart")))
       .then(span => span.getText())
       .then(text => {
-        expect(text).to.be.eq("0")
-        done()
-      })
-  })
+        expect(text).to.be.eq("0");
+        done();
+      });
+  });
 
   after(done => {
-    driver.quit().then(() => done())
-  })
-})
+    driver.quit().then(() => done());
+  });
+});

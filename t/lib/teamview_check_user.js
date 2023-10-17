@@ -6,23 +6,23 @@
  *
  * */
 
-"use strict"
+"use strict";
 
 var By = require("selenium-webdriver").By,
   expect = require("chai").expect,
   open_page_func = require("./open_page"),
   config = require("./config"),
-  bluebird = require("bluebird")
+  bluebird = require("bluebird");
 
 module.exports = bluebird.promisify(function(args, callback) {
   var result_callback = callback,
     driver = args.driver,
     emails = args.emails || [],
     is_link = args.is_link || false,
-    application_host = args.application_host || config.get_application_host()
+    application_host = args.application_host || config.get_application_host();
 
   if (!driver) {
-    throw "'driver' was not passed into the teamview_check_user!"
+    throw "'driver' was not passed into the teamview_check_user!";
   }
 
   return open_page_func({
@@ -38,15 +38,15 @@ module.exports = bluebird.promisify(function(args, callback) {
           )
         )
         .then(function(elements) {
-          expect(elements.length).to.be.equal(emails.length)
-          return bluebird.resolve(data)
-        })
+          expect(elements.length).to.be.equal(emails.length);
+          return bluebird.resolve(data);
+        });
     })
 
     .then(function(data) {
       // "export" current driver
       result_callback(null, {
         driver: data.driver
-      })
-    })
-})
+      });
+    });
+});

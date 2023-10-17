@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const test = require("selenium-webdriver/testing"),
   By = require("selenium-webdriver").By,
@@ -16,7 +16,7 @@ const test = require("selenium-webdriver/testing"),
   leave_type_new_form_id = "#leave_type_new_form",
   config = require("../../lib/config"),
   application_host = config.get_application_host(),
-  userStartsAtTheBeginingOfYear = require("../../lib/set_user_to_start_at_the_beginning_of_the_year")
+  userStartsAtTheBeginingOfYear = require("../../lib/set_user_to_start_at_the_beginning_of_the_year");
 
 /*
  *  Scenario to go in this test:
@@ -29,43 +29,43 @@ const test = require("selenium-webdriver/testing"),
  * */
 
 describe("Try to remove used leave type", function() {
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
-  var driver, email
+  var driver, email;
 
   it("Create new company", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(function(data) {
-      ;({ driver, email } = data)
-      done()
-    })
-  })
+      ({ driver, email } = data);
+      done();
+    });
+  });
 
   it("Ensure user starts at the very beginning of current year", done => {
     userStartsAtTheBeginingOfYear({ driver, email, year: 2015 }).then(() =>
       done()
-    )
-  })
+    );
+  });
 
   it("Open page with leave types", function(done) {
     open_page_func({
       url: application_host + "settings/general/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Add new leave type", function(done) {
     driver
       .findElement(By.css("#add_new_leave_type_btn"))
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function() {
         // This is very important line when working with Bootstrap modals!
-        driver.sleep(1000)
+        driver.sleep(1000);
 
         submit_form_func({
           driver: driver,
@@ -85,31 +85,31 @@ describe("Try to remove used leave type", function() {
             leave_type_new_form_id + ' button[type="submit"]',
           message: /Changes to leave types were saved/
         }).then(function() {
-          done()
-        })
-      })
-  })
+          done();
+        });
+      });
+  });
 
   it("Open calendar page", function(done) {
     open_page_func({
       url: application_host + "calendar/?show_full_year=1&year=2015",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Request new leave", function(done) {
     driver
       .findElement(By.css("#book_time_off_btn"))
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
 
       // Create new leave request
       .then(function() {
         // This is very important line when working with Bootstrap modals!
-        driver.sleep(1000)
+        driver.sleep(1000);
 
         submit_form_func({
           driver: driver,
@@ -134,10 +134,10 @@ describe("Try to remove used leave type", function() {
           ],
           message: /New leave request was added/
         }).then(function() {
-          done()
-        })
-      })
-  })
+          done();
+        });
+      });
+  });
 
   it("Check that all days are marked as pended", function(done) {
     check_booking_func({
@@ -146,18 +146,18 @@ describe("Try to remove used leave type", function() {
       halfs_1st_days: [moment("2015-06-15")],
       type: "pended"
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open page with leave types", function(done) {
     open_page_func({
       url: application_host + "settings/general/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Try to remove newly added leave type and ensure it fails", function(done) {
     submit_form_func({
@@ -167,13 +167,13 @@ describe("Try to remove used leave type", function() {
         ' button[data-tom-leave-type-order="remove_0"]',
       message: /Cannot remove leave type: type is in use/
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   after(function(done) {
     driver.quit().then(function() {
-      done()
-    })
-  })
-})
+      done();
+    });
+  });
+});

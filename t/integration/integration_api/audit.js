@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const test = require("selenium-webdriver/testing"),
   By = require("selenium-webdriver").By,
@@ -12,7 +12,7 @@ const test = require("selenium-webdriver/testing"),
   checkElementsFunc = require("../../lib/check_elements"),
   addNewUserFunc = require("../../lib/add_new_user"),
   config = require("../../lib/config"),
-  applicationHost = config.get_application_host()
+  applicationHost = config.get_application_host();
 
 /*
  * Scenario:
@@ -28,19 +28,19 @@ const test = require("selenium-webdriver/testing"),
  * */
 
 describe("Basic audit for user changes", function() {
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
-  let driver, token, email, userId, secondEmail, secondUserId
+  let driver, token, email, userId, secondEmail, secondUserId;
 
   it("Create new company", done => {
     registerNewUserFunc({ applicationHost })
       .then(data => {
-        ;({ driver, email } = data)
-        return userInfoFunc({ driver, email })
+        ({ driver, email } = data);
+        return userInfoFunc({ driver, email });
       })
       .then(data => (userId = data.user.id))
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Enable API integration and capture the token value", done => {
     openPageFunc({
@@ -65,8 +65,8 @@ describe("Basic audit for user changes", function() {
       .then(() => driver.findElement(By.css("input#token-value")))
       .then(el => el.getAttribute("value"))
       .then(v => Promise.resolve((token = v)))
-      .then(obj => done())
-  })
+      .then(obj => done());
+  });
 
   it("Navigate to current user details and update its Name and Surname", done => {
     openPageFunc({
@@ -90,8 +90,8 @@ describe("Basic audit for user changes", function() {
           message: /Details for .* were updated/
         })
       )
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Create second user", done => {
     addNewUserFunc({
@@ -99,12 +99,12 @@ describe("Basic audit for user changes", function() {
       driver
     })
       .then(data => {
-        secondEmail = data.new_user_email
-        return userInfoFunc({ driver, email: secondEmail })
+        secondEmail = data.new_user_email;
+        return userInfoFunc({ driver, email: secondEmail });
       })
       .then(data => (secondUserId = data.user.id))
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Remove second account", done => {
     openPageFunc({
@@ -119,8 +119,8 @@ describe("Basic audit for user changes", function() {
           confirm_dialog: true
         })
       )
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Fetch the Audit feed from integration API", done => {
     rp(`${applicationHost}integration/v1/audit`, {
@@ -135,35 +135,35 @@ describe("Basic audit for user changes", function() {
       .then(obj => {
         const twoEvents = obj
           .filter(i => i.entityType === "USER")
-          .filter(i => i.entityId === userId)
+          .filter(i => i.entityId === userId);
 
-        expect(twoEvents.length).to.be.eql(2)
+        expect(twoEvents.length).to.be.eql(2);
 
         expect(twoEvents.map(i => i.attribute).join(",")).to.be.eql(
           "name,lastname"
-        )
+        );
         expect(twoEvents.map(i => i.newValue).join(",")).to.be.eql(
           "NewAuditName,NewAuditLastName"
-        )
+        );
 
         const removedEvents = obj
           .filter(i => i.entityType === "USER")
-          .filter(i => i.entityId === secondUserId)
+          .filter(i => i.entityId === secondUserId);
 
         expect(
           removedEvents.length,
           "There records regarding user deletion"
-        ).to.be.above(0)
+        ).to.be.above(0);
         expect(
           removedEvents.filter(i => i.newValue === "null").length,
           "all of them are nulls"
-        ).to.be.eql(removedEvents.length)
+        ).to.be.eql(removedEvents.length);
 
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   after(function(done) {
-    driver.quit().then(() => done())
-  })
-})
+    driver.quit().then(() => done());
+  });
+});

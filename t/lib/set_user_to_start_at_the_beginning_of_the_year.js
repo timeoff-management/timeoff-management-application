@@ -1,18 +1,18 @@
-"use strict"
+"use strict";
 
 const openPageFunc = require("./open_page"),
   userInfoFunc = require("./user_info"),
   submitFormFunc = require("./submit_form"),
   config = require("./config"),
   bluebird = require("bluebird"),
-  moment = require("moment")
+  moment = require("moment");
 
 const getUserId = ({ userId, email, driver }) =>
   !!userId
     ? bluebird.resolve(userId)
     : userInfoFunc({ email, driver }).then(({ user: { id } }) =>
         bluebird.resolve(id)
-      )
+      );
 
 module.exports = ({
   driver,
@@ -42,4 +42,4 @@ module.exports = ({
       })
     )
     .then(() => openPageFunc({ driver, url: applicationHost }))
-    .then(() => bluebird.resolve({ driver }))
+    .then(() => bluebird.resolve({ driver }));

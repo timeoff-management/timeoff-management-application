@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const test = require("selenium-webdriver/testing"),
   By = require("selenium-webdriver").By,
@@ -15,11 +15,11 @@ const test = require("selenium-webdriver/testing"),
   add_new_user_func = require("../../lib/add_new_user"),
   leave_type_edit_form_id = "#leave_type_edit_form",
   config = require("../../lib/config"),
-  application_host = config.get_application_host()
+  application_host = config.get_application_host();
 
 const next_year = moment()
   .add(1, "y")
-  .format("YYYY")
+  .format("YYYY");
 
 /*
  *  Scenario to go in this test:
@@ -37,23 +37,23 @@ const next_year = moment()
  * */
 
 describe("Leave type limits for next year: " + next_year, function() {
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
-  let admin_user_email, non_admin_user_email, driver
+  let admin_user_email, non_admin_user_email, driver;
 
   it("Create new company", function(done) {
     register_new_user_func({ application_host }).then(data => {
-      ;({ driver, email: admin_user_email } = data)
-      done()
-    })
-  })
+      ({ driver, email: admin_user_email } = data);
+      done();
+    });
+  });
 
   it("Open page with leave types", function(done) {
     open_page_func({
       url: application_host + "settings/general/",
       driver
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Check that it is possible to update Limits", function(done) {
     submit_form_func({
@@ -70,19 +70,19 @@ describe("Leave type limits for next year: " + next_year, function() {
         leave_type_edit_form_id + ' button[type="submit"]',
       should_be_successful: true,
       message: /Changes to leave types were saved/
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Create new non-admin user", function(done) {
     add_new_user_func({ application_host, driver }).then(data => {
-      non_admin_user_email = data.new_user_email
-      done()
-    })
-  })
+      non_admin_user_email = data.new_user_email;
+      done();
+    });
+  });
 
   it("Logout from admin account", function(done) {
-    logout_user_func({ application_host, driver }).then(() => done())
-  })
+    logout_user_func({ application_host, driver }).then(() => done());
+  });
 
   it("Login as non-admin user", function(done) {
     login_user_func({
@@ -90,9 +90,9 @@ describe("Leave type limits for next year: " + next_year, function() {
       user_email: non_admin_user_email,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open calendar page", function(done) {
     open_page_func({
@@ -100,19 +100,19 @@ describe("Leave type limits for next year: " + next_year, function() {
         application_host + "calendar/?year=" + next_year + "&show_full_year=1",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Add a request that fits under the limit", function(done) {
     driver
       .findElement(By.css("#book_time_off_btn"))
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function() {
         // This is very important line when working with Bootstrap modals!
-        driver.sleep(1000)
+        driver.sleep(1000);
 
         submit_form_func({
           driver: driver,
@@ -135,20 +135,20 @@ describe("Leave type limits for next year: " + next_year, function() {
               full_days: [moment(next_year + "-05-10")],
               type: "pended"
             }).then(function() {
-              done()
-            })
-          })
-      })
-  })
+              done();
+            });
+          });
+      });
+  });
 
   it("Logout from regular user session", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Login as Admin", function(done) {
     login_user_func({
@@ -156,18 +156,18 @@ describe("Leave type limits for next year: " + next_year, function() {
       user_email: admin_user_email,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open requests page", function(done) {
     open_page_func({
       url: application_host + "requests/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Approve newly added leave request", function(done) {
     driver
@@ -177,25 +177,25 @@ describe("Leave type limits for next year: " + next_year, function() {
         )
       )
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function() {
         // Wait until page properly is reloaded
-        return driver.wait(until.elementLocated(By.css("h1")), 1000)
+        return driver.wait(until.elementLocated(By.css("h1")), 1000);
       })
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   it("Logout from admin account", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Login as non-admin user", function(done) {
     login_user_func({
@@ -203,9 +203,9 @@ describe("Leave type limits for next year: " + next_year, function() {
       user_email: non_admin_user_email,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open calendar page", function(done) {
     open_page_func({
@@ -213,19 +213,19 @@ describe("Leave type limits for next year: " + next_year, function() {
         application_host + "calendar/?year=" + next_year + "&show_full_year=1",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("And try to request one more day of the type already 100% taken", function(done) {
     driver
       .findElement(By.css("#book_time_off_btn"))
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function() {
         // This is very important line when working with Bootstrap modals!
-        driver.sleep(1000)
+        driver.sleep(1000);
 
         submit_form_func({
           driver: driver,
@@ -241,14 +241,14 @@ describe("Leave type limits for next year: " + next_year, function() {
           ],
           message: /Failed to create a leave request/
         }).then(function() {
-          done()
-        })
-      })
-  })
+          done();
+        });
+      });
+  });
 
   after(function(done) {
     driver.quit().then(function() {
-      done()
-    })
-  })
-})
+      done();
+    });
+  });
+});

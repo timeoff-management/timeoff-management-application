@@ -1,18 +1,18 @@
-"use strict"
+"use strict";
 
 var models = require("../lib/model/db"),
-  Promise = require("bluebird")
+  Promise = require("bluebird");
 
 module.exports = {
   up: function(queryInterface, Sequelize) {
     return queryInterface.describeTable("Users").then(attributes => {
       if (!attributes.hasOwnProperty("adjustment")) {
-        return Promise.resolve()
+        return Promise.resolve();
       }
 
       if ("sqlite" !== queryInterface.sequelize.getDialect()) {
         // For non SQLite: it is easy
-        return queryInterface.removeColumn(models.User.tableName, "adjustment")
+        return queryInterface.removeColumn(models.User.tableName, "adjustment");
       }
 
       // For SQLite it is "fun"
@@ -23,7 +23,7 @@ module.exports = {
           .createTable("Users_backup", models.User.attributes)
 
           .then(function() {
-            return queryInterface.sequelize.query("PRAGMA foreign_keys=off;")
+            return queryInterface.sequelize.query("PRAGMA foreign_keys=off;");
           })
 
           // Copy data form original Users into new Temp one
@@ -32,7 +32,7 @@ module.exports = {
               "INSERT INTO `Users_backup` (`id`, `email`, `password`, `name`, `lastname`, `activated`, `admin`, `start_date`, `end_date`, `createdAt`, `updatedAt`, `companyId`, `DepartmentId`, `auto_approve`) SELECT `id`, `email`, `password`, `name`, `lastname`, `activated`, `admin`, `start_date`, `end_date`, `createdAt`, `updatedAt`, `companyId`, `DepartmentId`, `auto_approve` FROM `" +
                 models.User.tableName +
                 "`"
-            )
+            );
           })
 
           .then(() => queryInterface.dropTable(models.User.tableName))
@@ -43,12 +43,12 @@ module.exports = {
           .then(() =>
             queryInterface.addIndex(models.User.tableName, ["companyId"])
           )
-      )
-    })
+      );
+    });
   },
 
   down: function(queryInterface, Sequelize) {
     // No way back!
-    return Promise.resolve()
+    return Promise.resolve();
   }
-}
+};

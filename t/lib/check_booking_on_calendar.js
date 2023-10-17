@@ -1,10 +1,10 @@
-"use strict"
+"use strict";
 
 var webdriver = require("selenium-webdriver"),
   _ = require("underscore"),
   By = require("selenium-webdriver").By,
   expect = require("chai").expect,
-  Promise = require("bluebird")
+  Promise = require("bluebird");
 
 var check_booking_func = Promise.promisify(function(args, callback) {
   var driver = args.driver,
@@ -13,14 +13,14 @@ var check_booking_func = Promise.promisify(function(args, callback) {
     halfs_1st_days = args.halfs_1st_days || [],
     halfs_2nd_days = args.halfs_2nd_days || [],
     result_callback = callback,
-    type_css_re
+    type_css_re;
 
   if (type === "pended") {
-    type_css_re = /\bleave_cell_pended\b/
+    type_css_re = /\bleave_cell_pended\b/;
   } else if (type === "approved") {
-    type_css_re = /\bleave_cell\b/
+    type_css_re = /\bleave_cell\b/;
   } else {
-    throw new Error("Mandatory type parameter was not provided")
+    throw new Error("Mandatory type parameter was not provided");
   }
 
   Promise.all([
@@ -40,31 +40,31 @@ var check_booking_func = Promise.promisify(function(args, callback) {
                 " td.day_" +
                 day.format("D") +
                 "." +
-                half
+                half;
 
               return driver
                 .findElement(By.css(selector))
                 .then(function(el) {
-                  return el.getAttribute("class")
+                  return el.getAttribute("class");
                 })
                 .then(function(css) {
-                  expect(css).to.match(type_css_re)
-                })
+                  expect(css).to.match(type_css_re);
+                });
             })
-          ])
-        })
+          ]);
+        });
       }
     )
   ]).then(function() {
     // "export" current driver
     result_callback(null, {
       driver: driver
-    })
-  })
-})
+    });
+  });
+});
 
 module.exports = function(args) {
   return args.driver.call(function() {
-    return check_booking_func(args)
-  })
-}
+    return check_booking_func(args);
+  });
+};

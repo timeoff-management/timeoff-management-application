@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 var test = require("selenium-webdriver/testing"),
   By = require("selenium-webdriver").By,
@@ -16,7 +16,7 @@ var test = require("selenium-webdriver/testing"),
   submit_form_func = require("../../lib/submit_form"),
   user_info_func = require("../../lib/user_info"),
   application_host = config.get_application_host(),
-  userStartsAtTheBeginingOfYear = require("../../lib/set_user_to_start_at_the_beginning_of_the_year")
+  userStartsAtTheBeginingOfYear = require("../../lib/set_user_to_start_at_the_beginning_of_the_year");
 
 /*
  *  Scenario (based in bug #166):
@@ -33,54 +33,54 @@ var test = require("selenium-webdriver/testing"),
  * */
 
 describe("Leave request cancelation", function() {
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
-  var driver, email_A, user_id_A
+  var driver, email_A, user_id_A;
 
   it("Register new company", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(function(data) {
-      driver = data.driver
-      email_A = data.email
-      done()
-    })
-  })
+      driver = data.driver;
+      email_A = data.email;
+      done();
+    });
+  });
 
   it("Obtain information about admin user A", function(done) {
     user_info_func({
       driver: driver,
       email: email_A
     }).then(function(data) {
-      user_id_A = data.user.id
-      done()
-    })
-  })
+      user_id_A = data.user.id;
+      done();
+    });
+  });
 
   it("Update admin details to have start date at very beginig of this year", done => {
     userStartsAtTheBeginingOfYear({
       driver,
       email: email_A
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Open Book leave popup window", function(done) {
     driver
       .findElement(By.css("#book_time_off_btn"))
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function(el) {
         // This is very important line when working with Bootstrap modals!
-        return driver.sleep(1000)
+        return driver.sleep(1000);
       })
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   it("Submit new leave request for user A one weekday", function(done) {
-    const currentYear = moment.utc().year()
+    const currentYear = moment.utc().year();
     submit_form_func({
       driver: driver,
       form_params: [
@@ -95,18 +95,18 @@ describe("Leave request cancelation", function() {
       ],
       message: /New leave request was added/
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open requests page", function(done) {
     open_page_func({
       url: application_host + "requests/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Approve new leave request", function(done) {
     driver
@@ -114,46 +114,46 @@ describe("Leave request cancelation", function() {
         By.css('tr[vpp="pending_for__' + email_A + '"] .btn-success')
       )
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function() {
         // Wait until page properly is reloaded
-        return driver.wait(until.elementLocated(By.css("h1")), 1000)
+        return driver.wait(until.elementLocated(By.css("h1")), 1000);
       })
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   it("Open user A details page (abcenses section)", function(done) {
     open_page_func({
       url: application_host + "users/edit/" + user_id_A + "/absences/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it('Check that allowance section of user details page shows "15 out of 20"', function(done) {
     driver
       .findElement(By.css("#days_remaining_inp"))
       .then(function(inp) {
-        return inp.getAttribute("value")
+        return inp.getAttribute("value");
       })
       .then(function(text) {
-        expect(text).to.be.eq("15 out of 20")
-        done()
-      })
-  })
+        expect(text).to.be.eq("15 out of 20");
+        done();
+      });
+  });
 
   it("Open employees list page", function(done) {
     open_page_func({
       url: application_host + "users",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it('Ensure "remaining" 15', function(done) {
     driver
@@ -161,13 +161,13 @@ describe("Leave request cancelation", function() {
         By.css('tr[data-vpp-user-row="' + user_id_A + '"] .vpp-days-remaining')
       )
       .then(function(el) {
-        return el.getText()
+        return el.getText();
       })
       .then(function(text) {
-        expect(text).to.be.eq("15")
-        done()
-      })
-  })
+        expect(text).to.be.eq("15");
+        done();
+      });
+  });
 
   it('Ensure "used" shows 5', function(done) {
     driver
@@ -175,67 +175,67 @@ describe("Leave request cancelation", function() {
         By.css('tr[data-vpp-user-row="' + user_id_A + '"] .vpp-days-used')
       )
       .then(function(el) {
-        return el.getText()
+        return el.getText();
       })
       .then(function(text) {
-        expect(text).to.be.eq("5")
-        done()
-      })
-  })
+        expect(text).to.be.eq("5");
+        done();
+      });
+  });
 
   it("Open requests page", function(done) {
     open_page_func({
       url: application_host + "requests/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Initiate revoke procedure (but not finish)", function(done) {
     driver
       .findElement(By.css("button.revoke-btn"))
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function() {
         // Wait until page properly is reloaded
-        return driver.wait(until.elementLocated(By.css("h1")), 1000)
+        return driver.wait(until.elementLocated(By.css("h1")), 1000);
       })
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   it("Open user A details page (abcenses section)", function(done) {
     open_page_func({
       url: application_host + "users/edit/" + user_id_A + "/absences/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it('Check that allowance section of user details page shows "15 out of 20"', function(done) {
     driver
       .findElement(By.css("#days_remaining_inp"))
       .then(function(inp) {
-        return inp.getAttribute("value")
+        return inp.getAttribute("value");
       })
       .then(function(text) {
-        expect(text).to.be.eq("15 out of 20")
-        done()
-      })
-  })
+        expect(text).to.be.eq("15 out of 20");
+        done();
+      });
+  });
 
   it("Open employees list page", function(done) {
     open_page_func({
       url: application_host + "users",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it('Ensure "remaining" 15', function(done) {
     driver
@@ -243,13 +243,13 @@ describe("Leave request cancelation", function() {
         By.css('tr[data-vpp-user-row="' + user_id_A + '"] .vpp-days-remaining')
       )
       .then(function(el) {
-        return el.getText()
+        return el.getText();
       })
       .then(function(text) {
-        expect(text).to.be.eq("15")
-        done()
-      })
-  })
+        expect(text).to.be.eq("15");
+        done();
+      });
+  });
 
   it('Ensure "used" shows 5', function(done) {
     driver
@@ -257,17 +257,17 @@ describe("Leave request cancelation", function() {
         By.css('tr[data-vpp-user-row="' + user_id_A + '"] .vpp-days-used')
       )
       .then(function(el) {
-        return el.getText()
+        return el.getText();
       })
       .then(function(text) {
-        expect(text).to.be.eq("5")
-        done()
-      })
-  })
+        expect(text).to.be.eq("5");
+        done();
+      });
+  });
 
   after(function(done) {
     driver.quit().then(function() {
-      done()
-    })
-  })
-})
+      done();
+    });
+  });
+});

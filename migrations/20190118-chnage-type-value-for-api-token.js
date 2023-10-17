@@ -1,12 +1,12 @@
-"use strict"
+"use strict";
 
-const models = require("../lib/model/db")
+const models = require("../lib/model/db");
 
 module.exports = {
   up: function(queryInterface, Sequelize) {
     return queryInterface.describeTable("Companies").then(attributes => {
       if (attributes.integration_api_token.type === "UUID") {
-        return 1
+        return 1;
       }
 
       return (
@@ -32,12 +32,12 @@ module.exports = {
           )
           .then(() => queryInterface.sequelize.query("PRAGMA foreign_keys=on;"))
           .then(() => queryInterface.addIndex(models.Company.tableName, ["id"]))
-      )
-    })
+      );
+    });
   },
 
   down: function(queryInterface, Sequelize) {
     // No way back!
-    return Promise.resolve()
+    return Promise.resolve();
   }
-}
+};

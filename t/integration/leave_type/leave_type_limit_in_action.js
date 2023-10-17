@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 var test = require("selenium-webdriver/testing"),
   By = require("selenium-webdriver").By,
@@ -16,7 +16,7 @@ var test = require("selenium-webdriver/testing"),
   add_new_user_func = require("../../lib/add_new_user"),
   leave_type_edit_form_id = "#leave_type_edit_form",
   config = require("../../lib/config"),
-  application_host = config.get_application_host()
+  application_host = config.get_application_host();
 
 /*
  *  Scenario to go in this test:
@@ -32,27 +32,27 @@ var test = require("selenium-webdriver/testing"),
  * */
 
 describe("Leave type limits in actoion", function() {
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
-  var non_admin_user_email, driver
+  var non_admin_user_email, driver;
 
   it("Create new company", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(function(data) {
-      driver = data.driver
-      done()
-    })
-  })
+      driver = data.driver;
+      done();
+    });
+  });
 
   it("Open page with leave types", function(done) {
     open_page_func({
       url: application_host + "settings/general/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Check that it is possible to update Limits", function(done) {
     submit_form_func({
@@ -70,28 +70,28 @@ describe("Leave type limits in actoion", function() {
       should_be_successful: true,
       message: /Changes to leave types were saved/
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Create new non-admin user", function(done) {
     add_new_user_func({
       application_host: application_host,
       driver: driver
     }).then(function(data) {
-      non_admin_user_email = data.new_user_email
-      done()
-    })
-  })
+      non_admin_user_email = data.new_user_email;
+      done();
+    });
+  });
 
   it("Logout from admin account", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Login as non-admin user", function(done) {
     login_user_func({
@@ -99,35 +99,35 @@ describe("Leave type limits in actoion", function() {
       user_email: non_admin_user_email,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open calendar page", function(done) {
     open_page_func({
       url: application_host + "calendar/?year=2015&show_full_year=1",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("And make sure that it is calendar indeed", function(done) {
     driver.getTitle().then(function(title) {
-      expect(title).to.be.equal("Calendar")
-      done()
-    })
-  })
+      expect(title).to.be.equal("Calendar");
+      done();
+    });
+  });
 
   it("Try to request new leave that exceed the limit", function(done) {
     driver
       .findElement(By.css("#book_time_off_btn"))
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function() {
         // This is very important line when working with Bootstrap modals!
-        driver.sleep(1000)
+        driver.sleep(1000);
 
         submit_form_func({
           driver: driver,
@@ -144,20 +144,20 @@ describe("Leave type limits in actoion", function() {
           message: /Adding requested .* absence would exceed maximum allowed for such type by 1/,
           multi_line_message: true
         }).then(function() {
-          done()
-        })
-      })
-  })
+          done();
+        });
+      });
+  });
 
   it("Add a request that fits under the limit", function(done) {
     driver
       .findElement(By.css("#book_time_off_btn"))
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function() {
         // This is very important line when working with Bootstrap modals!
-        driver.sleep(1000)
+        driver.sleep(1000);
 
         submit_form_func({
           driver: driver,
@@ -184,15 +184,15 @@ describe("Leave type limits in actoion", function() {
               ],
               type: "pended"
             }).then(function() {
-              done()
-            })
-          })
-      })
-  })
+              done();
+            });
+          });
+      });
+  });
 
   after(function(done) {
     driver.quit().then(function() {
-      done()
-    })
-  })
-})
+      done();
+    });
+  });
+});

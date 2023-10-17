@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const test = require("selenium-webdriver/testing"),
   By = require("selenium-webdriver").By,
@@ -18,7 +18,7 @@ const test = require("selenium-webdriver/testing"),
   config = require("../../lib/config"),
   application_host = config.get_application_host(),
   department_edit_form_id = "#department_edit_form",
-  currentYear = moment.utc().year()
+  currentYear = moment.utc().year();
 
 /*
  *  Scenario to check:
@@ -40,58 +40,58 @@ const test = require("selenium-webdriver/testing"),
  * */
 
 describe("Revoke leave request", function() {
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
-  let email_admin, email_manager_a, email_manager_b, email_employee, driver
+  let email_admin, email_manager_a, email_manager_b, email_employee, driver;
 
   it("Create new company", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(function(data) {
-      driver = data.driver
-      email_admin = data.email
-      done()
-    })
-  })
+      driver = data.driver;
+      email_admin = data.email;
+      done();
+    });
+  });
 
   it("Create MANAGER_A-to-be user", function(done) {
     add_new_user_func({
       application_host: application_host,
       driver: driver
     }).then(function(data) {
-      email_manager_a = data.new_user_email
-      done()
-    })
-  })
+      email_manager_a = data.new_user_email;
+      done();
+    });
+  });
 
   it("Create MANAGER_A-to-be user", function(done) {
     add_new_user_func({
       application_host: application_host,
       driver: driver
     }).then(function(data) {
-      email_manager_b = data.new_user_email
-      done()
-    })
-  })
+      email_manager_b = data.new_user_email;
+      done();
+    });
+  });
 
   it("Create EMPLOYEE-to-be user", function(done) {
     add_new_user_func({
       application_host: application_host,
       driver: driver
     }).then(function(data) {
-      email_employee = data.new_user_email
-      done()
-    })
-  })
+      email_employee = data.new_user_email;
+      done();
+    });
+  });
 
   it("Open department management page", function(done) {
     open_page_func({
       url: application_host + "settings/departments/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Update department to be supervised by MANAGER_A", function(done) {
     open_page_func({
@@ -127,17 +127,17 @@ describe("Revoke leave request", function() {
           message: /Department .* was updated/
         })
       )
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Logout from admin account", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Login as EMPLOYEE user", function(done) {
     login_user_func({
@@ -145,35 +145,35 @@ describe("Revoke leave request", function() {
       user_email: email_employee,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open calendar page", function(done) {
     open_page_func({
       url: application_host + "calendar/?show_full_year=1",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("And make sure that it is calendar indeed", function(done) {
     driver.getTitle().then(function(title) {
-      expect(title).to.be.equal("Calendar")
-      done()
-    })
-  })
+      expect(title).to.be.equal("Calendar");
+      done();
+    });
+  });
 
   it("Request new leave", function(done) {
     driver
       .findElement(By.css("#book_time_off_btn"))
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function() {
         // This is very important line when working with Bootstrap modals!
-        driver.sleep(1000)
+        driver.sleep(1000);
 
         submit_form_func({
           driver: driver,
@@ -195,10 +195,10 @@ describe("Revoke leave request", function() {
           ],
           message: /New leave request was added/
         }).then(function() {
-          done()
-        })
-      })
-  })
+          done();
+        });
+      });
+  });
 
   it("Check that all days are marked as pended", function(done) {
     check_booking_func({
@@ -207,18 +207,18 @@ describe("Revoke leave request", function() {
       halfs_1st_days: [moment.utc(`${currentYear}-05-11`)],
       type: "pended"
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Logout from EMPLOYEE account", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Login as MANAGER_A user", function(done) {
     login_user_func({
@@ -226,18 +226,18 @@ describe("Revoke leave request", function() {
       user_email: email_manager_a,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open requests page", function(done) {
     open_page_func({
       url: application_host + "requests/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Make sure that newly created request is waiting for approval", function(done) {
     check_elements_func({
@@ -250,9 +250,9 @@ describe("Revoke leave request", function() {
         }
       ]
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Approve newly added leave request", function(done) {
     driver
@@ -260,25 +260,25 @@ describe("Revoke leave request", function() {
         By.css('tr[vpp="pending_for__' + email_employee + '"] .btn-success')
       )
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function() {
         // Wait until page properly is reloaded
-        return driver.wait(until.elementLocated(By.css("h1")), 1000)
+        return driver.wait(until.elementLocated(By.css("h1")), 1000);
       })
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   it("Logout from MANAGER_A account", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Login as ADMIN user", function(done) {
     login_user_func({
@@ -286,18 +286,18 @@ describe("Revoke leave request", function() {
       user_email: email_admin,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open department management page", function(done) {
     open_page_func({
       url: application_host + "settings/departments/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Update department to be supervised by MANAGER_B", function(done) {
     open_page_func({
@@ -333,17 +333,17 @@ describe("Revoke leave request", function() {
           message: /Department .* was updated/
         })
       )
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Logout from admin account", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Login as EMPLOYEE user", function(done) {
     login_user_func({
@@ -351,42 +351,42 @@ describe("Revoke leave request", function() {
       user_email: email_employee,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open requests page", function(done) {
     open_page_func({
       url: application_host + "requests/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Revoke request", function(done) {
     driver
       .findElement(By.css("button.revoke-btn"))
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function() {
         // Wait until page properly is reloaded
-        return driver.wait(until.elementLocated(By.css("h1")), 1000)
+        return driver.wait(until.elementLocated(By.css("h1")), 1000);
       })
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   it("Logout from EMPLOYEE account", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Login as MANAGER_B user", function(done) {
     login_user_func({
@@ -394,18 +394,18 @@ describe("Revoke leave request", function() {
       user_email: email_manager_b,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open requests page", function(done) {
     open_page_func({
       url: application_host + "requests/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Make sure newly revoked request is shown for approval", function(done) {
     check_elements_func({
@@ -418,9 +418,9 @@ describe("Revoke leave request", function() {
         }
       ]
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Approve revoke request", function(done) {
     driver
@@ -428,20 +428,20 @@ describe("Revoke leave request", function() {
         By.css('tr[vpp="pending_for__' + email_employee + '"] .btn-success')
       )
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function() {
         // Wait until page properly is reloaded
-        return driver.wait(until.elementLocated(By.css("h1")), 1000)
+        return driver.wait(until.elementLocated(By.css("h1")), 1000);
       })
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   after(function(done) {
     driver.quit().then(function() {
-      done()
-    })
-  })
-})
+      done();
+    });
+  });
+});

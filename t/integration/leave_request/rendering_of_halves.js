@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 var test = require("selenium-webdriver/testing"),
   until = require("selenium-webdriver").until,
@@ -15,54 +15,54 @@ var test = require("selenium-webdriver/testing"),
   open_page_func = require("../../lib/open_page"),
   submit_form_func = require("../../lib/submit_form"),
   check_elements_func = require("../../lib/check_elements"),
-  add_new_user_func = require("../../lib/add_new_user")
+  add_new_user_func = require("../../lib/add_new_user");
 
 describe("Ensure that leaves with not full days are rendered properly", function() {
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
-  var non_admin_user_email, new_user_email, driver
+  var non_admin_user_email, new_user_email, driver;
 
   it("Create new company", done => {
     register_new_user_func({
       application_host: application_host
     }).then(data => {
-      driver = data.driver
-      new_user_email = data.email
-      done()
-    })
-  })
+      driver = data.driver;
+      new_user_email = data.email;
+      done();
+    });
+  });
 
   it("Create new non-admin user", done => {
     add_new_user_func({
       application_host: application_host,
       driver: driver
     }).then(data => {
-      non_admin_user_email = data.new_user_email
-      done()
-    })
-  })
+      non_admin_user_email = data.new_user_email;
+      done();
+    });
+  });
 
   it("Logout from admin acount", done => {
     logout_user_func({
       application_host: application_host,
       driver: driver
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Login as non-admin user", done => {
     login_user_func({
       application_host: application_host,
       user_email: non_admin_user_email,
       driver: driver
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Open calendar page", done => {
     open_page_func({
       url: application_host + "calendar/?show_full_year=1&year=2015",
       driver: driver
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Request new partial leave: morning to afternoon", done => {
     driver
@@ -99,8 +99,8 @@ describe("Ensure that leaves with not full days are rendered properly", function
           message: /New leave request was added/
         })
       )
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Request new partial leave: afternoon to morning", done => {
     driver
@@ -137,8 +137,8 @@ describe("Ensure that leaves with not full days are rendered properly", function
           message: /New leave request was added/
         })
       )
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Request just morning", done => {
     driver
@@ -175,8 +175,8 @@ describe("Ensure that leaves with not full days are rendered properly", function
           message: /New leave request was added/
         })
       )
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Request just multi days leave starting next afternoon", done => {
     driver
@@ -217,15 +217,15 @@ describe("Ensure that leaves with not full days are rendered properly", function
           message: /New leave request was added/
         })
       )
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Go to my requests page", done => {
     open_page_func({
       url: application_host + "requests/",
       driver: driver
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Ensure that both new leave requests are listed and both are marked as partial", done => {
     driver
@@ -236,8 +236,8 @@ describe("Ensure that leaves with not full days are rendered properly", function
         expect(
           els.length,
           "Ensure two elements with leave dates were found"
-        ).to.be.equal(4)
-        return Promise.map(els, el => el.getText())
+        ).to.be.equal(4);
+        return Promise.map(els, el => el.getText());
       })
       .then(dates_str => {
         expect(
@@ -248,10 +248,10 @@ describe("Ensure that leaves with not full days are rendered properly", function
           "2015-06-09 (morning) 2015-06-09",
           "2015-06-16 (morning) 2015-06-17 (afternoon)",
           "2015-06-23 (afternoon) 2015-06-24 (morning)"
-        ])
-        done()
-      })
-  })
+        ]);
+        done();
+      });
+  });
 
   it("Ensure tooltips include leave type name", done => {
     open_page_func({
@@ -271,50 +271,50 @@ describe("Ensure that leaves with not full days are rendered properly", function
         ([title9, title10, title11, title16, title17, title23, title24]) => {
           expect(title9).to.be.eq(
             "Holiday (morning) Sick Leave (afternoon): New absence waiting approval"
-          )
-          expect(title10).to.be.eq("Sick Leave: New absence waiting approval")
-          expect(title11).to.be.eq("Sick Leave: New absence waiting approval")
+          );
+          expect(title10).to.be.eq("Sick Leave: New absence waiting approval");
+          expect(title11).to.be.eq("Sick Leave: New absence waiting approval");
           expect(title16).to.be.eq(
             "Holiday (morning) : New absence waiting approval"
-          )
+          );
           expect(title17).to.be.eq(
             "Holiday (afternoon): New absence waiting approval"
-          )
+          );
           expect(title23).to.be.eq(
             "Holiday (afternoon): New absence waiting approval"
-          )
+          );
           expect(title24).to.be.eq(
             "Holiday (morning) : New absence waiting approval"
-          )
-          return Promise.resolve(1)
+          );
+          return Promise.resolve(1);
         }
       )
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   it("Logout from non-admin account", done => {
     logout_user_func({
       application_host: application_host,
       driver: driver
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Login as admin user", done => {
     login_user_func({
       application_host: application_host,
       user_email: new_user_email,
       driver: driver
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Go to my requests page", done => {
     open_page_func({
       url: application_host + "requests/",
       driver: driver
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Ensure that both new leave requests are listed for approval and both are marked as partial", done => {
     driver
@@ -325,8 +325,8 @@ describe("Ensure that leaves with not full days are rendered properly", function
         expect(
           els.length,
           "Ensure two elements with leave dates were found"
-        ).to.be.equal(4)
-        return Promise.map(els, el => el.getText())
+        ).to.be.equal(4);
+        return Promise.map(els, el => el.getText());
       })
       .then(dates_str => {
         expect(
@@ -337,12 +337,12 @@ describe("Ensure that leaves with not full days are rendered properly", function
           "2015-06-09 (morning) 2015-06-09",
           "2015-06-16 (morning) 2015-06-17 (afternoon)",
           "2015-06-23 (afternoon) 2015-06-24 (morning)"
-        ])
-        done()
-      })
-  })
+        ]);
+        done();
+      });
+  });
 
   after(done => {
-    driver.quit().then(() => done())
-  })
-})
+    driver.quit().then(() => done());
+  });
+});

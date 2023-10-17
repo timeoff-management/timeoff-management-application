@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 var test = require("selenium-webdriver/testing"),
   By = require("selenium-webdriver").By,
@@ -16,7 +16,7 @@ var test = require("selenium-webdriver/testing"),
   user_info_func = require("../../lib/user_info"),
   application_host = config.get_application_host(),
   schedule_form_id = "#company_schedule_form",
-  userStartsAtTheBeginingOfYear = require("../../lib/set_user_to_start_at_the_beginning_of_the_year")
+  userStartsAtTheBeginingOfYear = require("../../lib/set_user_to_start_at_the_beginning_of_the_year");
 
 /*
  * Scenario 1: Basic user specific schedule
@@ -40,55 +40,55 @@ var test = require("selenium-webdriver/testing"),
  * */
 
 describe("Basic user specific schedule", function() {
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
-  var driver, email_A, email_B, user_id_A, user_id_B
+  var driver, email_A, email_B, user_id_A, user_id_B;
 
   it("Register new company", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(function(data) {
-      driver = data.driver
-      email_A = data.email
-      done()
-    })
-  })
+      driver = data.driver;
+      email_A = data.email;
+      done();
+    });
+  });
 
   it("Create second user B", function(done) {
     add_new_user_func({
       application_host: application_host,
       driver: driver
     }).then(function(data) {
-      email_B = data.new_user_email
-      done()
-    })
-  })
+      email_B = data.new_user_email;
+      done();
+    });
+  });
 
   it("Obtain information about user A", function(done) {
     user_info_func({
       driver: driver,
       email: email_A
     }).then(function(data) {
-      user_id_A = data.user.id
-      done()
-    })
-  })
+      user_id_A = data.user.id;
+      done();
+    });
+  });
 
   it("Obtain information about user B", function(done) {
     user_info_func({
       driver: driver,
       email: email_B
     }).then(function(data) {
-      user_id_B = data.user.id
-      done()
-    })
-  })
+      user_id_B = data.user.id;
+      done();
+    });
+  });
 
   it("Ensure that user A started at the begining of current year", done => {
     userStartsAtTheBeginingOfYear({ driver, email: email_A, year: 2015 }).then(
       () => done()
-    )
-  })
+    );
+  });
 
   it("Open user B schedule and ensure wording indicates company wide one is used", function(done) {
     open_page_func({
@@ -99,22 +99,22 @@ describe("Basic user specific schedule", function() {
         return driver
           .findElement(By.css('a[data-vpp="link-to-company-schedule"]'))
           .then(function(company_schedule_link) {
-            expect(company_schedule_link).to.be.ok
-            return Promise.resolve()
-          })
+            expect(company_schedule_link).to.be.ok;
+            return Promise.resolve();
+          });
       })
       .then(function() {
         driver
           .findElement(By.css('button[name="save_user_specific_schedule"]'))
           .then(function(button) {
-            return button.getText()
+            return button.getText();
           })
           .then(function(caption) {
-            expect(caption).to.be.equal("Override company wide schedule")
-            done()
-          })
-      })
-  })
+            expect(caption).to.be.equal("Override company wide schedule");
+            done();
+          });
+      });
+  });
 
   it("Ensure it has default configuration", function(done) {
     check_elements_func({
@@ -157,9 +157,9 @@ describe("Basic user specific schedule", function() {
         }
       ]
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Update user B to have Wed to be non-working day", function(done) {
     submit_form_func({
@@ -173,9 +173,9 @@ describe("Basic user specific schedule", function() {
       submit_button_selector: 'button[name="save_user_specific_schedule"]',
       message: /Schedule for user was saved/
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Ensure that User B details shows new schedule", function(done) {
     check_elements_func({
@@ -218,18 +218,18 @@ describe("Basic user specific schedule", function() {
         }
       ]
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open company details page", function(done) {
     open_page_func({
       url: application_host + "settings/general/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Ensure Company wide schedule is still default: Sat, Sun are non-working", function(done) {
     check_elements_func({
@@ -272,18 +272,18 @@ describe("Basic user specific schedule", function() {
         }
       ]
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open Team view page", function(done) {
     open_page_func({
       url: application_host + "calendar/teamview/?&date=2015-01",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Make sure that team view shows user A has Sat and Sun as non-working days", function(done) {
     driver
@@ -296,11 +296,11 @@ describe("Basic user specific schedule", function() {
         )
       )
       .then(function(el) {
-        return el.getAttribute("class")
+        return el.getAttribute("class");
       })
       .then(function(css) {
-        expect(css).to.not.match(/\bweekend_cell\b/)
-        return Promise.resolve(1)
+        expect(css).to.not.match(/\bweekend_cell\b/);
+        return Promise.resolve(1);
       })
       .then(function() {
         return driver
@@ -312,12 +312,12 @@ describe("Basic user specific schedule", function() {
             )
           )
           .then(function(el) {
-            return el.getAttribute("class")
+            return el.getAttribute("class");
           })
           .then(function(css) {
-            expect(css).to.match(/\bweekend_cell\b/)
-            return Promise.resolve(1)
-          })
+            expect(css).to.match(/\bweekend_cell\b/);
+            return Promise.resolve(1);
+          });
       })
       .then(function() {
         return driver
@@ -329,17 +329,17 @@ describe("Basic user specific schedule", function() {
             )
           )
           .then(function(el) {
-            return el.getAttribute("class")
+            return el.getAttribute("class");
           })
           .then(function(css) {
-            expect(css).to.match(/\bweekend_cell\b/)
-            return Promise.resolve(1)
-          })
+            expect(css).to.match(/\bweekend_cell\b/);
+            return Promise.resolve(1);
+          });
       })
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   it("Make sure team view shows user B has Wed, Sat, Sun as non-working days", function(done) {
     driver
@@ -352,11 +352,11 @@ describe("Basic user specific schedule", function() {
         )
       )
       .then(function(el) {
-        return el.getAttribute("class")
+        return el.getAttribute("class");
       })
       .then(function(css) {
-        expect(css).to.match(/\bweekend_cell\b/)
-        return Promise.resolve(1)
+        expect(css).to.match(/\bweekend_cell\b/);
+        return Promise.resolve(1);
       })
       .then(function() {
         return driver
@@ -368,12 +368,12 @@ describe("Basic user specific schedule", function() {
             )
           )
           .then(function(el) {
-            return el.getAttribute("class")
+            return el.getAttribute("class");
           })
           .then(function(css) {
-            expect(css).to.match(/\bweekend_cell\b/)
-            return Promise.resolve(1)
-          })
+            expect(css).to.match(/\bweekend_cell\b/);
+            return Promise.resolve(1);
+          });
       })
       .then(function() {
         return driver
@@ -385,79 +385,79 @@ describe("Basic user specific schedule", function() {
             )
           )
           .then(function(el) {
-            return el.getAttribute("class")
+            return el.getAttribute("class");
           })
           .then(function(css) {
-            expect(css).to.match(/\bweekend_cell\b/)
-            return Promise.resolve(1)
-          })
+            expect(css).to.match(/\bweekend_cell\b/);
+            return Promise.resolve(1);
+          });
       })
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   it("Open Calendar page", function(done) {
     open_page_func({
       url: application_host + "calendar/?year=2015&show_full_year=1",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("... ensure that only Sat and Sun are non-working days", function(done) {
     driver
       // We know that 7th of January 2015 is Wednesday
       .findElement(By.css("table.month_January td.day_7"))
       .then(function(el) {
-        return el.getAttribute("class")
+        return el.getAttribute("class");
       })
       .then(function(css) {
-        expect(css).to.not.match(/\bweekend_cell\b/)
-        return Promise.resolve(1)
+        expect(css).to.not.match(/\bweekend_cell\b/);
+        return Promise.resolve(1);
       })
       .then(function() {
         return driver
           .findElement(By.css("table.month_January td.day_10"))
           .then(function(el) {
-            return el.getAttribute("class")
+            return el.getAttribute("class");
           })
           .then(function(css) {
-            expect(css).to.match(/\bweekend_cell\b/)
-            return Promise.resolve(1)
-          })
+            expect(css).to.match(/\bweekend_cell\b/);
+            return Promise.resolve(1);
+          });
       })
       .then(function() {
         return driver
           .findElement(By.css("table.month_January td.day_11"))
           .then(function(el) {
-            return el.getAttribute("class")
+            return el.getAttribute("class");
           })
           .then(function(css) {
-            expect(css).to.match(/\bweekend_cell\b/)
-            return Promise.resolve(1)
-          })
+            expect(css).to.match(/\bweekend_cell\b/);
+            return Promise.resolve(1);
+          });
       })
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   it("Open Book leave popup window", function(done) {
     driver
       .findElement(By.css("#book_time_off_btn"))
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function(el) {
         // This is very important line when working with Bootstrap modals!
-        return driver.sleep(1000)
+        return driver.sleep(1000);
       })
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   it("Submit new leave requesti from user A for 7 calendar days", function(done) {
     submit_form_func({
@@ -474,41 +474,41 @@ describe("Basic user specific schedule", function() {
       ],
       message: /New leave request was added/
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open requests page", function(done) {
     open_page_func({
       url: application_host + "requests/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("... and ensure newly created request deducts 5 days from allowance", function(done) {
     driver
       .findElement(By.css('td[data-vpp="days_used"]'))
       .then(function(el) {
-        return el.getText()
+        return el.getText();
       })
       .then(function(days_used) {
-        expect(days_used).to.be.equal("5")
+        expect(days_used).to.be.equal("5");
       })
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   it("Logout from user A (admin)", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Login as user B", function(done) {
     login_user_func({
@@ -516,72 +516,72 @@ describe("Basic user specific schedule", function() {
       user_email: email_B,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open Calendar page", function(done) {
     open_page_func({
       url: application_host + "calendar/?year=2015&show_full_year=1",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("... ensure its calendar page shows WED,Sat, and Sun as non-working days", function(done) {
     driver
       // We know that 7th of January 2015 is Wednesday
       .findElement(By.css("table.month_January td.day_7"))
       .then(function(el) {
-        return el.getAttribute("class")
+        return el.getAttribute("class");
       })
       .then(function(css) {
-        expect(css).to.match(/\bweekend_cell\b/)
-        return Promise.resolve(1)
+        expect(css).to.match(/\bweekend_cell\b/);
+        return Promise.resolve(1);
       })
       .then(function() {
         return driver
           .findElement(By.css("table.month_January td.day_10"))
           .then(function(el) {
-            return el.getAttribute("class")
+            return el.getAttribute("class");
           })
           .then(function(css) {
-            expect(css).to.match(/\bweekend_cell\b/)
-            return Promise.resolve(1)
-          })
+            expect(css).to.match(/\bweekend_cell\b/);
+            return Promise.resolve(1);
+          });
       })
       .then(function() {
         return driver
           .findElement(By.css("table.month_January td.day_11"))
           .then(function(el) {
-            return el.getAttribute("class")
+            return el.getAttribute("class");
           })
           .then(function(css) {
-            expect(css).to.match(/\bweekend_cell\b/)
-            return Promise.resolve(1)
-          })
+            expect(css).to.match(/\bweekend_cell\b/);
+            return Promise.resolve(1);
+          });
       })
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   //*    * Book a holiday for 7 days and make sure that 4 days deducted from allowance
   it("Open Book leave popup window", function(done) {
     driver
       .findElement(By.css("#book_time_off_btn"))
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function(el) {
         // This is very important line when working with Bootstrap modals!
-        return driver.sleep(1000)
+        return driver.sleep(1000);
       })
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   it("Submit new leave requesti from user A for 7 calendar days", function(done) {
     submit_form_func({
@@ -598,18 +598,18 @@ describe("Basic user specific schedule", function() {
       ],
       message: /New leave request was added/
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Logout from user B", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Login as user A (admin)", function(done) {
     login_user_func({
@@ -617,18 +617,18 @@ describe("Basic user specific schedule", function() {
       user_email: email_A,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open requests page", function(done) {
     open_page_func({
       url: application_host + "requests/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("... and ensure irequest from user B deducts 4 days from allowance", function(done) {
     driver
@@ -638,15 +638,15 @@ describe("Basic user specific schedule", function() {
         )
       )
       .then(function(el) {
-        return el.getText()
+        return el.getText();
       })
       .then(function(days_used) {
-        expect(days_used).to.be.equal("4")
+        expect(days_used).to.be.equal("4");
       })
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   it("Open user B schedule", function(done) {
     open_page_func({
@@ -659,22 +659,22 @@ describe("Basic user specific schedule", function() {
             By.css('strong[data-vpp="declare-user-specific-schedule"]')
           )
           .then(function(el) {
-            expect(el).to.be.ok
-            return Promise.resolve()
-          })
+            expect(el).to.be.ok;
+            return Promise.resolve();
+          });
       })
       .then(function() {
         driver
           .findElement(By.css('button[name="save_user_specific_schedule"]'))
           .then(function(button) {
-            return button.getText()
+            return button.getText();
           })
           .then(function(caption) {
-            expect(caption).to.be.equal("Save employee specific schedule")
-            done()
-          })
-      })
-  })
+            expect(caption).to.be.equal("Save employee specific schedule");
+            done();
+          });
+      });
+  });
 
   it("Revoke user specific schedule and replace it with company wide one", function(done) {
     submit_form_func({
@@ -683,9 +683,9 @@ describe("Basic user specific schedule", function() {
       submit_button_selector: 'button[name="revoke_user_specific_schedule"]',
       message: /Schedule for user was saved/
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Ensure that User B details shows new schedule", function(done) {
     check_elements_func({
@@ -728,18 +728,18 @@ describe("Basic user specific schedule", function() {
         }
       ]
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open Team view page", function(done) {
     open_page_func({
       url: application_host + "calendar/teamview/?&date=2015-01",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Make sure that team view shows user A has Sat and Sun as non-working days", function(done) {
     driver
@@ -752,11 +752,11 @@ describe("Basic user specific schedule", function() {
         )
       )
       .then(function(el) {
-        return el.getAttribute("class")
+        return el.getAttribute("class");
       })
       .then(function(css) {
-        expect(css).to.not.match(/\bweekend_cell\b/)
-        return Promise.resolve(1)
+        expect(css).to.not.match(/\bweekend_cell\b/);
+        return Promise.resolve(1);
       })
       .then(function() {
         return driver
@@ -768,12 +768,12 @@ describe("Basic user specific schedule", function() {
             )
           )
           .then(function(el) {
-            return el.getAttribute("class")
+            return el.getAttribute("class");
           })
           .then(function(css) {
-            expect(css).to.match(/\bweekend_cell\b/)
-            return Promise.resolve(1)
-          })
+            expect(css).to.match(/\bweekend_cell\b/);
+            return Promise.resolve(1);
+          });
       })
       .then(function() {
         return driver
@@ -785,17 +785,17 @@ describe("Basic user specific schedule", function() {
             )
           )
           .then(function(el) {
-            return el.getAttribute("class")
+            return el.getAttribute("class");
           })
           .then(function(css) {
-            expect(css).to.match(/\bweekend_cell\b/)
-            return Promise.resolve(1)
-          })
+            expect(css).to.match(/\bweekend_cell\b/);
+            return Promise.resolve(1);
+          });
       })
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   it("Make sure team view shows user B also has Sat, Sun as non-working days", function(done) {
     driver
@@ -808,11 +808,11 @@ describe("Basic user specific schedule", function() {
         )
       )
       .then(function(el) {
-        return el.getAttribute("class")
+        return el.getAttribute("class");
       })
       .then(function(css) {
-        expect(css).to.not.match(/\bweekend_cell\b/)
-        return Promise.resolve(1)
+        expect(css).to.not.match(/\bweekend_cell\b/);
+        return Promise.resolve(1);
       })
       .then(function() {
         return driver
@@ -824,12 +824,12 @@ describe("Basic user specific schedule", function() {
             )
           )
           .then(function(el) {
-            return el.getAttribute("class")
+            return el.getAttribute("class");
           })
           .then(function(css) {
-            expect(css).to.match(/\bweekend_cell\b/)
-            return Promise.resolve(1)
-          })
+            expect(css).to.match(/\bweekend_cell\b/);
+            return Promise.resolve(1);
+          });
       })
       .then(function() {
         return driver
@@ -841,24 +841,24 @@ describe("Basic user specific schedule", function() {
             )
           )
           .then(function(el) {
-            return el.getAttribute("class")
+            return el.getAttribute("class");
           })
           .then(function(css) {
-            expect(css).to.match(/\bweekend_cell\b/)
-            return Promise.resolve(1)
-          })
+            expect(css).to.match(/\bweekend_cell\b/);
+            return Promise.resolve(1);
+          });
       })
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   after(function(done) {
     driver.quit().then(function() {
-      done()
-    })
-  })
-})
+      done();
+    });
+  });
+});
 
 /*
  *  Scenario 2: Populate company wide schedule before using user specific one
@@ -873,58 +873,58 @@ describe("Basic user specific schedule", function() {
  * */
 
 describe("Populate company wide schedule before using user specific one", function() {
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
-  var driver, email_A, email_B, user_id_A, user_id_B
+  var driver, email_A, email_B, user_id_A, user_id_B;
 
   it("Register new company", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(function(data) {
-      driver = data.driver
-      email_A = data.email
-      done()
-    })
-  })
+      driver = data.driver;
+      email_A = data.email;
+      done();
+    });
+  });
 
   it("Create second user B", function(done) {
     add_new_user_func({
       application_host: application_host,
       driver: driver
     }).then(function(data) {
-      email_B = data.new_user_email
-      done()
-    })
-  })
+      email_B = data.new_user_email;
+      done();
+    });
+  });
 
   it("Obtain information about user A", function(done) {
     user_info_func({
       driver: driver,
       email: email_A
     }).then(function(data) {
-      user_id_A = data.user.id
-      done()
-    })
-  })
+      user_id_A = data.user.id;
+      done();
+    });
+  });
 
   it("Obtain information about user B", function(done) {
     user_info_func({
       driver: driver,
       email: email_B
     }).then(function(data) {
-      user_id_B = data.user.id
-      done()
-    })
-  })
+      user_id_B = data.user.id;
+      done();
+    });
+  });
 
   it("Open company details page", function(done) {
     open_page_func({
       url: application_host + "settings/general/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Make Thu and Fri to be non-working day", function(done) {
     submit_form_func({
@@ -942,9 +942,9 @@ describe("Populate company wide schedule before using user specific one", functi
       submit_button_selector: schedule_form_id + ' button[type="submit"]',
       message: /Schedule for company was saved/
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("And make sure that it was indeed marked so", function(done) {
     check_elements_func({
@@ -987,18 +987,18 @@ describe("Populate company wide schedule before using user specific one", functi
         }
       ]
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open user B schedule", function(done) {
     open_page_func({
       url: application_host + "users/edit/" + user_id_B + "/schedule/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Update user B to have Fri to be non-working day (by toggling off Thu)", function(done) {
     submit_form_func({
@@ -1012,9 +1012,9 @@ describe("Populate company wide schedule before using user specific one", functi
       submit_button_selector: 'button[name="save_user_specific_schedule"]',
       message: /Schedule for user was saved/
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Ensure that User B details shows new schedule", function(done) {
     check_elements_func({
@@ -1057,18 +1057,18 @@ describe("Populate company wide schedule before using user specific one", functi
         }
       ]
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open Team view page", function(done) {
     open_page_func({
       url: application_host + "calendar/teamview/?&date=2015-01",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Ensure team view shows user A has Mon, Tue, Wed as working days", function(done) {
     Promise.map([5, 6, 7], function(day_number) {
@@ -1082,16 +1082,16 @@ describe("Populate company wide schedule before using user specific one", functi
           )
         )
         .then(function(el) {
-          return el.getAttribute("class")
+          return el.getAttribute("class");
         })
         .then(function(css) {
-          expect(css).to.not.match(/\bweekend_cell\b/)
-          return Promise.resolve(1)
-        })
+          expect(css).to.not.match(/\bweekend_cell\b/);
+          return Promise.resolve(1);
+        });
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Ensure team view shows user A has Thu, Fri, Sat, Sun as non-working days", function(done) {
     Promise.map([8, 9, 10, 11], function(day_number) {
@@ -1105,16 +1105,16 @@ describe("Populate company wide schedule before using user specific one", functi
           )
         )
         .then(function(el) {
-          return el.getAttribute("class")
+          return el.getAttribute("class");
         })
         .then(function(css) {
-          expect(css).to.match(/\bweekend_cell\b/)
-          return Promise.resolve(1)
-        })
+          expect(css).to.match(/\bweekend_cell\b/);
+          return Promise.resolve(1);
+        });
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Ensure team view shows user B has Mon, Tue, Wed, Thu as working days", function(done) {
     Promise.map([5, 6, 7, 8], function(day_number) {
@@ -1128,16 +1128,16 @@ describe("Populate company wide schedule before using user specific one", functi
           )
         )
         .then(function(el) {
-          return el.getAttribute("class")
+          return el.getAttribute("class");
         })
         .then(function(css) {
-          expect(css).to.not.match(/\bweekend_cell\b/)
-          return Promise.resolve(1)
-        })
+          expect(css).to.not.match(/\bweekend_cell\b/);
+          return Promise.resolve(1);
+        });
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Ensure team view shows user B has Fri, Sat, Sun as non-working days", function(done) {
     Promise.map([9, 10, 11], function(day_number) {
@@ -1151,20 +1151,20 @@ describe("Populate company wide schedule before using user specific one", functi
           )
         )
         .then(function(el) {
-          return el.getAttribute("class")
+          return el.getAttribute("class");
         })
         .then(function(css) {
-          expect(css).to.match(/\bweekend_cell\b/)
-          return Promise.resolve(1)
-        })
+          expect(css).to.match(/\bweekend_cell\b/);
+          return Promise.resolve(1);
+        });
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   after(function(done) {
     driver.quit().then(function() {
-      done()
-    })
-  })
-})
+      done();
+    });
+  });
+});

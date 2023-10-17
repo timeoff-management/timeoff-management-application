@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const By = require("selenium-webdriver").By,
   moment = require("moment"),
@@ -18,7 +18,7 @@ const By = require("selenium-webdriver").By,
     .add(1, "week")
     .startOf("isoWeek")
     .add(2, "day")
-    .format("YYYY-MM-DD")
+    .format("YYYY-MM-DD");
 
 /*
  * Aim:
@@ -32,44 +32,44 @@ const By = require("selenium-webdriver").By,
  *    * Go to user B details, ensure new request is shown on the Calendar section
  * */
 describe("Ensure employee calendar from admin section shows bookings", function() {
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
-  let driver, emailA, emailB, userIdB
+  let driver, emailA, emailB, userIdB;
 
   it("Register new company", async () => {
-    ;({ driver: driver, email: emailA } = await registerNewUserFunc({
+    ({ driver: driver, email: emailA } = await registerNewUserFunc({
       application_host
-    }))
-  })
+    }));
+  });
 
   it("Create second user B", async () => {
-    ;({ new_user_email: emailB } = await addNewUserFunc({
+    ({ new_user_email: emailB } = await addNewUserFunc({
       application_host,
       driver
-    }))
-  })
+    }));
+  });
 
   it("Obtain information about user B", async () => {
-    ;({
+    ({
       user: { id: userIdB }
-    } = await userInfoFunc({ driver, email: emailB }))
-  })
+    } = await userInfoFunc({ driver, email: emailB }));
+  });
 
   it("Logout from user A (admin)", async () => {
-    await logoutUserFunc({ application_host, driver })
-  })
+    await logoutUserFunc({ application_host, driver });
+  });
 
   it("Login as user B", async () => {
-    await loginUserFunc({ application_host, driver, user_email: emailB })
-  })
+    await loginUserFunc({ application_host, driver, user_email: emailB });
+  });
 
   it("Open Book leave popup window", async () => {
-    const el = await driver.findElement(By.css("#book_time_off_btn"))
-    await el.click()
+    const el = await driver.findElement(By.css("#book_time_off_btn"));
+    await el.click();
 
     // This is very important line when working with Bootstrap modals!
-    await driver.sleep(1000)
-  })
+    await driver.sleep(1000);
+  });
 
   it("Submit new leave request from user B", async () => {
     await submitFormFunc({
@@ -85,31 +85,31 @@ describe("Ensure employee calendar from admin section shows bookings", function(
         }
       ],
       message: /New leave request was added/
-    })
-  })
+    });
+  });
 
   it("Logout from user B", async () => {
-    await logoutUserFunc({ application_host, driver })
-  })
+    await logoutUserFunc({ application_host, driver });
+  });
 
   it("Login as admin user A", async () => {
-    await loginUserFunc({ driver, application_host, user_email: emailA })
-  })
+    await loginUserFunc({ driver, application_host, user_email: emailA });
+  });
 
   it("Open user B calendar section and ensure the newly added booking is there", async () => {
     await openPageFunc({
       driver,
       url: `${application_host}users/edit/${userIdB}/calendar/`
-    })
+    });
 
     await checkBookingFunc({
       driver,
       full_days: [moment(someWeekdayDate)],
       type: "pended"
-    })
-  })
+    });
+  });
 
   after(async () => {
-    await driver.quit()
-  })
-})
+    await driver.quit();
+  });
+});

@@ -5,11 +5,11 @@
  *
  * */
 
-"use strict"
+"use strict";
 
 module.exports = {
   get_application_host: function() {
-    return `http://localhost:${process.env.PORT || 3000}/`
+    return `http://localhost:${process.env.PORT || 3000}/`;
   },
 
   /*
@@ -17,6 +17,6 @@ module.exports = {
    *
    * */
   get_execution_timeout: function() {
-    return 3 * 60 * 1000
+    return 3 * 60 * 1000;
   }
-}
+};

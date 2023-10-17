@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 var test = require("selenium-webdriver/testing"),
   By = require("selenium-webdriver").By,
@@ -9,21 +9,21 @@ var test = require("selenium-webdriver/testing"),
   submit_form_func = require("../lib/submit_form"),
   config = require("../lib/config"),
   moment = require("moment"),
-  application_host = config.get_application_host()
+  application_host = config.get_application_host();
 
 describe("Register new user", function() {
-  var driver
+  var driver;
 
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
   it("Performing registration process", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(function(data) {
-      driver = data.driver
-      done()
-    })
-  })
+      driver = data.driver;
+      done();
+    });
+  });
 
   it("Navigate to current uer details", done => {
     open_page_func({
@@ -32,8 +32,8 @@ describe("Register new user", function() {
     })
       .then(() => driver.findElement(By.css("td.user-link-cell a")))
       .then(element => element.click())
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Update start date to be mid-year", done => {
     submit_form_func({
@@ -46,8 +46,8 @@ describe("Register new user", function() {
       ],
       submit_button_selector: "button#save_changes_btn",
       message: /Details for .* were updated/
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Go back to Calendar page and ensure that available and total days are same and are 12", done => {
     open_page_func({
@@ -62,18 +62,18 @@ describe("Register new user", function() {
         expect(
           days,
           "Ensure that reported days available in allowance is correct"
-        ).to.be.equal("12")
-        return driver.findElement(By.css("[data-tom-total-days-in-allowance]"))
+        ).to.be.equal("12");
+        return driver.findElement(By.css("[data-tom-total-days-in-allowance]"));
       })
       .then(element => element.getText())
       .then(days => {
         expect(
           days,
           "Ensure that reported total days in allowance is correct"
-        ).to.be.equal("12")
-        done()
-      })
-  })
+        ).to.be.equal("12");
+        done();
+      });
+  });
 
   it("Navigate to current uer details", done => {
     open_page_func({
@@ -82,8 +82,8 @@ describe("Register new user", function() {
     })
       .then(() => driver.findElement(By.css("td.user-link-cell a")))
       .then(element => element.click())
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Update start date to be start of the year", done => {
     submit_form_func({
@@ -96,8 +96,8 @@ describe("Register new user", function() {
       ],
       submit_button_selector: "button#save_changes_btn",
       message: /Details for .* were updated/
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Go back to Calendar page and ensure that available and total days are same and are 20", done => {
     open_page_func({
@@ -112,22 +112,22 @@ describe("Register new user", function() {
         expect(
           days,
           "Ensure that reported days available in allowance is correct"
-        ).to.be.equal("20")
-        return driver.findElement(By.css("[data-tom-total-days-in-allowance]"))
+        ).to.be.equal("20");
+        return driver.findElement(By.css("[data-tom-total-days-in-allowance]"));
       })
       .then(element => element.getText())
       .then(days => {
         expect(
           days,
           "Ensure that reported total days in allowance is correct"
-        ).to.be.equal("20")
-        done()
-      })
-  })
+        ).to.be.equal("20");
+        done();
+      });
+  });
 
   after(function(done) {
     driver.quit().then(function() {
-      done()
-    })
-  })
-})
+      done();
+    });
+  });
+});

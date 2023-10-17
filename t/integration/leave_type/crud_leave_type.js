@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const test = require("selenium-webdriver/testing"),
   register_new_user_func = require("../../lib/register_new_user"),
@@ -11,30 +11,30 @@ const test = require("selenium-webdriver/testing"),
   expect = require("chai").expect,
   application_host = config.get_application_host(),
   leave_type_edit_form_id = "#leave_type_edit_form",
-  leave_type_new_form_id = "#leave_type_new_form"
+  leave_type_new_form_id = "#leave_type_new_form";
 
 describe("CRUD for leave types", function() {
-  var driver
+  var driver;
 
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
   it("Performing registration process", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(function(data) {
-      driver = data.driver
-      done()
-    })
-  })
+      driver = data.driver;
+      done();
+    });
+  });
 
   it("Open page with leave types", function(done) {
     open_page_func({
       url: application_host + "settings/general/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Check if there are default leave types", function(done) {
     check_elements_func({
@@ -54,9 +54,9 @@ describe("CRUD for leave types", function() {
         }
       ]
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Make sure default colours are set for leave types", done => {
     driver
@@ -65,21 +65,21 @@ describe("CRUD for leave types", function() {
         expect(
           els.length,
           "Ensure number of colour pickers is the same as leave types"
-        ).to.be.equal(2)
+        ).to.be.equal(2);
 
         return Bluebird.map(els, el =>
           el.findElement(By.css('input[type="hidden"]'))
-        )
+        );
       })
       .then(els => Bluebird.map(els, el => el.getAttribute("value")))
       .then(colours => {
         expect(colours.sort(), "Check default colour values").to.be.deep.equal([
           "leave_type_color_1",
           "leave_type_color_1"
-        ])
-        done()
-      })
-  })
+        ]);
+        done();
+      });
+  });
 
   it("Change Sick leave type to be non-default colour", done => {
     submit_form_func({
@@ -97,8 +97,8 @@ describe("CRUD for leave types", function() {
       submit_button_selector:
         leave_type_edit_form_id + ' button[type="submit"]',
       message: /Changes to leave types were saved/
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Ensure that color class for Sick days was updated to be non-default", done => {
     driver
@@ -112,10 +112,10 @@ describe("CRUD for leave types", function() {
         expect(colours.sort(), "Check default colour values").to.be.deep.equal([
           "leave_type_color_1",
           "leave_type_color_2"
-        ])
-        done()
-      })
-  })
+        ]);
+        done();
+      });
+  });
 
   it('Make sure that both leave types have "use allowance" tick boxes set', function(done) {
     check_elements_func({
@@ -137,9 +137,9 @@ describe("CRUD for leave types", function() {
         }
       ]
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it('Check that updating "use allowance flag" works', function(done) {
     submit_form_func({
@@ -158,9 +158,9 @@ describe("CRUD for leave types", function() {
         leave_type_edit_form_id + ' button[type="submit"]',
       message: /Changes to leave types were saved/
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it('Double check that "use allowance" tick boxes were updated correctly', function(done) {
     check_elements_func({
@@ -182,9 +182,9 @@ describe("CRUD for leave types", function() {
         }
       ]
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Check that it is possible to update Limits", function(done) {
     submit_form_func({
@@ -208,9 +208,9 @@ describe("CRUD for leave types", function() {
       should_be_successful: true,
       message: /Changes to leave types were saved/
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Make sure that Limit cannot be negative", function(done) {
     submit_form_func({
@@ -227,19 +227,19 @@ describe("CRUD for leave types", function() {
         leave_type_edit_form_id + ' button[type="submit"]',
       message: /New limit for .* should be positive number or 0/
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Add new leave type", function(done) {
     driver
       .findElement(By.css("#add_new_leave_type_btn"))
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function() {
         // This is very important line when working with Bootstrap modals!
-        driver.sleep(1000)
+        driver.sleep(1000);
 
         submit_form_func({
           driver: driver,
@@ -259,10 +259,10 @@ describe("CRUD for leave types", function() {
             leave_type_new_form_id + ' button[type="submit"]',
           message: /Changes to leave types were saved/
         }).then(function() {
-          done()
-        })
-      })
-  })
+          done();
+        });
+      });
+  });
 
   it('Check that new leave type was added at the beginning of the list as it starts with "A"', function(done) {
     check_elements_func({
@@ -288,9 +288,9 @@ describe("CRUD for leave types", function() {
         }
       ]
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it('And rename newly added leave type to start with "M"', function(done) {
     submit_form_func({
@@ -307,9 +307,9 @@ describe("CRUD for leave types", function() {
         leave_type_edit_form_id + ' button[type="submit"]',
       message: /Changes to leave types were saved/
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Make sure that updated new leave type was moved into second position", function(done) {
     check_elements_func({
@@ -335,9 +335,9 @@ describe("CRUD for leave types", function() {
         }
       ]
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Remove empty newly added leave type", function(done) {
     submit_form_func({
@@ -361,9 +361,9 @@ describe("CRUD for leave types", function() {
         ' button[data-tom-leave-type-order="remove_1"]',
       message: /Leave type was successfully removed/
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("And make sure only two old leave types are left", function(done) {
     check_elements_func({
@@ -383,9 +383,9 @@ describe("CRUD for leave types", function() {
         }
       ]
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Add AAA and ZZZ leave types", function(done) {
     driver
@@ -436,8 +436,8 @@ describe("CRUD for leave types", function() {
           message: /Changes to leave types were saved/
         })
       )
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Ensure AAA is first and ZZZ is last in the list (general settings page)", function(done) {
     check_elements_func({
@@ -468,35 +468,35 @@ describe("CRUD for leave types", function() {
           value: "ZZZ"
         }
       ]
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Ensure AAA is a first and ZZZ is a last in a list on book holiday modal", function(done) {
     driver
       .findElements(By.css("select#leave_type option"))
       .then(options =>
         Bluebird.map(options, option => {
-          let option_info = {}
+          let option_info = {};
           return option
             .getAttribute("data-tom-index")
             .then(val => Bluebird.resolve((option_info.value = val)))
             .then(() => option.getAttribute("data-tom"))
             .then(txt => Bluebird.resolve((option_info.text = txt)))
-            .then(() => Bluebird.resolve(option_info))
+            .then(() => Bluebird.resolve(option_info));
         })
       )
       .then(option_infos => {
         expect(option_infos[0], "AAA is first").to.include({
           value: "0",
           text: "AAA"
-        })
+        });
         expect(option_infos[3], "ZZZ is last").to.include({
           value: "3",
           text: "ZZZ"
-        })
-        done()
-      })
-  })
+        });
+        done();
+      });
+  });
 
   it("Mark ZZZ as one to be default one", function(done) {
     driver
@@ -526,8 +526,8 @@ describe("CRUD for leave types", function() {
           message: /Changes to leave types were saved/
         })
       )
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Ensure AAA is first and ZZZ is last in the list (general settings page)", function(done) {
     check_elements_func({
@@ -558,39 +558,39 @@ describe("CRUD for leave types", function() {
           value: "ZZZ"
         }
       ]
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Ensure ZZZ is a first and AAA is a second in a list on book holiday modal", function(done) {
     driver
       .findElements(By.css("select#leave_type option"))
       .then(options =>
         Bluebird.map(options, option => {
-          let option_info = {}
+          let option_info = {};
           return option
             .getAttribute("data-tom-index")
             .then(val => Bluebird.resolve((option_info.value = val)))
             .then(() => option.getAttribute("data-tom"))
             .then(txt => Bluebird.resolve((option_info.text = txt)))
-            .then(() => Bluebird.resolve(option_info))
+            .then(() => Bluebird.resolve(option_info));
         })
       )
       .then(option_infos => {
         expect(option_infos[0], "ZZZ is first").to.include({
           value: "0",
           text: "ZZZ"
-        })
+        });
         expect(option_infos[1], "AAA is last").to.include({
           value: "1",
           text: "AAA"
-        })
-        done()
-      })
-  })
+        });
+        done();
+      });
+  });
 
   after(function(done) {
     driver.quit().then(function() {
-      done()
-    })
-  })
-})
+      done();
+    });
+  });
+});

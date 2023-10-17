@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 /*
  *  Scenario:
@@ -37,79 +37,79 @@ const test = require("selenium-webdriver/testing"),
   user_info_func = require("../../lib/user_info"),
   application_host = config.get_application_host(),
   new_department_form_id = "#add_new_department_form",
-  company_edit_form_id = "#company_edit_form"
+  company_edit_form_id = "#company_edit_form";
 
 describe("Check that values for new columns are shown only for employess currently login user can supervise", function() {
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
-  let driver, email_A, user_id_A, email_B, user_id_B, email_C, user_id_C
+  let driver, email_A, user_id_A, email_B, user_id_B, email_C, user_id_C;
 
   it("Register new company as admin user A", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(data => {
-      driver = data.driver
-      email_A = data.email
-      done()
-    })
-  })
+      driver = data.driver;
+      email_A = data.email;
+      done();
+    });
+  });
 
   it("Create second user B", function(done) {
     add_new_user_func({
       application_host: application_host,
       driver: driver
     }).then(data => {
-      email_B = data.new_user_email
-      done()
-    })
-  })
+      email_B = data.new_user_email;
+      done();
+    });
+  });
 
   it("Create second user C", function(done) {
     add_new_user_func({
       application_host: application_host,
       driver: driver
     }).then(data => {
-      email_C = data.new_user_email
-      done()
-    })
-  })
+      email_C = data.new_user_email;
+      done();
+    });
+  });
 
   it("Obtain information about user A", function(done) {
     user_info_func({
       driver: driver,
       email: email_A
     }).then(data => {
-      user_id_A = data.user.id
-      done()
-    })
-  })
+      user_id_A = data.user.id;
+      done();
+    });
+  });
 
   it("Obtain information about user B", function(done) {
     user_info_func({
       driver: driver,
       email: email_B
     }).then(data => {
-      user_id_B = data.user.id
-      done()
-    })
-  })
+      user_id_B = data.user.id;
+      done();
+    });
+  });
 
   it("Obtain information about user C", function(done) {
     user_info_func({
       driver: driver,
       email: email_C
     }).then(data => {
-      user_id_C = data.user.id
-      done()
-    })
-  })
+      user_id_C = data.user.id;
+      done();
+    });
+  });
 
   it("Open page for editing company details", function(done) {
     open_page_func({
       url: application_host + "settings/general/",
       driver: driver
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it('Ensure company has "Share absences between all employees" flag OFF', function(done) {
     check_elements_func({
@@ -121,8 +121,8 @@ describe("Check that values for new columns are shown only for employess current
           tick: true
         }
       ]
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("... and tick that box ON", function(done) {
     submit_form_func({
@@ -137,15 +137,15 @@ describe("Check that values for new columns are shown only for employess current
       submit_button_selector: company_edit_form_id + ' button[type="submit"]',
       message: /successfully/i,
       should_be_successful: true
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Open department management page", function(done) {
     open_page_func({
       url: application_host + "settings/departments/",
       driver: driver
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Add new department and make its approver to be user B", function(done) {
     driver
@@ -153,7 +153,7 @@ describe("Check that values for new columns are shown only for employess current
       .then(el => el.click())
       .then(function() {
         // This is very important line when working with Bootstrap modals!
-        driver.sleep(1000)
+        driver.sleep(1000);
 
         submit_form_func({
           driver: driver,
@@ -176,17 +176,17 @@ describe("Check that values for new columns are shown only for employess current
           submit_button_selector: `${new_department_form_id} button[type="submit"]`,
           message: /Changes to departments were saved/
         }).then(function() {
-          done()
-        })
-      })
-  })
+          done();
+        });
+      });
+  });
 
   it("Open user editing page for user B", function(done) {
     open_page_func({
       url: `${application_host}users/edit/${user_id_C}/`,
       driver: driver
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("And make sure it is part of the newly added department", function(done) {
     submit_form_func({
@@ -202,9 +202,9 @@ describe("Check that values for new columns are shown only for employess current
       ],
       message: /Details for .* were updated/
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("As user A ensure team view shows deducted values for all three users", function(done) {
     open_page_func({
@@ -220,8 +220,8 @@ describe("Check that values for new columns are shown only for employess current
       )
       .then(el => el.getText())
       .then(txt => {
-        expect(txt).to.be.eql("0")
-        return Promise.resolve(1)
+        expect(txt).to.be.eql("0");
+        return Promise.resolve(1);
       })
 
       .then(() =>
@@ -233,8 +233,8 @@ describe("Check that values for new columns are shown only for employess current
       )
       .then(el => el.getText())
       .then(txt => {
-        expect(txt).to.be.eql("0")
-        return Promise.resolve(1)
+        expect(txt).to.be.eql("0");
+        return Promise.resolve(1);
       })
 
       .then(() =>
@@ -246,29 +246,29 @@ describe("Check that values for new columns are shown only for employess current
       )
       .then(el => el.getText())
       .then(txt => {
-        expect(txt).to.be.eql("0")
-        return Promise.resolve(1)
+        expect(txt).to.be.eql("0");
+        return Promise.resolve(1);
       })
 
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   it("Logout from user A (admin)", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Login as user B", function(done) {
     login_user_func({
       application_host: application_host,
       user_email: email_B,
       driver: driver
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Login as user B and ensure she sees deducted days only for user B (self) and user C but not for user A", function(done) {
     open_page_func({
@@ -284,8 +284,8 @@ describe("Check that values for new columns are shown only for employess current
       )
       .then(el => el.getText())
       .then(txt => {
-        expect(txt).to.be.eql("")
-        return Promise.resolve(1)
+        expect(txt).to.be.eql("");
+        return Promise.resolve(1);
       })
 
       .then(() =>
@@ -297,8 +297,8 @@ describe("Check that values for new columns are shown only for employess current
       )
       .then(el => el.getText())
       .then(txt => {
-        expect(txt).to.be.eql("0")
-        return Promise.resolve(1)
+        expect(txt).to.be.eql("0");
+        return Promise.resolve(1);
       })
 
       .then(() =>
@@ -310,29 +310,29 @@ describe("Check that values for new columns are shown only for employess current
       )
       .then(el => el.getText())
       .then(txt => {
-        expect(txt).to.be.eql("0")
-        return Promise.resolve(1)
+        expect(txt).to.be.eql("0");
+        return Promise.resolve(1);
       })
 
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   it("Logout from user B", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Login as user C", function(done) {
     login_user_func({
       application_host: application_host,
       user_email: email_C,
       driver: driver
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Login as user C and ensure she sees only values for her account", function(done) {
     open_page_func({
@@ -348,8 +348,8 @@ describe("Check that values for new columns are shown only for employess current
       )
       .then(el => el.getText())
       .then(txt => {
-        expect(txt).to.be.eql("")
-        return Promise.resolve(1)
+        expect(txt).to.be.eql("");
+        return Promise.resolve(1);
       })
 
       .then(() =>
@@ -361,8 +361,8 @@ describe("Check that values for new columns are shown only for employess current
       )
       .then(el => el.getText())
       .then(txt => {
-        expect(txt).to.be.eql("")
-        return Promise.resolve(1)
+        expect(txt).to.be.eql("");
+        return Promise.resolve(1);
       })
 
       .then(() =>
@@ -374,16 +374,16 @@ describe("Check that values for new columns are shown only for employess current
       )
       .then(el => el.getText())
       .then(txt => {
-        expect(txt).to.be.eql("0")
-        return Promise.resolve(1)
+        expect(txt).to.be.eql("0");
+        return Promise.resolve(1);
       })
 
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   after(function(done) {
-    driver.quit().then(() => done())
-  })
-})
+    driver.quit().then(() => done());
+  });
+});

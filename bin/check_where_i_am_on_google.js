@@ -1,27 +1,27 @@
 // Usage:
 //  node  bin/check_where_i_am_on_google.js --domain="nixieshop.com" --query="nixie shop"
 
-"use strict"
+"use strict";
 
 var optimist = require("optimist").argv,
   search_query = optimist.query || "time off manager",
   web_site_domain = optimist.domain || "timeoffmanager.com",
-  stop_on_first = true
+  stop_on_first = true;
 
-console.log("-----------------------------------")
-console.log("  Cheking query string : " + search_query)
-console.log("  Look for domain      : " + web_site_domain)
-console.log("-----------------------------------")
+console.log("-----------------------------------");
+console.log("  Cheking query string : " + search_query);
+console.log("  Look for domain      : " + web_site_domain);
+console.log("-----------------------------------");
 
 var webdriver = require("selenium-webdriver"),
   _ = require("underscore"),
   google_url = "https://www.google.com/search?q=" + search_query + "&start=",
-  driver
+  driver;
 
 // Instantiate new driver object
 driver = new webdriver.Builder()
   .withCapabilities(webdriver.Capabilities.chrome())
-  .build()
+  .build();
 
 _.map(
   [
@@ -83,24 +83,24 @@ _.map(
     //    910,920,930,940,950,960,970,980,990,1000,
   ],
   function(i) {
-    driver.sleep(500)
+    driver.sleep(500);
 
     // Go to front page
-    driver.get(google_url + i)
+    driver.get(google_url + i);
 
     driver.getPageSource().then(function(source) {
       if (source.match(new RegExp("http(s)?://(www.)?" + web_site_domain))) {
-        console.log(">>>>>>> Found on " + (1 + i / 10) + " page")
+        console.log(">>>>>>> Found on " + (1 + i / 10) + " page");
         if (stop_on_first) {
           driver.quit().then(function() {
-            process.exit()
-          })
+            process.exit();
+          });
         }
       } else {
-        console.log(1 + i / 10 + "...")
+        console.log(1 + i / 10 + "...");
       }
-    })
+    });
   }
-)
+);
 
-driver.quit()
+driver.quit();

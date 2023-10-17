@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const register_new_user_func = require("../../lib/register_new_user"),
   open_page_func = require("../../lib/open_page"),
@@ -9,7 +9,7 @@ const register_new_user_func = require("../../lib/register_new_user"),
   application_host = config.get_application_host(),
   bankholiday_form_id = "#update_bankholiday_form",
   new_bankholiday_form_id = "#add_new_bank_holiday_form",
-  company_edit_form_id = "#company_edit_form"
+  company_edit_form_id = "#company_edit_form";
 
 /*
  * This is a regressiopn for https://github.com/timeoff-management/application/issues/103
@@ -25,26 +25,26 @@ const register_new_user_func = require("../../lib/register_new_user"),
  * */
 
 describe("Try to manage Bank holidays with non-default date format", function() {
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
-  var driver
+  var driver;
 
   it("Register new company and ensure it has non-default date format", function(done) {
     register_new_user_func({
       application_host: application_host,
       default_date_format: "DD/MM/YYYY"
     }).then(function(data) {
-      driver = data.driver
-      done()
-    })
-  })
+      driver = data.driver;
+      done();
+    });
+  });
 
   it("Open page with bank holidays", function(done) {
     open_page_func({
       driver,
       url: application_host + "settings/bankholidays/?year=2015"
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Remove default predefined bank holidays", function(done) {
     submit_form_func({
@@ -52,30 +52,30 @@ describe("Try to manage Bank holidays with non-default date format", function() 
       message: /Bank holiday was successfully removed/,
       submit_button_selector:
         bankholiday_form_id + ' button[tom-test-hook="remove__0"]'
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("And make sure that no bank holidays are shown", function(done) {
     driver
       .findElement(By.css("div.tst-no-bank-holidays"))
       .then(function(el) {
-        return el.getText()
+        return el.getText();
       })
       .then(function(txt) {
-        expect(txt).to.exist
-        done()
-      })
-  })
+        expect(txt).to.exist;
+        done();
+      });
+  });
 
   it("Add New year", function(done) {
     driver
       .findElement(By.css("#add_new_bank_holiday_btn"))
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function() {
         // This is very important line when working with Bootstrap modals!
-        driver.sleep(1000)
+        driver.sleep(1000);
 
         submit_form_func({
           driver: driver,
@@ -93,20 +93,20 @@ describe("Try to manage Bank holidays with non-default date format", function() 
             new_bankholiday_form_id + ' button[type="submit"]',
           message: /Changes to bank holidays were saved/
         }).then(function() {
-          done()
-        })
-      })
-  })
+          done();
+        });
+      });
+  });
 
   it("Add Second day of New year", function(done) {
     driver
       .findElement(By.css("#add_new_bank_holiday_btn"))
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function() {
         // This is very important line when working with Bootstrap modals!
-        driver.sleep(1000)
+        driver.sleep(1000);
 
         submit_form_func({
           driver: driver,
@@ -124,20 +124,20 @@ describe("Try to manage Bank holidays with non-default date format", function() 
             new_bankholiday_form_id + ' button[type="submit"]',
           message: /Changes to bank holidays were saved/
         }).then(function() {
-          done()
-        })
-      })
-  })
+          done();
+        });
+      });
+  });
 
   it("Add Add Labour day", function(done) {
     driver
       .findElement(By.css("#add_new_bank_holiday_btn"))
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function() {
         // This is very important line when working with Bootstrap modals!
-        driver.sleep(1000)
+        driver.sleep(1000);
 
         submit_form_func({
           driver: driver,
@@ -155,10 +155,10 @@ describe("Try to manage Bank holidays with non-default date format", function() 
             new_bankholiday_form_id + ' button[type="submit"]',
           message: /Changes to bank holidays were saved/
         }).then(function() {
-          done()
-        })
-      })
-  })
+          done();
+        });
+      });
+  });
 
   it("Rename Christmas to have proper name", function(done) {
     submit_form_func({
@@ -195,48 +195,48 @@ describe("Try to manage Bank holidays with non-default date format", function() 
       message: /Changes to bank holidays were saved/,
       should_be_successful: true
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   after(function(done) {
     driver.quit().then(function() {
-      done()
-    })
-  })
-})
+      done();
+    });
+  });
+});
 
 describe("Try to use DD/MM/YY and some missleading date", function() {
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
-  var driver
+  var driver;
 
   it("Register new company with default date to be DD/MM/YY", function(done) {
     register_new_user_func({
       application_host: application_host,
       default_date_format: "DD/MM/YY"
     }).then(function(data) {
-      driver = data.driver
-      done()
-    })
-  })
+      driver = data.driver;
+      done();
+    });
+  });
 
   it("Open page with bank holidays", function(done) {
     open_page_func({
       driver,
       url: application_host + "settings/bankholidays/"
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Try to add new bank holiday with date that was reported to be problematic", function(done) {
     driver
       .findElement(By.css("#add_new_bank_holiday_btn"))
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function() {
         // This is very important line when working with Bootstrap modals!
-        driver.sleep(1000)
+        driver.sleep(1000);
 
         return submit_form_func({
           driver: driver,
@@ -253,16 +253,16 @@ describe("Try to use DD/MM/YY and some missleading date", function() {
           submit_button_selector:
             new_bankholiday_form_id + ' button[type="submit"]',
           message: /Changes to bank holidays were saved/
-        })
+        });
       })
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   after(function(done) {
     driver.quit().then(function() {
-      done()
-    })
-  })
-})
+      done();
+    });
+  });
+});

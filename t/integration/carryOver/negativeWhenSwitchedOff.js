@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const test = require("selenium-webdriver/testing"),
   By = require("selenium-webdriver").By,
@@ -15,7 +15,7 @@ const test = require("selenium-webdriver/testing"),
   applicationHost = config.get_application_host(),
   companyEditFormId = "#company_edit_form",
   departmentEditFormId = "#department_edit_form",
-  userStartsAtTheBeginingOfYear = require("../../lib/set_user_to_start_at_the_beginning_of_the_year")
+  userStartsAtTheBeginingOfYear = require("../../lib/set_user_to_start_at_the_beginning_of_the_year");
 
 /*
  * Scenario:
@@ -30,23 +30,23 @@ const test = require("selenium-webdriver/testing"),
  * */
 
 describe("No negative allowanca is carried overs", function() {
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
-  let driver, email, userId
+  let driver, email, userId;
 
   it("Register new company", done => {
     registerNewUserFunc({ applicationHost }).then(data => {
-      ;({ driver, email } = data)
-      done()
-    })
-  })
+      ({ driver, email } = data);
+      done();
+    });
+  });
 
   it("Obtain information about admin user", done => {
     userInfoFunc({ driver, email }).then(data => {
-      userId = data.user.id
-      done()
-    })
-  })
+      userId = data.user.id;
+      done();
+    });
+  });
 
   it("Amend its user to started at the very begining of last year", done => {
     userStartsAtTheBeginingOfYear({
@@ -56,8 +56,8 @@ describe("No negative allowanca is carried overs", function() {
         .utc()
         .add(-1, "y")
         .startOf("year")
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Update user to have her leaves be auto apporved", done => {
     openPageFunc({
@@ -78,14 +78,14 @@ describe("No negative allowanca is carried overs", function() {
           message: /Details for .+ were updated/
         })
       )
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Add and approve week long leave in last year", done => {
     const lastYear = moment
       .utc()
       .add(-1, "y")
-      .year()
+      .year();
 
     openPageFunc({ driver, url: applicationHost })
       .then(() => driver.findElement(By.css("#book_time_off_btn")))
@@ -107,8 +107,8 @@ describe("No negative allowanca is carried overs", function() {
           message: /New leave request was added/
         })
       )
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Adjust user's deparment's allpwance to be 1 day", done => {
     openPageFunc({
@@ -134,8 +134,8 @@ describe("No negative allowanca is carried overs", function() {
           should_be_successful: true
         })
       )
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Ensure that nominal allowance was reduced to 1", done => {
     openPageFunc({
@@ -145,10 +145,10 @@ describe("No negative allowanca is carried overs", function() {
       .then(() => driver.findElement(By.css("#nominalAllowancePart")))
       .then(el => el.getText())
       .then(text => {
-        expect(text).to.be.eq("1")
-        done()
-      })
-  })
+        expect(text).to.be.eq("1");
+        done();
+      });
+  });
 
   it('Ensure that company has Carry Over set to be "None"', done => {
     openPageFunc({
@@ -166,8 +166,8 @@ describe("No negative allowanca is carried overs", function() {
           ]
         })
       )
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Calculate carry over", done => {
     submitFormFunc({
@@ -176,8 +176,8 @@ describe("No negative allowanca is carried overs", function() {
         '#calculate_carry_over_form button[type="submit"]',
       message: /allowance was successfully carried over/i,
       should_be_successful: true
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Ensure that newly created user's carried over still remains 0", done => {
     openPageFunc({
@@ -187,12 +187,12 @@ describe("No negative allowanca is carried overs", function() {
       .then(() => driver.findElement(By.css("#allowanceCarriedOverPart")))
       .then(span => span.getText())
       .then(text => {
-        expect(text).to.be.eq("0")
-        done()
-      })
-  })
+        expect(text).to.be.eq("0");
+        done();
+      });
+  });
 
   after(done => {
-    driver.quit().then(() => done())
-  })
-})
+    driver.quit().then(() => done());
+  });
+});

@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 var test = require("selenium-webdriver/testing"),
   register_new_user_func = require("../lib/register_new_user"),
@@ -10,7 +10,7 @@ var test = require("selenium-webdriver/testing"),
   _ = require("underscore"),
   logout_user_func = require("../lib/logout_user"),
   config = require("../lib/config"),
-  application_host = config.get_application_host()
+  application_host = config.get_application_host();
 
 /*
  *  Scenario to check in thus test.
@@ -26,18 +26,18 @@ var test = require("selenium-webdriver/testing"),
  * */
 
 describe("Menu bar reflect permissions of logged in user", function() {
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
-  var ordinary_user_email, driver
+  var ordinary_user_email, driver;
 
   it("Create new company", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(function(data) {
-      driver = data.driver
-      done()
-    })
-  })
+      driver = data.driver;
+      done();
+    });
+  });
 
   it("Check that all necessary menus are shown", function(done) {
     var promises_to_check = check_presense_promises({
@@ -53,31 +53,31 @@ describe("Menu bar reflect permissions of logged in user", function() {
         'li > a[href="/requests/"]',
         'li > a[href="/logout/"]'
       ]
-    })
+    });
 
     bluebird.all(promises_to_check).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Create non-admin user", function(done) {
     add_new_user_func({
       application_host: application_host,
       driver: driver
     }).then(function(data) {
-      ordinary_user_email = data.new_user_email
-      done()
-    })
-  })
+      ordinary_user_email = data.new_user_email;
+      done();
+    });
+  });
 
   it("Logout from admin acount", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Login as ordinary user", function(done) {
     login_user_func({
@@ -85,9 +85,9 @@ describe("Menu bar reflect permissions of logged in user", function() {
       user_email: ordinary_user_email,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Check that limited links are there", function(done) {
     var promises_to_check = check_presense_promises({
@@ -100,12 +100,12 @@ describe("Menu bar reflect permissions of logged in user", function() {
         'li > a[href="/requests/"]',
         'li > a[href="/logout/"]'
       ]
-    })
+    });
 
     bluebird.all(promises_to_check).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Check that admin links are not shown", function(done) {
     var promises_to_check = check_presense_promises({
@@ -116,31 +116,31 @@ describe("Menu bar reflect permissions of logged in user", function() {
         'li > a[href="/settings/general/"]',
         'li > a[href="/settings/departments/"]'
       ]
-    })
+    });
 
     bluebird.all(promises_to_check).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   after(function(done) {
     driver.quit().then(function() {
-      done()
-    })
-  })
-})
+      done();
+    });
+  });
+});
 
 function check_presense_promises(args) {
   var selectors = args.selectors,
     driver = args.driver,
-    presense = args.presense || false
+    presense = args.presense || false;
 
   var promises_to_check = _.map(selectors, function(selector) {
     return driver.isElementPresent(By.css(selector)).then(function(is_present) {
-      expect(is_present).to.be.equal(presense)
-      return bluebird.resolve()
-    })
-  })
+      expect(is_present).to.be.equal(presense);
+      return bluebird.resolve();
+    });
+  });
 
-  return promises_to_check
+  return promises_to_check;
 }

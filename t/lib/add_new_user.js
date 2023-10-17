@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 var By = require("selenium-webdriver").By,
   expect = require("chai").expect,
@@ -9,7 +9,7 @@ var By = require("selenium-webdriver").By,
   submit_form_func = require("./submit_form"),
   build_driver = require("./build_driver"),
   add_new_user_form_id = "#add_new_user_form",
-  driver
+  driver;
 
 module.exports = Promise.promisify(function(args, callback) {
   var application_host = args.application_host,
@@ -18,21 +18,21 @@ module.exports = Promise.promisify(function(args, callback) {
     // optional parameter, if provided the user adding action is expected to fail
     // with that error
     error_message = args.error_message,
-    driver = args.driver || build_driver()
+    driver = args.driver || build_driver();
 
-  var random_token = new Date().getTime()
-  var new_user_email = args.email || random_token + "@test.com"
+  var random_token = new Date().getTime();
+  var new_user_email = args.email || random_token + "@test.com";
 
   // Open front page
-  driver.get(application_host + "users/add/")
+  driver.get(application_host + "users/add/");
 
   driver.call(() => {
-    var select_department = {}
+    var select_department = {};
     if (typeof department_index !== "undefined") {
       select_department = {
         selector: 'select[name="department"]',
         option_selector: 'option[data-vpp="' + department_index + '"]'
-      }
+      };
     }
 
     return submit_form_func({
@@ -70,14 +70,14 @@ module.exports = Promise.promisify(function(args, callback) {
       message: error_message
         ? new RegExp(error_message)
         : /New user account successfully added/
-    })
-  })
+    });
+  });
 
   driver.call(function() {
     // "export"
     result_callback(null, {
       driver: driver,
       new_user_email: new_user_email
-    })
-  })
-})
+    });
+  });
+});

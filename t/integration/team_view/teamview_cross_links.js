@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 var test = require("selenium-webdriver/testing"),
   By = require("selenium-webdriver").By,
@@ -11,7 +11,7 @@ var test = require("selenium-webdriver/testing"),
   logout_user_func = require("../../lib/logout_user"),
   check_teamview_func = require("../../lib/teamview_check_user"),
   config = require("../../lib/config"),
-  application_host = config.get_application_host()
+  application_host = config.get_application_host();
 
 /*
  *  Scenario to check in thus test.
@@ -25,30 +25,30 @@ var test = require("selenium-webdriver/testing"),
  * */
 
 describe("Cross linking on Teamview page", function() {
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
-  var driver, user_A, user_B
+  var driver, user_A, user_B;
 
   it("Create new company", function(done) {
     // Performing registration process
     register_new_user_func({
       application_host: application_host
     }).then(function(data) {
-      driver = data.driver
-      user_A = data.email
-      done()
-    })
-  })
+      driver = data.driver;
+      user_A = data.email;
+      done();
+    });
+  });
 
   it("Create new user B", function(done) {
     add_new_user_func({
       application_host: application_host,
       driver: driver
     }).then(function(data) {
-      user_B = data.new_user_email
-      done()
-    })
-  })
+      user_B = data.new_user_email;
+      done();
+    });
+  });
 
   it("Make sure that both users are shown on Team view page", function(done) {
     check_teamview_func({
@@ -56,18 +56,18 @@ describe("Cross linking on Teamview page", function() {
       emails: [user_A, user_B],
       is_link: true
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Logout from A account", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Login as user B", function(done) {
     login_user_func({
@@ -75,9 +75,9 @@ describe("Cross linking on Teamview page", function() {
       user_email: user_B,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Make sure that only user A and B are presented", function(done) {
     check_teamview_func({
@@ -85,13 +85,13 @@ describe("Cross linking on Teamview page", function() {
       emails: [user_A, user_B],
       is_link: false
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   after(function(done) {
     driver.quit().then(function() {
-      done()
-    })
-  })
-})
+      done();
+    });
+  });
+});

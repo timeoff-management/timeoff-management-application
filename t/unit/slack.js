@@ -1,13 +1,13 @@
-"use strict"
+"use strict";
 
 var expect = require("chai").expect,
   _ = require("underscore"),
   bluebird = require("bluebird"),
-  Slack = require("../../lib/email")
+  Slack = require("../../lib/email");
 
 describe("Check Slack", function() {
   it("Knows how to render and parse template", function(done) {
-    var Slack = new Slack()
+    var Slack = new Slack();
 
     bluebird
       .resolve(
@@ -17,16 +17,16 @@ describe("Check Slack", function() {
             user: {
               name: "FOO",
               reload_with_session_details: function() {
-                bluebird.resolve(1)
+                bluebird.resolve(1);
               }
             }
           }
         })
       )
       .then(function(email) {
-        expect(Slack.text).to.match(/Hello FOO\./)
+        expect(Slack.text).to.match(/Hello FOO\./);
 
-        done()
-      })
-  })
-})
+        done();
+      });
+  });
+});

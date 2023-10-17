@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 var test = require("selenium-webdriver/testing"),
   By = require("selenium-webdriver").By,
@@ -15,7 +15,7 @@ var test = require("selenium-webdriver/testing"),
   user_info_func = require("../../lib/user_info"),
   application_host = config.get_application_host(),
   some_weekday_date = "2015-06-17",
-  leave_type_new_form_id = "#leave_type_new_form"
+  leave_type_new_form_id = "#leave_type_new_form";
 
 /*
  *  Scenario:
@@ -38,56 +38,56 @@ var test = require("selenium-webdriver/testing"),
  * */
 
 describe("Auto approval leave type", function() {
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
-  var driver, email_A, email_B, user_id_B
+  var driver, email_A, email_B, user_id_B;
 
   it("Register new company", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(function(data) {
-      driver = data.driver
-      email_A = data.email
-      done()
-    })
-  })
+      driver = data.driver;
+      email_A = data.email;
+      done();
+    });
+  });
 
   it("Create second user B", function(done) {
     add_new_user_func({
       application_host: application_host,
       driver: driver
     }).then(function(data) {
-      email_B = data.new_user_email
-      done()
-    })
-  })
+      email_B = data.new_user_email;
+      done();
+    });
+  });
 
   it("Obtain information about user B", function(done) {
     user_info_func({
       driver: driver,
       email: email_B
     }).then(function(data) {
-      user_id_B = data.user.id
-      done()
-    })
-  })
+      user_id_B = data.user.id;
+      done();
+    });
+  });
 
   it("Open page with leave types", function(done) {
     open_page_func({
       url: application_host + "settings/general/",
       driver
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Add auto approve leave type", function(done) {
     driver
       .findElement(By.css("#add_new_leave_type_btn"))
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function() {
         // This is very important line when working with Bootstrap modals!
-        driver.sleep(1000)
+        driver.sleep(1000);
 
         submit_form_func({
           driver: driver,
@@ -107,19 +107,19 @@ describe("Auto approval leave type", function() {
             leave_type_new_form_id + ' button[type="submit"]',
           message: /Changes to leave types were saved/
         }).then(function() {
-          done()
-        })
-      })
-  })
+          done();
+        });
+      });
+  });
 
   it("Logout from admin user", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Login as regular user B", function(done) {
     login_user_func({
@@ -127,24 +127,24 @@ describe("Auto approval leave type", function() {
       user_email: email_B,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open Book leave popup window", function(done) {
     driver
       .findElement(By.css("#book_time_off_btn"))
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function(el) {
         // This is very important line when working with Bootstrap modals!
-        return driver.sleep(1000)
+        return driver.sleep(1000);
       })
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   it("Submit new leave request from non admin user", function(done) {
     submit_form_func({
@@ -161,40 +161,40 @@ describe("Auto approval leave type", function() {
       ],
       message: /New leave request was added/
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open requests page", function(done) {
     open_page_func({
       url: application_host + "requests/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Ensure that new leave went straight to Approved status", function(done) {
     driver
       .findElements(By.css("tr.leave-request-row .leave-request-row-status"))
       .then(function(elements) {
-        expect(elements.length).to.be.eq(1)
-        return elements[0].getText()
+        expect(elements.length).to.be.eq(1);
+        return elements[0].getText();
       })
       .then(function(status) {
-        expect(status).to.be.eq("Approved")
-        done()
-      })
-  })
+        expect(status).to.be.eq("Approved");
+        done();
+      });
+  });
 
   it("Logout from user B", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Login as admin user A", function(done) {
     login_user_func({
@@ -202,58 +202,58 @@ describe("Auto approval leave type", function() {
       user_email: email_A,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open requests page", function(done) {
     open_page_func({
       url: application_host + "requests/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Ensure that there is no pending leave requests", function(done) {
     driver.findElements(By.css(".btn-warning")).then(function(elements) {
-      expect(elements.length).to.be.eq(0)
-      done()
-    })
-  })
+      expect(elements.length).to.be.eq(0);
+      done();
+    });
+  });
 
   it("Open email audit page", function(done) {
     open_page_func({
       url: application_host + "audit/email/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Ensure there were two emails regarding auto-approved leaves", function(done) {
     driver
       .findElements(By.css("tr.vpp-email-audit-entry-header a.collapsed"))
       .then(function(elements) {
         return Promise.map([elements[0], elements[1]], function(el) {
-          return el.getText()
-        })
+          return el.getText();
+        });
       })
       .then(function(subjects) {
-        expect(subjects).to.contain("New leave was added and auto approved.")
-        expect(subjects).to.contain("New leave was added")
-        done()
-      })
-  })
+        expect(subjects).to.contain("New leave was added and auto approved.");
+        expect(subjects).to.contain("New leave was added");
+        done();
+      });
+  });
 
   it("Logout from admin user", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Login as regular user B", function(done) {
     login_user_func({
@@ -261,57 +261,57 @@ describe("Auto approval leave type", function() {
       user_email: email_B,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open requests page", function(done) {
     open_page_func({
       url: application_host + "requests/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Revoke request", function(done) {
     driver
       .findElement(By.css("button.revoke-btn"))
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function() {
         // Wait until page properly is reloaded
-        return driver.wait(until.elementLocated(By.css("h1")), 1000)
+        return driver.wait(until.elementLocated(By.css("h1")), 1000);
       })
       .then(function() {
         return driver.findElement(By.css(".alert-success")).then(function(el) {
-          expect(el).to.be.ok
-          return Promise.resolve(1)
-        })
+          expect(el).to.be.ok;
+          return Promise.resolve(1);
+        });
       })
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   it("Ensure that it is gone without need to be approved", function(done) {
     driver
       .findElements(By.css("tr.leave-request-row .leave-request-row-status"))
       .then(function(elements) {
-        expect(elements.length).to.be.eq(0)
-        done()
-      })
-  })
+        expect(elements.length).to.be.eq(0);
+        done();
+      });
+  });
 
   it("Logout from user B", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Login as admin user A", function(done) {
     login_user_func({
@@ -319,71 +319,71 @@ describe("Auto approval leave type", function() {
       user_email: email_A,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open user B absences section", function(done) {
     open_page_func({
       url: application_host + "users/edit/" + user_id_B + "/absences/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Ensure that user B does not have any leaves", function(done) {
     driver
       .findElements(By.css("tr.leave-request-row .leave-request-row-status"))
       .then(function(elements) {
-        expect(elements.length).to.be.eq(0)
-        done()
-      })
-  })
+        expect(elements.length).to.be.eq(0);
+        done();
+      });
+  });
 
   it("Open requests page", function(done) {
     open_page_func({
       url: application_host + "requests/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Ensure that there is no pending leave requests", function(done) {
     driver.findElements(By.css(".btn-warning")).then(function(elements) {
-      expect(elements.length).to.be.eq(0)
-      done()
-    })
-  })
+      expect(elements.length).to.be.eq(0);
+      done();
+    });
+  });
 
   it("Open email audit page", function(done) {
     open_page_func({
       url: application_host + "audit/email/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Ensure there were two emails regarding auto-approved leaves", function(done) {
     driver
       .findElements(By.css("tr.vpp-email-audit-entry-header a.collapsed"))
       .then(function(elements) {
         return Promise.map([elements[0], elements[1]], function(el) {
-          return el.getText()
-        })
+          return el.getText();
+        });
       })
       .then(function(subjects) {
-        expect(subjects).to.contain("Leave was revoked and auto approved")
-        expect(subjects).to.contain("Leave was revoked")
-        done()
-      })
-  })
+        expect(subjects).to.contain("Leave was revoked and auto approved");
+        expect(subjects).to.contain("Leave was revoked");
+        done();
+      });
+  });
 
   after(function(done) {
     driver.quit().then(function() {
-      done()
-    })
-  })
-})
+      done();
+    });
+  });
+});

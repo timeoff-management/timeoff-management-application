@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const test = require("selenium-webdriver/testing"),
   config = require("../../lib/config"),
@@ -18,7 +18,7 @@ const test = require("selenium-webdriver/testing"),
   check_booking_func = require("../../lib/check_booking_on_calendar"),
   user_info_func = require("../../lib/user_info"),
   add_new_user_func = require("../../lib/add_new_user"),
-  userStartsAtTheBeginingOfYear = require("../../lib/set_user_to_start_at_the_beginning_of_the_year")
+  userStartsAtTheBeginingOfYear = require("../../lib/set_user_to_start_at_the_beginning_of_the_year");
 
 /*
  *  Scenario to go in this test:
@@ -34,38 +34,38 @@ const test = require("selenium-webdriver/testing"),
  * */
 
 describe("Basic leave request", function() {
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
-  var non_admin_user_email, new_user_email, driver
+  var non_admin_user_email, new_user_email, driver;
 
   it("Create new company", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(function(data) {
-      new_user_email = data.email
-      driver = data.driver
-      done()
-    })
-  })
+      new_user_email = data.email;
+      driver = data.driver;
+      done();
+    });
+  });
 
   it("Create new non-admin user", function(done) {
     add_new_user_func({
       application_host: application_host,
       driver: driver
     }).then(function(data) {
-      non_admin_user_email = data.new_user_email
-      done()
-    })
-  })
+      non_admin_user_email = data.new_user_email;
+      done();
+    });
+  });
 
   it("Logout from admin account", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Login as non-admin user", function(done) {
     login_user_func({
@@ -73,49 +73,49 @@ describe("Basic leave request", function() {
       user_email: non_admin_user_email,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open calendar page", function(done) {
     open_page_func({
       url: application_host + "calendar/?year=2015&show_full_year=1",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("And make sure that it is calendar indeed", function(done) {
     driver.getTitle().then(function(title) {
-      expect(title).to.be.equal("Calendar")
-      done()
-    })
-  })
+      expect(title).to.be.equal("Calendar");
+      done();
+    });
+  });
 
   it("Open Book leave popup window", function(done) {
     driver
       .findElement(By.css("#book_time_off_btn"))
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function(el) {
         // This is very important line when working with Bootstrap modals!
-        return driver.sleep(1000)
+        return driver.sleep(1000);
       })
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   it("Following code is to ensure that non admin user can request leave only for herself", function(done) {
     driver
       .isElementPresent(By.css("select#employee"))
       .then(function(is_present) {
-        expect(is_present).to.be.equal(false)
-        done()
-      })
-  })
+        expect(is_present).to.be.equal(false);
+        done();
+      });
+  });
 
   it("Submit new leave request", function(done) {
     submit_form_func({
@@ -138,9 +138,9 @@ describe("Basic leave request", function() {
       ],
       message: /New leave request was added/
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Check that all days are marked as pended", function(done) {
     check_booking_func({
@@ -149,18 +149,18 @@ describe("Basic leave request", function() {
       halfs_1st_days: [moment("2015-06-15")],
       type: "pended"
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Logout from non-admin acount", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Login as admin user", function(done) {
     login_user_func({
@@ -168,18 +168,18 @@ describe("Basic leave request", function() {
       user_email: new_user_email,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open requests page", function(done) {
     open_page_func({
       url: application_host + "requests/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Make sure newly created request is shown for approval", function(done) {
     check_elements_func({
@@ -192,9 +192,9 @@ describe("Basic leave request", function() {
         }
       ]
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Approve newly added leave request", function(done) {
     driver
@@ -204,25 +204,25 @@ describe("Basic leave request", function() {
         )
       )
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       .then(function() {
         // Wait until page properly is reloaded
-        return driver.wait(until.elementLocated(By.css("h1")), 1000)
+        return driver.wait(until.elementLocated(By.css("h1")), 1000);
       })
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   it("Logout from admin acount", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Login as non-admin user", function(done) {
     login_user_func({
@@ -230,25 +230,25 @@ describe("Basic leave request", function() {
       user_email: non_admin_user_email,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open calendar page (in full year mode)", function(done) {
     open_page_func({
       url: application_host + "calendar/?year=2015&show_full_year=1",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("And make sure that it is calendar indeed", function(done) {
     driver.getTitle().then(function(title) {
-      expect(title).to.be.equal("Calendar")
-      done()
-    })
-  })
+      expect(title).to.be.equal("Calendar");
+      done();
+    });
+  });
 
   it("Check that all days are marked as pended", function(done) {
     check_booking_func({
@@ -257,18 +257,18 @@ describe("Basic leave request", function() {
       halfs_1st_days: [moment("2015-06-15")],
       type: "approved"
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open calendar page (short version)", function(done) {
     open_page_func({
       url: application_host + "requests/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Make sure that requests have approver been populated", function(done) {
     driver
@@ -276,65 +276,65 @@ describe("Basic leave request", function() {
         By.css(".user-requests-table td.user-request-table-approver")
       )
       .then(function(el) {
-        return el.getText()
+        return el.getText();
       })
       .then(function(text) {
-        expect(text).to.be.not.empty
-        done()
-      })
-  })
+        expect(text).to.be.not.empty;
+        done();
+      });
+  });
 
   after(function(done) {
     driver.quit().then(function() {
-      done()
-    })
-  })
-})
+      done();
+    });
+  });
+});
 
 describe("Use problematic date with non default date format", function() {
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
-  let driver, email, user_id
+  let driver, email, user_id;
 
   it("Register new company with default date to be DD/MM/YY", function(done) {
     register_new_user_func({
       application_host: application_host,
       default_date_format: "DD/MM/YY"
     }).then(data => {
-      ;({ email, driver } = data)
-      done()
-    })
-  })
+      ({ email, driver } = data);
+      done();
+    });
+  });
 
   it("Ensure user starts at the very beginning of current year", done => {
     userStartsAtTheBeginingOfYear({ driver, email, year: 2016 }).then(() =>
       done()
-    )
-  })
+    );
+  });
 
   it("Open calendar page", function(done) {
     open_page_func({
       url: application_host + "calendar/?year=2016&show_full_year=1",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open Book new leave pop up", function(done) {
     driver
       .findElement(By.css("#book_time_off_btn"))
       .then(function(el) {
-        return el.click()
+        return el.click();
       })
       // This is very important line when working with Bootstrap modals!
       .then(function() {
-        return driver.sleep(1000)
+        return driver.sleep(1000);
       })
       .then(function() {
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   it("Make sure it is possible to place an leave request for date that was reported to be problematic", function(done) {
     submit_form_func({
@@ -357,36 +357,36 @@ describe("Use problematic date with non default date format", function() {
       ],
       message: /New leave request was added/
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   after(function(done) {
     driver.quit().then(function() {
-      done()
-    })
-  })
-})
+      done();
+    });
+  });
+});
 
 describe("Book the very last day of year to be a holiday", function() {
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
-  let driver, email
+  let driver, email;
 
   it("Register new company", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(function(data) {
-      ;({ driver, email } = data)
-      done()
-    })
-  })
+      ({ driver, email } = data);
+      done();
+    });
+  });
 
   it("Ensure user starts at the very beginning of current year", done => {
     userStartsAtTheBeginingOfYear({ driver, email, year: 2018 }).then(() =>
       done()
-    )
-  })
+    );
+  });
 
   it("Place new holiday to be the very last day of the year", function(done) {
     driver
@@ -410,8 +410,8 @@ describe("Book the very last day of year to be a holiday", function() {
           message: /New leave request was added/
         })
       )
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Open calendar page and ensure that the very last day of the year is marked as pending", function(done) {
     open_page_func({
@@ -426,12 +426,12 @@ describe("Book the very last day of year to be a holiday", function() {
         })
       )
 
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   after(function(done) {
     driver.quit().then(function() {
-      done()
-    })
-  })
-})
+      done();
+    });
+  });
+});

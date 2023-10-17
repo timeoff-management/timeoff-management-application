@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 var test = require("selenium-webdriver/testing"),
   config = require("../lib/config"),
@@ -11,7 +11,7 @@ var test = require("selenium-webdriver/testing"),
   register_new_user_func = require("../lib/register_new_user"),
   logout_user_func = require("../lib/logout_user"),
   submit_form_func = require("../lib/submit_form"),
-  add_new_user_func = require("../lib/add_new_user")
+  add_new_user_func = require("../lib/add_new_user");
 
 /*
   At this moment there is a bug when anyone can hijack acount if primary email
@@ -27,34 +27,34 @@ var test = require("selenium-webdriver/testing"),
 */
 
 describe("Reuse email from existing acount when creating new company", function() {
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
-  var admin_email, driver
+  var admin_email, driver;
 
   it("Create new company", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(function(data) {
-      driver = data.driver
-      admin_email = data.email
-      done()
-    })
-  })
+      driver = data.driver;
+      admin_email = data.email;
+      done();
+    });
+  });
 
   it("Logout from newly created account", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Close the browser", function(done) {
     driver.quit().then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Try to create another account with the same email", function(done) {
     register_new_user_func({
@@ -63,16 +63,16 @@ describe("Reuse email from existing acount when creating new company", function(
       failing_error_message:
         "Failed to register user please contact customer service. Error: Email is already used"
     }).then(function(data) {
-      driver = data.driver
-      done()
-    })
-  })
+      driver = data.driver;
+      done();
+    });
+  });
 
   after(function(done) {
     driver.quit().then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   //  after(function() {
   //    if (this.currentTest.state == 'failed') {
@@ -86,4 +86,4 @@ describe("Reuse email from existing acount when creating new company", function(
   //
   //    }
   //  });
-})
+});

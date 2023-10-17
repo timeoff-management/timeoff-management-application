@@ -7,26 +7,26 @@ $(document).ready(function() {
    *  When FROM field in New absense form chnages: update TO one if necessary
    */
   $("input.book-leave-from-input").on("change", function(e) {
-    e.stopPropagation()
+    e.stopPropagation();
 
-    var from_date = $("input.book-leave-from-input").datepicker("getDate")
+    var from_date = $("input.book-leave-from-input").datepicker("getDate");
 
     if (!from_date) {
       // no new value for FROM part, do nothing
-      console.log("No from date")
-      return
+      console.log("No from date");
+      return;
     }
 
-    var to_date = $("input.book-leave-to-input").datepicker("getDate")
+    var to_date = $("input.book-leave-to-input").datepicker("getDate");
 
     if (!to_date || (to_date && to_date.getTime() < from_date.getTime())) {
       $("input.book-leave-to-input").datepicker(
         "setDate",
         $("input.book-leave-from-input").datepicker("getFormattedDate")
-      )
+      );
     }
-  })
-})
+  });
+});
 
 /*
  * Bootstrap-datepicker
@@ -78,16 +78,16 @@ $(document).ready(function() {
     clear: "Clear",
     weekStart: 1,
     format: "dd/mm/yyyy"
-  }
-})(jQuery)
+  };
+})(jQuery);
 
 $(function() {
-  $('[data-toggle="tooltip"]').tooltip()
-})
+  $('[data-toggle="tooltip"]').tooltip();
+});
 
 $(function() {
-  $('[data-toggle="popover"]').popover()
-})
+  $('[data-toggle="popover"]').popover();
+});
 
 /*
  * This is handler for invocation of "add secondary supervisors" modal
@@ -97,16 +97,16 @@ $(function() {
 $("#add_secondary_supervisers_modal").on("show.bs.modal", function(event) {
   var button = $(event.relatedTarget),
     department_name = button.data("department_name"),
-    department_id = button.data("department_id")
+    department_id = button.data("department_id");
 
-  var modal = $(this)
+  var modal = $(this);
 
-  modal.find(".modal-title strong").text(department_name)
+  modal.find(".modal-title strong").text(department_name);
 
   // Make modal window to be no hiegher then window and its content
   // scrollable
-  $(".modal .modal-body").css("overflow-y", "auto")
-  $(".modal .modal-body").css("max-height", $(window).height() * 0.7)
+  $(".modal .modal-body").css("overflow-y", "auto");
+  $(".modal .modal-body").css("max-height", $(window).height() * 0.7);
 
   $(this)
     .find(".modal-body")
@@ -114,8 +114,8 @@ $("#add_secondary_supervisers_modal").on("show.bs.modal", function(event) {
     .html(
       '<p class="text-center"><i class="fa fa-refresh fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span></p>'
     )
-    .load("/settings/departments/available-supervisors/" + department_id + "/")
-})
+    .load("/settings/departments/available-supervisors/" + department_id + "/");
+});
 
 /*
  *  Given URL string return its query paramters as object.
@@ -125,16 +125,16 @@ $("#add_secondary_supervisers_modal").on("show.bs.modal", function(event) {
 
 function getUrlVars(url) {
   if (!url) {
-    url = window.location.href
+    url = window.location.href;
   }
   var vars = {},
-    hash
-  var hashes = url.slice(url.indexOf("?") + 1).split("&")
+    hash;
+  var hashes = url.slice(url.indexOf("?") + 1).split("&");
   for (var i = 0; i < hashes.length; i++) {
-    hash = hashes[i].split("=")
-    vars[hash[0]] = hash[1]
+    hash = hashes[i].split("=");
+    vars[hash[0]] = hash[1];
   }
-  return vars
+  return vars;
 }
 
 /*
@@ -146,59 +146,59 @@ $(document).ready(function() {
   $("#team_view_month_select_btn")
     .datepicker()
     .on("changeDate", function(e) {
-      var url = $(e.currentTarget).data("tom")
+      var url = $(e.currentTarget).data("tom");
 
-      var form = document.createElement("form")
-      form.method = "GET"
-      form.action = url
+      var form = document.createElement("form");
+      form.method = "GET";
+      form.action = url;
 
-      var url_params = getUrlVars(url)
-      url_params["date"] = e.format("yyyy-mm")
+      var url_params = getUrlVars(url);
+      url_params["date"] = e.format("yyyy-mm");
 
       // Move query parameters into the form
       $.each(url_params, function(key, val) {
-        var inp = document.createElement("input")
-        inp.name = key
-        inp.value = val
-        inp.type = "hidden"
-        form.appendChild(inp)
-      })
+        var inp = document.createElement("input");
+        inp.name = key;
+        inp.value = val;
+        inp.type = "hidden";
+        form.appendChild(inp);
+      });
 
-      document.body.appendChild(form)
+      document.body.appendChild(form);
 
-      return form.submit()
-    })
-})
+      return form.submit();
+    });
+});
 
 $(document).ready(function() {
   $("[data-tom-color-picker] a").on("click", function(e) {
-    e.stopPropagation()
+    e.stopPropagation();
 
     // Close dropdown
     $(e.target)
       .closest(".dropdown-menu")
-      .dropdown("toggle")
+      .dropdown("toggle");
 
-    var new_class_name = $(e.target).data("tom-color-picker-css-class")
+    var new_class_name = $(e.target).data("tom-color-picker-css-class");
 
     // Ensure newly selected color is on triggering element
     $(e.target)
       .closest("[data-tom-color-picker]")
       .find("button.dropdown-toggle")
       .attr("class", function(idx, c) {
-        return c.replace(/leave_type_color_\d+/g, "")
+        return c.replace(/leave_type_color_\d+/g, "");
       })
-      .addClass(new_class_name)
+      .addClass(new_class_name);
 
     // Capture newly picked up color in hidden input for submission
     $(e.target)
       .closest("[data-tom-color-picker]")
       .find('input[type="hidden"]')
-      .attr("value", new_class_name)
+      .attr("value", new_class_name);
 
-    return false
-  })
-})
+    return false;
+  });
+});
 
 $(document).ready(function() {
   $(".user-details-summary-trigger").popover({
@@ -208,22 +208,22 @@ $(document).ready(function() {
     placement: "auto",
     delay: { show: 1000, hide: 10 },
     content: function() {
-      var divId = "tmp-id-" + $.now()
-      return detailsInPopup($(this).attr("data-user-id"), divId)
+      var divId = "tmp-id-" + $.now();
+      return detailsInPopup($(this).attr("data-user-id"), divId);
     }
-  })
+  });
 
   function detailsInPopup(userId, divId) {
     $.ajax({
       url: "/users/summary/" + userId + "/",
       success: function(response) {
-        $("#" + divId).html(response)
+        $("#" + divId).html(response);
       }
-    })
+    });
 
-    return '<div id="' + divId + '">Loading...</div>'
+    return '<div id="' + divId + '">Loading...</div>';
   }
-})
+});
 
 $(document).ready(function() {
   $(".leave-details-summary-trigger").popover({
@@ -233,21 +233,21 @@ $(document).ready(function() {
     placement: "auto",
     delay: { show: 1000, hide: 10 },
     content: function() {
-      var divId = "tmp-id-" + $.now()
-      return detailsInPopup($(this).attr("data-leave-id"), divId)
+      var divId = "tmp-id-" + $.now();
+      return detailsInPopup($(this).attr("data-leave-id"), divId);
     }
-  })
+  });
 
   function detailsInPopup(leaveId, divId) {
     $.ajax({
       url: "/calendar/leave-summary/" + leaveId + "/",
       success: function(response) {
-        $("#" + divId).html(response)
+        $("#" + divId).html(response);
       }
-    })
-    return '<div id="' + divId + '">Loading...</div>'
+    });
+    return '<div id="' + divId + '">Loading...</div>';
   }
-})
+});
 
 $(document).ready(function() {
   const fetchNotifications = () => {
@@ -255,98 +255,101 @@ $(document).ready(function() {
       $.ajax({
         url: "/api/v1/notifications/",
         success: function(args) {
-          const error = args.error
-          const data = args.data
+          const error = args.error;
+          const data = args.data;
 
           if (error) {
-            console.log("Failed to fetch notifications")
-            return
+            console.log("Failed to fetch notifications");
+            return;
           }
 
-          const dropDown = $("#header-notification-dropdown ul.dropdown-menu")
-          const badge = $("#header-notification-dropdown .notification-badge")
+          const dropDown = $("#header-notification-dropdown ul.dropdown-menu");
+          const badge = $("#header-notification-dropdown .notification-badge");
 
           if (!data || !data.length) {
-            badge.addClass("hidden")
-            dropDown.empty()
-            dropDown.append('<li class="dropdown-header">No notifications</li>')
+            badge.addClass("hidden");
+            dropDown.empty();
+            dropDown.append(
+              '<li class="dropdown-header">No notifications</li>'
+            );
 
-            document.title = document.title.replace(/\(\d+\)\s*/, "")
+            document.title = document.title.replace(/\(\d+\)\s*/, "");
 
-            return
+            return;
           }
 
           const numberOfNotifications = data
             .map(function(d) {
-              return d.numberOfRequests
+              return d.numberOfRequests;
             })
             .reduce(function(acc, it) {
-              return acc + it
-            }, 0)
+              return acc + it;
+            }, 0);
 
-          badge.removeClass("hidden").html(numberOfNotifications)
+          badge.removeClass("hidden").html(numberOfNotifications);
 
           if (!document.title.startsWith("(")) {
-            document.title = "(" + numberOfNotifications + ") " + document.title
+            document.title =
+              "(" + numberOfNotifications + ") " + document.title;
           } else {
             document.title = document.title.replace(
               /\(\d+\)/,
               "(" + numberOfNotifications + ")"
-            )
+            );
           }
 
-          dropDown.empty()
+          dropDown.empty();
 
           for (var i = 0; i < data.length; i++) {
-            const notification = data[i]
+            const notification = data[i];
             dropDown.append(
               '<li><a href="' +
                 notification.link +
                 '">' +
                 notification.label +
                 "</a></li>"
-            )
+            );
           }
         }
-      })
+      });
     }
 
-    setTimeout(fetchNotifications, 30 * 1000)
-  }
+    setTimeout(fetchNotifications, 30 * 1000);
+  };
 
-  fetchNotifications()
-})
+  fetchNotifications();
+});
 
 /**
  * Prevent for double submission.
  */
 $(document).ready(function() {
   $(".single-click").on("click", function(e) {
-    var form = $(e.target).closest("form")
+    var form = $(e.target).closest("form");
 
     // Ensure "required" fields are populated
-    var formIsValid = true
+    var formIsValid = true;
     $(form)
       .find("[required]")
       .each(function(el) {
-        formIsValid = formIsValid && !!el.val()
-      })
+        formIsValid = formIsValid && !!el.val();
+      });
     if (formIsValid) {
-      e.stopPropagation()
+      e.stopPropagation();
     } else {
-      return
+      return;
     }
 
-    $(e.target).prop("disabled", true)
+    $(e.target).prop("disabled", true);
 
-    var submitName = $(e.target).attr("name")
+    var submitName = $(e.target).attr("name");
     if (submitName !== undefined) {
       $("<input>")
         .attr({ type: "hidden", name: submitName, value: "1" })
-        .appendTo(form)
+        .appendTo(form);
     }
-    form.submit()
+    form.submit();
 
-    return false
-  })
-})
+    return false;
+  });
+});

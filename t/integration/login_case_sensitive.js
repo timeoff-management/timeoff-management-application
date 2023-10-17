@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 var test = require("selenium-webdriver/testing"),
   By = require("selenium-webdriver").By,
@@ -9,7 +9,7 @@ var test = require("selenium-webdriver/testing"),
   register_new_user_func = require("../lib/register_new_user"),
   logout_user_func = require("../lib/logout_user"),
   config = require("../lib/config"),
-  application_host = config.get_application_host()
+  application_host = config.get_application_host();
 
 /*
   User emails are case insensitive.
@@ -22,29 +22,29 @@ var test = require("selenium-webdriver/testing"),
 */
 
 describe("Emails are case insensitive", function() {
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
-  var admin_email, driver
+  var admin_email, driver;
 
   it("Register an account useing upper case letters", function(done) {
     register_new_user_func({
       application_host: application_host,
       user_email: new Date().getTime() + "John.Smith@TEST.com"
     }).then(function(data) {
-      admin_email = data.email
-      driver = data.driver
-      done()
-    })
-  })
+      admin_email = data.email;
+      driver = data.driver;
+      done();
+    });
+  });
 
   it("Logount from current session", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Login with lower case email", function(done) {
     login_user_func({
@@ -52,18 +52,18 @@ describe("Emails are case insensitive", function() {
       user_email: admin_email.toLowerCase(),
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Logout", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Try to login with upper case email", function(done) {
     login_user_func({
@@ -71,13 +71,13 @@ describe("Emails are case insensitive", function() {
       user_email: admin_email.toUpperCase(),
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   after(function(done) {
     driver.quit().then(function() {
-      done()
-    })
-  })
-})
+      done();
+    });
+  });
+});

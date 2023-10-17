@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 var test = require("selenium-webdriver/testing"),
   By = require("selenium-webdriver").By,
@@ -18,7 +18,7 @@ var test = require("selenium-webdriver/testing"),
   user_info_func = require("../lib/user_info"),
   config = require("../lib/config"),
   application_host = config.get_application_host(),
-  department_edit_form_id = "#department_edit_form"
+  department_edit_form_id = "#department_edit_form";
 
 /*
  * Scenario to check:
@@ -40,7 +40,7 @@ var test = require("selenium-webdriver/testing"),
  * */
 
 describe("Dealing with inactive users", function() {
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
   var email_admin,
     admin_user_id,
@@ -49,46 +49,46 @@ describe("Dealing with inactive users", function() {
     email_employee,
     employee_user_id,
     employee_id,
-    driver
+    driver;
 
   it("Create new company", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(function(data) {
-      driver = data.driver
-      email_admin = data.email
-      done()
-    })
-  })
+      driver = data.driver;
+      email_admin = data.email;
+      done();
+    });
+  });
 
   it("Create MANAGER", function(done) {
     add_new_user_func({
       application_host: application_host,
       driver: driver
     }).then(function(data) {
-      email_manager = data.new_user_email
-      done()
-    })
-  })
+      email_manager = data.new_user_email;
+      done();
+    });
+  });
 
   it("Create EMPLOYEE", function(done) {
     add_new_user_func({
       application_host: application_host,
       driver: driver
     }).then(function(data) {
-      email_employee = data.new_user_email
-      done()
-    })
-  })
+      email_employee = data.new_user_email;
+      done();
+    });
+  });
 
   it("Open department management page", function(done) {
     open_page_func({
       url: application_host + "settings/departments/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Update department to be supervised by MANAGER", function(done) {
     open_page_func({
@@ -124,8 +124,8 @@ describe("Dealing with inactive users", function() {
           message: /Department .* was updated/
         })
       )
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Make sure EMPLOYEE shows up on the Team view page", function(done) {
     teamview_check_func({
@@ -133,28 +133,28 @@ describe("Dealing with inactive users", function() {
       emails: [email_admin, email_manager, email_employee],
       is_link: true
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open departments management page", function(done) {
     open_page_func({
       url: application_host + "settings/departments/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("obtain detailed info about employee (ID etc)", function(done) {
     user_info_func({
       driver: driver,
       email: email_employee
     }).then(function(data) {
-      employee_id = data.user.id
-      done()
-    })
-  })
+      employee_id = data.user.id;
+      done();
+    });
+  });
 
   it("See if EMPLOYEE is among possible approvers", function(done) {
     driver
@@ -164,19 +164,19 @@ describe("Dealing with inactive users", function() {
         )
       )
       .then(function(option) {
-        expect(option).to.be.not.empty
-        done()
-      })
-  })
+        expect(option).to.be.not.empty;
+        done();
+      });
+  });
 
   it("Logout from admin account", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Login as an EMPLOYEE to make sure it is possible", function(done) {
     login_user_func({
@@ -184,18 +184,18 @@ describe("Dealing with inactive users", function() {
       user_email: email_employee,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Logout from EMPLOYEE account", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Login back as ADMIN", function(done) {
     login_user_func({
@@ -203,18 +203,18 @@ describe("Dealing with inactive users", function() {
       user_email: email_admin,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open employee details page", function(done) {
     open_page_func({
       url: application_host + "users/edit/" + employee_id + "/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Mark EMPLOYEE as one inactive one by specifying end date to be in past", function(done) {
     submit_form_func({
@@ -230,9 +230,9 @@ describe("Dealing with inactive users", function() {
       submit_button_selector: "button#save_changes_btn",
       message: /Details for .+ were updated/
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Make sure EMPLOYEE is not on Team view page anymore", function(done) {
     teamview_check_func({
@@ -240,25 +240,25 @@ describe("Dealing with inactive users", function() {
       emails: [email_admin, email_manager],
       is_link: true
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Open users list page", function(done) {
     open_page_func({
       url: application_host + "users/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Make sure that EMPLOYEE still is shown on users page decpite being inactive", function(done) {
     driver.findElements(By.css("td.user_department")).then(function(elements) {
-      expect(elements.length).to.be.equal(3)
-      done()
-    })
-  })
+      expect(elements.length).to.be.equal(3);
+      done();
+    });
+  });
 
   it("Check that employee is striked in the list", function(done) {
     driver
@@ -266,21 +266,21 @@ describe("Dealing with inactive users", function() {
       .then(el => el.findElements(By.tagName("s")))
       .then(els => {
         if (els.length === 1) {
-          done()
+          done();
         } else {
-          throw new Error("User is not striked")
+          throw new Error("User is not striked");
         }
-      })
-  })
+      });
+  });
 
   it("Open department settings page", function(done) {
     open_page_func({
       url: application_host + "settings/departments/",
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Try to add new department and make sure that EMPLOYEE is not among potentual approvers", function(done) {
     driver
@@ -290,19 +290,19 @@ describe("Dealing with inactive users", function() {
         )
       )
       .then(function(option) {
-        expect(option).to.be.empty
-        done()
-      })
-  })
+        expect(option).to.be.empty;
+        done();
+      });
+  });
 
   it("Logout from admin account", function(done) {
     logout_user_func({
       application_host: application_host,
       driver: driver
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   it("Try to login as EMPLOYEE and make sure system rejects", function(done) {
     login_user_func({
@@ -311,13 +311,13 @@ describe("Dealing with inactive users", function() {
       driver: driver,
       should_fail: true
     }).then(function() {
-      done()
-    })
-  })
+      done();
+    });
+  });
 
   after(function(done) {
     driver.quit().then(function() {
-      done()
-    })
-  })
-})
+      done();
+    });
+  });
+});

@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const test = require("selenium-webdriver/testing"),
   until = require("selenium-webdriver").until,
@@ -12,7 +12,7 @@ const test = require("selenium-webdriver/testing"),
   expect = require("chai").expect,
   application_host = config.get_application_host(),
   leave_type_edit_form_id = "#leave_type_edit_form",
-  userStartsAtTheBeginingOfYear = require("../../lib/set_user_to_start_at_the_beginning_of_the_year")
+  userStartsAtTheBeginingOfYear = require("../../lib/set_user_to_start_at_the_beginning_of_the_year");
 
 /*
  *  Aim of the scenario: to ensure that half a days are highlighted correctly
@@ -41,35 +41,35 @@ const test = require("selenium-webdriver/testing"),
  * */
 
 describe("Coloring of half days", function() {
-  let driver, user_email, user_id, leave_type_holiday_id, leave_type_sick_id
+  let driver, user_email, user_id, leave_type_holiday_id, leave_type_sick_id;
 
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
   it("Performing registration process", function(done) {
     register_new_user_func({
       application_host: application_host
     }).then(data => {
-      driver = data.driver
-      user_email = data.email
-      done()
-    })
-  })
+      driver = data.driver;
+      user_email = data.email;
+      done();
+    });
+  });
 
   it("Obtain information user", function(done) {
     user_info_func({
       driver: driver,
       email: user_email
     }).then(data => {
-      user_id = data.user.id
-      done()
-    })
-  })
+      user_id = data.user.id;
+      done();
+    });
+  });
 
   it("Ensure user starts at the very beginning of current year", done => {
     userStartsAtTheBeginingOfYear({ driver, email: user_email, year: 2018 })
       .then(() => open_page_func({ url: application_host, driver }))
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it('Changes default color for Sick days to be "color 3"', done => {
     open_page_func({
@@ -99,19 +99,19 @@ describe("Coloring of half days", function() {
       .then(() => driver.findElements(By.css("button.leavetype-remove-btn")))
       .then(btns => Bluebird.map(btns, btn => btn.getAttribute("value")))
       .then(ids => {
-        leave_type_holiday_id = ids[0]
-        leave_type_sick_id = ids[1]
+        leave_type_holiday_id = ids[0];
+        leave_type_sick_id = ids[1];
 
-        done()
-      })
-  })
+        done();
+      });
+  });
 
   it("Go Calendar page", done => {
     open_page_func({
       url: application_host,
       driver: driver
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Add absence: 2018-02-01 (afternoon) - 2018-02-02 (morning) Sick", done => {
     driver
@@ -146,8 +146,8 @@ describe("Coloring of half days", function() {
           message: /New leave request was added/
         })
       )
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Add absence: 2018-02-02 (afternoon) - 2018-02-02 (afternnon) : Holiday", done => {
     driver
@@ -183,8 +183,8 @@ describe("Coloring of half days", function() {
           submit_button_selector: '#book_leave_modal button[type="submit"]'
         })
       )
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Add absence: 2018-02-08 (morning) - 2018-02-08 (morning) : Holiday (0.5 days)", done => {
     driver
@@ -220,8 +220,8 @@ describe("Coloring of half days", function() {
           submit_button_selector: '#book_leave_modal button[type="submit"]'
         })
       )
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Add absence: 2018-02-13 (afternoon) - 2018-02-14 (morning) : Sick", done => {
     driver
@@ -257,8 +257,8 @@ describe("Coloring of half days", function() {
           submit_button_selector: '#book_leave_modal button[type="submit"]'
         })
       )
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Add absence: 2018-02-14 (afternoon) - 2018-02-15 (morning) : Holiday", done => {
     driver
@@ -294,15 +294,15 @@ describe("Coloring of half days", function() {
           submit_button_selector: '#book_leave_modal button[type="submit"]'
         })
       )
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Open requests page", function(done) {
     open_page_func({
       url: application_host + "requests/",
       driver: driver
-    }).then(() => done())
-  })
+    }).then(() => done());
+  });
 
   it("Ensure that all absences are approved", function(done) {
     driver
@@ -326,8 +326,8 @@ describe("Coloring of half days", function() {
       .then(el => el.click())
       .then(() => driver.wait(until.elementLocated(By.css("h1")), 1000))
 
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Go to callendar page and ensure that all half days cells have correct color classes", done => {
     open_page_func({
@@ -342,8 +342,8 @@ describe("Coloring of half days", function() {
       )
       .then(el => el.getAttribute("class"))
       .then(cls => {
-        expect(cls).not.to.match(/leave_type_color_/)
-        return Bluebird.resolve()
+        expect(cls).not.to.match(/leave_type_color_/);
+        return Bluebird.resolve();
       })
 
       .then(() =>
@@ -353,8 +353,8 @@ describe("Coloring of half days", function() {
       )
       .then(el => el.getAttribute("class"))
       .then(cls => {
-        expect(cls).to.match(/leave_type_color_3/)
-        return Bluebird.resolve()
+        expect(cls).to.match(/leave_type_color_3/);
+        return Bluebird.resolve();
       })
 
       // Check Feb 2
@@ -365,8 +365,8 @@ describe("Coloring of half days", function() {
       )
       .then(el => el.getAttribute("class"))
       .then(cls => {
-        expect(cls).to.match(/leave_type_color_3/)
-        return Bluebird.resolve()
+        expect(cls).to.match(/leave_type_color_3/);
+        return Bluebird.resolve();
       })
 
       .then(() =>
@@ -376,8 +376,8 @@ describe("Coloring of half days", function() {
       )
       .then(el => el.getAttribute("class"))
       .then(cls => {
-        expect(cls).to.match(/leave_type_color_1/)
-        return Bluebird.resolve()
+        expect(cls).to.match(/leave_type_color_1/);
+        return Bluebird.resolve();
       })
 
       // Check Feb 8
@@ -388,8 +388,8 @@ describe("Coloring of half days", function() {
       )
       .then(el => el.getAttribute("class"))
       .then(cls => {
-        expect(cls).to.match(/leave_type_color_1/)
-        return Bluebird.resolve()
+        expect(cls).to.match(/leave_type_color_1/);
+        return Bluebird.resolve();
       })
 
       .then(() =>
@@ -399,8 +399,8 @@ describe("Coloring of half days", function() {
       )
       .then(el => el.getAttribute("class"))
       .then(cls => {
-        expect(cls).not.to.match(/leave_type_color_/)
-        return Bluebird.resolve()
+        expect(cls).not.to.match(/leave_type_color_/);
+        return Bluebird.resolve();
       })
 
       // Check Feb 13
@@ -411,8 +411,8 @@ describe("Coloring of half days", function() {
       )
       .then(el => el.getAttribute("class"))
       .then(cls => {
-        expect(cls).not.to.match(/leave_type_color_/)
-        return Bluebird.resolve()
+        expect(cls).not.to.match(/leave_type_color_/);
+        return Bluebird.resolve();
       })
 
       .then(() =>
@@ -422,8 +422,8 @@ describe("Coloring of half days", function() {
       )
       .then(el => el.getAttribute("class"))
       .then(cls => {
-        expect(cls).to.match(/leave_type_color_3/)
-        return Bluebird.resolve()
+        expect(cls).to.match(/leave_type_color_3/);
+        return Bluebird.resolve();
       })
 
       // Check Feb 14
@@ -434,8 +434,8 @@ describe("Coloring of half days", function() {
       )
       .then(el => el.getAttribute("class"))
       .then(cls => {
-        expect(cls).to.match(/leave_type_color_3/)
-        return Bluebird.resolve()
+        expect(cls).to.match(/leave_type_color_3/);
+        return Bluebird.resolve();
       })
 
       .then(() =>
@@ -445,8 +445,8 @@ describe("Coloring of half days", function() {
       )
       .then(el => el.getAttribute("class"))
       .then(cls => {
-        expect(cls).to.match(/leave_type_color_1/)
-        return Bluebird.resolve()
+        expect(cls).to.match(/leave_type_color_1/);
+        return Bluebird.resolve();
       })
 
       // Check Feb 15
@@ -457,8 +457,8 @@ describe("Coloring of half days", function() {
       )
       .then(el => el.getAttribute("class"))
       .then(cls => {
-        expect(cls).to.match(/leave_type_color_1/)
-        return Bluebird.resolve()
+        expect(cls).to.match(/leave_type_color_1/);
+        return Bluebird.resolve();
       })
 
       .then(() =>
@@ -468,12 +468,12 @@ describe("Coloring of half days", function() {
       )
       .then(el => el.getAttribute("class"))
       .then(cls => {
-        expect(cls).not.to.match(/leave_type_color_/)
-        return Bluebird.resolve()
+        expect(cls).not.to.match(/leave_type_color_/);
+        return Bluebird.resolve();
       })
 
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Go to Team view page and ensure that all half a day cells have correct color classes", done => {
     open_page_func({
@@ -492,8 +492,8 @@ describe("Coloring of half days", function() {
       )
       .then(el => el.getAttribute("class"))
       .then(cls => {
-        expect(cls).not.to.match(/leave_type_color_/)
-        return Bluebird.resolve()
+        expect(cls).not.to.match(/leave_type_color_/);
+        return Bluebird.resolve();
       })
 
       .then(() =>
@@ -507,8 +507,8 @@ describe("Coloring of half days", function() {
       )
       .then(el => el.getAttribute("class"))
       .then(cls => {
-        expect(cls).to.match(/leave_type_color_3/)
-        return Bluebird.resolve()
+        expect(cls).to.match(/leave_type_color_3/);
+        return Bluebird.resolve();
       })
 
       // Check Feb 2
@@ -523,8 +523,8 @@ describe("Coloring of half days", function() {
       )
       .then(el => el.getAttribute("class"))
       .then(cls => {
-        expect(cls).to.match(/leave_type_color_3/)
-        return Bluebird.resolve()
+        expect(cls).to.match(/leave_type_color_3/);
+        return Bluebird.resolve();
       })
 
       .then(() =>
@@ -538,8 +538,8 @@ describe("Coloring of half days", function() {
       )
       .then(el => el.getAttribute("class"))
       .then(cls => {
-        expect(cls).to.match(/leave_type_color_1/)
-        return Bluebird.resolve()
+        expect(cls).to.match(/leave_type_color_1/);
+        return Bluebird.resolve();
       })
 
       // Check Feb 8
@@ -554,8 +554,8 @@ describe("Coloring of half days", function() {
       )
       .then(el => el.getAttribute("class"))
       .then(cls => {
-        expect(cls).to.match(/leave_type_color_1/)
-        return Bluebird.resolve()
+        expect(cls).to.match(/leave_type_color_1/);
+        return Bluebird.resolve();
       })
 
       .then(() =>
@@ -569,8 +569,8 @@ describe("Coloring of half days", function() {
       )
       .then(el => el.getAttribute("class"))
       .then(cls => {
-        expect(cls).not.to.match(/leave_type_color_/)
-        return Bluebird.resolve()
+        expect(cls).not.to.match(/leave_type_color_/);
+        return Bluebird.resolve();
       })
 
       // Check Feb 13
@@ -585,8 +585,8 @@ describe("Coloring of half days", function() {
       )
       .then(el => el.getAttribute("class"))
       .then(cls => {
-        expect(cls).not.to.match(/leave_type_color_/)
-        return Bluebird.resolve()
+        expect(cls).not.to.match(/leave_type_color_/);
+        return Bluebird.resolve();
       })
 
       .then(() =>
@@ -600,8 +600,8 @@ describe("Coloring of half days", function() {
       )
       .then(el => el.getAttribute("class"))
       .then(cls => {
-        expect(cls).to.match(/leave_type_color_3/)
-        return Bluebird.resolve()
+        expect(cls).to.match(/leave_type_color_3/);
+        return Bluebird.resolve();
       })
 
       // Check Feb 14
@@ -616,8 +616,8 @@ describe("Coloring of half days", function() {
       )
       .then(el => el.getAttribute("class"))
       .then(cls => {
-        expect(cls).to.match(/leave_type_color_3/)
-        return Bluebird.resolve()
+        expect(cls).to.match(/leave_type_color_3/);
+        return Bluebird.resolve();
       })
 
       .then(() =>
@@ -631,8 +631,8 @@ describe("Coloring of half days", function() {
       )
       .then(el => el.getAttribute("class"))
       .then(cls => {
-        expect(cls).to.match(/leave_type_color_1/)
-        return Bluebird.resolve()
+        expect(cls).to.match(/leave_type_color_1/);
+        return Bluebird.resolve();
       })
 
       // Check Feb 15
@@ -647,8 +647,8 @@ describe("Coloring of half days", function() {
       )
       .then(el => el.getAttribute("class"))
       .then(cls => {
-        expect(cls).to.match(/leave_type_color_1/)
-        return Bluebird.resolve()
+        expect(cls).to.match(/leave_type_color_1/);
+        return Bluebird.resolve();
       })
 
       .then(() =>
@@ -662,12 +662,12 @@ describe("Coloring of half days", function() {
       )
       .then(el => el.getAttribute("class"))
       .then(cls => {
-        expect(cls).not.to.match(/leave_type_color_/)
-        return Bluebird.resolve()
+        expect(cls).not.to.match(/leave_type_color_/);
+        return Bluebird.resolve();
       })
 
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("On Team view page ensure that days deducted from allowance are stated correctly", done => {
     open_page_func({
@@ -685,10 +685,10 @@ describe("Coloring of half days", function() {
       .then(txt => {
         expect(txt, "Ensure that system shows 2 days as deducted").to.be.eql(
           "2"
-        )
-        done()
-      })
-  })
+        );
+        done();
+      });
+  });
 
   it("Go to report page and for 2018-02 ensure that report contains correct summaries", done => {
     open_page_func({
@@ -720,12 +720,12 @@ describe("Coloring of half days", function() {
         expect(
           stat,
           "Ensure that report shows correct deducted days"
-        ).to.be.deep.equal(["2", "2", "2"])
-        done()
-      })
-  })
+        ).to.be.deep.equal(["2", "2", "2"]);
+        done();
+      });
+  });
 
   after(function(done) {
-    driver.quit().then(() => done())
-  })
-})
+    driver.quit().then(() => done());
+  });
+});

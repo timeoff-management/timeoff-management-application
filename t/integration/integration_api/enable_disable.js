@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const test = require("selenium-webdriver/testing"),
   By = require("selenium-webdriver").By,
@@ -10,7 +10,7 @@ const test = require("selenium-webdriver/testing"),
   submitFormFunc = require("../../lib/submit_form"),
   checkElementsFunc = require("../../lib/check_elements"),
   config = require("../../lib/config"),
-  applicationHost = config.get_application_host()
+  applicationHost = config.get_application_host();
 
 /*
  *  Scenario to go in this test:
@@ -29,16 +29,16 @@ const test = require("selenium-webdriver/testing"),
  * */
 
 describe("Enable/disable Integration APIs", function() {
-  this.timeout(config.get_execution_timeout())
+  this.timeout(config.get_execution_timeout());
 
-  let driver, oldToken, newToken, email
+  let driver, oldToken, newToken, email;
 
   it("Create new company", done => {
     registerNewUserFunc({ applicationHost }).then(data => {
-      ;({ driver, email } = data)
-      done()
-    })
-  })
+      ({ driver, email } = data);
+      done();
+    });
+  });
 
   it("Navigate to API page and ensure the API is disable", done => {
     openPageFunc({
@@ -57,8 +57,8 @@ describe("Enable/disable Integration APIs", function() {
           ]
         })
       )
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Read the key and try to invoke the API with that key: ensure the end point is blocked", done => {
     driver
@@ -76,20 +76,20 @@ describe("Enable/disable Integration APIs", function() {
         })
       )
       .then(res => {
-        throw new Error("TOM_TEST")
+        throw new Error("TOM_TEST");
       })
       .catch(error => {
         expect(error).not.to.be.equal(
           "TOM_TEST",
           'Ensure contrl flow did not go beyond the "rp"'
-        )
+        );
         expect(error.response.statusCode).to.be.equal(
           401,
           "Ensure response code is correct"
-        )
-        done()
-      })
-  })
+        );
+        done();
+      });
+  });
 
   it("Enable the API and repeate the invokation above: ensure that now it is successful", done => {
     openPageFunc({
@@ -126,10 +126,10 @@ describe("Enable/disable Integration APIs", function() {
         expect(obj[0].user.email).to.be.equal(
           email,
           "Ensure that report conatins email of admin user"
-        )
-        done()
-      })
-  })
+        );
+        done();
+      });
+  });
 
   it("Regenerate the API key", done => {
     openPageFunc({
@@ -148,8 +148,8 @@ describe("Enable/disable Integration APIs", function() {
       .then(() => driver.findElement(By.css("input#token-value")))
       .then(el => el.getAttribute("value"))
       .then(v => Promise.resolve((newToken = v)))
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Ensure that old API key is not valid anymore", done => {
     rp(`${applicationHost}integration/v1/report/absence`, {
@@ -161,20 +161,20 @@ describe("Enable/disable Integration APIs", function() {
       }
     })
       .then(res => {
-        throw new Error("TOM_TEST")
+        throw new Error("TOM_TEST");
       })
       .catch(error => {
         expect(error).not.to.be.equal(
           "TOM_TEST",
           'Ensure contrl flow did not go beyond the "rp"'
-        )
+        );
         expect(error.response.statusCode).to.be.equal(
           401,
           "Ensure response code is correct"
-        )
-        done()
-      })
-  })
+        );
+        done();
+      });
+  });
 
   it("Ensure that newly renenerated API key works fine", done => {
     rp(`${applicationHost}integration/v1/report/absence`, {
@@ -190,10 +190,10 @@ describe("Enable/disable Integration APIs", function() {
         expect(obj[0].user.email).to.be.equal(
           email,
           "Ensure that report conatins email of admin user"
-        )
-        done()
-      })
-  })
+        );
+        done();
+      });
+  });
 
   it("Disable the API integration for current company", done => {
     openPageFunc({
@@ -215,8 +215,8 @@ describe("Enable/disable Integration APIs", function() {
           message: /Settings were saved/
         })
       )
-      .then(() => done())
-  })
+      .then(() => done());
+  });
 
   it("Ensure that API end points do not work anymore", done => {
     rp(`${applicationHost}integration/v1/report/absence`, {
@@ -228,22 +228,22 @@ describe("Enable/disable Integration APIs", function() {
       }
     })
       .then(res => {
-        throw new Error("TOM_TEST")
+        throw new Error("TOM_TEST");
       })
       .catch(error => {
         expect(error).not.to.be.equal(
           "TOM_TEST",
           'Ensure contrl flow did not go beyond the "rp"'
-        )
+        );
         expect(error.response.statusCode).to.be.equal(
           401,
           "Ensure response code is correct"
-        )
-        done()
-      })
-  })
+        );
+        done();
+      });
+  });
 
   after(function(done) {
-    driver.quit().then(() => done())
-  })
-})
+    driver.quit().then(() => done());
+  });
+});
