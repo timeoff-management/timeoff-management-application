@@ -31,8 +31,7 @@
       "port": 6379
     }
   },
-  "ga_analytics_on": false,
-  "ga_tracker": "UA-123456789",
+  "ga_tracker": "",
   "crypto_secret": "!2~`HswpPPLa22+=±§sdq qwe,appp qwwokDF_",
   "application_domain": "http://app.timeoff.management",
   "promotion_website_domain": "http://timeoff.management",
