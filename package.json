@@ -51,6 +51,11 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "eslint": "^8.51.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-n": "^16.2.0",
+    "eslint-plugin-promise": "^6.1.1",
     "mocha": "^6.2.2",
     "node-sass": "^8.0.0",
     "prettier": "1.17.0",
@@ -59,6 +64,7 @@
   },
   "scripts": {
     "prettier": "prettier --write \"**/*.js\"",
+    "lint": "eslint --ext .js lib",
     "test": "node node_modules/mocha/bin/mocha --recursive t",
     "start": "node bin/wwww",
     "db-update": "node node_modules/.bin/sequelize db:migrate --config=config/db.json --models-path=lib/model/db/",
