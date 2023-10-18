@@ -65,6 +65,7 @@
   "scripts": {
     "prettier": "prettier --write \"**/*.js\"",
     "lint": "eslint --ext .js lib",
+    "lint:fix": "eslint --ext .js lib --fix",
     "test": "node node_modules/mocha/bin/mocha --recursive t",
     "start": "node bin/wwww",
     "db-update": "node node_modules/.bin/sequelize db:migrate --config=config/db.json --models-path=lib/model/db/",
