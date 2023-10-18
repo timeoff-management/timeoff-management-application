@@ -5,42 +5,42 @@
  *
  * */
 
-"use strict";
+'use strict'
 
-var bluebird = require("bluebird");
+var bluebird = require('bluebird')
 
 // Function that is executed on the client,
 // it relies on presence of jQuery and window.VPP_email
 var func_to_inject = function() {
-  var callback = arguments[arguments.length - 1];
+  var callback = arguments[arguments.length - 1]
 
   $.ajax({
-    url: "/users/search/",
-    type: "post",
+    url: '/users/search/',
+    type: 'post',
     data: {
       email: window.VPP_email
     },
     headers: {
-      Accept: "application/json"
+      Accept: 'application/json'
     },
-    dataType: "json",
+    dataType: 'json',
     success: function(data) {
-      callback(data);
+      callback(data)
     }
-  });
-};
+  })
+}
 
 var user_info_func = bluebird.promisify(function(args, callback) {
   var result_callback = callback,
     driver = args.driver,
-    email = args.email;
+    email = args.email
 
   if (!driver) {
-    throw "'driver' was not passed into the user_info!";
+    throw "'driver' was not passed into the user_info!"
   }
 
   if (!email) {
-    throw "'email' was not passed into the user_info!";
+    throw "'email' was not passed into the user_info!"
   }
 
   return bluebird
@@ -48,18 +48,18 @@ var user_info_func = bluebird.promisify(function(args, callback) {
 
     .then(function(data) {
       // Inject email we are using to identify user into the tested page
-      driver.executeScript('window.VPP_email = "' + email + '";');
+      driver.executeScript('window.VPP_email = "' + email + '";')
 
-      var user;
+      var user
 
       // execute AJAX request on the client that fetchs user info by email
       driver.executeAsyncScript(func_to_inject).then(function(users) {
-        user = users.length > 0 ? users[0] : {};
-      });
+        user = users.length > 0 ? users[0] : {}
+      })
 
       return driver.call(function() {
-        return bluebird.resolve(user);
-      });
+        return bluebird.resolve(user)
+      })
     })
 
     .then(function(user) {
@@ -67,12 +67,12 @@ var user_info_func = bluebird.promisify(function(args, callback) {
       result_callback(null, {
         driver: driver,
         user: user
-      });
-    });
-});
+      })
+    })
+})
 
 module.exports = function(args) {
   return args.driver.call(function() {
-    return user_info_func(args);
-  });
-};
+    return user_info_func(args)
+  })
+}

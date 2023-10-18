@@ -1,18 +1,18 @@
-"use strict";
+'use strict'
 
-const openPageFunc = require("./open_page"),
-  userInfoFunc = require("./user_info"),
-  submitFormFunc = require("./submit_form"),
-  config = require("./config"),
-  bluebird = require("bluebird"),
-  moment = require("moment");
+const openPageFunc = require('./open_page'),
+  userInfoFunc = require('./user_info'),
+  submitFormFunc = require('./submit_form'),
+  config = require('./config'),
+  bluebird = require('bluebird'),
+  moment = require('moment')
 
 const getUserId = ({ userId, email, driver }) =>
   !!userId
     ? bluebird.resolve(userId)
     : userInfoFunc({ email, driver }).then(({ user: { id } }) =>
         bluebird.resolve(id)
-      );
+      )
 
 module.exports = ({
   driver,
@@ -31,15 +31,15 @@ module.exports = ({
         driver,
         form_params: [
           {
-            selector: "input#start_date_inp",
+            selector: 'input#start_date_inp',
             value: overwriteDate
-              ? overwriteDate.format("YYYY-MM-DD")
+              ? overwriteDate.format('YYYY-MM-DD')
               : `${year}-01-01`
           }
         ],
-        submit_button_selector: "button#save_changes_btn",
+        submit_button_selector: 'button#save_changes_btn',
         message: /Details for .* were updated/
       })
     )
     .then(() => openPageFunc({ driver, url: applicationHost }))
-    .then(() => bluebird.resolve({ driver }));
+    .then(() => bluebird.resolve({ driver }))
