@@ -1,17 +1,17 @@
 'use strict'
 
-var test = require('selenium-webdriver/testing'),
-  By = require('selenium-webdriver').By,
-  expect = require('chai').expect,
-  _ = require('underscore'),
-  Promise = require('bluebird'),
-  register_new_user_func = require('../lib/register_new_user'),
-  login_user_func = require('../lib/login_with_user'),
-  open_page_func = require('../lib/open_page'),
-  submit_form_func = require('../lib/submit_form'),
-  add_new_user_func = require('../lib/add_new_user'),
-  config = require('../lib/config'),
-  application_host = config.get_application_host()
+const test = require('selenium-webdriver/testing');
+  const By = require('selenium-webdriver').By;
+  const expect = require('chai').expect;
+  const _ = require('underscore');
+  const Promise = require('bluebird');
+  const register_new_user_func = require('../lib/register_new_user');
+  const login_user_func = require('../lib/login_with_user');
+  const open_page_func = require('../lib/open_page');
+  const submit_form_func = require('../lib/submit_form');
+  const add_new_user_func = require('../lib/add_new_user');
+  const config = require('../lib/config');
+  const application_host = config.get_application_host()
 
 /*
  *  Scenario to check:
@@ -26,11 +26,11 @@ var test = require('selenium-webdriver/testing'),
 describe('Edit user to have duplicated email', function() {
   this.timeout(config.get_execution_timeout())
 
-  var email_admin, driver
+  let email_admin, driver
 
   it('Create new company', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(function(data) {
       driver = data.driver
       email_admin = data.email
@@ -40,8 +40,8 @@ describe('Edit user to have duplicated email', function() {
 
   it('Create second user', function(done) {
     add_new_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -50,7 +50,7 @@ describe('Edit user to have duplicated email', function() {
   it("Open 'users' page", function(done) {
     open_page_func({
       url: application_host + 'users/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -76,7 +76,7 @@ describe('Edit user to have duplicated email', function() {
 
   it('Try to assign to second user the same email as ADMIN has', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'input[name="email_address"]',
@@ -92,7 +92,7 @@ describe('Edit user to have duplicated email', function() {
 
   it('Update email user with unique email address', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'input[name="email_address"]',

@@ -1,22 +1,22 @@
 'use strict'
 
-const test = require('selenium-webdriver/testing'),
-  register_new_user_func = require('../../lib/register_new_user'),
-  login_user_func = require('../../lib/login_with_user'),
-  open_page_func = require('../../lib/open_page'),
-  submit_form_func = require('../../lib/submit_form'),
-  config = require('../../lib/config'),
-  application_host = config.get_application_host(),
-  company_edit_form_id = '#company_edit_form'
+const test = require('selenium-webdriver/testing');
+  const register_new_user_func = require('../../lib/register_new_user');
+  const login_user_func = require('../../lib/login_with_user');
+  const open_page_func = require('../../lib/open_page');
+  const submit_form_func = require('../../lib/submit_form');
+  const config = require('../../lib/config');
+  const application_host = config.get_application_host();
+  const company_edit_form_id = '#company_edit_form'
 
 describe('Edit company details', function() {
-  var driver
+  let driver
 
   this.timeout(config.get_execution_timeout())
 
   it('Performing registration process', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(function(data) {
       driver = data.driver
       done()
@@ -26,7 +26,7 @@ describe('Edit company details', function() {
   it('Open page for editing company details', function(done) {
     open_page_func({
       url: application_host + 'settings/general/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -34,7 +34,7 @@ describe('Edit company details', function() {
 
   it('Check that company is been updated if valid values are submitted', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: company_edit_form_id + ' input[name="name"]',

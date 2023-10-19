@@ -1,34 +1,34 @@
 'use strict'
 
-var webdriver = require('selenium-webdriver'),
-  By = require('selenium-webdriver').By,
-  Key = require('selenium-webdriver').Key,
-  expect = require('chai').expect,
-  _ = require('underscore'),
-  Promise = require('bluebird'),
-  until = require('selenium-webdriver').until,
-  check_elements = require('./check_elements')
+const webdriver = require('selenium-webdriver');
+  const By = require('selenium-webdriver').By;
+  const Key = require('selenium-webdriver').Key;
+  const expect = require('chai').expect;
+  const _ = require('underscore');
+  const Promise = require('bluebird');
+  const until = require('selenium-webdriver').until;
+  const check_elements = require('./check_elements')
 
-var submit_form_func = Promise.promisify(function(args, callback) {
-  var driver = args.driver,
-    result_callback = callback,
+const submit_form_func = Promise.promisify(function(args, callback) {
+  let driver = args.driver;
+    const result_callback = callback;
     // Regex to check the message that is shown after form is submitted
-    message = args.message || /.*/,
+    const message = args.message || /.*/;
     // Array of object that have at least two keys: selector - css selector
     // and value - value to be entered
-    form_params = args.form_params || [],
+    const form_params = args.form_params || [];
     // Defined how elemts are going to be checked in case of success,
     // if that parameter is omitted - 'form_params' is used instead
-    elements_to_check = args.elements_to_check || form_params,
+    const elements_to_check = args.elements_to_check || form_params;
     // Indicates whether form submission is going to be successful
-    should_be_successful = args.should_be_successful || false,
+    const should_be_successful = args.should_be_successful || false;
     // Indicate if message to be searched through all messages shown,
     // bu defaul it looks into firts message only
-    multi_line_message = args.multi_line_message || false,
+    const multi_line_message = args.multi_line_message || false;
     // Indicates if there is a confirmation dialog
-    confirm_dialog = args.confirm_dialog || false,
+    const confirm_dialog = args.confirm_dialog || false;
     // CSS selecetor for form submition button
-    submit_button_selector =
+    const submit_button_selector =
       args.submit_button_selector || 'button[type="submit"]'
 
   driver.call(function() {
@@ -92,8 +92,8 @@ var submit_form_func = Promise.promisify(function(args, callback) {
     driver.call(function() {
       Promise.resolve(
         check_elements({
-          driver: driver,
-          elements_to_check: elements_to_check
+          driver,
+          elements_to_check
         }).then(function(data) {
           driver = data.driver
         })
@@ -117,7 +117,7 @@ var submit_form_func = Promise.promisify(function(args, callback) {
 
         // "export" current driver
         result_callback(null, {
-          driver: driver
+          driver
         })
       })
     })
@@ -133,7 +133,7 @@ var submit_form_func = Promise.promisify(function(args, callback) {
 
         // "export" current driver
         result_callback(null, {
-          driver: driver
+          driver
         })
       })
   }

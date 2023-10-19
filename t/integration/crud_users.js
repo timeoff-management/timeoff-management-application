@@ -1,18 +1,18 @@
 'use strict'
 
-var test = require('selenium-webdriver/testing'),
-  By = require('selenium-webdriver').By,
-  expect = require('chai').expect,
-  _ = require('underscore'),
-  Promise = require('bluebird'),
-  register_new_user_func = require('../lib/register_new_user'),
-  login_user_func = require('../lib/login_with_user'),
-  open_page_func = require('../lib/open_page'),
-  submit_form_func = require('../lib/submit_form'),
-  add_new_user_func = require('../lib/add_new_user'),
-  config = require('../lib/config'),
-  application_host = config.get_application_host(),
-  department_edit_form_id = '#department_edit_form'
+const test = require('selenium-webdriver/testing');
+  const By = require('selenium-webdriver').By;
+  const expect = require('chai').expect;
+  const _ = require('underscore');
+  const Promise = require('bluebird');
+  const register_new_user_func = require('../lib/register_new_user');
+  const login_user_func = require('../lib/login_with_user');
+  const open_page_func = require('../lib/open_page');
+  const submit_form_func = require('../lib/submit_form');
+  const add_new_user_func = require('../lib/add_new_user');
+  const config = require('../lib/config');
+  const application_host = config.get_application_host();
+  const department_edit_form_id = '#department_edit_form'
 
 /*
  *  Scenario to check:
@@ -39,7 +39,7 @@ var test = require('selenium-webdriver/testing'),
 describe('CRUD for users', function() {
   this.timeout(config.get_execution_timeout())
 
-  var email_admin,
+  let email_admin,
     admin_user_id,
     email_manager,
     manager_user_id,
@@ -49,7 +49,7 @@ describe('CRUD for users', function() {
 
   it('Create new company', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(function(data) {
       driver = data.driver
       done()
@@ -58,8 +58,8 @@ describe('CRUD for users', function() {
 
   it('Create ADMIN-to-be user', function(done) {
     add_new_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function(data) {
       email_admin = data.new_user_email
       done()
@@ -68,8 +68,8 @@ describe('CRUD for users', function() {
 
   it('Create MANAGER-to-be user', function(done) {
     add_new_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function(data) {
       email_manager = data.new_user_email
       done()
@@ -78,8 +78,8 @@ describe('CRUD for users', function() {
 
   it('Create EMPLOYEE-to-be user', function(done) {
     add_new_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function(data) {
       email_employee = data.new_user_email
       done()
@@ -89,7 +89,7 @@ describe('CRUD for users', function() {
   it('Open department management page', function(done) {
     open_page_func({
       url: application_host + 'settings/departments/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -133,7 +133,7 @@ describe('CRUD for users', function() {
   it('And update its boss to be MANAGER', function(done) {
     open_page_func({
       url: application_host + 'settings/departments/',
-      driver: driver
+      driver
     })
       .then(() =>
         driver
@@ -142,7 +142,7 @@ describe('CRUD for users', function() {
       )
       .then(() =>
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: 'input[name="name"]',
@@ -170,7 +170,7 @@ describe('CRUD for users', function() {
   it("Open 'users' page", function(done) {
     open_page_func({
       url: application_host + 'users/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -186,7 +186,7 @@ describe('CRUD for users', function() {
   it('Open EMPLOYEE user details page', function(done) {
     open_page_func({
       url: application_host + 'users/edit/' + employee_user_id + '/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -195,7 +195,7 @@ describe('CRUD for users', function() {
   it('And remove account', function(done) {
     submit_form_func({
       submit_button_selector: 'button#remove_btn',
-      driver: driver,
+      driver,
       message: /Employee records were removed from the system/,
       confirm_dialog: true
     }).then(function() {
@@ -213,7 +213,7 @@ describe('CRUD for users', function() {
   it('Open MANAGER user details page', function(done) {
     open_page_func({
       url: application_host + 'users/edit/' + manager_user_id + '/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -222,7 +222,7 @@ describe('CRUD for users', function() {
   it('Try to remove account', function(done) {
     submit_form_func({
       submit_button_selector: 'button#remove_btn',
-      driver: driver,
+      driver,
       message: /Cannot remove supervisor/,
       confirm_dialog: true
     }).then(function() {
@@ -233,7 +233,7 @@ describe('CRUD for users', function() {
   it("Open 'users' page", function(done) {
     open_page_func({
       url: application_host + 'users/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -249,7 +249,7 @@ describe('CRUD for users', function() {
   it('Open departments', function(done) {
     open_page_func({
       url: application_host + 'settings/departments/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -258,7 +258,7 @@ describe('CRUD for users', function() {
   it('... and update the very first user is an supervisor', function(done) {
     open_page_func({
       url: application_host + 'settings/departments/',
-      driver: driver
+      driver
     })
       .then(() =>
         driver
@@ -267,7 +267,7 @@ describe('CRUD for users', function() {
       )
       .then(() =>
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: 'input[name="name"]',
@@ -295,7 +295,7 @@ describe('CRUD for users', function() {
   it('Open ex-MANAGER user details page', function(done) {
     open_page_func({
       url: application_host + 'users/edit/' + manager_user_id + '/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -304,7 +304,7 @@ describe('CRUD for users', function() {
   it('Remove account', function(done) {
     submit_form_func({
       submit_button_selector: 'button#remove_btn',
-      driver: driver,
+      driver,
       message: /Employee records were removed from the system/,
       confirm_dialog: true
     }).then(function() {
@@ -323,7 +323,7 @@ describe('CRUD for users', function() {
   it('Open ADMIN user details page', function(done) {
     open_page_func({
       url: application_host + 'users/edit/' + admin_user_id + '/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -331,7 +331,7 @@ describe('CRUD for users', function() {
 
   it('Make sure that ADMIN has admin privilegues', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'input[name="admin"]',
@@ -349,7 +349,7 @@ describe('CRUD for users', function() {
   it('... and try to remove account', function(done) {
     submit_form_func({
       submit_button_selector: 'button#remove_btn',
-      driver: driver,
+      driver,
       message: /Cannot remove administrator user/,
       confirm_dialog: true
     }).then(function() {
@@ -360,7 +360,7 @@ describe('CRUD for users', function() {
   it("Open 'users' page", function(done) {
     open_page_func({
       url: application_host + 'users/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -376,7 +376,7 @@ describe('CRUD for users', function() {
   it('Open ADMIN user details page (absences)', function(done) {
     open_page_func({
       url: application_host + 'users/edit/' + admin_user_id + '/absences/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -384,7 +384,7 @@ describe('CRUD for users', function() {
 
   it('Ensure Adjustment works: check that system prevents from using non-halfs for adjustments', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'input[name="adjustment"]',
@@ -401,7 +401,7 @@ describe('CRUD for users', function() {
 
   it('If the adjustment is with half, it is OK', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'input[name="adjustment"]',
@@ -418,7 +418,7 @@ describe('CRUD for users', function() {
 
   it('If the adjustment is with half and is negative, it is OK', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'input[name="adjustment"]',
@@ -436,7 +436,7 @@ describe('CRUD for users', function() {
   it('Open ADMIN user details page (general)', function(done) {
     open_page_func({
       url: application_host + 'users/edit/' + admin_user_id + '/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -444,7 +444,7 @@ describe('CRUD for users', function() {
 
   it('Revoke admin rights', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'input[name="admin"]',
@@ -462,7 +462,7 @@ describe('CRUD for users', function() {
   it('Remove account', function(done) {
     submit_form_func({
       submit_button_selector: 'button#remove_btn',
-      driver: driver,
+      driver,
       message: /Employee records were removed from the system/,
       confirm_dialog: true
     }).then(function() {

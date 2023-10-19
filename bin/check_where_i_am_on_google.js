@@ -3,20 +3,20 @@
 
 'use strict'
 
-var optimist = require('optimist').argv,
-  search_query = optimist.query || 'time off manager',
-  web_site_domain = optimist.domain || 'timeoffmanager.com',
-  stop_on_first = true
+const optimist = require('optimist').argv;
+  const search_query = optimist.query || 'time off manager';
+  const web_site_domain = optimist.domain || 'timeoffmanager.com';
+  const stop_on_first = true
 
 console.log('-----------------------------------')
 console.log('  Cheking query string : ' + search_query)
 console.log('  Look for domain      : ' + web_site_domain)
 console.log('-----------------------------------')
 
-var webdriver = require('selenium-webdriver'),
-  _ = require('underscore'),
-  google_url = 'https://www.google.com/search?q=' + search_query + '&start=',
-  driver
+const webdriver = require('selenium-webdriver');
+  const _ = require('underscore');
+  const google_url = 'https://www.google.com/search?q=' + search_query + '&start=';
+  let driver
 
 // Instantiate new driver object
 driver = new webdriver.Builder()

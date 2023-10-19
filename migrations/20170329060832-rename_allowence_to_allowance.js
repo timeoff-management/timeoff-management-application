@@ -1,6 +1,6 @@
 'use strict'
 
-var models = require('../lib/model/db')
+const models = require('../lib/model/db')
 
 module.exports = {
   up: function(queryInterface, Sequelize) {
@@ -11,7 +11,7 @@ module.exports = {
           return 1
         }
 
-        if ('sqlite' === queryInterface.sequelize.getDialect()) {
+        if (queryInterface.sequelize.getDialect() === 'sqlite') {
           console.log('Going into SQLIite case')
 
           return (

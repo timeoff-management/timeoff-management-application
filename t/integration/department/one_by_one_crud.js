@@ -1,20 +1,20 @@
 'use strict'
 
-var test = require('selenium-webdriver/testing'),
-  register_new_user_func = require('../../lib/register_new_user'),
-  login_user_func = require('../../lib/login_with_user'),
-  open_page_func = require('../../lib/open_page'),
-  submit_form_func = require('../../lib/submit_form'),
-  check_elements_func = require('../../lib/check_elements'),
-  By = require('selenium-webdriver').By,
-  config = require('../../lib/config'),
-  application_host = config.get_application_host(),
-  expect = require('chai').expect,
-  Bluebird = require('bluebird'),
-  add_new_user_func = require('../../lib/add_new_user'),
-  user_info_func = require('../../lib/user_info'),
-  new_department_form_id = '#add_new_department_form',
-  department_edit_form_id = '#department_edit_form'
+const test = require('selenium-webdriver/testing');
+  const register_new_user_func = require('../../lib/register_new_user');
+  const login_user_func = require('../../lib/login_with_user');
+  const open_page_func = require('../../lib/open_page');
+  const submit_form_func = require('../../lib/submit_form');
+  const check_elements_func = require('../../lib/check_elements');
+  const By = require('selenium-webdriver').By;
+  const config = require('../../lib/config');
+  const application_host = config.get_application_host();
+  const expect = require('chai').expect;
+  const Bluebird = require('bluebird');
+  const add_new_user_func = require('../../lib/add_new_user');
+  const user_info_func = require('../../lib/user_info');
+  const new_department_form_id = '#add_new_department_form';
+  const department_edit_form_id = '#department_edit_form'
 
 /*
  *  Scenario:
@@ -33,13 +33,13 @@ var test = require('selenium-webdriver/testing'),
  * */
 
 describe('Check departments list page', function() {
-  var driver
+  let driver
 
   this.timeout(config.get_execution_timeout())
 
   it('Register new account', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(function(data) {
       driver = data.driver
       done()
@@ -49,7 +49,7 @@ describe('Check departments list page', function() {
   it('Open page with department list and ensure it has read-only list', function(done) {
     open_page_func({
       url: application_host + 'settings/departments/',
-      driver: driver
+      driver
     })
       .then(function() {
         return driver.findElements(
@@ -104,7 +104,7 @@ describe('Check departments list page', function() {
         driver.sleep(1000)
 
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: new_department_form_id + ' input[name="name__new"]',
@@ -161,7 +161,7 @@ describe('Check departments list page', function() {
         driver.sleep(1000)
 
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: new_department_form_id + ' input[name="name__new"]',
@@ -224,7 +224,7 @@ describe('Check departments list page', function() {
  * */
 
 describe('Edit individual department via department details page', function() {
-  var driver,
+  let driver,
     email_A,
     email_B,
     user_id_A,
@@ -236,7 +236,7 @@ describe('Edit individual department via department details page', function() {
 
   it('Register new account', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(function(data) {
       email_A = data.email
       driver = data.driver
@@ -246,8 +246,8 @@ describe('Edit individual department via department details page', function() {
 
   it('Create second user B', function(done) {
     add_new_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function(data) {
       email_B = data.new_user_email
       done()
@@ -256,7 +256,7 @@ describe('Edit individual department via department details page', function() {
 
   it('Obtain information about user A', function(done) {
     user_info_func({
-      driver: driver,
+      driver,
       email: email_A
     }).then(function(data) {
       user_id_A = data.user.id
@@ -266,7 +266,7 @@ describe('Edit individual department via department details page', function() {
 
   it('Obtain information about user B', function(done) {
     user_info_func({
-      driver: driver,
+      driver,
       email: email_B
     }).then(function(data) {
       user_id_B = data.user.id
@@ -277,7 +277,7 @@ describe('Edit individual department via department details page', function() {
   it('Open page with department list and click first department in the list', function(done) {
     open_page_func({
       url: application_host + 'settings/departments/',
-      driver: driver
+      driver
     }).then(function() {
       driver
         .findElements(By.css('a[href*="/settings/departments/edit/"]'))
@@ -299,7 +299,7 @@ describe('Edit individual department via department details page', function() {
 
   it('Edit department', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: department_edit_form_id + ' input[name="name"]',
@@ -331,7 +331,7 @@ describe('Edit individual department via department details page', function() {
 
   it('Ensure that chnages were applied', function(done) {
     check_elements_func({
-      driver: driver,
+      driver,
       elements_to_check: [
         {
           selector: department_edit_form_id + ' input[name="name"]',
@@ -413,7 +413,7 @@ describe('Edit individual department via department details page', function() {
         driver.sleep(1000)
 
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: new_department_form_id + ' input[name="name__new"]',
@@ -457,7 +457,7 @@ describe('Edit individual department via department details page', function() {
   it('Open user A details page', function(done) {
     open_page_func({
       url: application_host + 'users/edit/' + user_id_A + '/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -465,7 +465,7 @@ describe('Edit individual department via department details page', function() {
 
   it('... and move her to newly added department', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'select[name="department"]',
@@ -482,7 +482,7 @@ describe('Edit individual department via department details page', function() {
 
   it('Ensure that chnages were applied', function(done) {
     check_elements_func({
-      driver: driver,
+      driver,
       elements_to_check: [
         {
           selector: 'select[name="department"]',
@@ -497,7 +497,7 @@ describe('Edit individual department via department details page', function() {
   it('Open user B details page', function(done) {
     open_page_func({
       url: application_host + 'users/edit/' + user_id_B + '/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -505,7 +505,7 @@ describe('Edit individual department via department details page', function() {
 
   it('... and move her to newly added department', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'select[name="department"]',
@@ -522,7 +522,7 @@ describe('Edit individual department via department details page', function() {
 
   it('Ensure that chnages were applied', function(done) {
     check_elements_func({
-      driver: driver,
+      driver,
       elements_to_check: [
         {
           selector: 'select[name="department"]',
@@ -537,7 +537,7 @@ describe('Edit individual department via department details page', function() {
   it('Go to the very first department details page', function(done) {
     open_page_func({
       url: department_edit_page_url,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -600,7 +600,7 @@ describe('Edit individual department via department details page', function() {
  * */
 
 describe('CRUD for department secondary supervisers', function() {
-  var driver,
+  let driver,
     email_A,
     email_B,
     email_C,
@@ -613,7 +613,7 @@ describe('CRUD for department secondary supervisers', function() {
 
   it('Register new account', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(function(data) {
       email_A = data.email
       driver = data.driver
@@ -623,7 +623,7 @@ describe('CRUD for department secondary supervisers', function() {
 
   it('Obtain information about user A', function(done) {
     user_info_func({
-      driver: driver,
+      driver,
       email: email_A
     }).then(function(data) {
       user_id_A = data.user.id
@@ -634,7 +634,7 @@ describe('CRUD for department secondary supervisers', function() {
   it('Go to departments details page', function(done) {
     open_page_func({
       url: application_host + 'settings/departments/',
-      driver: driver
+      driver
     }).then(function() {
       driver
         .findElements(By.css('a[href*="/settings/departments/edit/"]'))
@@ -678,8 +678,8 @@ describe('CRUD for department secondary supervisers', function() {
 
   it('Create second user B', function(done) {
     add_new_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function(data) {
       email_B = data.new_user_email
       done()
@@ -688,7 +688,7 @@ describe('CRUD for department secondary supervisers', function() {
 
   it('Obtain information about user B', function(done) {
     user_info_func({
-      driver: driver,
+      driver,
       email: email_B
     }).then(function(data) {
       user_id_B = data.user.id
@@ -698,8 +698,8 @@ describe('CRUD for department secondary supervisers', function() {
 
   it('Create second user C', function(done) {
     add_new_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function(data) {
       email_C = data.new_user_email
       done()
@@ -708,7 +708,7 @@ describe('CRUD for department secondary supervisers', function() {
 
   it('Obtain information about user C', function(done) {
     user_info_func({
-      driver: driver,
+      driver,
       email: email_C
     }).then(function(data) {
       user_id_C = data.user.id
@@ -719,7 +719,7 @@ describe('CRUD for department secondary supervisers', function() {
   it('Go to any department details page', function(done) {
     open_page_func({
       url: department_edit_page_url,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -727,7 +727,7 @@ describe('CRUD for department secondary supervisers', function() {
 
   it('... and ensure that user A is its manager', function(done) {
     check_elements_func({
-      driver: driver,
+      driver,
       elements_to_check: [
         {
           selector: 'select#manager_id',
@@ -785,7 +785,7 @@ describe('CRUD for department secondary supervisers', function() {
 
   it('tick user B and save changes', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'input[name="supervisor_id"][value="' + user_id_B + '"]',
@@ -823,7 +823,7 @@ describe('CRUD for department secondary supervisers', function() {
       .then(() => driver.sleep(1000))
       .then(() =>
         check_elements_func({
-          driver: driver,
+          driver,
           elements_to_check: [
             {
               selector: `input[name="supervisor_id"][value="${user_id_B}"]`,
@@ -835,7 +835,7 @@ describe('CRUD for department secondary supervisers', function() {
       )
       .then(() =>
         check_elements_func({
-          driver: driver,
+          driver,
           elements_to_check: [
             {
               selector: `input[name="supervisor_id"][value="${user_id_C}"]`,
@@ -850,7 +850,7 @@ describe('CRUD for department secondary supervisers', function() {
 
   it('Tick user C and un-tick user B and save changes', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'input[name="supervisor_id"][value="' + user_id_B + '"]',

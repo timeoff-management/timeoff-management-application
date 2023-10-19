@@ -1,21 +1,21 @@
 'use strict'
 
-const test = require('selenium-webdriver/testing'),
-  By = require('selenium-webdriver').By,
-  expect = require('chai').expect,
-  _ = require('underscore'),
-  Promise = require('bluebird'),
-  fs = Promise.promisifyAll(require('fs')),
-  csv = Promise.promisifyAll(require('csv')),
-  register_new_user_func = require('../lib/register_new_user'),
-  login_user_func = require('../lib/login_with_user'),
-  logout_user_func = require('../lib/logout_user'),
-  open_page_func = require('../lib/open_page'),
-  submit_form_func = require('../lib/submit_form'),
-  add_new_user_func = require('../lib/add_new_user'),
-  config = require('../lib/config'),
-  user_info_func = require('../lib/user_info'),
-  application_host = config.get_application_host()
+const test = require('selenium-webdriver/testing');
+  const By = require('selenium-webdriver').By;
+  const expect = require('chai').expect;
+  const _ = require('underscore');
+  const Promise = require('bluebird');
+  const fs = Promise.promisifyAll(require('fs'));
+  const csv = Promise.promisifyAll(require('csv'));
+  const register_new_user_func = require('../lib/register_new_user');
+  const login_user_func = require('../lib/login_with_user');
+  const logout_user_func = require('../lib/logout_user');
+  const open_page_func = require('../lib/open_page');
+  const submit_form_func = require('../lib/submit_form');
+  const add_new_user_func = require('../lib/add_new_user');
+  const config = require('../lib/config');
+  const user_info_func = require('../lib/user_info');
+  const application_host = config.get_application_host()
 
 /*
  *  Scenario to check:
@@ -33,15 +33,15 @@ const test = require('selenium-webdriver/testing'),
 describe('Bulk import of users', function() {
   this.timeout(config.get_execution_timeout())
 
-  let email_admin,
-    driver,
-    csv_data,
-    sample_email,
-    test_users_filename = __dirname + '/test.csv'
+  let email_admin;
+    let driver;
+    let csv_data;
+    let sample_email;
+    const test_users_filename = __dirname + '/test.csv'
 
   it('Create new company', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(data => {
       driver = data.driver
       done()
@@ -51,7 +51,7 @@ describe('Bulk import of users', function() {
   it('Navigate to bulk upload page', function(done) {
     open_page_func({
       url: application_host + 'users/import/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -60,7 +60,7 @@ describe('Bulk import of users', function() {
   it('Create test .CSV file for the test', function(done) {
     csv_data = [['email', 'name', 'lastname', 'department']]
 
-    let token = new Date().getTime()
+    const token = new Date().getTime()
     for (let i = 0; i < 10; i++) {
       csv_data.push([
         'test_csv_' + i + '_' + token + '@test.com',
@@ -82,7 +82,7 @@ describe('Bulk import of users', function() {
   })
 
   it('Upload user import file', function(done) {
-    let regex = new RegExp(
+    const regex = new RegExp(
       'Successfully imported users with following emails: ' +
         csv_data
           .slice(1)
@@ -93,7 +93,7 @@ describe('Bulk import of users', function() {
 
     submit_form_func({
       submit_button_selector: '#submit_users_btn',
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: '#users_input_inp',
@@ -108,19 +108,17 @@ describe('Bulk import of users', function() {
   it('Ensure that imported users are in the system', function(done) {
     let users_ids
     // Get IDs of newly added users
-    Promise.map(csv_data.slice(1).map(it => it[0]), email => {
-      return user_info_func({
-        driver: driver,
-        email: email
-      }).then(data => data.user.id)
-    })
+    Promise.map(csv_data.slice(1).map(it => it[0]), email => user_info_func({
+        driver,
+        email
+      }).then(data => data.user.id))
       // Open users page
       .then(ids => {
         users_ids = ids
 
         return open_page_func({
           url: application_host + 'users/',
-          driver: driver
+          driver
         })
       })
 
@@ -146,18 +144,18 @@ describe('Bulk import of users', function() {
 
   it('Logout from admin account', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
   })
 
-  it('Now try to login as newly added employee using "undefined" as password..', done => {
+  it('Now try to login as newly added employee using "undefined" as password..', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: sample_email,
-      driver: driver,
+      driver,
       password: 'undefined',
       should_fail: true
     }).then(() => done())

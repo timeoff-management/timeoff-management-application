@@ -1,13 +1,13 @@
 'use strict'
 
-var expect = require('chai').expect,
-  _ = require('underscore'),
-  bluebird = require('bluebird'),
-  Email = require('../../lib/email')
+const expect = require('chai').expect;
+  const _ = require('underscore');
+  const bluebird = require('bluebird');
+  const Email = require('../../lib/email')
 
 describe('Check Email', function() {
   it('Knows how to render and parse template', function(done) {
-    var email = new Email()
+    const email = new Email()
 
     bluebird
       .resolve(

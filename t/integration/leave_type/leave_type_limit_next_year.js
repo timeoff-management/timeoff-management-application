@@ -1,21 +1,21 @@
 'use strict'
 
-const test = require('selenium-webdriver/testing'),
-  By = require('selenium-webdriver').By,
-  expect = require('chai').expect,
-  Promise = require('bluebird'),
-  moment = require('moment'),
-  until = require('selenium-webdriver').until,
-  login_user_func = require('../../lib/login_with_user'),
-  register_new_user_func = require('../../lib/register_new_user'),
-  logout_user_func = require('../../lib/logout_user'),
-  open_page_func = require('../../lib/open_page'),
-  submit_form_func = require('../../lib/submit_form'),
-  check_booking_func = require('../../lib/check_booking_on_calendar'),
-  add_new_user_func = require('../../lib/add_new_user'),
-  leave_type_edit_form_id = '#leave_type_edit_form',
-  config = require('../../lib/config'),
-  application_host = config.get_application_host()
+const test = require('selenium-webdriver/testing');
+  const By = require('selenium-webdriver').By;
+  const expect = require('chai').expect;
+  const Promise = require('bluebird');
+  const moment = require('moment');
+  const until = require('selenium-webdriver').until;
+  const login_user_func = require('../../lib/login_with_user');
+  const register_new_user_func = require('../../lib/register_new_user');
+  const logout_user_func = require('../../lib/logout_user');
+  const open_page_func = require('../../lib/open_page');
+  const submit_form_func = require('../../lib/submit_form');
+  const check_booking_func = require('../../lib/check_booking_on_calendar');
+  const add_new_user_func = require('../../lib/add_new_user');
+  const leave_type_edit_form_id = '#leave_type_edit_form';
+  const config = require('../../lib/config');
+  const application_host = config.get_application_host()
 
 const next_year = moment()
   .add(1, 'y')
@@ -86,9 +86,9 @@ describe('Leave type limits for next year: ' + next_year, function() {
 
   it('Login as non-admin user', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: non_admin_user_email,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -98,7 +98,7 @@ describe('Leave type limits for next year: ' + next_year, function() {
     open_page_func({
       url:
         application_host + 'calendar/?year=' + next_year + '&show_full_year=1',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -115,7 +115,7 @@ describe('Leave type limits for next year: ' + next_year, function() {
         driver.sleep(1000)
 
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: 'input#from',
@@ -131,7 +131,7 @@ describe('Leave type limits for next year: ' + next_year, function() {
           // Check that all days are marked as pended
           .then(function() {
             check_booking_func({
-              driver: driver,
+              driver,
               full_days: [moment(next_year + '-05-10')],
               type: 'pended'
             }).then(function() {
@@ -143,8 +143,8 @@ describe('Leave type limits for next year: ' + next_year, function() {
 
   it('Logout from regular user session', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -152,9 +152,9 @@ describe('Leave type limits for next year: ' + next_year, function() {
 
   it('Login as Admin', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: admin_user_email,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -163,7 +163,7 @@ describe('Leave type limits for next year: ' + next_year, function() {
   it('Open requests page', function(done) {
     open_page_func({
       url: application_host + 'requests/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -190,8 +190,8 @@ describe('Leave type limits for next year: ' + next_year, function() {
 
   it('Logout from admin account', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -199,9 +199,9 @@ describe('Leave type limits for next year: ' + next_year, function() {
 
   it('Login as non-admin user', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: non_admin_user_email,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -211,7 +211,7 @@ describe('Leave type limits for next year: ' + next_year, function() {
     open_page_func({
       url:
         application_host + 'calendar/?year=' + next_year + '&show_full_year=1',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -228,7 +228,7 @@ describe('Leave type limits for next year: ' + next_year, function() {
         driver.sleep(1000)
 
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: 'input#from',

@@ -1,18 +1,18 @@
 'use strict'
 
-const test = require('selenium-webdriver/testing'),
-  register_new_user_func = require('../lib/register_new_user'),
-  open_page_func = require('../lib/open_page'),
-  submit_form_func = require('../lib/submit_form'),
-  check_elements_func = require('../lib/check_elements'),
-  By = require('selenium-webdriver').By,
-  config = require('../lib/config'),
-  application_host = config.get_application_host(),
-  expect = require('chai').expect,
-  Bluebird = require('bluebird'),
-  moment = require('moment'),
-  company_edit_form_id = '#company_edit_form',
-  userStartsAtTheBeginingOfYear = require('../lib/set_user_to_start_at_the_beginning_of_the_year')
+const test = require('selenium-webdriver/testing');
+  const register_new_user_func = require('../lib/register_new_user');
+  const open_page_func = require('../lib/open_page');
+  const submit_form_func = require('../lib/submit_form');
+  const check_elements_func = require('../lib/check_elements');
+  const By = require('selenium-webdriver').By;
+  const config = require('../lib/config');
+  const application_host = config.get_application_host();
+  const expect = require('chai').expect;
+  const Bluebird = require('bluebird');
+  const moment = require('moment');
+  const company_edit_form_id = '#company_edit_form';
+  const userStartsAtTheBeginingOfYear = require('../lib/set_user_to_start_at_the_beginning_of_the_year')
 
 /*
  *  Basic scenario for checking time zones:
@@ -40,7 +40,7 @@ describe('Check Time zones', function() {
 
   it('Create a company', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(function(data) {
       driver = data.driver
       user_email = data.email
@@ -48,7 +48,7 @@ describe('Check Time zones', function() {
     })
   })
 
-  it('Ensure user starts at the very beginning of current year', done => {
+  it('Ensure user starts at the very beginning of current year', function(done) {
     userStartsAtTheBeginingOfYear({ driver, email: user_email })
       .then(() => open_page_func({ url: application_host, driver }))
       .then(() => done())
@@ -57,13 +57,13 @@ describe('Check Time zones', function() {
   it('Open page for editing company details', function(done) {
     open_page_func({
       url: application_host + 'settings/general/',
-      driver: driver
+      driver
     }).then(() => done())
   })
 
   it('Update Time zone to be somethng in Tonga', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: company_edit_form_id + ' select[name="timezone"]',
@@ -96,7 +96,7 @@ describe('Check Time zones', function() {
   it('Get the current date from Calendar page and ensure it is the same as today_tonga', function(done) {
     open_page_func({
       url: application_host + 'calendar/',
-      driver: driver
+      driver
     })
       .then(() =>
         driver.findElement(
@@ -118,7 +118,7 @@ describe('Check Time zones', function() {
   it('Get the current date from Team view page and ensure it is the same as today_tonga', function(done) {
     open_page_func({
       url: application_host + 'calendar/teamview/',
-      driver: driver
+      driver
     })
       .then(() =>
         driver.findElement(
@@ -154,7 +154,7 @@ describe('Check Time zones', function() {
 
   it('Submit new leave request', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [],
       message: /New leave request was added/
     }).then(() => done())
@@ -163,7 +163,7 @@ describe('Check Time zones', function() {
   it('Ensure its "created at" value on My requests page is today_tonga', function(done) {
     open_page_func({
       url: application_host + 'requests/',
-      driver: driver
+      driver
     })
       .then(() =>
         driver.findElement(
@@ -191,13 +191,13 @@ describe('Check Time zones', function() {
   it('Open page for editing company details', function(done) {
     open_page_func({
       url: application_host + 'settings/general/',
-      driver: driver
+      driver
     }).then(() => done())
   })
 
   it('Update Time zone to be Pacific/Midway', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: company_edit_form_id + ' select[name="timezone"]',
@@ -237,7 +237,7 @@ describe('Check Time zones', function() {
   it('Get the current date from Calendar page and ensure it is the same as today_usa', function(done) {
     open_page_func({
       url: application_host + 'calendar/',
-      driver: driver
+      driver
     })
       .then(() =>
         driver.findElement(
@@ -259,7 +259,7 @@ describe('Check Time zones', function() {
   it('Get the current date from Team view page and ensure it is the same as today_usa', function(done) {
     open_page_func({
       url: application_host + 'calendar/teamview/',
-      driver: driver
+      driver
     })
       .then(() =>
         driver.findElement(
@@ -295,7 +295,7 @@ describe('Check Time zones', function() {
 
   it('Submit new leave request', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [],
       message: /New leave request was added/
     }).then(() => done())
@@ -304,7 +304,7 @@ describe('Check Time zones', function() {
   it('Ensure its "created at" value on My requests page is today_usa', function(done) {
     open_page_func({
       url: application_host + 'requests/',
-      driver: driver
+      driver
     })
       .then(() =>
         driver.findElement(

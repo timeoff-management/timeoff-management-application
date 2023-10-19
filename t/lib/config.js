@@ -17,6 +17,6 @@ module.exports = {
    *
    * */
   get_execution_timeout: function() {
-    return 3 * 60 * 1000
+    return 30 * 1000
   }
 }

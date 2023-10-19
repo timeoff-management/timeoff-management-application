@@ -1,20 +1,20 @@
 'use strict'
 
-var test = require('selenium-webdriver/testing'),
-  By = require('selenium-webdriver').By,
-  expect = require('chai').expect,
-  Promise = require('bluebird'),
-  until = require('selenium-webdriver').until,
-  register_new_user_func = require('../../lib/register_new_user'),
-  login_user_func = require('../../lib/login_with_user'),
-  open_page_func = require('../../lib/open_page'),
-  submit_form_func = require('../../lib/submit_form'),
-  check_elements_func = require('../../lib/check_elements'),
-  add_new_user_func = require('../../lib/add_new_user'),
-  By = require('selenium-webdriver').By,
-  new_department_form_id = '#add_new_department_form',
-  config = require('../../lib/config'),
-  application_host = config.get_application_host()
+const test = require('selenium-webdriver/testing');
+  var By = require('selenium-webdriver').By;
+  const expect = require('chai').expect;
+  const Promise = require('bluebird');
+  const until = require('selenium-webdriver').until;
+  const register_new_user_func = require('../../lib/register_new_user');
+  const login_user_func = require('../../lib/login_with_user');
+  const open_page_func = require('../../lib/open_page');
+  const submit_form_func = require('../../lib/submit_form');
+  const check_elements_func = require('../../lib/check_elements');
+  const add_new_user_func = require('../../lib/add_new_user');
+  var By = require('selenium-webdriver').By;
+  const new_department_form_id = '#add_new_department_form';
+  const config = require('../../lib/config');
+  const application_host = config.get_application_host()
 
 /*
  *  Scenario to check that filtering by department feature on users page.
@@ -30,13 +30,13 @@ var test = require('selenium-webdriver/testing'),
  * */
 
 describe('Check filtering on "users" page', function() {
-  var driver
+  let driver
 
   this.timeout(config.get_execution_timeout())
 
   it('Performing registration process', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(function(data) {
       driver = data.driver
       done()
@@ -46,7 +46,7 @@ describe('Check filtering on "users" page', function() {
   it('Create new department "IT": open page', function(done) {
     open_page_func({
       url: application_host + 'settings/departments/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -63,7 +63,7 @@ describe('Check filtering on "users" page', function() {
         driver.sleep(1000)
 
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: new_department_form_id + ' input[name="name__new"]',
@@ -87,8 +87,8 @@ describe('Check filtering on "users" page', function() {
 
   it('Create new non-admin user', function(done) {
     add_new_user_func({
-      application_host: application_host,
-      driver: driver,
+      application_host,
+      driver,
       // We know that departments are ordered alphabetically, so newly
       // added "ID" is before default "Sales" one
       department_index: '0'
@@ -100,7 +100,7 @@ describe('Check filtering on "users" page', function() {
   it("Open 'users' page", function(done) {
     open_page_func({
       url: application_host + 'users/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })

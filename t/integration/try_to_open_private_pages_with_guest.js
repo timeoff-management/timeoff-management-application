@@ -1,18 +1,18 @@
 'use strict'
 
-var test = require('selenium-webdriver/testing'),
-  config = require('../lib/config'),
-  application_host = config.get_application_host(),
-  By = require('selenium-webdriver').By,
-  expect = require('chai').expect,
-  _ = require('underscore'),
-  Promise = require('bluebird'),
-  until = require('selenium-webdriver').until,
-  login_user_func = require('../lib/login_with_user'),
-  register_new_user_func = require('../lib/register_new_user'),
-  logout_user_func = require('../lib/logout_user'),
-  add_new_user_func = require('../lib/add_new_user'),
-  build_driver = require('../lib/build_driver')
+const test = require('selenium-webdriver/testing');
+  const config = require('../lib/config');
+  const application_host = config.get_application_host();
+  const By = require('selenium-webdriver').By;
+  const expect = require('chai').expect;
+  const _ = require('underscore');
+  const Promise = require('bluebird');
+  const until = require('selenium-webdriver').until;
+  const login_user_func = require('../lib/login_with_user');
+  const register_new_user_func = require('../lib/register_new_user');
+  const logout_user_func = require('../lib/logout_user');
+  const add_new_user_func = require('../lib/add_new_user');
+  const build_driver = require('../lib/build_driver')
 
 describe('Try to access private pages with guest user', function() {
   this.timeout(config.get_execution_timeout())
@@ -23,7 +23,7 @@ describe('Try to access private pages with guest user', function() {
         // Add more URLs to check into the array below
         ['logout/', 'settings/general/', 'settings/departments/'],
         function(path) {
-          var driver = build_driver()
+          const driver = build_driver()
 
           // Open front page
           driver.get(application_host + path)
@@ -40,7 +40,7 @@ describe('Try to access private pages with guest user', function() {
   })
 
   it('Check main (dashboard) page', function(done) {
-    var driver = build_driver()
+    const driver = build_driver()
 
     // Open front page
     driver.get(application_host)
@@ -56,10 +56,10 @@ describe('Try to access private pages with guest user', function() {
 describe('Try to access admin pages with non-admin user', function() {
   this.timeout(config.get_execution_timeout())
 
-  var non_admin_user_email, driver
+  let non_admin_user_email, driver
 
-  var check_pathes = function(driver, reachable) {
-    var admin_pages = [
+  const check_pathes = function(driver, reachable) {
+    const admin_pages = [
       'users/add/',
       'users/',
       'settings/general/',
@@ -81,7 +81,7 @@ describe('Try to access admin pages with non-admin user', function() {
 
   it('Register new admin user', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(function(data) {
       driver = data.driver
       done()
@@ -96,8 +96,8 @@ describe('Try to access admin pages with non-admin user', function() {
 
   it('Add new non-admin user', function(done) {
     add_new_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function(data) {
       non_admin_user_email = data.new_user_email
       done()
@@ -106,8 +106,8 @@ describe('Try to access admin pages with non-admin user', function() {
 
   it('Logout from admin account', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -115,9 +115,9 @@ describe('Try to access admin pages with non-admin user', function() {
 
   it('And login with newly created non-admin account', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: non_admin_user_email,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })

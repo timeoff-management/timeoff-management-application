@@ -1,22 +1,22 @@
 'use strict'
 
-var test = require('selenium-webdriver/testing'),
-  By = require('selenium-webdriver').By,
-  expect = require('chai').expect,
-  Promise = require('bluebird'),
-  until = require('selenium-webdriver').until,
-  _ = require('underscore'),
-  register_new_user_func = require('../../lib/register_new_user'),
-  login_user_func = require('../../lib/login_with_user'),
-  open_page_func = require('../../lib/open_page'),
-  submit_form_func = require('../../lib/submit_form'),
-  add_new_user_func = require('../../lib/add_new_user'),
-  logout_user_func = require('../../lib/logout_user'),
-  config = require('../../lib/config'),
-  new_department_form_id = '#add_new_department_form',
-  application_host = config.get_application_host(),
-  company_edit_form_id = '#company_edit_form',
-  department_edit_form_id = '#department_edit_form'
+const test = require('selenium-webdriver/testing');
+  const By = require('selenium-webdriver').By;
+  const expect = require('chai').expect;
+  const Promise = require('bluebird');
+  const until = require('selenium-webdriver').until;
+  const _ = require('underscore');
+  const register_new_user_func = require('../../lib/register_new_user');
+  const login_user_func = require('../../lib/login_with_user');
+  const open_page_func = require('../../lib/open_page');
+  const submit_form_func = require('../../lib/submit_form');
+  const add_new_user_func = require('../../lib/add_new_user');
+  const logout_user_func = require('../../lib/logout_user');
+  const config = require('../../lib/config');
+  const new_department_form_id = '#add_new_department_form';
+  const application_host = config.get_application_host();
+  const company_edit_form_id = '#company_edit_form';
+  const department_edit_form_id = '#department_edit_form'
 
 /*
  *  Scenario to check in thus test.
@@ -50,7 +50,7 @@ function check_teamview(data, emails) {
     url: application_host + 'calendar/teamview/',
     driver: data.driver
   }).then(function(data) {
-    var promise_to_check = data.driver
+    const promise_to_check = data.driver
       .findElements(By.css('tr.teamview-user-list-row > td.left-column-cell'))
 
       // Make sure that number of users is as expected
@@ -67,12 +67,12 @@ function check_teamview(data, emails) {
       // Make sure that users are actually those as expected
       .then(function(full_names) {
         // The idea is to extract unique tokens from provided emails
-        var tokens_from_emails = _.map(emails, function(email) {
+        const tokens_from_emails = _.map(emails, function(email) {
           return email.substring(0, email.lastIndexOf('@'))
         }).sort()
 
         // ... extract unique tokens from full names on the page
-        var tokens_from_name = _.map(full_names, function(name) {
+        const tokens_from_name = _.map(full_names, function(name) {
           return name.substring(4, name.lastIndexOf(' '))
         }).sort()
 
@@ -89,11 +89,11 @@ function check_teamview(data, emails) {
 describe('Check basic scenario for Team view page', function() {
   this.timeout(config.get_execution_timeout())
 
-  var driver, user_A, user_B, user_C
+  let driver, user_A, user_B, user_C
 
   it('Performing registration process', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(function(data) {
       driver = data.driver
       user_A = data.email
@@ -103,8 +103,8 @@ describe('Check basic scenario for Team view page', function() {
 
   it('Create new user B', function(done) {
     add_new_user_func({
-      application_host: application_host,
-      driver: driver,
+      application_host,
+      driver,
       // We have just one department so far
       department_index: '0'
     }).then(function(data) {
@@ -114,7 +114,7 @@ describe('Check basic scenario for Team view page', function() {
   })
 
   it('Make sure that both users are shown on Team view page', function(done) {
-    check_teamview({ driver: driver }, [user_A, user_B]).then(function() {
+    check_teamview({ driver }, [user_A, user_B]).then(function() {
       done()
     })
   })
@@ -122,7 +122,7 @@ describe('Check basic scenario for Team view page', function() {
   it('Create new department: "IT"', function(done) {
     open_page_func({
       url: application_host + 'settings/departments/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -139,7 +139,7 @@ describe('Check basic scenario for Team view page', function() {
         driver.sleep(1000)
 
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: new_department_form_id + ' input[name="name__new"]',
@@ -163,8 +163,8 @@ describe('Check basic scenario for Team view page', function() {
 
   it('Create user C', function(done) {
     add_new_user_func({
-      application_host: application_host,
-      driver: driver,
+      application_host,
+      driver,
       // We know that departments are ordered alphabetically, so newly
       // added "ID" is before default "Sales" one
       department_index: '0'
@@ -177,7 +177,7 @@ describe('Check basic scenario for Team view page', function() {
   it('Make sure user C is superviser of IT department', function(done) {
     open_page_func({
       url: application_host + 'settings/departments/',
-      driver: driver
+      driver
     })
       .then(() =>
         driver
@@ -186,7 +186,7 @@ describe('Check basic scenario for Team view page', function() {
       )
       .then(() =>
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: 'select[name="boss_id"]',
@@ -205,8 +205,8 @@ describe('Check basic scenario for Team view page', function() {
 
   it('Logout from A account', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -214,24 +214,24 @@ describe('Check basic scenario for Team view page', function() {
 
   it('Login as user B', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: user_B,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
   })
 
   it('and make sure that only user A and B are presented', function(done) {
-    check_teamview({ driver: driver }, [user_A, user_B]).then(function() {
+    check_teamview({ driver }, [user_A, user_B]).then(function() {
       done()
     })
   })
 
   it('Logout from B account', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -239,16 +239,16 @@ describe('Check basic scenario for Team view page', function() {
 
   it('Login back as user A', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: user_A,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
   })
 
   it('and make sure that all users are shown:  A, B, and C', function(done) {
-    check_teamview({ driver: driver }, [user_A, user_B, user_C]).then(
+    check_teamview({ driver }, [user_A, user_B, user_C]).then(
       function() {
         done()
       }
@@ -258,7 +258,7 @@ describe('Check basic scenario for Team view page', function() {
   it('Update IT department to be supervised by user B', function(done) {
     open_page_func({
       url: application_host + 'settings/departments/',
-      driver: driver
+      driver
     })
       .then(() =>
         driver
@@ -267,7 +267,7 @@ describe('Check basic scenario for Team view page', function() {
       )
       .then(() =>
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: 'select[name="boss_id"]',
@@ -287,8 +287,8 @@ describe('Check basic scenario for Team view page', function() {
 
   it('Logout from A account', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -296,16 +296,16 @@ describe('Check basic scenario for Team view page', function() {
 
   it('Login as user B', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: user_B,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
   })
 
   it('and make sure that all users are shown:  A, B, and C', function(done) {
-    check_teamview({ driver: driver }, [user_A, user_B, user_C]).then(
+    check_teamview({ driver }, [user_A, user_B, user_C]).then(
       function() {
         done()
       }
@@ -314,8 +314,8 @@ describe('Check basic scenario for Team view page', function() {
 
   it('Logout from admin account', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -323,24 +323,24 @@ describe('Check basic scenario for Team view page', function() {
 
   it('Login as user C', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: user_C,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
   })
 
   it('and make sure that only one user C is here', function(done) {
-    check_teamview({ driver: driver }, [user_C]).then(function() {
+    check_teamview({ driver }, [user_C]).then(function() {
       done()
     })
   })
 
   it('Logout from user C account', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -348,9 +348,9 @@ describe('Check basic scenario for Team view page', function() {
 
   it('Login as user A', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: user_A,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -359,7 +359,7 @@ describe('Check basic scenario for Team view page', function() {
   it('Open page for editing company details', function(done) {
     open_page_func({
       url: application_host + 'settings/general/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -367,7 +367,7 @@ describe('Check basic scenario for Team view page', function() {
 
   it('Check that company is been updated if valid values are submitted', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: company_edit_form_id + ' input[name="share_all_absences"]',
@@ -385,8 +385,8 @@ describe('Check basic scenario for Team view page', function() {
 
   it('Logout from user A account', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -394,16 +394,16 @@ describe('Check basic scenario for Team view page', function() {
 
   it('Login as user C', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: user_C,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
   })
 
   it('and make sure that all users are shown on Team view page', function(done) {
-    check_teamview({ driver: driver }, [user_A, user_B, user_C]).then(
+    check_teamview({ driver }, [user_A, user_B, user_C]).then(
       function() {
         done()
       }

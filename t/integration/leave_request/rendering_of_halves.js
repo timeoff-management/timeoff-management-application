@@ -1,30 +1,30 @@
 'use strict'
 
-var test = require('selenium-webdriver/testing'),
-  until = require('selenium-webdriver').until,
-  By = require('selenium-webdriver').By,
-  expect = require('chai').expect,
-  _ = require('underscore'),
-  Promise = require('bluebird'),
-  moment = require('moment'),
-  config = require('../../lib/config'),
-  application_host = config.get_application_host(),
-  login_user_func = require('../../lib/login_with_user'),
-  register_new_user_func = require('../../lib/register_new_user'),
-  logout_user_func = require('../../lib/logout_user'),
-  open_page_func = require('../../lib/open_page'),
-  submit_form_func = require('../../lib/submit_form'),
-  check_elements_func = require('../../lib/check_elements'),
-  add_new_user_func = require('../../lib/add_new_user')
+const test = require('selenium-webdriver/testing');
+  const until = require('selenium-webdriver').until;
+  const By = require('selenium-webdriver').By;
+  const expect = require('chai').expect;
+  const _ = require('underscore');
+  const Promise = require('bluebird');
+  const moment = require('moment');
+  const config = require('../../lib/config');
+  const application_host = config.get_application_host();
+  const login_user_func = require('../../lib/login_with_user');
+  const register_new_user_func = require('../../lib/register_new_user');
+  const logout_user_func = require('../../lib/logout_user');
+  const open_page_func = require('../../lib/open_page');
+  const submit_form_func = require('../../lib/submit_form');
+  const check_elements_func = require('../../lib/check_elements');
+  const add_new_user_func = require('../../lib/add_new_user')
 
 describe('Ensure that leaves with not full days are rendered properly', function() {
   this.timeout(config.get_execution_timeout())
 
-  var non_admin_user_email, new_user_email, driver
+  let non_admin_user_email, new_user_email, driver
 
-  it('Create new company', done => {
+  it('Create new company', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(data => {
       driver = data.driver
       new_user_email = data.email
@@ -32,39 +32,39 @@ describe('Ensure that leaves with not full days are rendered properly', function
     })
   })
 
-  it('Create new non-admin user', done => {
+  it('Create new non-admin user', function(done) {
     add_new_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(data => {
       non_admin_user_email = data.new_user_email
       done()
     })
   })
 
-  it('Logout from admin acount', done => {
+  it('Logout from admin acount', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(() => done())
   })
 
-  it('Login as non-admin user', done => {
+  it('Login as non-admin user', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: non_admin_user_email,
-      driver: driver
+      driver
     }).then(() => done())
   })
 
-  it('Open calendar page', done => {
+  it('Open calendar page', function(done) {
     open_page_func({
       url: application_host + 'calendar/?show_full_year=1&year=2015',
-      driver: driver
+      driver
     }).then(() => done())
   })
 
-  it('Request new partial leave: morning to afternoon', done => {
+  it('Request new partial leave: morning to afternoon', function(done) {
     driver
       .findElement(By.css('#book_time_off_btn'))
       .then(el => el.click())
@@ -75,7 +75,7 @@ describe('Ensure that leaves with not full days are rendered properly', function
       // Create new leave request
       .then(() =>
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: 'select[name="from_date_part"]',
@@ -102,7 +102,7 @@ describe('Ensure that leaves with not full days are rendered properly', function
       .then(() => done())
   })
 
-  it('Request new partial leave: afternoon to morning', done => {
+  it('Request new partial leave: afternoon to morning', function(done) {
     driver
       .findElement(By.css('#book_time_off_btn'))
       .then(el => el.click())
@@ -113,7 +113,7 @@ describe('Ensure that leaves with not full days are rendered properly', function
       // Create new leave request
       .then(() =>
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: 'select[name="from_date_part"]',
@@ -140,7 +140,7 @@ describe('Ensure that leaves with not full days are rendered properly', function
       .then(() => done())
   })
 
-  it('Request just morning', done => {
+  it('Request just morning', function(done) {
     driver
       .findElement(By.css('#book_time_off_btn'))
       .then(el => el.click())
@@ -151,7 +151,7 @@ describe('Ensure that leaves with not full days are rendered properly', function
       // Create new leave request
       .then(() =>
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: 'select[name="from_date_part"]',
@@ -178,7 +178,7 @@ describe('Ensure that leaves with not full days are rendered properly', function
       .then(() => done())
   })
 
-  it('Request just multi days leave starting next afternoon', done => {
+  it('Request just multi days leave starting next afternoon', function(done) {
     driver
       .findElement(By.css('#book_time_off_btn'))
       .then(el => el.click())
@@ -189,7 +189,7 @@ describe('Ensure that leaves with not full days are rendered properly', function
       // Create new leave request
       .then(() =>
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: 'select[name="from_date_part"]',
@@ -220,14 +220,14 @@ describe('Ensure that leaves with not full days are rendered properly', function
       .then(() => done())
   })
 
-  it('Go to my requests page', done => {
+  it('Go to my requests page', function(done) {
     open_page_func({
       url: application_host + 'requests/',
-      driver: driver
+      driver
     }).then(() => done())
   })
 
-  it('Ensure that both new leave requests are listed and both are marked as partial', done => {
+  it('Ensure that both new leave requests are listed and both are marked as partial', function(done) {
     driver
       .findElements(
         By.css('table.user-requests-table td[data-tom-leave-dates="1"]')
@@ -253,7 +253,7 @@ describe('Ensure that leaves with not full days are rendered properly', function
       })
   })
 
-  it('Ensure tooltips include leave type name', done => {
+  it('Ensure tooltips include leave type name', function(done) {
     open_page_func({
       url: application_host + 'calendar/?show_full_year=1&year=2015',
       driver
@@ -294,29 +294,29 @@ describe('Ensure that leaves with not full days are rendered properly', function
       })
   })
 
-  it('Logout from non-admin account', done => {
+  it('Logout from non-admin account', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(() => done())
   })
 
-  it('Login as admin user', done => {
+  it('Login as admin user', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: new_user_email,
-      driver: driver
+      driver
     }).then(() => done())
   })
 
-  it('Go to my requests page', done => {
+  it('Go to my requests page', function(done) {
     open_page_func({
       url: application_host + 'requests/',
-      driver: driver
+      driver
     }).then(() => done())
   })
 
-  it('Ensure that both new leave requests are listed for approval and both are marked as partial', done => {
+  it('Ensure that both new leave requests are listed for approval and both are marked as partial', function(done) {
     driver
       .findElements(
         By.css('table.requests-to-approve-table td[data-tom-leave-dates="1"]')
@@ -342,7 +342,7 @@ describe('Ensure that leaves with not full days are rendered properly', function
       })
   })
 
-  after(done => {
+  after(function(done) {
     driver.quit().then(() => done())
   })
 })

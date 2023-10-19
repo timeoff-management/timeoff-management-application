@@ -1,22 +1,22 @@
 'use strict'
 
-var test = require('selenium-webdriver/testing'),
-  By = require('selenium-webdriver').By,
-  Promise = require('bluebird'),
-  expect = require('chai').expect,
-  moment = require('moment'),
-  add_new_user_func = require('../../lib/add_new_user'),
-  check_elements_func = require('../../lib/check_elements'),
-  config = require('../../lib/config'),
-  login_user_func = require('../../lib/login_with_user'),
-  logout_user_func = require('../../lib/logout_user'),
-  open_page_func = require('../../lib/open_page'),
-  register_new_user_func = require('../../lib/register_new_user'),
-  submit_form_func = require('../../lib/submit_form'),
-  user_info_func = require('../../lib/user_info'),
-  application_host = config.get_application_host(),
-  schedule_form_id = '#company_schedule_form',
-  userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year')
+const test = require('selenium-webdriver/testing');
+  const By = require('selenium-webdriver').By;
+  const Promise = require('bluebird');
+  const expect = require('chai').expect;
+  const moment = require('moment');
+  const add_new_user_func = require('../../lib/add_new_user');
+  const check_elements_func = require('../../lib/check_elements');
+  const config = require('../../lib/config');
+  const login_user_func = require('../../lib/login_with_user');
+  const logout_user_func = require('../../lib/logout_user');
+  const open_page_func = require('../../lib/open_page');
+  const register_new_user_func = require('../../lib/register_new_user');
+  const submit_form_func = require('../../lib/submit_form');
+  const user_info_func = require('../../lib/user_info');
+  const application_host = config.get_application_host();
+  const schedule_form_id = '#company_schedule_form';
+  const userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year')
 
 /*
  * Scenario 1: Basic user specific schedule
@@ -42,11 +42,11 @@ var test = require('selenium-webdriver/testing'),
 describe('Basic user specific schedule', function() {
   this.timeout(config.get_execution_timeout())
 
-  var driver, email_A, email_B, user_id_A, user_id_B
+  let driver, email_A, email_B, user_id_A, user_id_B
 
   it('Register new company', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(function(data) {
       driver = data.driver
       email_A = data.email
@@ -56,8 +56,8 @@ describe('Basic user specific schedule', function() {
 
   it('Create second user B', function(done) {
     add_new_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function(data) {
       email_B = data.new_user_email
       done()
@@ -66,7 +66,7 @@ describe('Basic user specific schedule', function() {
 
   it('Obtain information about user A', function(done) {
     user_info_func({
-      driver: driver,
+      driver,
       email: email_A
     }).then(function(data) {
       user_id_A = data.user.id
@@ -76,7 +76,7 @@ describe('Basic user specific schedule', function() {
 
   it('Obtain information about user B', function(done) {
     user_info_func({
-      driver: driver,
+      driver,
       email: email_B
     }).then(function(data) {
       user_id_B = data.user.id
@@ -84,7 +84,7 @@ describe('Basic user specific schedule', function() {
     })
   })
 
-  it('Ensure that user A started at the begining of current year', done => {
+  it('Ensure that user A started at the begining of current year', function(done) {
     userStartsAtTheBeginingOfYear({ driver, email: email_A, year: 2015 }).then(
       () => done()
     )
@@ -93,7 +93,7 @@ describe('Basic user specific schedule', function() {
   it('Open user B schedule and ensure wording indicates company wide one is used', function(done) {
     open_page_func({
       url: application_host + 'users/edit/' + user_id_B + '/schedule/',
-      driver: driver
+      driver
     })
       .then(function() {
         return driver
@@ -118,7 +118,7 @@ describe('Basic user specific schedule', function() {
 
   it('Ensure it has default configuration', function(done) {
     check_elements_func({
-      driver: driver,
+      driver,
       elements_to_check: [
         {
           selector: 'input[name="monday"]',
@@ -163,7 +163,7 @@ describe('Basic user specific schedule', function() {
 
   it('Update user B to have Wed to be non-working day', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: '#schedule_item_wednesday',
@@ -179,7 +179,7 @@ describe('Basic user specific schedule', function() {
 
   it('Ensure that User B details shows new schedule', function(done) {
     check_elements_func({
-      driver: driver,
+      driver,
       elements_to_check: [
         {
           selector: 'input[name="monday"]',
@@ -225,7 +225,7 @@ describe('Basic user specific schedule', function() {
   it('Open company details page', function(done) {
     open_page_func({
       url: application_host + 'settings/general/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -233,7 +233,7 @@ describe('Basic user specific schedule', function() {
 
   it('Ensure Company wide schedule is still default: Sat, Sun are non-working', function(done) {
     check_elements_func({
-      driver: driver,
+      driver,
       elements_to_check: [
         {
           selector: schedule_form_id + ' input[name="monday"]',
@@ -279,7 +279,7 @@ describe('Basic user specific schedule', function() {
   it('Open Team view page', function(done) {
     open_page_func({
       url: application_host + 'calendar/teamview/?&date=2015-01',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -400,7 +400,7 @@ describe('Basic user specific schedule', function() {
   it('Open Calendar page', function(done) {
     open_page_func({
       url: application_host + 'calendar/?year=2015&show_full_year=1',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -461,7 +461,7 @@ describe('Basic user specific schedule', function() {
 
   it('Submit new leave requesti from user A for 7 calendar days', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'input#from',
@@ -481,7 +481,7 @@ describe('Basic user specific schedule', function() {
   it('Open requests page', function(done) {
     open_page_func({
       url: application_host + 'requests/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -503,8 +503,8 @@ describe('Basic user specific schedule', function() {
 
   it('Logout from user A (admin)', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -512,9 +512,9 @@ describe('Basic user specific schedule', function() {
 
   it('Login as user B', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: email_B,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -523,7 +523,7 @@ describe('Basic user specific schedule', function() {
   it('Open Calendar page', function(done) {
     open_page_func({
       url: application_host + 'calendar/?year=2015&show_full_year=1',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -585,7 +585,7 @@ describe('Basic user specific schedule', function() {
 
   it('Submit new leave requesti from user A for 7 calendar days', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'input#from',
@@ -604,8 +604,8 @@ describe('Basic user specific schedule', function() {
 
   it('Logout from user B', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -613,9 +613,9 @@ describe('Basic user specific schedule', function() {
 
   it('Login as user A (admin)', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: email_A,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -624,7 +624,7 @@ describe('Basic user specific schedule', function() {
   it('Open requests page', function(done) {
     open_page_func({
       url: application_host + 'requests/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -651,7 +651,7 @@ describe('Basic user specific schedule', function() {
   it('Open user B schedule', function(done) {
     open_page_func({
       url: application_host + 'users/edit/' + user_id_B + '/schedule/',
-      driver: driver
+      driver
     })
       .then(function() {
         return driver
@@ -678,7 +678,7 @@ describe('Basic user specific schedule', function() {
 
   it('Revoke user specific schedule and replace it with company wide one', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [{}],
       submit_button_selector: 'button[name="revoke_user_specific_schedule"]',
       message: /Schedule for user was saved/
@@ -689,7 +689,7 @@ describe('Basic user specific schedule', function() {
 
   it('Ensure that User B details shows new schedule', function(done) {
     check_elements_func({
-      driver: driver,
+      driver,
       elements_to_check: [
         {
           selector: 'input[name="monday"]',
@@ -735,7 +735,7 @@ describe('Basic user specific schedule', function() {
   it('Open Team view page', function(done) {
     open_page_func({
       url: application_host + 'calendar/teamview/?&date=2015-01',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -875,11 +875,11 @@ describe('Basic user specific schedule', function() {
 describe('Populate company wide schedule before using user specific one', function() {
   this.timeout(config.get_execution_timeout())
 
-  var driver, email_A, email_B, user_id_A, user_id_B
+  let driver, email_A, email_B, user_id_A, user_id_B
 
   it('Register new company', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(function(data) {
       driver = data.driver
       email_A = data.email
@@ -889,8 +889,8 @@ describe('Populate company wide schedule before using user specific one', functi
 
   it('Create second user B', function(done) {
     add_new_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function(data) {
       email_B = data.new_user_email
       done()
@@ -899,7 +899,7 @@ describe('Populate company wide schedule before using user specific one', functi
 
   it('Obtain information about user A', function(done) {
     user_info_func({
-      driver: driver,
+      driver,
       email: email_A
     }).then(function(data) {
       user_id_A = data.user.id
@@ -909,7 +909,7 @@ describe('Populate company wide schedule before using user specific one', functi
 
   it('Obtain information about user B', function(done) {
     user_info_func({
-      driver: driver,
+      driver,
       email: email_B
     }).then(function(data) {
       user_id_B = data.user.id
@@ -920,7 +920,7 @@ describe('Populate company wide schedule before using user specific one', functi
   it('Open company details page', function(done) {
     open_page_func({
       url: application_host + 'settings/general/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -928,7 +928,7 @@ describe('Populate company wide schedule before using user specific one', functi
 
   it('Make Thu and Fri to be non-working day', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: schedule_form_id + ' #schedule_item_thursday',
@@ -948,7 +948,7 @@ describe('Populate company wide schedule before using user specific one', functi
 
   it('And make sure that it was indeed marked so', function(done) {
     check_elements_func({
-      driver: driver,
+      driver,
       elements_to_check: [
         {
           selector: schedule_form_id + ' input[name="monday"]',
@@ -994,7 +994,7 @@ describe('Populate company wide schedule before using user specific one', functi
   it('Open user B schedule', function(done) {
     open_page_func({
       url: application_host + 'users/edit/' + user_id_B + '/schedule/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -1002,7 +1002,7 @@ describe('Populate company wide schedule before using user specific one', functi
 
   it('Update user B to have Fri to be non-working day (by toggling off Thu)', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: '#schedule_item_thursday',
@@ -1018,7 +1018,7 @@ describe('Populate company wide schedule before using user specific one', functi
 
   it('Ensure that User B details shows new schedule', function(done) {
     check_elements_func({
-      driver: driver,
+      driver,
       elements_to_check: [
         {
           selector: 'input[name="monday"]',
@@ -1064,7 +1064,7 @@ describe('Populate company wide schedule before using user specific one', functi
   it('Open Team view page', function(done) {
     open_page_func({
       url: application_host + 'calendar/teamview/?&date=2015-01',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })

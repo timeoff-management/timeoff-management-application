@@ -9,7 +9,7 @@ $(document).ready(function() {
   $('input.book-leave-from-input').on('change', function(e) {
     e.stopPropagation()
 
-    var from_date = $('input.book-leave-from-input').datepicker('getDate')
+    const from_date = $('input.book-leave-from-input').datepicker('getDate')
 
     if (!from_date) {
       // no new value for FROM part, do nothing
@@ -17,7 +17,7 @@ $(document).ready(function() {
       return
     }
 
-    var to_date = $('input.book-leave-to-input').datepicker('getDate')
+    const to_date = $('input.book-leave-to-input').datepicker('getDate')
 
     if (!to_date || (to_date && to_date.getTime() < from_date.getTime())) {
       $('input.book-leave-to-input').datepicker(
@@ -95,11 +95,11 @@ $(function() {
  * */
 
 $('#add_secondary_supervisers_modal').on('show.bs.modal', function(event) {
-  var button = $(event.relatedTarget),
-    department_name = button.data('department_name'),
-    department_id = button.data('department_id')
+  const button = $(event.relatedTarget);
+    const department_name = button.data('department_name');
+    const department_id = button.data('department_id')
 
-  var modal = $(this)
+  const modal = $(this)
 
   modal.find('.modal-title strong').text(department_name)
 
@@ -127,10 +127,10 @@ function getUrlVars(url) {
   if (!url) {
     url = window.location.href
   }
-  var vars = {},
-    hash
-  var hashes = url.slice(url.indexOf('?') + 1).split('&')
-  for (var i = 0; i < hashes.length; i++) {
+  const vars = {};
+    let hash
+  const hashes = url.slice(url.indexOf('?') + 1).split('&')
+  for (let i = 0; i < hashes.length; i++) {
     hash = hashes[i].split('=')
     vars[hash[0]] = hash[1]
   }
@@ -146,18 +146,18 @@ $(document).ready(function() {
   $('#team_view_month_select_btn')
     .datepicker()
     .on('changeDate', function(e) {
-      var url = $(e.currentTarget).data('tom')
+      const url = $(e.currentTarget).data('tom')
 
-      var form = document.createElement('form')
+      const form = document.createElement('form')
       form.method = 'GET'
       form.action = url
 
-      var url_params = getUrlVars(url)
-      url_params['date'] = e.format('yyyy-mm')
+      const url_params = getUrlVars(url)
+      url_params.date = e.format('yyyy-mm')
 
       // Move query parameters into the form
       $.each(url_params, function(key, val) {
-        var inp = document.createElement('input')
+        const inp = document.createElement('input')
         inp.name = key
         inp.value = val
         inp.type = 'hidden'
@@ -179,7 +179,7 @@ $(document).ready(function() {
       .closest('.dropdown-menu')
       .dropdown('toggle')
 
-    var new_class_name = $(e.target).data('tom-color-picker-css-class')
+    const new_class_name = $(e.target).data('tom-color-picker-css-class')
 
     // Ensure newly selected color is on triggering element
     $(e.target)
@@ -208,7 +208,7 @@ $(document).ready(function() {
     placement: 'auto',
     delay: { show: 1000, hide: 10 },
     content: function() {
-      var divId = 'tmp-id-' + $.now()
+      const divId = 'tmp-id-' + $.now()
       return detailsInPopup($(this).attr('data-user-id'), divId)
     }
   })
@@ -233,7 +233,7 @@ $(document).ready(function() {
     placement: 'auto',
     delay: { show: 1000, hide: 10 },
     content: function() {
-      var divId = 'tmp-id-' + $.now()
+      const divId = 'tmp-id-' + $.now()
       return detailsInPopup($(this).attr('data-leave-id'), divId)
     }
   })
@@ -297,7 +297,7 @@ $(document).ready(function() {
 
           dropDown.empty()
 
-          for (var i = 0; i < data.length; i++) {
+          for (let i = 0; i < data.length; i++) {
             const notification = data[i]
             dropDown.append(
               '<li><a href="' +
@@ -322,10 +322,10 @@ $(document).ready(function() {
  */
 $(document).ready(function() {
   $('.single-click').on('click', function(e) {
-    var form = $(e.target).closest('form')
+    const form = $(e.target).closest('form')
 
     // Ensure "required" fields are populated
-    var formIsValid = true
+    let formIsValid = true
     $(form)
       .find('[required]')
       .each(function(el) {
@@ -339,7 +339,7 @@ $(document).ready(function() {
 
     $(e.target).prop('disabled', true)
 
-    var submitName = $(e.target).attr('name')
+    const submitName = $(e.target).attr('name')
     if (submitName !== undefined) {
       $('<input>')
         .attr({ type: 'hidden', name: submitName, value: '1' })

@@ -7,12 +7,12 @@
 
 'use strict'
 
-var bluebird = require('bluebird')
+const bluebird = require('bluebird')
 
 // Function that is executed on the client,
 // it relies on presence of jQuery and window.VPP_email
-var func_to_inject = function() {
-  var callback = arguments[arguments.length - 1]
+const func_to_inject = function() {
+  const callback = arguments[arguments.length - 1]
 
   $.ajax({
     url: '/users/search/',
@@ -30,10 +30,10 @@ var func_to_inject = function() {
   })
 }
 
-var user_info_func = bluebird.promisify(function(args, callback) {
-  var result_callback = callback,
-    driver = args.driver,
-    email = args.email
+const user_info_func = bluebird.promisify(function(args, callback) {
+  const result_callback = callback;
+    const driver = args.driver;
+    const email = args.email
 
   if (!driver) {
     throw "'driver' was not passed into the user_info!"
@@ -50,7 +50,7 @@ var user_info_func = bluebird.promisify(function(args, callback) {
       // Inject email we are using to identify user into the tested page
       driver.executeScript('window.VPP_email = "' + email + '";')
 
-      var user
+      let user
 
       // execute AJAX request on the client that fetchs user info by email
       driver.executeAsyncScript(func_to_inject).then(function(users) {
@@ -65,8 +65,8 @@ var user_info_func = bluebird.promisify(function(args, callback) {
     .then(function(user) {
       // "export" current driver
       result_callback(null, {
-        driver: driver,
-        user: user
+        driver,
+        user
       })
     })
 })

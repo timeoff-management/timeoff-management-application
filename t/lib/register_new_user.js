@@ -4,29 +4,27 @@
 
 'use strict'
 
-var By = require('selenium-webdriver').By,
-  until = require('selenium-webdriver').until,
-  expect = require('chai').expect,
-  _ = require('underscore'),
-  uuid = require('node-uuid'),
-  Promise = require('bluebird'),
-  open_page_func = require('./open_page'),
-  build_driver = require('./build_driver'),
-  company_edit_form_id = '#company_edit_form',
-  submit_form_func = require('./submit_form')
+const By = require('selenium-webdriver').By
+const until = require('selenium-webdriver').until
+const expect = require('chai').expect
+const Promise = require('bluebird')
+const open_page_func = require('./open_page')
+const build_driver = require('./build_driver')
+const company_edit_form_id = '#company_edit_form'
+const submit_form_func = require('./submit_form')
 
-var register_new_user_func = Promise.promisify(function(args, callback) {
-  var application_host = args.application_host || args.applicationHost,
-    failing_error_message = args.failing_error_message,
-    default_date_format = args.default_date_format,
-    random_token = new Date().getTime(),
-    new_user_email = args.user_email || random_token + '@test.com'
+const register_new_user_func = Promise.promisify(function(args, callback) {
+  const application_host = args.application_host || args.applicationHost
+  const failing_error_message = args.failing_error_message
+  const default_date_format = args.default_date_format
+  const random_token = new Date().getTime()
+  const new_user_email = args.user_email || random_token + '@test.com'
 
   // Instantiate new driver object if it not provided as paramater
-  var driver = args.driver || build_driver()
+  const driver = args.driver || build_driver()
 
   // Make sure we are in desktop version
-  //driver.manage().window().setSize(1024, 768);
+  // driver.manage().window().setSize(1024, 768);
 
   // Go to front page
   driver.get(application_host)
@@ -62,7 +60,7 @@ var register_new_user_func = Promise.promisify(function(args, callback) {
 
   driver.call(() =>
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'input[name="company_name"]',
@@ -125,14 +123,14 @@ var register_new_user_func = Promise.promisify(function(args, callback) {
     driver.call(function() {
       return open_page_func({
         url: application_host + 'settings/general/',
-        driver: driver
+        driver
       })
     })
 
     // update company to use provided date format as a default
     driver.call(function() {
       return submit_form_func({
-        driver: driver,
+        driver,
         form_params: [
           {
             selector: company_edit_form_id + ' select[name="date_format"]',
@@ -150,19 +148,19 @@ var register_new_user_func = Promise.promisify(function(args, callback) {
   // Pass data back to the caller
   driver.get(application_host).then(function() {
     callback(null, {
-      driver: driver,
+      driver,
       email: new_user_email
     })
   })
 })
 
 module.exports = function(args) {
-  if (args.hasOwnProperty('driver')) {
+  if (args.driver) {
     return args.driver.call(function() {
       return register_new_user_func(args)
     })
-  } else {
-    const result = register_new_user_func(args)
-    return result
   }
+
+  const result = register_new_user_func(args)
+  return result
 }

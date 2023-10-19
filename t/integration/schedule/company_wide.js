@@ -1,19 +1,19 @@
 'use strict'
 
-const test = require('selenium-webdriver/testing'),
-  By = require('selenium-webdriver').By,
-  Promise = require('bluebird'),
-  moment = require('moment'),
-  expect = require('chai').expect,
-  register_new_user_func = require('../../lib/register_new_user'),
-  open_page_func = require('../../lib/open_page'),
-  submit_form_func = require('../../lib/submit_form'),
-  check_elements_func = require('../../lib/check_elements'),
-  config = require('../../lib/config'),
-  user_info_func = require('../../lib/user_info'),
-  application_host = config.get_application_host(),
-  schedule_form_id = '#company_schedule_form',
-  userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year')
+const test = require('selenium-webdriver/testing');
+  const By = require('selenium-webdriver').By;
+  const Promise = require('bluebird');
+  const moment = require('moment');
+  const expect = require('chai').expect;
+  const register_new_user_func = require('../../lib/register_new_user');
+  const open_page_func = require('../../lib/open_page');
+  const submit_form_func = require('../../lib/submit_form');
+  const check_elements_func = require('../../lib/check_elements');
+  const config = require('../../lib/config');
+  const user_info_func = require('../../lib/user_info');
+  const application_host = config.get_application_host();
+  const schedule_form_id = '#company_schedule_form';
+  const userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year')
 
 /*
  *  Scenario 1:
@@ -28,11 +28,11 @@ const test = require('selenium-webdriver/testing'),
 describe('Changing default company wide schedule', function() {
   this.timeout(config.get_execution_timeout())
 
-  var driver
+  let driver
 
   it('Register new company', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(function(data) {
       driver = data.driver
       done()
@@ -42,7 +42,7 @@ describe('Changing default company wide schedule', function() {
   it('Open company details page', function(done) {
     open_page_func({
       url: application_host + 'settings/general/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -50,7 +50,7 @@ describe('Changing default company wide schedule', function() {
 
   it('Ensure company has default schedule', function(done) {
     check_elements_func({
-      driver: driver,
+      driver,
       elements_to_check: [
         {
           selector: schedule_form_id + ' input[name="monday"]',
@@ -95,7 +95,7 @@ describe('Changing default company wide schedule', function() {
 
   it('Make Wednesday to be non-working day', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: schedule_form_id + ' #schedule_item_wednesday',
@@ -111,7 +111,7 @@ describe('Changing default company wide schedule', function() {
 
   it('And make sure that it was indeed marked so', function(done) {
     check_elements_func({
-      driver: driver,
+      driver,
       elements_to_check: [
         {
           selector: schedule_form_id + ' input[name="monday"]',
@@ -157,7 +157,7 @@ describe('Changing default company wide schedule', function() {
   it('Open Calendar page', function(done) {
     open_page_func({
       url: application_host + 'calendar/?year=2015&show_full_year=1',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -191,7 +191,7 @@ describe('Changing default company wide schedule', function() {
   it('Open Team view page', function(done) {
     open_page_func({
       url: application_host + 'calendar/teamview/?&date=2015-01',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -245,7 +245,7 @@ describe('Leave request reflects shanges in company schedule', function() {
 
   it('Register new company', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(function(data) {
       driver = data.driver
       email_A = data.email
@@ -253,11 +253,11 @@ describe('Leave request reflects shanges in company schedule', function() {
     })
   })
 
-  it('Obtain information about newly added user', done => {
+  it('Obtain information about newly added user', function(done) {
     user_info_func({ driver, email: email_A }).then(data => done())
   })
 
-  it('Ensure user starts at the very beginning of current year', done => {
+  it('Ensure user starts at the very beginning of current year', function(done) {
     userStartsAtTheBeginingOfYear({ driver, email: email_A, year: 2015 }).then(
       () => done()
     )
@@ -280,7 +280,7 @@ describe('Leave request reflects shanges in company schedule', function() {
 
   it('Submit new leave requesti for 7 calendar days', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'input#from',
@@ -300,7 +300,7 @@ describe('Leave request reflects shanges in company schedule', function() {
   it('Open requests page', function(done) {
     open_page_func({
       url: application_host + 'requests/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -323,7 +323,7 @@ describe('Leave request reflects shanges in company schedule', function() {
   it('Open company details page', function(done) {
     open_page_func({
       url: application_host + 'settings/general/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -331,7 +331,7 @@ describe('Leave request reflects shanges in company schedule', function() {
 
   it('Make Saturday to be working day', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: schedule_form_id + ' #schedule_item_saturday',
@@ -348,7 +348,7 @@ describe('Leave request reflects shanges in company schedule', function() {
   it('Open requests page', function(done) {
     open_page_func({
       url: application_host + 'requests/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })

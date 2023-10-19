@@ -11,8 +11,6 @@
 # 3. Run with:
 #	docker run -d -p 3000:3000 --name alpine_timeoff timeoff
 #
-# 4. Login to running container (to update config (vi config/app.json):
-#	docker exec -ti --user root alpine_timeoff /bin/sh
 # --------------------------------------------------------------------
 FROM node:16-alpine
 
@@ -21,13 +19,13 @@ RUN apk update
 
 # Install dependencies
 RUN apk add \
-    git \
-    make \
-    python3 \
-    g++ \
-    gcc \
-    libc-dev \
-    clang
+  git \
+  make \
+  python3 \
+  g++ \
+  gcc \
+  libc-dev \
+  clang
 
 WORKDIR /app
 

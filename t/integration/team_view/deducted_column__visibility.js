@@ -22,22 +22,22 @@
  *
  * */
 
-const test = require('selenium-webdriver/testing'),
-  By = require('selenium-webdriver').By,
-  Promise = require('bluebird'),
-  expect = require('chai').expect,
-  add_new_user_func = require('../../lib/add_new_user'),
-  check_elements_func = require('../../lib/check_elements'),
-  config = require('../../lib/config'),
-  login_user_func = require('../../lib/login_with_user'),
-  logout_user_func = require('../../lib/logout_user'),
-  open_page_func = require('../../lib/open_page'),
-  register_new_user_func = require('../../lib/register_new_user'),
-  submit_form_func = require('../../lib/submit_form'),
-  user_info_func = require('../../lib/user_info'),
-  application_host = config.get_application_host(),
-  new_department_form_id = '#add_new_department_form',
-  company_edit_form_id = '#company_edit_form'
+const test = require('selenium-webdriver/testing');
+  const By = require('selenium-webdriver').By;
+  const Promise = require('bluebird');
+  const expect = require('chai').expect;
+  const add_new_user_func = require('../../lib/add_new_user');
+  const check_elements_func = require('../../lib/check_elements');
+  const config = require('../../lib/config');
+  const login_user_func = require('../../lib/login_with_user');
+  const logout_user_func = require('../../lib/logout_user');
+  const open_page_func = require('../../lib/open_page');
+  const register_new_user_func = require('../../lib/register_new_user');
+  const submit_form_func = require('../../lib/submit_form');
+  const user_info_func = require('../../lib/user_info');
+  const application_host = config.get_application_host();
+  const new_department_form_id = '#add_new_department_form';
+  const company_edit_form_id = '#company_edit_form'
 
 describe('Check that values for new columns are shown only for employess currently login user can supervise', function() {
   this.timeout(config.get_execution_timeout())
@@ -46,7 +46,7 @@ describe('Check that values for new columns are shown only for employess current
 
   it('Register new company as admin user A', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(data => {
       driver = data.driver
       email_A = data.email
@@ -56,8 +56,8 @@ describe('Check that values for new columns are shown only for employess current
 
   it('Create second user B', function(done) {
     add_new_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(data => {
       email_B = data.new_user_email
       done()
@@ -66,8 +66,8 @@ describe('Check that values for new columns are shown only for employess current
 
   it('Create second user C', function(done) {
     add_new_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(data => {
       email_C = data.new_user_email
       done()
@@ -76,7 +76,7 @@ describe('Check that values for new columns are shown only for employess current
 
   it('Obtain information about user A', function(done) {
     user_info_func({
-      driver: driver,
+      driver,
       email: email_A
     }).then(data => {
       user_id_A = data.user.id
@@ -86,7 +86,7 @@ describe('Check that values for new columns are shown only for employess current
 
   it('Obtain information about user B', function(done) {
     user_info_func({
-      driver: driver,
+      driver,
       email: email_B
     }).then(data => {
       user_id_B = data.user.id
@@ -96,7 +96,7 @@ describe('Check that values for new columns are shown only for employess current
 
   it('Obtain information about user C', function(done) {
     user_info_func({
-      driver: driver,
+      driver,
       email: email_C
     }).then(data => {
       user_id_C = data.user.id
@@ -107,13 +107,13 @@ describe('Check that values for new columns are shown only for employess current
   it('Open page for editing company details', function(done) {
     open_page_func({
       url: application_host + 'settings/general/',
-      driver: driver
+      driver
     }).then(() => done())
   })
 
   it('Ensure company has "Share absences between all employees" flag OFF', function(done) {
     check_elements_func({
-      driver: driver,
+      driver,
       elements_to_check: [
         {
           selector: company_edit_form_id + ' input[name="share_all_absences"]',
@@ -126,7 +126,7 @@ describe('Check that values for new columns are shown only for employess current
 
   it('... and tick that box ON', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: company_edit_form_id + ' input[name="share_all_absences"]',
@@ -143,7 +143,7 @@ describe('Check that values for new columns are shown only for employess current
   it('Open department management page', function(done) {
     open_page_func({
       url: application_host + 'settings/departments/',
-      driver: driver
+      driver
     }).then(() => done())
   })
 
@@ -156,7 +156,7 @@ describe('Check that values for new columns are shown only for employess current
         driver.sleep(1000)
 
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: `${new_department_form_id} input[name="name__new"]`,
@@ -184,14 +184,14 @@ describe('Check that values for new columns are shown only for employess current
   it('Open user editing page for user B', function(done) {
     open_page_func({
       url: `${application_host}users/edit/${user_id_C}/`,
-      driver: driver
+      driver
     }).then(() => done())
   })
 
   it('And make sure it is part of the newly added department', function(done) {
     submit_form_func({
       submit_button_selector: 'button#save_changes_btn',
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'select[name="department"]',
@@ -209,7 +209,7 @@ describe('Check that values for new columns are shown only for employess current
   it('As user A ensure team view shows deducted values for all three users', function(done) {
     open_page_func({
       url: `${application_host}calendar/teamview/`,
-      driver: driver
+      driver
     })
       .then(() =>
         driver.findElement(
@@ -257,23 +257,23 @@ describe('Check that values for new columns are shown only for employess current
 
   it('Logout from user A (admin)', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(() => done())
   })
 
   it('Login as user B', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: email_B,
-      driver: driver
+      driver
     }).then(() => done())
   })
 
   it('Login as user B and ensure she sees deducted days only for user B (self) and user C but not for user A', function(done) {
     open_page_func({
       url: `${application_host}calendar/teamview/`,
-      driver: driver
+      driver
     })
       .then(() =>
         driver.findElement(
@@ -321,23 +321,23 @@ describe('Check that values for new columns are shown only for employess current
 
   it('Logout from user B', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(() => done())
   })
 
   it('Login as user C', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: email_C,
-      driver: driver
+      driver
     }).then(() => done())
   })
 
   it('Login as user C and ensure she sees only values for her account', function(done) {
     open_page_func({
       url: `${application_host}calendar/teamview/`,
-      driver: driver
+      driver
     })
       .then(() =>
         driver.findElement(

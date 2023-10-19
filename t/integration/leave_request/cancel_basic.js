@@ -1,21 +1,21 @@
 'use strict'
 
-const By = require('selenium-webdriver').By,
-  until = require('selenium-webdriver').until,
-  Promise = require('bluebird'),
-  moment = require('moment'),
-  expect = require('chai').expect,
-  add_new_user_func = require('../../lib/add_new_user'),
-  check_elements_func = require('../../lib/check_elements'),
-  config = require('../../lib/config'),
-  login_user_func = require('../../lib/login_with_user'),
-  logout_user_func = require('../../lib/logout_user'),
-  open_page_func = require('../../lib/open_page'),
-  register_new_user_func = require('../../lib/register_new_user'),
-  submit_form_func = require('../../lib/submit_form'),
-  user_info_func = require('../../lib/user_info'),
-  application_host = config.get_application_host(),
-  some_weekday_date = moment()
+const By = require('selenium-webdriver').By;
+  const until = require('selenium-webdriver').until;
+  const Promise = require('bluebird');
+  const moment = require('moment');
+  const expect = require('chai').expect;
+  const add_new_user_func = require('../../lib/add_new_user');
+  const check_elements_func = require('../../lib/check_elements');
+  const config = require('../../lib/config');
+  const login_user_func = require('../../lib/login_with_user');
+  const logout_user_func = require('../../lib/logout_user');
+  const open_page_func = require('../../lib/open_page');
+  const register_new_user_func = require('../../lib/register_new_user');
+  const submit_form_func = require('../../lib/submit_form');
+  const user_info_func = require('../../lib/user_info');
+  const application_host = config.get_application_host();
+  const some_weekday_date = moment()
     .utc()
     .startOf('year')
     .add(1, 'week')
@@ -43,7 +43,7 @@ const By = require('selenium-webdriver').By,
 describe('Leave request cancelation', function() {
   this.timeout(config.get_execution_timeout())
 
-  var driver, email_A, email_B, user_id_A, user_id_B
+  let driver, email_A, email_B, user_id_A, user_id_B
 
   it('Check precondition', function() {
     expect(moment().format('YYYY')).to.be.eq(
@@ -53,7 +53,7 @@ describe('Leave request cancelation', function() {
 
   it('Register new company', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(function(data) {
       driver = data.driver
       email_A = data.email
@@ -63,8 +63,8 @@ describe('Leave request cancelation', function() {
 
   it('Create second user B', function(done) {
     add_new_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function(data) {
       email_B = data.new_user_email
       done()
@@ -73,7 +73,7 @@ describe('Leave request cancelation', function() {
 
   it('Obtain information about admin user A', function(done) {
     user_info_func({
-      driver: driver,
+      driver,
       email: email_A
     }).then(function(data) {
       user_id_A = data.user.id
@@ -83,7 +83,7 @@ describe('Leave request cancelation', function() {
 
   it('Obtain information about user B', function(done) {
     user_info_func({
-      driver: driver,
+      driver,
       email: email_B
     }).then(function(data) {
       user_id_B = data.user.id
@@ -93,8 +93,8 @@ describe('Leave request cancelation', function() {
 
   it('Logout from user A (admin)', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -102,9 +102,9 @@ describe('Leave request cancelation', function() {
 
   it('Login as user B', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: email_B,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -127,7 +127,7 @@ describe('Leave request cancelation', function() {
 
   it('Submit new leave request from user B for one weekday', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'input#from',
@@ -147,7 +147,7 @@ describe('Leave request cancelation', function() {
   it('Open requests page', function(done) {
     open_page_func({
       url: application_host + 'requests/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -155,7 +155,7 @@ describe('Leave request cancelation', function() {
 
   it('Ensure newly created request is on Requests page', function(done) {
     check_elements_func({
-      driver: driver,
+      driver,
       elements_to_check: [
         {
           selector:
@@ -219,8 +219,8 @@ describe('Leave request cancelation', function() {
 
   it(' Logout from user B account', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -228,9 +228,9 @@ describe('Leave request cancelation', function() {
 
   it('Login back as admin user A', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: email_A,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -239,7 +239,7 @@ describe('Leave request cancelation', function() {
   it('Open requests page', function(done) {
     open_page_func({
       url: application_host + 'requests/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -255,7 +255,7 @@ describe('Leave request cancelation', function() {
   it('Open email audit page', function(done) {
     open_page_func({
       url: application_host + 'audit/email/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -279,7 +279,7 @@ describe('Leave request cancelation', function() {
   it('Open user B absences section', function(done) {
     open_page_func({
       url: application_host + 'users/edit/' + user_id_B + '/absences/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -293,7 +293,7 @@ describe('Leave request cancelation', function() {
       })
       .then(function(text) {
         // It says XX out of XX, where XX are the same
-        var allowances = text.match(/(\d+) out of (\d+)/).slice(1, 3)
+        const allowances = text.match(/(\d+) out of (\d+)/).slice(1, 3)
         expect(allowances[0]).to.be.eq(allowances[1])
         done()
       })
@@ -301,8 +301,8 @@ describe('Leave request cancelation', function() {
 
   it('Logout from user A (admin)', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -310,9 +310,9 @@ describe('Leave request cancelation', function() {
 
   it('Login as user B', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: email_B,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -335,7 +335,7 @@ describe('Leave request cancelation', function() {
 
   it('Submit leave request for the same date as the first', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'input#from',
@@ -355,7 +355,7 @@ describe('Leave request cancelation', function() {
   it('Open requests page', function(done) {
     open_page_func({
       url: application_host + 'requests/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -391,11 +391,11 @@ describe('Leave request cancelation', function() {
 describe('Check only requestor can see the Cancel button', function() {
   this.timeout(config.get_execution_timeout())
 
-  var driver, email_A, email_B, user_id_A, user_id_B
+  let driver, email_A, email_B, user_id_A, user_id_B
 
   it('Register new company', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(function(data) {
       driver = data.driver
       email_A = data.email
@@ -405,8 +405,8 @@ describe('Check only requestor can see the Cancel button', function() {
 
   it('Create second user B', function(done) {
     add_new_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function(data) {
       email_B = data.new_user_email
       done()
@@ -415,7 +415,7 @@ describe('Check only requestor can see the Cancel button', function() {
 
   it('Obtain information about admin user A', function(done) {
     user_info_func({
-      driver: driver,
+      driver,
       email: email_A
     }).then(function(data) {
       user_id_A = data.user.id
@@ -425,7 +425,7 @@ describe('Check only requestor can see the Cancel button', function() {
 
   it('Obtain information about user B', function(done) {
     user_info_func({
-      driver: driver,
+      driver,
       email: email_B
     }).then(function(data) {
       user_id_B = data.user.id
@@ -435,8 +435,8 @@ describe('Check only requestor can see the Cancel button', function() {
 
   it('Logout from user A (admin)', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -444,9 +444,9 @@ describe('Check only requestor can see the Cancel button', function() {
 
   it('Login as user B', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: email_B,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -469,7 +469,7 @@ describe('Check only requestor can see the Cancel button', function() {
 
   it('Submit new leave requesti from user B', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'input#from',
@@ -489,7 +489,7 @@ describe('Check only requestor can see the Cancel button', function() {
   it('Open requests page', function(done) {
     open_page_func({
       url: application_host + 'requests/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -510,8 +510,8 @@ describe('Check only requestor can see the Cancel button', function() {
 
   it('Logout from user A (admin)', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -519,9 +519,9 @@ describe('Check only requestor can see the Cancel button', function() {
 
   it('Login as admin user A', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: email_A,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -530,7 +530,7 @@ describe('Check only requestor can see the Cancel button', function() {
   it('Open user B absences section', function(done) {
     open_page_func({
       url: application_host + 'users/edit/' + user_id_B + '/absences/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })

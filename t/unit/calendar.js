@@ -1,16 +1,16 @@
 'use strict'
 
-var expect = require('chai').expect,
-  _ = require('underscore'),
-  model = require('../../lib/model/db'),
-  moment = require('moment'),
-  schedule = model.Schedule.build({ company_id: 1 }),
-  CalendarMonth = require('../../lib/model/calendar_month')
+const expect = require('chai').expect;
+  const _ = require('underscore');
+  const model = require('../../lib/model/db');
+  const moment = require('moment');
+  const schedule = model.Schedule.build({ company_id: 1 });
+  const CalendarMonth = require('../../lib/model/calendar_month')
 
 describe('Check calendar month object', function() {
   it('Normalize provided date to be at the begining of the month', function() {
-    var january = new CalendarMonth('2015-01-10', {
-      schedule: schedule,
+    const january = new CalendarMonth('2015-01-10', {
+      schedule,
       today: moment.utc()
     })
 
@@ -18,50 +18,50 @@ describe('Check calendar month object', function() {
   })
 
   it('Knows on which week day month starts', function() {
-    var january = new CalendarMonth('2015-01-21', {
-      schedule: schedule,
+    const january = new CalendarMonth('2015-01-21', {
+      schedule,
       today: moment.utc()
     })
     expect(january.week_day()).to.be.equal(4)
 
-    var feb = new CalendarMonth('2015-02-21', {
-      schedule: schedule,
+    const feb = new CalendarMonth('2015-02-21', {
+      schedule,
       today: moment.utc()
     })
     expect(feb.week_day()).to.be.equal(7)
   })
 
   it('Knows how many blanks to put before first day of the month', function() {
-    var january = new CalendarMonth('2015-01-11', {
-      schedule: schedule,
+    const january = new CalendarMonth('2015-01-11', {
+      schedule,
       today: moment.utc()
     })
     expect(january.how_many_blanks_at_the_start()).to.be.equal(3)
 
-    var feb = new CalendarMonth('2015-02-11', {
-      schedule: schedule,
+    const feb = new CalendarMonth('2015-02-11', {
+      schedule,
       today: moment.utc()
     })
     expect(feb.how_many_blanks_at_the_start()).to.be.equal(6)
   })
 
   it('Knows how many blanks to put after the last day of the month', function() {
-    var january = new CalendarMonth('2015-01-11', {
-      schedule: schedule,
+    const january = new CalendarMonth('2015-01-11', {
+      schedule,
       today: moment.utc()
     })
     expect(january.how_many_blanks_at_the_end()).to.be.equal(1)
 
-    var feb = new CalendarMonth('2015-02-11', {
-      schedule: schedule,
+    const feb = new CalendarMonth('2015-02-11', {
+      schedule,
       today: moment.utc()
     })
     expect(feb.how_many_blanks_at_the_end()).to.be.equal(1)
   })
 
   it('Knows whether day is weekend', function() {
-    var feb = new CalendarMonth('2015-02-12', {
-      schedule: schedule,
+    const feb = new CalendarMonth('2015-02-12', {
+      schedule,
       today: moment.utc()
     })
     expect(feb.is_weekend(12)).not.to.be.ok
@@ -71,12 +71,12 @@ describe('Check calendar month object', function() {
   })
 
   it('Knows how to generate data structure for template', function() {
-    var january = new CalendarMonth('2015-01-11', {
-        schedule: schedule,
+    const january = new CalendarMonth('2015-01-11', {
+        schedule,
         today: moment.utc()
-      }),
-      object_to_test = january.as_for_template()
-    delete object_to_test['moment']
+      });
+      let object_to_test = january.as_for_template()
+    delete object_to_test.moment
     object_to_test.weeks.forEach(function(week) {
       week.forEach(function(day) {
         delete day.leave_obj
@@ -133,12 +133,12 @@ describe('Check calendar month object', function() {
       ]
     })
 
-    var apr = new CalendarMonth('2015-04-11', {
-      schedule: schedule,
+    const apr = new CalendarMonth('2015-04-11', {
+      schedule,
       today: moment.utc()
     })
     object_to_test = apr.as_for_template()
-    delete object_to_test['moment']
+    delete object_to_test.moment
     object_to_test.weeks.forEach(function(week) {
       week.forEach(function(day) {
         delete day.leave_obj
@@ -197,8 +197,8 @@ describe('Check calendar month object', function() {
   })
 
   it('Sanity checks pass', function() {
-    var apr = new CalendarMonth('2015-04-01', {
-      schedule: schedule,
+    const apr = new CalendarMonth('2015-04-01', {
+      schedule,
       today: moment.utc()
     })
 
@@ -208,9 +208,9 @@ describe('Check calendar month object', function() {
   })
 
   it('It knows whether day is bank holiday', function() {
-    var mar = new CalendarMonth('2015-03-19', {
+    const mar = new CalendarMonth('2015-03-19', {
       bank_holidays: [{ date: '2015-03-08' }],
-      schedule: schedule,
+      schedule,
       today: moment.utc()
     })
 

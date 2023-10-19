@@ -1,14 +1,14 @@
 'use strict'
 
-const openPageFunc = require('./open_page'),
-  userInfoFunc = require('./user_info'),
-  submitFormFunc = require('./submit_form'),
-  config = require('./config'),
-  bluebird = require('bluebird'),
-  moment = require('moment')
+const openPageFunc = require('./open_page');
+  const userInfoFunc = require('./user_info');
+  const submitFormFunc = require('./submit_form');
+  const config = require('./config');
+  const bluebird = require('bluebird');
+  const moment = require('moment')
 
 const getUserId = ({ userId, email, driver }) =>
-  !!userId
+  userId
     ? bluebird.resolve(userId)
     : userInfoFunc({ email, driver }).then(({ user: { id } }) =>
         bluebird.resolve(id)

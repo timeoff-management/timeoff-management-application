@@ -4,7 +4,7 @@ $(document).ready(function() {
   })
 
   $('button.departments-remove-btn').on('click', function(e) {
-    var delete_form = $('#delete_form')
+    const delete_form = $('#delete_form')
     delete_form.attr(
       'action',
       delete_form.attr('action') + $(this).attr('value') + '/'

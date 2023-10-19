@@ -1,16 +1,16 @@
 'use strict'
 
-const test = require('selenium-webdriver/testing'),
-  By = require('selenium-webdriver').By,
-  expect = require('chai').expect,
-  Promise = require('bluebird'),
-  rp = require('request-promise'),
-  registerNewUserFunc = require('../../lib/register_new_user'),
-  openPageFunc = require('../../lib/open_page'),
-  submitFormFunc = require('../../lib/submit_form'),
-  checkElementsFunc = require('../../lib/check_elements'),
-  config = require('../../lib/config'),
-  applicationHost = config.get_application_host()
+const test = require('selenium-webdriver/testing');
+  const By = require('selenium-webdriver').By;
+  const expect = require('chai').expect;
+  const Promise = require('bluebird');
+  const rp = require('request-promise');
+  const registerNewUserFunc = require('../../lib/register_new_user');
+  const openPageFunc = require('../../lib/open_page');
+  const submitFormFunc = require('../../lib/submit_form');
+  const checkElementsFunc = require('../../lib/check_elements');
+  const config = require('../../lib/config');
+  const applicationHost = config.get_application_host()
 
 /*
  *  Scenario to go in this test:
@@ -33,14 +33,14 @@ describe('Enable/disable Integration APIs', function() {
 
   let driver, oldToken, newToken, email
 
-  it('Create new company', done => {
+  it('Create new company', function(done) {
     registerNewUserFunc({ applicationHost }).then(data => {
       ;({ driver, email } = data)
       done()
     })
   })
 
-  it('Navigate to API page and ensure the API is disable', done => {
+  it('Navigate to API page and ensure the API is disable', function(done) {
     openPageFunc({
       driver,
       url: `${applicationHost}settings/company/integration-api/`
@@ -60,7 +60,7 @@ describe('Enable/disable Integration APIs', function() {
       .then(() => done())
   })
 
-  it('Read the key and try to invoke the API with that key: ensure the end point is blocked', done => {
+  it('Read the key and try to invoke the API with that key: ensure the end point is blocked', function(done) {
     driver
       .findElement(By.css('input#token-value'))
       .then(el => el.getAttribute('value'))
@@ -91,7 +91,7 @@ describe('Enable/disable Integration APIs', function() {
       })
   })
 
-  it('Enable the API and repeate the invokation above: ensure that now it is successful', done => {
+  it('Enable the API and repeate the invokation above: ensure that now it is successful', function(done) {
     openPageFunc({
       driver,
       url: `${applicationHost}settings/company/integration-api/`
@@ -131,7 +131,7 @@ describe('Enable/disable Integration APIs', function() {
       })
   })
 
-  it('Regenerate the API key', done => {
+  it('Regenerate the API key', function(done) {
     openPageFunc({
       driver,
       url: `${applicationHost}settings/company/integration-api/`
@@ -151,7 +151,7 @@ describe('Enable/disable Integration APIs', function() {
       .then(() => done())
   })
 
-  it('Ensure that old API key is not valid anymore', done => {
+  it('Ensure that old API key is not valid anymore', function(done) {
     rp(`${applicationHost}integration/v1/report/absence`, {
       method: 'GET',
       body: '{}',
@@ -176,7 +176,7 @@ describe('Enable/disable Integration APIs', function() {
       })
   })
 
-  it('Ensure that newly renenerated API key works fine', done => {
+  it('Ensure that newly renenerated API key works fine', function(done) {
     rp(`${applicationHost}integration/v1/report/absence`, {
       method: 'GET',
       body: '{}',
@@ -195,7 +195,7 @@ describe('Enable/disable Integration APIs', function() {
       })
   })
 
-  it('Disable the API integration for current company', done => {
+  it('Disable the API integration for current company', function(done) {
     openPageFunc({
       driver,
       url: `${applicationHost}settings/company/integration-api/`
@@ -218,7 +218,7 @@ describe('Enable/disable Integration APIs', function() {
       .then(() => done())
   })
 
-  it('Ensure that API end points do not work anymore', done => {
+  it('Ensure that API end points do not work anymore', function(done) {
     rp(`${applicationHost}integration/v1/report/absence`, {
       method: 'GET',
       body: '{}',

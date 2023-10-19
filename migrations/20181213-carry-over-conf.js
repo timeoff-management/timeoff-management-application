@@ -3,8 +3,7 @@
 const models = require('../lib/model/db')
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.describeTable('Companies').then(attributes => {
+  up: (queryInterface, Sequelize) => queryInterface.describeTable('Companies').then(attributes => {
       if (attributes.hasOwnProperty('carry_over')) {
         return 1
       }
@@ -14,8 +13,7 @@ module.exports = {
         'carry_over',
         models.Company.attributes.carry_over
       )
-    })
-  },
+    }),
 
   down: function(queryInterface, Sequelize) {
     return queryInterface.removeColumn('Companies', 'carry_over')

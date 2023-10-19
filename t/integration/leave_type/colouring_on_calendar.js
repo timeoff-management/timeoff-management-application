@@ -1,18 +1,18 @@
 'use strict'
 
-const test = require('selenium-webdriver/testing'),
-  until = require('selenium-webdriver').until,
-  register_new_user_func = require('../../lib/register_new_user'),
-  open_page_func = require('../../lib/open_page'),
-  submit_form_func = require('../../lib/submit_form'),
-  user_info_func = require('../../lib/user_info'),
-  By = require('selenium-webdriver').By,
-  config = require('../../lib/config'),
-  Bluebird = require('bluebird'),
-  expect = require('chai').expect,
-  application_host = config.get_application_host(),
-  leave_type_edit_form_id = '#leave_type_edit_form',
-  userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year')
+const test = require('selenium-webdriver/testing');
+  const until = require('selenium-webdriver').until;
+  const register_new_user_func = require('../../lib/register_new_user');
+  const open_page_func = require('../../lib/open_page');
+  const submit_form_func = require('../../lib/submit_form');
+  const user_info_func = require('../../lib/user_info');
+  const By = require('selenium-webdriver').By;
+  const config = require('../../lib/config');
+  const Bluebird = require('bluebird');
+  const expect = require('chai').expect;
+  const application_host = config.get_application_host();
+  const leave_type_edit_form_id = '#leave_type_edit_form';
+  const userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year')
 
 /*
  *  Aim of the scenario: to ensure that half a days are highlighted correctly
@@ -47,7 +47,7 @@ describe('Coloring of half days', function() {
 
   it('Performing registration process', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(data => {
       driver = data.driver
       user_email = data.email
@@ -57,7 +57,7 @@ describe('Coloring of half days', function() {
 
   it('Obtain information user', function(done) {
     user_info_func({
-      driver: driver,
+      driver,
       email: user_email
     }).then(data => {
       user_id = data.user.id
@@ -65,20 +65,20 @@ describe('Coloring of half days', function() {
     })
   })
 
-  it('Ensure user starts at the very beginning of current year', done => {
+  it('Ensure user starts at the very beginning of current year', function(done) {
     userStartsAtTheBeginingOfYear({ driver, email: user_email, year: 2018 })
       .then(() => open_page_func({ url: application_host, driver }))
       .then(() => done())
   })
 
-  it('Changes default color for Sick days to be "color 3"', done => {
+  it('Changes default color for Sick days to be "color 3"', function(done) {
     open_page_func({
       url: application_host + 'settings/general/',
-      driver: driver
+      driver
     })
       .then(() =>
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector:
@@ -106,21 +106,21 @@ describe('Coloring of half days', function() {
       })
   })
 
-  it('Go Calendar page', done => {
+  it('Go Calendar page', function(done) {
     open_page_func({
       url: application_host,
-      driver: driver
+      driver
     }).then(() => done())
   })
 
-  it('Add absence: 2018-02-01 (afternoon) - 2018-02-02 (morning) Sick', done => {
+  it('Add absence: 2018-02-01 (afternoon) - 2018-02-02 (morning) Sick', function(done) {
     driver
       .findElement(By.css('#book_time_off_btn'))
       .then(el => el.click())
       .then(() => driver.sleep(1000))
       .then(() =>
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: 'select[name="from_date_part"]',
@@ -149,14 +149,14 @@ describe('Coloring of half days', function() {
       .then(() => done())
   })
 
-  it('Add absence: 2018-02-02 (afternoon) - 2018-02-02 (afternnon) : Holiday', done => {
+  it('Add absence: 2018-02-02 (afternoon) - 2018-02-02 (afternnon) : Holiday', function(done) {
     driver
       .findElement(By.css('#book_time_off_btn'))
       .then(el => el.click())
       .then(() => driver.sleep(1000))
       .then(() =>
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: 'select[name="from_date_part"]',
@@ -186,14 +186,14 @@ describe('Coloring of half days', function() {
       .then(() => done())
   })
 
-  it('Add absence: 2018-02-08 (morning) - 2018-02-08 (morning) : Holiday (0.5 days)', done => {
+  it('Add absence: 2018-02-08 (morning) - 2018-02-08 (morning) : Holiday (0.5 days)', function(done) {
     driver
       .findElement(By.css('#book_time_off_btn'))
       .then(el => el.click())
       .then(() => driver.sleep(1000))
       .then(() =>
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: 'select[name="from_date_part"]',
@@ -223,14 +223,14 @@ describe('Coloring of half days', function() {
       .then(() => done())
   })
 
-  it('Add absence: 2018-02-13 (afternoon) - 2018-02-14 (morning) : Sick', done => {
+  it('Add absence: 2018-02-13 (afternoon) - 2018-02-14 (morning) : Sick', function(done) {
     driver
       .findElement(By.css('#book_time_off_btn'))
       .then(el => el.click())
       .then(() => driver.sleep(1000))
       .then(() =>
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: 'select[name="from_date_part"]',
@@ -260,14 +260,14 @@ describe('Coloring of half days', function() {
       .then(() => done())
   })
 
-  it('Add absence: 2018-02-14 (afternoon) - 2018-02-15 (morning) : Holiday', done => {
+  it('Add absence: 2018-02-14 (afternoon) - 2018-02-15 (morning) : Holiday', function(done) {
     driver
       .findElement(By.css('#book_time_off_btn'))
       .then(el => el.click())
       .then(() => driver.sleep(1000))
       .then(() =>
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: 'select[name="from_date_part"]',
@@ -300,7 +300,7 @@ describe('Coloring of half days', function() {
   it('Open requests page', function(done) {
     open_page_func({
       url: application_host + 'requests/',
-      driver: driver
+      driver
     }).then(() => done())
   })
 
@@ -329,10 +329,10 @@ describe('Coloring of half days', function() {
       .then(() => done())
   })
 
-  it('Go to callendar page and ensure that all half days cells have correct color classes', done => {
+  it('Go to callendar page and ensure that all half days cells have correct color classes', function(done) {
     open_page_func({
       url: application_host + 'calendar/?year=2018&show_full_year=1',
-      driver: driver
+      driver
     })
       // Check Feb 1
       .then(() =>
@@ -475,10 +475,10 @@ describe('Coloring of half days', function() {
       .then(() => done())
   })
 
-  it('Go to Team view page and ensure that all half a day cells have correct color classes', done => {
+  it('Go to Team view page and ensure that all half a day cells have correct color classes', function(done) {
     open_page_func({
       url: application_host + 'calendar/teamview/?date=2018-02',
-      driver: driver
+      driver
     })
       // Check Feb 1
       .then(() =>
@@ -669,10 +669,10 @@ describe('Coloring of half days', function() {
       .then(() => done())
   })
 
-  it('On Team view page ensure that days deducted from allowance are stated correctly', done => {
+  it('On Team view page ensure that days deducted from allowance are stated correctly', function(done) {
     open_page_func({
       url: application_host + 'calendar/teamview/?date=2018-02',
-      driver: driver
+      driver
     })
       .then(() =>
         driver.findElement(
@@ -690,12 +690,12 @@ describe('Coloring of half days', function() {
       })
   })
 
-  it('Go to report page and for 2018-02 ensure that report contains correct summaries', done => {
+  it('Go to report page and for 2018-02 ensure that report contains correct summaries', function(done) {
     open_page_func({
       url:
         application_host +
         'reports/allowancebytime/?start_date=2018-02&end_date=2018-02',
-      driver: driver
+      driver
     })
       .then(() =>
         driver.findElement(By.css(`tr[data-vpp-user-list-row="${user_id}"]`))

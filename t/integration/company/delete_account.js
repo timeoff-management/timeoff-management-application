@@ -1,18 +1,18 @@
 'use strict'
 
-const test = require('selenium-webdriver/testing'),
-  By = require('selenium-webdriver').By,
-  expect = require('chai').expect,
-  Promise = require('bluebird'),
-  register_new_user_func = require('../../lib/register_new_user'),
-  login_user_func = require('../../lib/login_with_user'),
-  logout_user_func = require('../../lib/logout_user'),
-  open_page_func = require('../../lib/open_page'),
-  submit_form_func = require('../../lib/submit_form'),
-  config = require('../../lib/config'),
-  application_host = config.get_application_host(),
-  company_edit_form_id = '#company_edit_form',
-  userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year')
+const test = require('selenium-webdriver/testing');
+  const By = require('selenium-webdriver').By;
+  const expect = require('chai').expect;
+  const Promise = require('bluebird');
+  const register_new_user_func = require('../../lib/register_new_user');
+  const login_user_func = require('../../lib/login_with_user');
+  const logout_user_func = require('../../lib/logout_user');
+  const open_page_func = require('../../lib/open_page');
+  const submit_form_func = require('../../lib/submit_form');
+  const config = require('../../lib/config');
+  const application_host = config.get_application_host();
+  const company_edit_form_id = '#company_edit_form';
+  const userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year')
 
 /*
  *  Scenario to test:
@@ -35,9 +35,9 @@ describe('Remove company account', function() {
 
   let driver, emailCompanyA, emailCompanyB
 
-  it('Create Company A', done => {
+  it('Create Company A', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(data => {
       emailCompanyA = data.email
       driver = data.driver
@@ -45,7 +45,7 @@ describe('Remove company account', function() {
     })
   })
 
-  it('Ensure user starts at the very beginning of current year', done => {
+  it('Ensure user starts at the very beginning of current year', function(done) {
     userStartsAtTheBeginingOfYear({
       driver,
       email: emailCompanyA,
@@ -53,7 +53,7 @@ describe('Remove company account', function() {
     }).then(() => done())
   })
 
-  it('Book a leave by user from company A', done => {
+  it('Book a leave by user from company A', function(done) {
     driver
       .findElement(By.css('#book_time_off_btn'))
       .then(el => el.click())
@@ -61,7 +61,7 @@ describe('Remove company account', function() {
       .then(el => driver.sleep(1000))
       .then(() =>
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: 'select[name="from_date_part"]',
@@ -83,13 +83,13 @@ describe('Remove company account', function() {
       .then(() => done())
   })
 
-  it('Close down current session', done => {
+  it('Close down current session', function(done) {
     driver.quit().then(() => done())
   })
 
-  it('Create Company B', done => {
+  it('Create Company B', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(data => {
       emailCompanyB = data.email
       driver = data.driver
@@ -97,13 +97,13 @@ describe('Remove company account', function() {
     })
   })
 
-  it('Ensure user starts at the very beginning of current year', done => {
+  it('Ensure user starts at the very beginning of current year', function(done) {
     userStartsAtTheBeginingOfYear({ driver, email: emailCompanyB, year: 2018 })
       .then(() => open_page_func({ url: application_host, driver }))
       .then(() => done())
   })
 
-  it('Book a leave by user from company B', done => {
+  it('Book a leave by user from company B', function(done) {
     driver
       .findElement(By.css('#book_time_off_btn'))
       .then(el => el.click())
@@ -111,7 +111,7 @@ describe('Remove company account', function() {
       .then(el => driver.sleep(1000))
       .then(() =>
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: 'select[name="from_date_part"]',
@@ -133,25 +133,25 @@ describe('Remove company account', function() {
       .then(() => done())
   })
 
-  it('Logout from Company B', done => {
+  it('Logout from Company B', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(() => done())
   })
 
-  it("Login as Admin from company A and remove company's account", done => {
+  it("Login as Admin from company A and remove company's account", function(done) {
     let companyName
 
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: emailCompanyA,
-      driver: driver
+      driver
     })
       .then(() =>
         open_page_func({
           url: application_host + 'settings/general/',
-          driver: driver
+          driver
         })
       )
 
@@ -165,7 +165,7 @@ describe('Remove company account', function() {
       .then(() => driver.sleep(1000))
       .then(() =>
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: 'input[name="confirm_name"]',
@@ -191,7 +191,7 @@ describe('Remove company account', function() {
       .then(() => driver.sleep(1000))
       .then(() =>
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: 'input[name="confirm_name"]',
@@ -208,10 +208,10 @@ describe('Remove company account', function() {
       .then(() => done())
   })
 
-  it('Ensure that user is logout (by trying to poen general setting page)', done => {
+  it('Ensure that user is logout (by trying to poen general setting page)', function(done) {
     open_page_func({
       url: application_host + 'settings/general/',
-      driver: driver
+      driver
     })
       .then(() => driver.getCurrentUrl())
       .then(url => {
@@ -220,27 +220,27 @@ describe('Remove company account', function() {
       })
   })
 
-  it('Ensure it is not possible to login back', done => {
+  it('Ensure it is not possible to login back', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: emailCompanyA,
-      driver: driver,
+      driver,
       should_fail: true
     }).then(() => done())
   })
 
-  it('Login as admin of company B', done => {
+  it('Login as admin of company B', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: emailCompanyB,
-      driver: driver
+      driver
     }).then(() => done())
   })
 
-  it('Ensure that admin still has a leave registered', done => {
+  it('Ensure that admin still has a leave registered', function(done) {
     open_page_func({
       url: application_host + 'requests/',
-      driver: driver
+      driver
     })
       .then(() =>
         driver.findElements(
@@ -264,10 +264,10 @@ describe('Remove company account', function() {
       })
   })
 
-  it('Ensure that there are still records in Email audit page', done => {
+  it('Ensure that there are still records in Email audit page', function(done) {
     open_page_func({
       url: application_host + 'audit/email/',
-      driver: driver
+      driver
     })
       .then(() =>
         driver.findElements(By.css('tr.vpp-email-audit-entry-header'))
@@ -281,7 +281,7 @@ describe('Remove company account', function() {
       })
   })
 
-  after(done => {
+  after(function(done) {
     driver.quit().then(() => done())
   })
 })

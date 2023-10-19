@@ -1,18 +1,18 @@
 'use strict'
 
-const test = require('selenium-webdriver/testing'),
-  By = require('selenium-webdriver').By,
-  until = require('selenium-webdriver').until,
-  Promise = require('bluebird'),
-  expect = require('chai').expect,
-  registerNewUserFunc = require('../../lib/register_new_user'),
-  config = require('../../lib/config'),
-  openPageFunc = require('../../lib/open_page'),
-  submitFormFunc = require('../../lib/submit_form'),
-  userInfoFunc = require('../../lib/user_info'),
-  applicationHost = config.get_application_host(),
-  companyEditFormId = '#company_edit_form',
-  userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year')
+const test = require('selenium-webdriver/testing')
+const By = require('selenium-webdriver').By
+const until = require('selenium-webdriver').until
+const Promise = require('bluebird')
+const expect = require('chai').expect
+const registerNewUserFunc = require('../../lib/register_new_user')
+const config = require('../../lib/config')
+const openPageFunc = require('../../lib/open_page')
+const submitFormFunc = require('../../lib/submit_form')
+const userInfoFunc = require('../../lib/user_info')
+const applicationHost = config.get_application_host()
+const companyEditFormId = '#company_edit_form'
+const userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year')
 
 /*
  * Scenario:
@@ -31,21 +31,21 @@ describe('Carry over issue for users started in current year', function() {
 
   let driver, email, userId
 
-  it('Register new company', done => {
+  it('Register new company', function(done) {
     registerNewUserFunc({ applicationHost }).then(data => {
       ;({ driver, email } = data)
       done()
     })
   })
 
-  it('Obtain information about admin user', done => {
+  it('Obtain information about admin user', function(done) {
     userInfoFunc({ driver, email }).then(data => {
       userId = data.user.id
       done()
     })
   })
 
-  it('Update admin details to have start date at very beginig of this year', done => {
+  it('Update admin details to have start date at very beginig of this year', function(done) {
     userStartsAtTheBeginingOfYear({ driver, email }).then(() => done())
   })
 
@@ -56,7 +56,7 @@ describe('Carry over issue for users started in current year', function() {
     }).then(() => done())
   })
 
-  it('Ensure user does not have anything carried over from previous year', done => {
+  it('Ensure user does not have anything carried over from previous year', function(done) {
     driver
       .findElement(By.css('#allowanceCarriedOverPart'))
       .then(span => span.getText())
@@ -66,7 +66,7 @@ describe('Carry over issue for users started in current year', function() {
       })
   })
 
-  it('Update copany configuration to carry over all unused allowance from previous year', done => {
+  it('Update copany configuration to carry over all unused allowance from previous year', function(done) {
     openPageFunc({
       driver,
       url: `${applicationHost}settings/general/`
@@ -89,7 +89,7 @@ describe('Carry over issue for users started in current year', function() {
       .then(() => done())
   })
 
-  it('Recalculate carried over allowance for the company', done => {
+  it('Recalculate carried over allowance for the company', function(done) {
     submitFormFunc({
       driver,
       submit_button_selector:
@@ -99,7 +99,7 @@ describe('Carry over issue for users started in current year', function() {
     }).then(() => done())
   })
 
-  it("Ensure that newly created user's carried over still remains 0", done => {
+  it("Ensure that newly created user's carried over still remains 0", function(done) {
     openPageFunc({
       driver,
       url: `${applicationHost}users/edit/${userId}/absences/`
@@ -112,7 +112,7 @@ describe('Carry over issue for users started in current year', function() {
       })
   })
 
-  after(done => {
+  after(function(done) {
     driver.quit().then(() => done())
   })
 })

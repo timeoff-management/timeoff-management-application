@@ -1,15 +1,15 @@
 'use strict'
 
-const register_new_user_func = require('../../lib/register_new_user'),
-  open_page_func = require('../../lib/open_page'),
-  submit_form_func = require('../../lib/submit_form'),
-  expect = require('chai').expect,
-  By = require('selenium-webdriver').By,
-  config = require('../../lib/config'),
-  application_host = config.get_application_host(),
-  bankholiday_form_id = '#update_bankholiday_form',
-  new_bankholiday_form_id = '#add_new_bank_holiday_form',
-  company_edit_form_id = '#company_edit_form'
+const register_new_user_func = require('../../lib/register_new_user')
+const open_page_func = require('../../lib/open_page')
+const submit_form_func = require('../../lib/submit_form')
+const expect = require('chai').expect
+const By = require('selenium-webdriver').By
+const config = require('../../lib/config')
+const application_host = config.get_application_host()
+const bankholiday_form_id = '#update_bankholiday_form'
+const new_bankholiday_form_id = '#add_new_bank_holiday_form'
+const company_edit_form_id = '#company_edit_form'
 
 /*
  * This is a regressiopn for https://github.com/timeoff-management/application/issues/103
@@ -27,11 +27,11 @@ const register_new_user_func = require('../../lib/register_new_user'),
 describe('Try to manage Bank holidays with non-default date format', function() {
   this.timeout(config.get_execution_timeout())
 
-  var driver
+  let driver
 
   it('Register new company and ensure it has non-default date format', function(done) {
     register_new_user_func({
-      application_host: application_host,
+      application_host,
       default_date_format: 'DD/MM/YYYY'
     })
       .then(function(data) {
@@ -82,7 +82,7 @@ describe('Try to manage Bank holidays with non-default date format', function() 
         driver.sleep(1000)
 
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: new_bankholiday_form_id + ' input[name="name__new"]',
@@ -113,7 +113,7 @@ describe('Try to manage Bank holidays with non-default date format', function() 
         driver.sleep(1000)
 
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: new_bankholiday_form_id + ' input[name="name__new"]',
@@ -144,7 +144,7 @@ describe('Try to manage Bank holidays with non-default date format', function() 
         driver.sleep(1000)
 
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: new_bankholiday_form_id + ' input[name="name__new"]',
@@ -166,7 +166,7 @@ describe('Try to manage Bank holidays with non-default date format', function() 
 
   it('Rename Christmas to have proper name', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="name__0"]',
@@ -213,11 +213,11 @@ describe('Try to manage Bank holidays with non-default date format', function() 
 describe('Try to use DD/MM/YY and some missleading date', function() {
   this.timeout(config.get_execution_timeout())
 
-  var driver
+  let driver
 
   it('Register new company with default date to be DD/MM/YY', function(done) {
     register_new_user_func({
-      application_host: application_host,
+      application_host,
       default_date_format: 'DD/MM/YY'
     }).then(function(data) {
       driver = data.driver
@@ -243,7 +243,7 @@ describe('Try to use DD/MM/YY and some missleading date', function() {
         driver.sleep(1000)
 
         return submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: new_bankholiday_form_id + ' input[name="name__new"]',

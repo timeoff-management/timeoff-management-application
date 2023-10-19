@@ -1,17 +1,17 @@
 'use strict'
 
-var test = require('selenium-webdriver/testing'),
-  config = require('../lib/config'),
-  application_host = config.get_application_host(),
-  By = require('selenium-webdriver').By,
-  expect = require('chai').expect,
-  _ = require('underscore'),
-  Promise = require('bluebird'),
-  login_user_func = require('../lib/login_with_user'),
-  register_new_user_func = require('../lib/register_new_user'),
-  logout_user_func = require('../lib/logout_user'),
-  submit_form_func = require('../lib/submit_form'),
-  add_new_user_func = require('../lib/add_new_user')
+const test = require('selenium-webdriver/testing');
+  const config = require('../lib/config');
+  const application_host = config.get_application_host();
+  const By = require('selenium-webdriver').By;
+  const expect = require('chai').expect;
+  const _ = require('underscore');
+  const Promise = require('bluebird');
+  const login_user_func = require('../lib/login_with_user');
+  const register_new_user_func = require('../lib/register_new_user');
+  const logout_user_func = require('../lib/logout_user');
+  const submit_form_func = require('../lib/submit_form');
+  const add_new_user_func = require('../lib/add_new_user')
 
 /*
   At this moment there is a bug when anyone can hijack acount if primary email
@@ -29,11 +29,11 @@ var test = require('selenium-webdriver/testing'),
 describe('Reuse email from existing acount when creating new company', function() {
   this.timeout(config.get_execution_timeout())
 
-  var admin_email, driver
+  let admin_email, driver
 
   it('Create new company', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(function(data) {
       driver = data.driver
       admin_email = data.email
@@ -43,8 +43,8 @@ describe('Reuse email from existing acount when creating new company', function(
 
   it('Logout from newly created account', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -58,7 +58,7 @@ describe('Reuse email from existing acount when creating new company', function(
 
   it('Try to create another account with the same email', function(done) {
     register_new_user_func({
-      application_host: application_host,
+      application_host,
       user_email: admin_email,
       failing_error_message:
         'Failed to register user please contact customer service. Error: Email is already used'

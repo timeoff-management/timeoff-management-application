@@ -1,21 +1,21 @@
 'use strict'
 
-var test = require('selenium-webdriver/testing'),
-  By = require('selenium-webdriver').By,
-  until = require('selenium-webdriver').until,
-  Promise = require('bluebird'),
-  expect = require('chai').expect,
-  add_new_user_func = require('../../lib/add_new_user'),
-  check_elements_func = require('../../lib/check_elements'),
-  config = require('../../lib/config'),
-  login_user_func = require('../../lib/login_with_user'),
-  logout_user_func = require('../../lib/logout_user'),
-  open_page_func = require('../../lib/open_page'),
-  register_new_user_func = require('../../lib/register_new_user'),
-  submit_form_func = require('../../lib/submit_form'),
-  user_info_func = require('../../lib/user_info'),
-  application_host = config.get_application_host(),
-  some_weekday_date = '2015-06-17'
+const test = require('selenium-webdriver/testing');
+  const By = require('selenium-webdriver').By;
+  const until = require('selenium-webdriver').until;
+  const Promise = require('bluebird');
+  const expect = require('chai').expect;
+  const add_new_user_func = require('../../lib/add_new_user');
+  const check_elements_func = require('../../lib/check_elements');
+  const config = require('../../lib/config');
+  const login_user_func = require('../../lib/login_with_user');
+  const logout_user_func = require('../../lib/logout_user');
+  const open_page_func = require('../../lib/open_page');
+  const register_new_user_func = require('../../lib/register_new_user');
+  const submit_form_func = require('../../lib/submit_form');
+  const user_info_func = require('../../lib/user_info');
+  const application_host = config.get_application_host();
+  const some_weekday_date = '2015-06-17'
 
 /*
  *  Scenario:
@@ -40,11 +40,11 @@ var test = require('selenium-webdriver/testing'),
 describe('Auto approvals', function() {
   this.timeout(config.get_execution_timeout())
 
-  var driver, email_A, email_B, user_id_A, user_id_B
+  let driver, email_A, email_B, user_id_A, user_id_B
 
   it('Register new company', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(function(data) {
       driver = data.driver
       email_A = data.email
@@ -54,8 +54,8 @@ describe('Auto approvals', function() {
 
   it('Create second user B', function(done) {
     add_new_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function(data) {
       email_B = data.new_user_email
       done()
@@ -64,7 +64,7 @@ describe('Auto approvals', function() {
 
   it('Obtain information about admin user A', function(done) {
     user_info_func({
-      driver: driver,
+      driver,
       email: email_A
     }).then(function(data) {
       user_id_A = data.user.id
@@ -74,7 +74,7 @@ describe('Auto approvals', function() {
 
   it('Obtain information about user B', function(done) {
     user_info_func({
-      driver: driver,
+      driver,
       email: email_B
     }).then(function(data) {
       user_id_B = data.user.id
@@ -85,7 +85,7 @@ describe('Auto approvals', function() {
   it('Open details page for user B', function(done) {
     open_page_func({
       url: application_host + 'users/edit/' + user_id_B + '/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -93,7 +93,7 @@ describe('Auto approvals', function() {
 
   it('Update settings to make all its leave requests auto approved', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'input[name="auto_approve"]',
@@ -110,8 +110,8 @@ describe('Auto approvals', function() {
 
   it('Logout from admin user', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -119,9 +119,9 @@ describe('Auto approvals', function() {
 
   it('Login as regular user B', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: email_B,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -144,7 +144,7 @@ describe('Auto approvals', function() {
 
   it('Submit new leave requesti from user B', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'input#from',
@@ -164,7 +164,7 @@ describe('Auto approvals', function() {
   it('Open requests page', function(done) {
     open_page_func({
       url: application_host + 'requests/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -185,8 +185,8 @@ describe('Auto approvals', function() {
 
   it('Logout from user B', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -194,9 +194,9 @@ describe('Auto approvals', function() {
 
   it('Login as admin user A', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: email_A,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -205,7 +205,7 @@ describe('Auto approvals', function() {
   it('Open requests page', function(done) {
     open_page_func({
       url: application_host + 'requests/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -221,7 +221,7 @@ describe('Auto approvals', function() {
   it('Open email audit page', function(done) {
     open_page_func({
       url: application_host + 'audit/email/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -244,8 +244,8 @@ describe('Auto approvals', function() {
 
   it('Logout from admin user', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -253,9 +253,9 @@ describe('Auto approvals', function() {
 
   it('Login as regular user B', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: email_B,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -264,7 +264,7 @@ describe('Auto approvals', function() {
   it('Open requests page', function(done) {
     open_page_func({
       url: application_host + 'requests/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -302,8 +302,8 @@ describe('Auto approvals', function() {
 
   it('Logout from user B', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -311,9 +311,9 @@ describe('Auto approvals', function() {
 
   it('Login as admin user A', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: email_A,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -322,7 +322,7 @@ describe('Auto approvals', function() {
   it('Open user B absences section', function(done) {
     open_page_func({
       url: application_host + 'users/edit/' + user_id_B + '/absences/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -340,7 +340,7 @@ describe('Auto approvals', function() {
   it('Open requests page', function(done) {
     open_page_func({
       url: application_host + 'requests/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -356,7 +356,7 @@ describe('Auto approvals', function() {
   it('Open email audit page', function(done) {
     open_page_func({
       url: application_host + 'audit/email/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })

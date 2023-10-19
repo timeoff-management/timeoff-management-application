@@ -1,16 +1,16 @@
 'use strict'
 
-var test = require('selenium-webdriver/testing'),
-  register_new_user_func = require('../lib/register_new_user'),
-  login_user_func = require('../lib/login_with_user'),
-  add_new_user_func = require('../lib/add_new_user'),
-  By = require('selenium-webdriver').By,
-  bluebird = require('bluebird'),
-  expect = require('chai').expect,
-  _ = require('underscore'),
-  logout_user_func = require('../lib/logout_user'),
-  config = require('../lib/config'),
-  application_host = config.get_application_host()
+const test = require('selenium-webdriver/testing');
+  const register_new_user_func = require('../lib/register_new_user');
+  const login_user_func = require('../lib/login_with_user');
+  const add_new_user_func = require('../lib/add_new_user');
+  const By = require('selenium-webdriver').By;
+  const bluebird = require('bluebird');
+  const expect = require('chai').expect;
+  const _ = require('underscore');
+  const logout_user_func = require('../lib/logout_user');
+  const config = require('../lib/config');
+  const application_host = config.get_application_host()
 
 /*
  *  Scenario to check in thus test.
@@ -28,11 +28,11 @@ var test = require('selenium-webdriver/testing'),
 describe('Menu bar reflect permissions of logged in user', function() {
   this.timeout(config.get_execution_timeout())
 
-  var ordinary_user_email, driver
+  let ordinary_user_email, driver
 
   it('Create new company', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(function(data) {
       driver = data.driver
       done()
@@ -40,8 +40,8 @@ describe('Menu bar reflect permissions of logged in user', function() {
   })
 
   it('Check that all necessary menus are shown', function(done) {
-    var promises_to_check = check_presense_promises({
-      driver: driver,
+    const promises_to_check = check_presense_promises({
+      driver,
       presense: true,
       selectors: [
         'li > a[href="/calendar/"]',
@@ -62,8 +62,8 @@ describe('Menu bar reflect permissions of logged in user', function() {
 
   it('Create non-admin user', function(done) {
     add_new_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function(data) {
       ordinary_user_email = data.new_user_email
       done()
@@ -72,8 +72,8 @@ describe('Menu bar reflect permissions of logged in user', function() {
 
   it('Logout from admin acount', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -81,17 +81,17 @@ describe('Menu bar reflect permissions of logged in user', function() {
 
   it('Login as ordinary user', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: ordinary_user_email,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
   })
 
   it('Check that limited links are there', function(done) {
-    var promises_to_check = check_presense_promises({
-      driver: driver,
+    const promises_to_check = check_presense_promises({
+      driver,
       presense: true,
       selectors: [
         'li > a[href="/calendar/"]',
@@ -108,8 +108,8 @@ describe('Menu bar reflect permissions of logged in user', function() {
   })
 
   it('Check that admin links are not shown', function(done) {
-    var promises_to_check = check_presense_promises({
-      driver: driver,
+    const promises_to_check = check_presense_promises({
+      driver,
       presense: false,
       selectors: [
         'li > a[href="/users/"]',
@@ -131,11 +131,11 @@ describe('Menu bar reflect permissions of logged in user', function() {
 })
 
 function check_presense_promises(args) {
-  var selectors = args.selectors,
-    driver = args.driver,
-    presense = args.presense || false
+  const selectors = args.selectors;
+    const driver = args.driver;
+    const presense = args.presense || false
 
-  var promises_to_check = _.map(selectors, function(selector) {
+  const promises_to_check = _.map(selectors, function(selector) {
     return driver.isElementPresent(By.css(selector)).then(function(is_present) {
       expect(is_present).to.be.equal(presense)
       return bluebird.resolve()

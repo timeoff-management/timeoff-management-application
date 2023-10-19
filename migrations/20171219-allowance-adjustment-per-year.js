@@ -1,7 +1,7 @@
 'use strict'
 
-var models = require('../lib/model/db'),
-  Promise = require('bluebird')
+const models = require('../lib/model/db');
+  const Promise = require('bluebird')
 
 module.exports = {
   up: function(queryInterface, Sequelize) {
@@ -16,7 +16,7 @@ module.exports = {
           return Promise.resolve()
         }
 
-        let sql =
+        const sql =
           'INSERT INTO user_allowance_adjustment (year, adjustment, user_id, created_at) ' +
           "SELECT 2017 AS year, adjustment as adjustment, id as user_id, date() || ' ' || time() as created_at " +
           'FROM users'

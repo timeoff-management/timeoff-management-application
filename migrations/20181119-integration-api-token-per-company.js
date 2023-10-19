@@ -1,10 +1,9 @@
 'use strict'
 
-var models = require('../lib/model/db')
+const models = require('../lib/model/db')
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface
+  up: (queryInterface, Sequelize) => queryInterface
       .describeTable('Companies')
       .then(attributes => {
         if (attributes.hasOwnProperty('integration_api_token')) {
@@ -29,8 +28,7 @@ module.exports = {
             models.Company.attributes.integration_api_enabled
           )
         })
-      )
-  },
+      ),
 
   down: (queryInterface, Sequelize) =>
     queryInterface

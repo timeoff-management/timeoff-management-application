@@ -1,7 +1,7 @@
 'use strict'
 
-var models = require('../lib/model/db'),
-  Promise = require('bluebird')
+const models = require('../lib/model/db');
+  const Promise = require('bluebird')
 
 module.exports = {
   up: function(queryInterface, Sequelize) {
@@ -10,7 +10,7 @@ module.exports = {
         return Promise.resolve()
       }
 
-      if ('sqlite' !== queryInterface.sequelize.getDialect()) {
+      if (queryInterface.sequelize.getDialect() !== 'sqlite') {
         // For non SQLite: it is easy
         return queryInterface.removeColumn(models.User.tableName, 'adjustment')
       }

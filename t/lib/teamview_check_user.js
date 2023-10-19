@@ -8,18 +8,18 @@
 
 'use strict'
 
-var By = require('selenium-webdriver').By,
-  expect = require('chai').expect,
-  open_page_func = require('./open_page'),
-  config = require('./config'),
-  bluebird = require('bluebird')
+const By = require('selenium-webdriver').By;
+  const expect = require('chai').expect;
+  const open_page_func = require('./open_page');
+  const config = require('./config');
+  const bluebird = require('bluebird')
 
 module.exports = bluebird.promisify(function(args, callback) {
-  var result_callback = callback,
-    driver = args.driver,
-    emails = args.emails || [],
-    is_link = args.is_link || false,
-    application_host = args.application_host || config.get_application_host()
+  const result_callback = callback;
+    const driver = args.driver;
+    const emails = args.emails || [];
+    const is_link = args.is_link || false;
+    const application_host = args.application_host || config.get_application_host()
 
   if (!driver) {
     throw "'driver' was not passed into the teamview_check_user!"
@@ -27,7 +27,7 @@ module.exports = bluebird.promisify(function(args, callback) {
 
   return open_page_func({
     url: application_host + 'calendar/teamview/',
-    driver: driver
+    driver
   })
     .then(function(data) {
       return data.driver

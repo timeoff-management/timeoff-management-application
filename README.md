@@ -79,18 +79,74 @@ Create company account and use cloud based version.
 
 ### Self hosting
 
-Install TimeOff.Management application within your infrastructure:
-
-(make sure you have Node.js (>=4.0.0) and SQLite installed)
-
 ```bash
+# Clone the repository
 git clone https://github.com/timeoff-management/application.git timeoff-management
 cd timeoff-management
+```
+
+Edit the configuration inside the `config` folder.
+
+#### Standalone
+
+Install TimeOff.Management application within your infrastructure:
+
+(make sure you have Node.js (>=16.0.0) and SQLite installed)
+
+```bash
 npm install
 npm start
 ```
 
 Open http://localhost:3000/ in your browser.
+
+#### Using Docker
+
+##### Build the image manually
+
+You can build the image from the latest version of the repository.
+
+```bash
+# Build the docker image
+docker build --tag timeoff:latest .
+
+# Launch the docker image
+docker run -d -p 3000:3000 --name alpine_timeoff timeoff
+```
+
+##### Using Docker-compose
+
+```bash
+docker-compose up
+```
+
+## Configuration
+
+### Using environment variables
+
+| Variable                  | Description                             | Default value  |
+| ------------------------- | --------------------------------------- | -------------- |
+| PORT                      | Port of the application                 | 3000           |
+| NODE_ENV                  | Environment of NodeJs                   | development    |
+| SMTP_HOST                 | Host of the smtp server                 | localhost      |
+| SMTP_PORT                 | Port of the smtp server                 | 25             |
+| SMTP_FROM                 | Sender email                            | email@test.com |
+| SMTP_AUTH_USER            | Username for the smtp server            |                |
+| SMTP_AUTH_PASS            | Password for the smtp server            |                |
+| SMTP_REQUIRE_TLS          | Use STARTTLS                            | false          |
+| SLACK_TOKEN               | If set, the Slack token to send message |                |
+| SLACK_BOT_NAME            | Name of the bot on Slack                |                |
+| SLACK_ICON_URL            | Icon of the bot on Slack                |                |
+| GA_TRACKER                | Google Analytics tracker code           |                |
+| ALLOW_CREATE_NEW_ACCOUNTS | Display the account creation form       | true           |
+
+
+### Using the JSON configuration files
+
+#### app.json
+
+#### db.json
+
 
 ## Run tests
 

@@ -1,21 +1,21 @@
 'use strict'
 
-const test = require('selenium-webdriver/testing'),
-  By = require('selenium-webdriver').By,
-  until = require('selenium-webdriver').until,
-  Promise = require('bluebird'),
-  expect = require('chai').expect,
-  moment = require('moment'),
-  registerNewUserFunc = require('../../lib/register_new_user'),
-  checkElementsFunc = require('../../lib/check_elements'),
-  config = require('../../lib/config'),
-  openPageFunc = require('../../lib/open_page'),
-  submitFormFunc = require('../../lib/submit_form'),
-  userInfoFunc = require('../../lib/user_info'),
-  applicationHost = config.get_application_host(),
-  companyEditFormId = '#company_edit_form',
-  departmentEditFormId = '#department_edit_form',
-  userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year')
+const test = require('selenium-webdriver/testing')
+const By = require('selenium-webdriver').By
+const until = require('selenium-webdriver').until
+const Promise = require('bluebird')
+const expect = require('chai').expect
+const moment = require('moment')
+const registerNewUserFunc = require('../../lib/register_new_user')
+const checkElementsFunc = require('../../lib/check_elements')
+const config = require('../../lib/config')
+const openPageFunc = require('../../lib/open_page')
+const submitFormFunc = require('../../lib/submit_form')
+const userInfoFunc = require('../../lib/user_info')
+const applicationHost = config.get_application_host()
+const companyEditFormId = '#company_edit_form'
+const departmentEditFormId = '#department_edit_form'
+const userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year')
 
 /*
  * Scenario:
@@ -34,21 +34,21 @@ describe('No negative allowanca is carried overs', function() {
 
   let driver, email, userId
 
-  it('Register new company', done => {
+  it('Register new company', function(done) {
     registerNewUserFunc({ applicationHost }).then(data => {
       ;({ driver, email } = data)
       done()
     })
   })
 
-  it('Obtain information about admin user', done => {
+  it('Obtain information about admin user', function(done) {
     userInfoFunc({ driver, email }).then(data => {
       userId = data.user.id
       done()
     })
   })
 
-  it('Amend its user to started at the very begining of last year', done => {
+  it('Amend its user to started at the very begining of last year', function(done) {
     userStartsAtTheBeginingOfYear({
       driver,
       email,
@@ -59,7 +59,7 @@ describe('No negative allowanca is carried overs', function() {
     }).then(() => done())
   })
 
-  it('Update user to have her leaves be auto apporved', done => {
+  it('Update user to have her leaves be auto apporved', function(done) {
     openPageFunc({
       driver,
       url: `${applicationHost}users/edit/${userId}/`
@@ -81,7 +81,7 @@ describe('No negative allowanca is carried overs', function() {
       .then(() => done())
   })
 
-  it('Add and approve week long leave in last year', done => {
+  it('Add and approve week long leave in last year', function(done) {
     const lastYear = moment
       .utc()
       .add(-1, 'y')
@@ -110,7 +110,7 @@ describe('No negative allowanca is carried overs', function() {
       .then(() => done())
   })
 
-  it("Adjust user's deparment's allowance to be 1 day", done => {
+  it("Adjust user's deparment's allowance to be 1 day", function(done) {
     openPageFunc({
       driver,
       url: `${applicationHost}settings/departments/`
@@ -137,7 +137,7 @@ describe('No negative allowanca is carried overs', function() {
       .then(() => done())
   })
 
-  it('Ensure that nominal allowance was reduced to 1', done => {
+  it('Ensure that nominal allowance was reduced to 1', function(done) {
     openPageFunc({
       driver,
       url: `${applicationHost}users/edit/${userId}/absences/`
@@ -150,7 +150,7 @@ describe('No negative allowanca is carried overs', function() {
       })
   })
 
-  it('Ensure that company has Carry Over set to be "None"', done => {
+  it('Ensure that company has Carry Over set to be "None"', function(done) {
     openPageFunc({
       driver,
       url: `${applicationHost}settings/general/`
@@ -169,7 +169,7 @@ describe('No negative allowanca is carried overs', function() {
       .then(() => done())
   })
 
-  it('Calculate carry over', done => {
+  it('Calculate carry over', function(done) {
     submitFormFunc({
       driver,
       submit_button_selector:
@@ -179,7 +179,7 @@ describe('No negative allowanca is carried overs', function() {
     }).then(() => done())
   })
 
-  it("Ensure that newly created user's carried over still remains 0", done => {
+  it("Ensure that newly created user's carried over still remains 0", function(done) {
     openPageFunc({
       driver,
       url: `${applicationHost}users/edit/${userId}/absences/`
@@ -192,7 +192,7 @@ describe('No negative allowanca is carried overs', function() {
       })
   })
 
-  after(done => {
+  after(function(done) {
     driver.quit().then(() => done())
   })
 })

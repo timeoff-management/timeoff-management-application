@@ -1,22 +1,22 @@
 'use strict'
 
-var test = require('selenium-webdriver/testing'),
-  until = require('selenium-webdriver').until,
-  By = require('selenium-webdriver').By,
-  expect = require('chai').expect,
-  _ = require('underscore'),
-  Promise = require('bluebird'),
-  moment = require('moment'),
-  config = require('../../lib/config'),
-  application_host = config.get_application_host(),
-  login_user_func = require('../../lib/login_with_user'),
-  register_new_user_func = require('../../lib/register_new_user'),
-  logout_user_func = require('../../lib/logout_user'),
-  open_page_func = require('../../lib/open_page'),
-  submit_form_func = require('../../lib/submit_form'),
-  check_elements_func = require('../../lib/check_elements'),
-  check_booking_func = require('../../lib/check_booking_on_calendar'),
-  add_new_user_func = require('../../lib/add_new_user')
+const test = require('selenium-webdriver/testing');
+  const until = require('selenium-webdriver').until;
+  const By = require('selenium-webdriver').By;
+  const expect = require('chai').expect;
+  const _ = require('underscore');
+  const Promise = require('bluebird');
+  const moment = require('moment');
+  const config = require('../../lib/config');
+  const application_host = config.get_application_host();
+  const login_user_func = require('../../lib/login_with_user');
+  const register_new_user_func = require('../../lib/register_new_user');
+  const logout_user_func = require('../../lib/logout_user');
+  const open_page_func = require('../../lib/open_page');
+  const submit_form_func = require('../../lib/submit_form');
+  const check_elements_func = require('../../lib/check_elements');
+  const check_booking_func = require('../../lib/check_booking_on_calendar');
+  const add_new_user_func = require('../../lib/add_new_user')
 
 /*
  *  Scenario to go in this test:
@@ -38,11 +38,11 @@ var test = require('selenium-webdriver/testing'),
 describe('Overlapping leaverequest (with halfs)', function() {
   this.timeout(config.get_execution_timeout())
 
-  var non_admin_user_email, new_user_email, driver
+  let non_admin_user_email, new_user_email, driver
 
   it('Create new company', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(function(data) {
       driver = data.driver
       new_user_email = data.email
@@ -52,8 +52,8 @@ describe('Overlapping leaverequest (with halfs)', function() {
 
   it('Create new non-admin user', function(done) {
     add_new_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function(data) {
       non_admin_user_email = data.new_user_email
       done()
@@ -62,8 +62,8 @@ describe('Overlapping leaverequest (with halfs)', function() {
 
   it('Logout from admin acount', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -71,9 +71,9 @@ describe('Overlapping leaverequest (with halfs)', function() {
 
   it('Login as non-admin user', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: non_admin_user_email,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -82,7 +82,7 @@ describe('Overlapping leaverequest (with halfs)', function() {
   it('Open calendar page', function(done) {
     open_page_func({
       url: application_host + 'calendar/?show_full_year=1&year=2015',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -108,7 +108,7 @@ describe('Overlapping leaverequest (with halfs)', function() {
         driver.sleep(1000)
 
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: 'select[name="from_date_part"]',
@@ -133,7 +133,7 @@ describe('Overlapping leaverequest (with halfs)', function() {
 
   it('Check that all days are marked as pended', function(done) {
     check_booking_func({
-      driver: driver,
+      driver,
       full_days: [moment('2015-06-17')],
       halfs_1st_days: [moment('2015-06-16')],
       type: 'pended'
@@ -155,7 +155,7 @@ describe('Overlapping leaverequest (with halfs)', function() {
         driver.sleep(1000)
 
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: 'input#from',
@@ -189,7 +189,7 @@ describe('Overlapping leaverequest (with halfs)', function() {
           driver.sleep(1000)
 
           submit_form_func({
-            driver: driver,
+            driver,
             form_params: [
               {
                 selector: 'select[name="from_date_part"]',
@@ -226,7 +226,7 @@ describe('Overlapping leaverequest (with halfs)', function() {
         driver.sleep(1000)
 
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: 'select[name="to_date_part"]',
@@ -262,7 +262,7 @@ describe('Overlapping leaverequest (with halfs)', function() {
         driver.sleep(1000)
 
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: 'select[name="to_date_part"]',
@@ -287,7 +287,7 @@ describe('Overlapping leaverequest (with halfs)', function() {
 
   it('Check that all days are marked as pended', function(done) {
     check_booking_func({
-      driver: driver,
+      driver,
       full_days: [
         moment('2015-06-15'),
         moment('2015-06-16'),

@@ -20,21 +20,21 @@
  *
  * */
 
-var test = require('selenium-webdriver/testing'),
-  By = require('selenium-webdriver').By,
-  Promise = require('bluebird'),
-  expect = require('chai').expect,
-  add_new_user_func = require('../../lib/add_new_user'),
-  check_elements_func = require('../../lib/check_elements'),
-  config = require('../../lib/config'),
-  login_user_func = require('../../lib/login_with_user'),
-  logout_user_func = require('../../lib/logout_user'),
-  open_page_func = require('../../lib/open_page'),
-  register_new_user_func = require('../../lib/register_new_user'),
-  submit_form_func = require('../../lib/submit_form'),
-  user_info_func = require('../../lib/user_info'),
-  new_bankholiday_form_id = '#add_new_bank_holiday_form',
-  application_host = config.get_application_host()
+const test = require('selenium-webdriver/testing');
+  const By = require('selenium-webdriver').By;
+  const Promise = require('bluebird');
+  const expect = require('chai').expect;
+  const add_new_user_func = require('../../lib/add_new_user');
+  const check_elements_func = require('../../lib/check_elements');
+  const config = require('../../lib/config');
+  const login_user_func = require('../../lib/login_with_user');
+  const logout_user_func = require('../../lib/logout_user');
+  const open_page_func = require('../../lib/open_page');
+  const register_new_user_func = require('../../lib/register_new_user');
+  const submit_form_func = require('../../lib/submit_form');
+  const user_info_func = require('../../lib/user_info');
+  const new_bankholiday_form_id = '#add_new_bank_holiday_form';
+  const application_host = config.get_application_host()
 
 describe('Case when holidays spans through more then one month and is devided by bank holiday', function() {
   this.timeout(config.get_execution_timeout())
@@ -43,7 +43,7 @@ describe('Case when holidays spans through more then one month and is devided by
 
   it('Register new company as admin user A', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(data => {
       driver = data.driver
       email_A = data.email
@@ -53,8 +53,8 @@ describe('Case when holidays spans through more then one month and is devided by
 
   it('Create second user B', function(done) {
     add_new_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(data => {
       email_B = data.new_user_email
       done()
@@ -63,7 +63,7 @@ describe('Case when holidays spans through more then one month and is devided by
 
   it('Obtain information about user A', function(done) {
     user_info_func({
-      driver: driver,
+      driver,
       email: email_A
     }).then(data => {
       user_id_A = data.user.id
@@ -73,7 +73,7 @@ describe('Case when holidays spans through more then one month and is devided by
 
   it('Obtain information about user B', function(done) {
     user_info_func({
-      driver: driver,
+      driver,
       email: email_B
     }).then(data => {
       user_id_B = data.user.id
@@ -97,7 +97,7 @@ describe('Case when holidays spans through more then one month and is devided by
         driver.sleep(1000)
 
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: new_bankholiday_form_id + ' input[name="name__new"]',
@@ -117,16 +117,16 @@ describe('Case when holidays spans through more then one month and is devided by
 
   it('Logout from user A (admin)', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(() => done())
   })
 
   it('Login as user B', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: email_B,
-      driver: driver
+      driver
     }).then(() => done())
   })
 
@@ -141,7 +141,7 @@ describe('Case when holidays spans through more then one month and is devided by
 
   it('As user B create a holiday request from 28 July to morning of 4 Aug 2016 (a)', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'select[name="from_date_part"]',
@@ -174,7 +174,7 @@ describe('Case when holidays spans through more then one month and is devided by
 
   it('As user B create a holiday request from 12 Aug to 15 Aug 2016 (b)', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'input#from',
@@ -202,7 +202,7 @@ describe('Case when holidays spans through more then one month and is devided by
 
   it('As user B create a holiday request from 26 Aug to 2 Sep 2016', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'input#from',
@@ -228,7 +228,7 @@ describe('Case when holidays spans through more then one month and is devided by
 
   it('As user B create a sick day request from 18 to 18 Aug 2016', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'select[name="leave_type"]',
@@ -249,28 +249,28 @@ describe('Case when holidays spans through more then one month and is devided by
 
   it('Logout from user B', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(() => done())
   })
 
   it('Login as user A (admin)', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: email_A,
-      driver: driver
+      driver
     }).then(() => done())
   })
 
   it('Open requests page', function(done) {
     open_page_func({
       url: application_host + 'requests/',
-      driver: driver
+      driver
     }).then(() => done())
   })
 
   it('Approve newly added leave request', function(done) {
-    let click_selector = `tr[vpp="pending_for__${email_B}"] .btn-success`
+    const click_selector = `tr[vpp="pending_for__${email_B}"] .btn-success`
     driver
       .findElement(By.css(click_selector))
       .then(el => el.click())
@@ -285,16 +285,16 @@ describe('Case when holidays spans through more then one month and is devided by
 
   it('Logout from user A (admin)', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(() => done())
   })
 
   it('Login as user B', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: email_B,
-      driver: driver
+      driver
     }).then(() => done())
   })
 
@@ -309,7 +309,7 @@ describe('Case when holidays spans through more then one month and is devided by
 
   it('As user B cretae a holiday request from 24 Aug to 24 Aug 2016 (but not approved)', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'input#from',
@@ -328,23 +328,23 @@ describe('Case when holidays spans through more then one month and is devided by
 
   it('Logout from user B', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(() => done())
   })
 
   it('Login as user A (admin)', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: email_A,
-      driver: driver
+      driver
     }).then(() => done())
   })
 
   it('Navigate to team view and ensure that it shows 9 days were deducted for Aug 2016', function(done) {
     open_page_func({
       url: application_host + 'calendar/teamview/?date=2016-08',
-      driver: driver
+      driver
     })
       .then(() =>
         driver.findElement(
@@ -365,7 +365,7 @@ describe('Case when holidays spans through more then one month and is devided by
   it('1.5 days deducted for July 2016', function(done) {
     open_page_func({
       url: application_host + 'calendar/teamview/?date=2016-07',
-      driver: driver
+      driver
     })
       .then(() =>
         driver.findElement(
@@ -386,7 +386,7 @@ describe('Case when holidays spans through more then one month and is devided by
   it('2 days deducted for Sept 2016', function(done) {
     open_page_func({
       url: application_host + 'calendar/teamview/?date=2016-09',
-      driver: driver
+      driver
     })
       .then(() =>
         driver.findElement(

@@ -1,33 +1,33 @@
 'use strict'
 
-var By = require('selenium-webdriver').By,
-  expect = require('chai').expect,
-  _ = require('underscore'),
-  until = require('selenium-webdriver').until,
-  Promise = require('bluebird'),
-  uuid = require('node-uuid'),
-  submit_form_func = require('./submit_form'),
-  build_driver = require('./build_driver'),
-  add_new_user_form_id = '#add_new_user_form',
-  driver
+const By = require('selenium-webdriver').By;
+  const expect = require('chai').expect;
+  const _ = require('underscore');
+  const until = require('selenium-webdriver').until;
+  const Promise = require('bluebird');
+  const uuid = require('node-uuid');
+  const submit_form_func = require('./submit_form');
+  const build_driver = require('./build_driver');
+  const add_new_user_form_id = '#add_new_user_form';
+  let driver
 
 module.exports = Promise.promisify(function(args, callback) {
-  var application_host = args.application_host,
-    result_callback = callback,
-    department_index = args.department_index,
+  const application_host = args.application_host;
+    const result_callback = callback;
+    const department_index = args.department_index;
     // optional parameter, if provided the user adding action is expected to fail
     // with that error
-    error_message = args.error_message,
-    driver = args.driver || build_driver()
+    const error_message = args.error_message;
+    const driver = args.driver || build_driver()
 
-  var random_token = new Date().getTime()
-  var new_user_email = args.email || random_token + '@test.com'
+  const random_token = new Date().getTime()
+  const new_user_email = args.email || random_token + '@test.com'
 
   // Open front page
   driver.get(application_host + 'users/add/')
 
   driver.call(() => {
-    var select_department = {}
+    let select_department = {}
     if (typeof department_index !== 'undefined') {
       select_department = {
         selector: 'select[name="department"]',
@@ -36,7 +36,7 @@ module.exports = Promise.promisify(function(args, callback) {
     }
 
     return submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: add_new_user_form_id + ' input[name="name"]',
@@ -65,7 +65,7 @@ module.exports = Promise.promisify(function(args, callback) {
         }
       ],
       submit_button_selector: add_new_user_form_id + ' #add_new_user_btn',
-      should_be_successful: error_message ? false : true,
+      should_be_successful: !error_message,
       elements_to_check: [],
       message: error_message
         ? new RegExp(error_message)
@@ -76,8 +76,8 @@ module.exports = Promise.promisify(function(args, callback) {
   driver.call(function() {
     // "export"
     result_callback(null, {
-      driver: driver,
-      new_user_email: new_user_email
+      driver,
+      new_user_email
     })
   })
 })

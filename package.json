@@ -55,6 +55,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-mocha": "^10.2.0",
     "eslint-plugin-n": "^16.2.0",
     "eslint-plugin-promise": "^6.1.1",
     "mocha": "^6.2.2",
@@ -65,8 +66,8 @@
   },
   "scripts": {
     "prettier": "prettier --write \"**/*.js\"",
-    "lint": "eslint --ext .js lib",
-    "lint:fix": "eslint --ext .js lib --fix",
+    "lint": "eslint --ext .js \"**/*.js\"",
+    "lint:fix": "eslint --ext .js \"**/*.js\" --fix",
     "test": "node node_modules/mocha/bin/mocha --recursive t",
     "test:chrome": "USE_CHROME=1 node node_modules/mocha/bin/mocha --recursive t",
     "start": "node bin/wwww",

@@ -7,10 +7,10 @@
 module.exports = function(args) {
   if (!args) args = {}
 
-  var params = args.params || {},
-    error_messages = []
+  const params = args.params || {};
+    const error_messages = []
 
-  var req = {
+  const req = {
     session: {},
     user: {
       company: {

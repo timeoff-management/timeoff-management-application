@@ -1,16 +1,16 @@
-var express = require('express')
-var path = require('path')
-var favicon = require('serve-favicon')
-var logger = require('morgan')
-var cookieParser = require('cookie-parser')
-var bodyParser = require('body-parser')
-var moment = require('moment')
-var _handlebars = require('handlebars')
-var {
+const express = require('express')
+const path = require('path')
+const favicon = require('serve-favicon')
+const logger = require('morgan')
+const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
+const moment = require('moment')
+const _handlebars = require('handlebars')
+const {
   allowInsecurePrototypeAccess
 } = require('@handlebars/allow-prototype-access')
 
-var app = express()
+const app = express()
 
 // Handlebars
 //
@@ -18,7 +18,7 @@ var app = express()
 // https://stackoverflow.com/questions/59690923/handlebars-access-has-been-denied-to-resolve-the-property-from-because-it-is
 
 // View engine setup
-var handlebars = require('express-handlebars').create({
+const handlebars = require('express-handlebars').create({
   defaultLayout: 'main',
   extname: '.hbs',
   helpers: require('./lib/view/helpers')(),
@@ -33,7 +33,7 @@ app.set('view engine', '.hbs')
 app.set('db_model', require('./lib/model/db'))
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+// app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -43,9 +43,9 @@ app.use(express.static(path.join(__dirname, 'public')))
 // Setup authentication mechanism
 const passport = require('./lib/passport')()
 
-var session = require('express-session')
+const session = require('express-session')
 // initalize sequelize with session store
-var SequelizeStore = require('connect-session-sequelize')(session.Store)
+const SequelizeStore = require('connect-session-sequelize')(session.Store)
 app.use(
   session({
     secret: 'my dirty secret ;khjsdkjahsdajhasdam,nnsnad,',
@@ -64,7 +64,7 @@ app.use(passport.session())
 // Make sure session and user objects are available in templates
 app.use(function(req, res, next) {
   // Get today given user's timezone
-  var today
+  let today
 
   if (req.user && req.user.company) {
     today = req.user.company.get_today()

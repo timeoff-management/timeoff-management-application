@@ -1,20 +1,20 @@
 'use strict'
 
-var test = require('selenium-webdriver/testing'),
-  config = require('../../lib/config'),
-  application_host = config.get_application_host(),
-  By = require('selenium-webdriver').By,
-  expect = require('chai').expect,
-  _ = require('underscore'),
-  Promise = require('bluebird'),
-  until = require('selenium-webdriver').until,
-  login_user_func = require('../../lib/login_with_user'),
-  register_new_user_func = require('../../lib/register_new_user'),
-  logout_user_func = require('../../lib/logout_user'),
-  open_page_func = require('../../lib/open_page'),
-  submit_form_func = require('../../lib/submit_form'),
-  add_new_user_func = require('../../lib/add_new_user'),
-  new_department_form_id = '#add_new_department_form'
+const test = require('selenium-webdriver/testing');
+  const config = require('../../lib/config');
+  const application_host = config.get_application_host();
+  const By = require('selenium-webdriver').By;
+  const expect = require('chai').expect;
+  const _ = require('underscore');
+  const Promise = require('bluebird');
+  const until = require('selenium-webdriver').until;
+  const login_user_func = require('../../lib/login_with_user');
+  const register_new_user_func = require('../../lib/register_new_user');
+  const logout_user_func = require('../../lib/logout_user');
+  const open_page_func = require('../../lib/open_page');
+  const submit_form_func = require('../../lib/submit_form');
+  const add_new_user_func = require('../../lib/add_new_user');
+  const new_department_form_id = '#add_new_department_form'
 
 /*
  *  Scenario to go in this test:
@@ -36,7 +36,7 @@ var test = require('selenium-webdriver/testing'),
 describe('Request leave for outher users', function() {
   this.timeout(config.get_execution_timeout())
 
-  var ordenary_user_email,
+  let ordenary_user_email,
     line_manager_email,
     admin_email,
     ordenary_user_id,
@@ -44,7 +44,7 @@ describe('Request leave for outher users', function() {
 
   it('Create new company', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(function(data) {
       driver = data.driver
       admin_email = data.email
@@ -54,8 +54,8 @@ describe('Request leave for outher users', function() {
 
   it('Create new line manager user', function(done) {
     add_new_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function(data) {
       line_manager_email = data.new_user_email
       done()
@@ -64,8 +64,8 @@ describe('Request leave for outher users', function() {
 
   it('Create new ordanry user', function(done) {
     add_new_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function(data) {
       ordenary_user_email = data.new_user_email
       done()
@@ -75,7 +75,7 @@ describe('Request leave for outher users', function() {
   it('Open department management page', function(done) {
     open_page_func({
       url: application_host + 'settings/departments/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -108,7 +108,7 @@ describe('Request leave for outher users', function() {
           driver.sleep(1000)
 
           submit_form_func({
-            driver: driver,
+            driver,
             form_params: [
               {
                 selector: new_department_form_id + ' input[name="name__new"]',
@@ -141,7 +141,7 @@ describe('Request leave for outher users', function() {
   it('Open user editing page for ordenry user', function(done) {
     open_page_func({
       url: application_host + 'users/edit/' + ordenary_user_id + '/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -150,7 +150,7 @@ describe('Request leave for outher users', function() {
   it('And make sure it is part of the newly added department', function(done) {
     submit_form_func({
       submit_button_selector: 'button#save_changes_btn',
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'select[name="department"]',
@@ -167,8 +167,8 @@ describe('Request leave for outher users', function() {
 
   it('Logout from admin acount', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -176,9 +176,9 @@ describe('Request leave for outher users', function() {
 
   it('Login as ordenary user', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: ordenary_user_email,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -187,7 +187,7 @@ describe('Request leave for outher users', function() {
   it('Open calendar page', function(done) {
     open_page_func({
       url: application_host + 'calendar/?show_full_year=1&year=2015',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -214,8 +214,8 @@ describe('Request leave for outher users', function() {
 
   it('Logout from ordenary acount', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -223,9 +223,9 @@ describe('Request leave for outher users', function() {
 
   it('Login as line manager user', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: line_manager_email,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -234,7 +234,7 @@ describe('Request leave for outher users', function() {
   it('Open calendar page', function(done) {
     open_page_func({
       url: application_host + 'calendar/?show_full_year=1&year=2015',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -294,8 +294,8 @@ describe('Request leave for outher users', function() {
 
   it('Logout from ordenary acount', function(done) {
     logout_user_func({
-      application_host: application_host,
-      driver: driver
+      application_host,
+      driver
     }).then(function() {
       done()
     })
@@ -303,9 +303,9 @@ describe('Request leave for outher users', function() {
 
   it('Login as admin user', function(done) {
     login_user_func({
-      application_host: application_host,
+      application_host,
       user_email: admin_email,
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -314,7 +314,7 @@ describe('Request leave for outher users', function() {
   it('Open calendar page', function(done) {
     open_page_func({
       url: application_host + 'calendar/?show_full_year=1&year=2015',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })

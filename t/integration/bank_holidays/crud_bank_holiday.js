@@ -1,15 +1,15 @@
 'use strict'
 
-const register_new_user_func = require('../../lib/register_new_user'),
-  open_page_func = require('../../lib/open_page'),
-  submit_form_func = require('../../lib/submit_form'),
-  check_elements_func = require('../../lib/check_elements'),
-  moment = require('moment'),
-  By = require('selenium-webdriver').By,
-  config = require('../../lib/config'),
-  application_host = config.get_application_host(),
-  bankholiday_form_id = '#update_bankholiday_form',
-  new_bankholiday_form_id = '#add_new_bank_holiday_form'
+const register_new_user_func = require('../../lib/register_new_user')
+const open_page_func = require('../../lib/open_page')
+const submit_form_func = require('../../lib/submit_form')
+const check_elements_func = require('../../lib/check_elements')
+const moment = require('moment')
+const By = require('selenium-webdriver').By
+const config = require('../../lib/config')
+const application_host = config.get_application_host()
+const bankholiday_form_id = '#update_bankholiday_form'
+const new_bankholiday_form_id = '#add_new_bank_holiday_form'
 
 describe('CRUD for bank holidays', function() {
   let driver
@@ -23,7 +23,7 @@ describe('CRUD for bank holidays', function() {
     })
   })
 
-  it('Open page with bank holidays', done => {
+  it('Open page with bank holidays', function(done) {
     open_page_func({
       driver,
       url: application_host + 'settings/bankholidays/?year=2015'
@@ -60,7 +60,7 @@ describe('CRUD for bank holidays', function() {
     }).then(() => done())
   })
 
-  it('Go back to current year page of bank holidays', done => {
+  it('Go back to current year page of bank holidays', function(done) {
     open_page_func({
       driver,
       url: `${application_host}settings/bankholidays/?year=${moment().year()}`
@@ -85,7 +85,7 @@ describe('CRUD for bank holidays', function() {
 
   it('Update Early spring holiday to be 4th of May', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="date__0"]',
@@ -97,7 +97,7 @@ describe('CRUD for bank holidays', function() {
     }).then(() => done())
   })
 
-  it('Go back to 2015', done => {
+  it('Go back to 2015', function(done) {
     open_page_func({
       driver,
       url: application_host + 'settings/bankholidays/?year=2015'
@@ -107,15 +107,13 @@ describe('CRUD for bank holidays', function() {
   it('Add new bank holiday to be in the beginning of the list', function(done) {
     driver
       .findElement(By.css('#add_new_bank_holiday_btn'))
-      .then(function(el) {
-        return el.click()
-      })
-      .then(function() {
+      .then(el => el.click())
+      .then(() => {
         // This is very important line when working with Bootstrap modals!
         driver.sleep(1000)
 
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: new_bankholiday_form_id + ' input[name="name__new"]',
@@ -129,7 +127,7 @@ describe('CRUD for bank holidays', function() {
           submit_button_selector:
             new_bankholiday_form_id + ' button[type="submit"]',
           message: /Changes to bank holidays were saved/
-        }).then(function() {
+        }).then(() => {
           done()
         })
       })
@@ -138,15 +136,13 @@ describe('CRUD for bank holidays', function() {
   it('Add new bank holiday to be in the end of the list', function(done) {
     driver
       .findElement(By.css('#add_new_bank_holiday_btn'))
-      .then(function(el) {
-        return el.click()
-      })
-      .then(function() {
+      .then(el => el.click())
+      .then(() => {
         // This is very important line when working with Bootstrap modals!
         driver.sleep(1000)
 
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: new_bankholiday_form_id + ' input[name="name__new"]',
@@ -160,7 +156,7 @@ describe('CRUD for bank holidays', function() {
           submit_button_selector:
             new_bankholiday_form_id + ' button[type="submit"]',
           message: /Changes to bank holidays were saved/
-        }).then(function() {
+        }).then(() => {
           done()
         })
       })
@@ -168,7 +164,7 @@ describe('CRUD for bank holidays', function() {
 
   it('Check that the order of all three holidays is based on dates rather than names', function(done) {
     check_elements_func({
-      driver: driver,
+      driver,
       elements_to_check: [
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="name__0"]',
@@ -200,7 +196,7 @@ describe('CRUD for bank holidays', function() {
 
   it('Rename Christmas to have proper name', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: bankholiday_form_id + ' input[tom-test-hook="name__2"]',
@@ -252,7 +248,7 @@ describe('CRUD for bank holidays', function() {
   })
 
   after(function(done) {
-    driver.quit().then(function() {
+    driver.quit().then(() => {
       done()
     })
   })

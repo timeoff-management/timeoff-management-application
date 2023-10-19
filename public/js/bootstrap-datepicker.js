@@ -17,7 +17,7 @@
     return new Date(Date.UTC.apply(Date, arguments))
   }
   function UTCToday() {
-    var today = new Date()
+    const today = new Date()
     return UTCDate(today.getFullYear(), today.getMonth(), today.getDate())
   }
   function isUTCEquals(date1, date2) {
@@ -37,15 +37,15 @@
   }
 
   var DateArray = (function() {
-    var extras = {
+    const extras = {
       get: function(i) {
         return this.slice(i)[0]
       },
       contains: function(d) {
         // Array.indexOf is not cross-browser;
         // $.inArray doesn't work with Dates
-        var val = d && d.valueOf()
-        for (var i = 0, l = this.length; i < l; i++)
+        const val = d && d.valueOf()
+        for (let i = 0, l = this.length; i < l; i++)
           if (this[i].valueOf() === val) return i
         return -1
       },
@@ -62,14 +62,14 @@
         this.length = 0
       },
       copy: function() {
-        var a = new DateArray()
+        const a = new DateArray()
         a.replace(this)
         return a
       }
     }
 
     return function() {
-      var a = []
+      const a = []
       a.push.apply(a, arguments)
       $.extend(a, extras)
       return a
@@ -78,7 +78,7 @@
 
   // Picker object
 
-  var Datepicker = function(element, options) {
+  const Datepicker = function(element, options) {
     $(element).data('datepicker', this)
     this._process_options(options)
 
@@ -146,11 +146,11 @@
       // Store raw options for reference
       this._o = $.extend({}, this._o, opts)
       // Processed options
-      var o = (this.o = $.extend({}, this._o))
+      const o = (this.o = $.extend({}, this._o))
 
       // Check if "de-DE" style date is available, if not language should
       // fallback to 2 letter code eg "de"
-      var lang = o.language
+      let lang = o.language
       if (!dates[lang]) {
         lang = lang.split('-')[0]
         if (!dates[lang]) lang = defaults.language
@@ -209,9 +209,9 @@
       o.weekStart %= 7
       o.weekEnd = (o.weekStart + 6) % 7
 
-      var format = DPGlobal.parseFormat(o.format)
+      const format = DPGlobal.parseFormat(o.format)
       if (o.startDate !== -Infinity) {
-        if (!!o.startDate) {
+        if (o.startDate) {
           if (o.startDate instanceof Date)
             o.startDate = this._local_to_utc(this._zero_time(o.startDate))
           else o.startDate = DPGlobal.parseDate(o.startDate, format, o.language)
@@ -220,7 +220,7 @@
         }
       }
       if (o.endDate !== Infinity) {
-        if (!!o.endDate) {
+        if (o.endDate) {
           if (o.endDate instanceof Date)
             o.endDate = this._local_to_utc(this._zero_time(o.endDate))
           else o.endDate = DPGlobal.parseDate(o.endDate, format, o.language)
@@ -245,7 +245,7 @@
 
       o.datesDisabled = o.datesDisabled || []
       if (!$.isArray(o.datesDisabled)) {
-        var datesDisabled = []
+        const datesDisabled = []
         datesDisabled.push(
           DPGlobal.parseDate(o.datesDisabled, format, o.language)
         )
@@ -255,10 +255,10 @@
         return DPGlobal.parseDate(d, format, o.language)
       })
 
-      var plc = String(o.orientation)
+      let plc = String(o.orientation)
           .toLowerCase()
-          .split(/\s+/g),
-        _plc = o.orientation.toLowerCase()
+          .split(/\s+/g);
+        let _plc = o.orientation.toLowerCase()
       plc = $.grep(plc, function(word) {
         return /^auto|left|right|top|bottom$/.test(word)
       })
@@ -288,9 +288,9 @@
         o.orientation.y = _plc[0] || 'auto'
       }
       if (o.defaultViewDate) {
-        var year = o.defaultViewDate.year || new Date().getFullYear()
-        var month = o.defaultViewDate.month || 0
-        var day = o.defaultViewDate.day || 1
+        const year = o.defaultViewDate.year || new Date().getFullYear()
+        const month = o.defaultViewDate.month || 0
+        const day = o.defaultViewDate.day || 1
         o.defaultViewDate = UTCDate(year, month, day)
       } else {
         o.defaultViewDate = UTCToday()
@@ -325,7 +325,7 @@
       }
     },
     _buildEvents: function() {
-      var events = {
+      const events = {
         keyup: $.proxy(function(e) {
           if ($.inArray(e.keyCode, [27, 37, 39, 38, 40, 32, 13, 9]) === -1)
             this.update()
@@ -449,8 +449,8 @@
       this._unapplyEvents(this._secondaryEvents)
     },
     _trigger: function(event, altdate) {
-      var date = altdate || this.dates.get(-1),
-        local_date = this._utc_to_local(date)
+      const date = altdate || this.dates.get(-1);
+        const local_date = this._utc_to_local(date)
 
       this.element.trigger({
         type: event,
@@ -465,14 +465,14 @@
             ix = this.dates.length - 1
           }
           format = format || this.o.format
-          var date = this.dates.get(ix)
+          const date = this.dates.get(ix)
           return DPGlobal.formatDate(date, format, this.o.language)
         }, this)
       })
     },
 
     show: function() {
-      var element = this.component ? this.element.find('input') : this.element
+      const element = this.component ? this.element.find('input') : this.element
       if (element.attr('readonly') && this.o.enableOnReadonly === false) return
       if (!this.isInline) this.picker.appendTo(this.o.container)
       this.place()
@@ -520,7 +520,7 @@
     },
 
     paste: function(evt) {
-      var dateString
+      let dateString
       if (
         evt.originalEvent.clipboardData &&
         evt.originalEvent.clipboardData.types &&
@@ -575,7 +575,7 @@
     },
 
     getUTCDate: function() {
-      var selected_date = this.dates.get(-1)
+      const selected_date = this.dates.get(-1)
       if (typeof selected_date !== 'undefined') {
         return new Date(selected_date)
       } else {
@@ -584,7 +584,7 @@
     },
 
     clearDates: function() {
-      var element
+      let element
       if (this.isInput) {
         element = this.element
       } else if (this.component) {
@@ -603,7 +603,7 @@
       }
     },
     setDates: function() {
-      var args = $.isArray(arguments[0]) ? arguments[0] : arguments
+      const args = $.isArray(arguments[0]) ? arguments[0] : arguments
       this.update.apply(this, args)
       this._trigger('changeDate')
       this.setValue()
@@ -611,7 +611,7 @@
     },
 
     setUTCDates: function() {
-      var args = $.isArray(arguments[0]) ? arguments[0] : arguments
+      const args = $.isArray(arguments[0]) ? arguments[0] : arguments
       this.update.apply(this, $.map(args, this._utc_to_local))
       this._trigger('changeDate')
       this.setValue()
@@ -622,7 +622,7 @@
     setUTCDate: alias('setUTCDates'),
 
     setValue: function() {
-      var formatted = this.getFormattedDate()
+      const formatted = this.getFormattedDate()
       if (!this.isInput) {
         if (this.component) {
           this.element.find('input').val(formatted)
@@ -636,76 +636,76 @@
     getFormattedDate: function(format) {
       if (format === undefined) format = this.o.format
 
-      var lang = this.o.language
+      const lang = this.o.language
       return $.map(this.dates, function(d) {
         return DPGlobal.formatDate(d, format, lang)
       }).join(this.o.multidateSeparator)
     },
 
     setStartDate: function(startDate) {
-      this._process_options({ startDate: startDate })
+      this._process_options({ startDate })
       this.update()
       this.updateNavArrows()
       return this
     },
 
     setEndDate: function(endDate) {
-      this._process_options({ endDate: endDate })
+      this._process_options({ endDate })
       this.update()
       this.updateNavArrows()
       return this
     },
 
     setDaysOfWeekDisabled: function(daysOfWeekDisabled) {
-      this._process_options({ daysOfWeekDisabled: daysOfWeekDisabled })
+      this._process_options({ daysOfWeekDisabled })
       this.update()
       this.updateNavArrows()
       return this
     },
 
     setDaysOfWeekHighlighted: function(daysOfWeekHighlighted) {
-      this._process_options({ daysOfWeekHighlighted: daysOfWeekHighlighted })
+      this._process_options({ daysOfWeekHighlighted })
       this.update()
       return this
     },
 
     setDatesDisabled: function(datesDisabled) {
-      this._process_options({ datesDisabled: datesDisabled })
+      this._process_options({ datesDisabled })
       this.update()
       this.updateNavArrows()
     },
 
     place: function() {
       if (this.isInline) return this
-      var calendarWidth = this.picker.outerWidth(),
-        calendarHeight = this.picker.outerHeight(),
-        visualPadding = 10,
-        container = $(this.o.container),
-        windowWidth = container.width(),
-        scrollTop =
+      const calendarWidth = this.picker.outerWidth();
+        const calendarHeight = this.picker.outerHeight();
+        const visualPadding = 10;
+        const container = $(this.o.container);
+        const windowWidth = container.width();
+        const scrollTop =
           this.o.container === 'body'
             ? $(document).scrollTop()
-            : container.scrollTop(),
-        appendOffset = container.offset()
+            : container.scrollTop();
+        const appendOffset = container.offset()
 
-      var parentsZindex = []
+      const parentsZindex = []
       this.element.parents().each(function() {
-        var itemZIndex = $(this).css('z-index')
+        const itemZIndex = $(this).css('z-index')
         if (itemZIndex !== 'auto' && itemZIndex !== 0)
           parentsZindex.push(parseInt(itemZIndex))
       })
-      var zIndex = Math.max.apply(Math, parentsZindex) + this.o.zIndexOffset
-      var offset = this.component
+      const zIndex = Math.max.apply(Math, parentsZindex) + this.o.zIndexOffset
+      const offset = this.component
         ? this.component.parent().offset()
         : this.element.offset()
-      var height = this.component
+      const height = this.component
         ? this.component.outerHeight(true)
         : this.element.outerHeight(false)
-      var width = this.component
+      const width = this.component
         ? this.component.outerWidth(true)
         : this.element.outerWidth(false)
-      var left = offset.left - appendOffset.left,
-        top = offset.top - appendOffset.top
+      let left = offset.left - appendOffset.left;
+        let top = offset.top - appendOffset.top
 
       if (this.o.container !== 'body') {
         top += scrollTop
@@ -739,8 +739,8 @@
 
       // auto y orientation is best-situation: top or bottom, no fudging,
       // decision based on which shows more of the calendar
-      var yorient = this.o.orientation.y,
-        top_overflow
+      let yorient = this.o.orientation.y;
+        let top_overflow
       if (yorient === 'auto') {
         top_overflow = -scrollTop + top - calendarHeight
         yorient = top_overflow < 0 ? 'bottom' : 'top'
@@ -752,17 +752,17 @@
       else top += height
 
       if (this.o.rtl) {
-        var right = windowWidth - (left + width)
+        const right = windowWidth - (left + width)
         this.picker.css({
-          top: top,
-          right: right,
-          zIndex: zIndex
+          top,
+          right,
+          zIndex
         })
       } else {
         this.picker.css({
-          top: top,
-          left: left,
-          zIndex: zIndex
+          top,
+          left,
+          zIndex
         })
       }
       return this
@@ -772,9 +772,9 @@
     update: function() {
       if (!this._allow_update) return this
 
-      var oldDates = this.dates.copy(),
-        dates = [],
-        fromArgs = false
+      const oldDates = this.dates.copy();
+        let dates = [];
+        let fromArgs = false
       if (arguments.length) {
         $.each(
           arguments,
@@ -831,8 +831,8 @@
     },
 
     fillDow: function() {
-      var dowCnt = this.o.weekStart,
-        html = '<tr>'
+      let dowCnt = this.o.weekStart;
+        let html = '<tr>'
       if (this.o.calendarWeeks) {
         this.picker
           .find('.datepicker-days .datepicker-switch')
@@ -852,8 +852,8 @@
     },
 
     fillMonths: function() {
-      var html = '',
-        i = 0
+      let html = '';
+        let i = 0
       while (i < 12) {
         html +=
           '<span class="month">' +
@@ -873,10 +873,10 @@
     },
 
     getClassNames: function(date) {
-      var cls = [],
-        year = this.viewDate.getUTCFullYear(),
-        month = this.viewDate.getUTCMonth(),
-        today = new Date()
+      const cls = [];
+        const year = this.viewDate.getUTCFullYear();
+        const month = this.viewDate.getUTCMonth();
+        const today = new Date()
       if (
         date.getUTCFullYear() < year ||
         (date.getUTCFullYear() === year && date.getUTCMonth() < month)
@@ -925,28 +925,28 @@
     },
 
     fill: function() {
-      var d = new Date(this.viewDate),
-        year = d.getUTCFullYear(),
-        month = d.getUTCMonth(),
-        startYear =
+      const d = new Date(this.viewDate);
+        let year = d.getUTCFullYear();
+        const month = d.getUTCMonth();
+        const startYear =
           this.o.startDate !== -Infinity
             ? this.o.startDate.getUTCFullYear()
-            : -Infinity,
-        startMonth =
+            : -Infinity;
+        const startMonth =
           this.o.startDate !== -Infinity
             ? this.o.startDate.getUTCMonth()
-            : -Infinity,
-        endYear =
+            : -Infinity;
+        const endYear =
           this.o.endDate !== Infinity
             ? this.o.endDate.getUTCFullYear()
-            : Infinity,
-        endMonth =
-          this.o.endDate !== Infinity ? this.o.endDate.getUTCMonth() : Infinity,
-        todaytxt = dates[this.o.language].today || dates['en'].today || '',
-        cleartxt = dates[this.o.language].clear || dates['en'].clear || '',
-        titleFormat =
-          dates[this.o.language].titleFormat || dates['en'].titleFormat,
-        tooltip
+            : Infinity;
+        const endMonth =
+          this.o.endDate !== Infinity ? this.o.endDate.getUTCMonth() : Infinity;
+        const todaytxt = dates[this.o.language].today || dates.en.today || '';
+        const cleartxt = dates[this.o.language].clear || dates.en.clear || '';
+        const titleFormat =
+          dates[this.o.language].titleFormat || dates.en.titleFormat;
+        let tooltip
       if (isNaN(year) || isNaN(month)) return
       this.picker
         .find('.datepicker-days thead .datepicker-switch')
@@ -971,8 +971,8 @@
         .toggle(this.o.title !== '')
       this.updateNavArrows()
       this.fillMonths()
-      var prevMonth = UTCDate(year, month - 1, 28),
-        day = DPGlobal.getDaysInMonth(
+      const prevMonth = UTCDate(year, month - 1, 28);
+        const day = DPGlobal.getDaysInMonth(
           prevMonth.getUTCFullYear(),
           prevMonth.getUTCMonth()
         )
@@ -980,36 +980,36 @@
       prevMonth.setUTCDate(
         day - ((prevMonth.getUTCDay() - this.o.weekStart + 7) % 7)
       )
-      var nextMonth = new Date(prevMonth)
+      let nextMonth = new Date(prevMonth)
       if (prevMonth.getUTCFullYear() < 100) {
         nextMonth.setUTCFullYear(prevMonth.getUTCFullYear())
       }
       nextMonth.setUTCDate(nextMonth.getUTCDate() + 42)
       nextMonth = nextMonth.valueOf()
-      var html = []
-      var clsName
+      let html = []
+      let clsName
       while (prevMonth.valueOf() < nextMonth) {
         if (prevMonth.getUTCDay() === this.o.weekStart) {
           html.push('<tr>')
           if (this.o.calendarWeeks) {
             // ISO 8601: First week contains first thursday.
             // ISO also states week starts on Monday, but we can be more abstract here.
-            var // Start of current week: based on weekstart/current date
+            const // Start of current week: based on weekstart/current date
               ws = new Date(
                 +prevMonth +
                   ((this.o.weekStart - prevMonth.getUTCDay() - 7) % 7) * 864e5
-              ),
+              );
               // Thursday of this week
-              th = new Date(
+              const th = new Date(
                 Number(ws) + ((7 + 4 - ws.getUTCDay()) % 7) * 864e5
-              ),
+              );
               // First Thursday of year, year from thursday
-              yth = new Date(
+              var yth = new Date(
                 Number((yth = UTCDate(th.getUTCFullYear(), 0, 1))) +
                   ((7 + 4 - yth.getUTCDay()) % 7) * 864e5
-              ),
+              );
               // Calendar week: ms between thursdays, div ms per day, div 7 days
-              calWeek = (th - yth) / 864e5 / 7 + 1
+              const calWeek = (th - yth) / 864e5 / 7 + 1
             html.push('<td class="cw">' + calWeek + '</td>')
           }
         }
@@ -1017,7 +1017,7 @@
         clsName.push('day')
 
         if (this.o.beforeShowDay !== $.noop) {
-          var before = this.o.beforeShowDay(this._utc_to_local(prevMonth))
+          let before = this.o.beforeShowDay(this._utc_to_local(prevMonth))
           if (before === undefined) before = {}
           else if (typeof before === 'boolean') before = { enabled: before }
           else if (typeof before === 'string') before = { classes: before }
@@ -1048,11 +1048,11 @@
         .empty()
         .append(html.join(''))
 
-      var monthsTitle =
+      const monthsTitle =
         dates[this.o.language].monthsTitle ||
-        dates['en'].monthsTitle ||
+        dates.en.monthsTitle ||
         'Months'
-      var months = this.picker
+      const months = this.picker
         .find('.datepicker-months')
         .find('.datepicker-switch')
         .text(this.o.maxViewMode < 2 ? monthsTitle : year)
@@ -1076,11 +1076,11 @@
       }
 
       if (this.o.beforeShowMonth !== $.noop) {
-        var that = this
+        const that = this
         $.each(months, function(i, month) {
           if (!$(month).hasClass('disabled')) {
-            var moDate = new Date(year, i, 1)
-            var before = that.o.beforeShowMonth(moDate)
+            const moDate = new Date(year, i, 1)
+            const before = that.o.beforeShowMonth(moDate)
             if (before === false) $(month).addClass('disabled')
           }
         })
@@ -1088,18 +1088,18 @@
 
       html = ''
       year = parseInt(year / 10, 10) * 10
-      var yearCont = this.picker
+      const yearCont = this.picker
         .find('.datepicker-years')
         .find('.datepicker-switch')
         .text(year + '-' + (year + 9))
         .end()
         .find('td')
       year -= 1
-      var years = $.map(this.dates, function(d) {
+      const years = $.map(this.dates, function(d) {
           return d.getUTCFullYear()
-        }),
-        classes
-      for (var i = -1; i < 11; i++) {
+        });
+        let classes
+      for (let i = -1; i < 11; i++) {
         classes = ['year']
         tooltip = null
 
@@ -1109,7 +1109,7 @@
         if (year < startYear || year > endYear) classes.push('disabled')
 
         if (this.o.beforeShowYear !== $.noop) {
-          var yrBefore = this.o.beforeShowYear(new Date(year, 0, 1))
+          let yrBefore = this.o.beforeShowYear(new Date(year, 0, 1))
           if (yrBefore === undefined) yrBefore = {}
           else if (typeof yrBefore === 'boolean')
             yrBefore = { enabled: yrBefore }
@@ -1137,9 +1137,9 @@
     updateNavArrows: function() {
       if (!this._allow_update) return
 
-      var d = new Date(this.viewDate),
-        year = d.getUTCFullYear(),
-        month = d.getUTCMonth()
+      const d = new Date(this.viewDate);
+        const year = d.getUTCFullYear();
+        const month = d.getUTCMonth()
       switch (this.viewMode) {
         case 0:
           if (
@@ -1188,10 +1188,10 @@
     click: function(e) {
       e.preventDefault()
       e.stopPropagation()
-      var target = $(e.target).closest('span, td, th'),
-        year,
-        month,
-        day
+      const target = $(e.target).closest('span, td, th');
+        let year;
+        let month;
+        let day
       if (target.length === 1) {
         switch (target[0].nodeName.toLowerCase()) {
           case 'th':
@@ -1292,7 +1292,7 @@
     },
 
     _toggle_multidate: function(date) {
-      var ix = this.dates.contains(date)
+      const ix = this.dates.contains(date)
       if (!date) {
         this.dates.clear()
       }
@@ -1326,7 +1326,7 @@
       if (!which || which !== 'view') {
         this._trigger('changeDate')
       }
-      var element
+      let element
       if (this.isInput) {
         element = this.element
       } else if (this.component) {
@@ -1341,7 +1341,7 @@
     },
 
     moveDay: function(date, dir) {
-      var newDate = new Date(date)
+      const newDate = new Date(date)
       newDate.setUTCDate(date.getUTCDate() + dir)
 
       return newDate
@@ -1354,12 +1354,12 @@
     moveMonth: function(date, dir) {
       if (!isValidDate(date)) return this.o.defaultViewDate
       if (!dir) return date
-      var new_date = new Date(date.valueOf()),
-        day = new_date.getUTCDate(),
-        month = new_date.getUTCMonth(),
-        mag = Math.abs(dir),
-        new_month,
-        test
+      let new_date = new Date(date.valueOf());
+        let day = new_date.getUTCDate();
+        const month = new_date.getUTCMonth();
+        const mag = Math.abs(dir);
+        let new_month;
+        let test
       dir = dir > 0 ? 1 : -1
       if (mag === 1) {
         test =
@@ -1380,7 +1380,7 @@
         if (new_month < 0 || new_month > 11) new_month = (new_month + 12) % 12
       } else {
         // For magnitudes >1, move one month at a time...
-        for (var i = 0; i < mag; i++)
+        for (let i = 0; i < mag; i++)
           // ...which might decrease the day (eg, Jan 31 to Feb 28, etc)...
           new_date = this.moveMonth(new_date, dir)
         // ...then reset the day, keeping it in the new month
@@ -1441,10 +1441,10 @@
         }
         return
       }
-      var dateChanged = false,
-        dir,
-        newViewDate,
-        focusDate = this.focusDate || this.viewDate
+      let dateChanged = false;
+        let dir;
+        let newViewDate;
+        let focusDate = this.focusDate || this.viewDate
       switch (e.keyCode) {
         case 27: // escape
           if (this.focusDate) {
@@ -1512,7 +1512,7 @@
       if (dateChanged) {
         if (this.dates.length) this._trigger('changeDate')
         else this._trigger('clearDate')
-        var element
+        let element
         if (this.isInput) {
           element = this.element
         } else if (this.component) {
@@ -1540,7 +1540,7 @@
     }
   }
 
-  var DateRangePicker = function(element, options) {
+  const DateRangePicker = function(element, options) {
     $(element).data('datepicker', this)
     this.element = $(element)
     this.inputs = $.map(options.inputs, function(i) {
@@ -1565,7 +1565,7 @@
       this.updateRanges()
     },
     updateRanges: function() {
-      var range = $.map(this.dates, function(d) {
+      const range = $.map(this.dates, function(d) {
         return d.valueOf()
       })
       $.each(this.pickers, function(i, p) {
@@ -1579,17 +1579,17 @@
       if (this.updating) return
       this.updating = true
 
-      var dp = $(e.target).data('datepicker')
+      const dp = $(e.target).data('datepicker')
 
       if (typeof dp === 'undefined') {
         return
       }
 
-      var new_date = dp.getUTCDate(),
-        i = $.inArray(e.target, this.inputs),
-        j = i - 1,
-        k = i + 1,
-        l = this.inputs.length
+      const new_date = dp.getUTCDate();
+        const i = $.inArray(e.target, this.inputs);
+        let j = i - 1;
+        let k = i + 1;
+        const l = this.inputs.length
       if (i === -1) return
 
       $.each(this.pickers, function(i, p) {
@@ -1621,15 +1621,15 @@
 
   function opts_from_el(el, prefix) {
     // Derive options from element data-attrs
-    var data = $(el).data(),
-      out = {},
-      inkey,
-      replace = new RegExp('^' + prefix.toLowerCase() + '([A-Z])')
+    const data = $(el).data();
+      const out = {};
+      let inkey;
+      const replace = new RegExp('^' + prefix.toLowerCase() + '([A-Z])')
     prefix = new RegExp('^' + prefix.toLowerCase())
     function re_lower(_, a) {
       return a.toLowerCase()
     }
-    for (var key in data)
+    for (const key in data)
       if (prefix.test(key)) {
         inkey = key.replace(replace, re_lower)
         out[inkey] = data[key]
@@ -1639,36 +1639,36 @@
 
   function opts_from_locale(lang) {
     // Derive options from locale plugins
-    var out = {}
+    const out = {}
     // Check if "de-DE" style date is available, if not language should
     // fallback to 2 letter code eg "de"
     if (!dates[lang]) {
       lang = lang.split('-')[0]
       if (!dates[lang]) return
     }
-    var d = dates[lang]
+    const d = dates[lang]
     $.each(locale_opts, function(i, k) {
       if (k in d) out[k] = d[k]
     })
     return out
   }
 
-  var old = $.fn.datepicker
+  const old = $.fn.datepicker
   var datepickerPlugin = function(option) {
-    var args = Array.apply(null, arguments)
+    const args = Array.apply(null, arguments)
     args.shift()
-    var internal_return
+    let internal_return
     this.each(function() {
-      var $this = $(this),
-        data = $this.data('datepicker'),
-        options = typeof option === 'object' && option
+      const $this = $(this);
+        let data = $this.data('datepicker');
+        const options = typeof option === 'object' && option
       if (!data) {
-        var elopts = opts_from_el(this, 'date'),
+        const elopts = opts_from_el(this, 'date');
           // Preliminary otions
-          xopts = $.extend({}, defaults, elopts, options),
-          locopts = opts_from_locale(xopts.language),
+          const xopts = $.extend({}, defaults, elopts, options);
+          const locopts = opts_from_locale(xopts.language);
           // Options priority: js args, data-attrs, locales, defaults
-          opts = $.extend({}, defaults, locopts, elopts, options)
+          const opts = $.extend({}, defaults, locopts, elopts, options)
         if ($this.hasClass('input-daterange') || opts.inputs) {
           $.extend(opts, {
             inputs: opts.inputs || $this.find('input').toArray()
@@ -1836,30 +1836,30 @@
         return format
       // IE treats \0 as a string end in inputs (truncating the value),
       // so it's a bad format delimiter, anyway
-      var separators = format.replace(this.validParts, '\0').split('\0'),
-        parts = format.match(this.validParts)
+      const separators = format.replace(this.validParts, '\0').split('\0');
+        const parts = format.match(this.validParts)
       if (!separators || !separators.length || !parts || parts.length === 0) {
         throw new Error('Invalid date format.')
       }
-      return { separators: separators, parts: parts }
+      return { separators, parts }
     },
     parseDate: function(date, format, language) {
       if (!date) return undefined
       if (date instanceof Date) return date
       if (typeof format === 'string') format = DPGlobal.parseFormat(format)
       if (format.toValue) return format.toValue(date, format, language)
-      var part_re = /([\-+]\d+)([dmwy])/,
-        parts = date.match(/([\-+]\d+)([dmwy])/g),
-        fn_map = {
+      const part_re = /([\-+]\d+)([dmwy])/;
+        let parts = date.match(/([\-+]\d+)([dmwy])/g);
+        const fn_map = {
           d: 'moveDay',
           m: 'moveMonth',
           w: 'moveWeek',
           y: 'moveYear'
-        },
-        part,
-        dir,
-        i,
-        fn
+        };
+        let part;
+        let dir;
+        let i;
+        let fn
       if (/^[\-+]\d+[dmwy]([\s,]+[\-+]\d+[dmwy])*$/.test(date)) {
         date = new Date()
         for (i = 0; i < parts.length; i++) {
@@ -1876,9 +1876,9 @@
       }
       parts = (date && date.match(this.nonpunctuation)) || []
       date = new Date()
-      var parsed = {},
-        setters_order = ['yyyy', 'yy', 'M', 'MM', 'm', 'mm', 'd', 'dd'],
-        setters_map = {
+      const parsed = {};
+        const setters_order = ['yyyy', 'yy', 'M', 'MM', 'm', 'mm', 'd', 'dd'];
+        const setters_map = {
           yyyy: function(d, v) {
             return d.setUTCFullYear(v)
           },
@@ -1897,14 +1897,14 @@
           d: function(d, v) {
             return d.setUTCDate(v)
           }
-        },
-        val,
-        filtered
-      setters_map['M'] = setters_map['MM'] = setters_map['mm'] =
-        setters_map['m']
-      setters_map['dd'] = setters_map['d']
+        };
+        let val;
+        let filtered
+      setters_map.M = setters_map.MM = setters_map.mm =
+        setters_map.m
+      setters_map.dd = setters_map.d
       date = UTCToday()
-      var fparts = format.parts.slice()
+      let fparts = format.parts.slice()
       // Remove noop parts
       if (parts.length !== fparts.length) {
         fparts = $(fparts)
@@ -1915,12 +1915,12 @@
       }
       // Process remainder
       function match_part() {
-        var m = this.slice(0, parts[i].length),
-          p = parts[i].slice(0, m.length)
+        const m = this.slice(0, parts[i].length);
+          const p = parts[i].slice(0, m.length)
         return m.toLowerCase() === p.toLowerCase()
       }
       if (parts.length === fparts.length) {
-        var cnt
+        let cnt
         for (i = 0, cnt = fparts.length; i < cnt; i++) {
           val = parseInt(parts[i], 10)
           part = fparts[i]
@@ -1938,7 +1938,7 @@
           }
           parsed[part] = val
         }
-        var _date, s
+        let _date, s
         for (i = 0; i < setters_order.length; i++) {
           s = setters_order[i]
           if (s in parsed && !isNaN(parsed[s])) {
@@ -1954,7 +1954,7 @@
       if (!date) return ''
       if (typeof format === 'string') format = DPGlobal.parseFormat(format)
       if (format.toDisplay) return format.toDisplay(date, format, language)
-      var val = {
+      const val = {
         d: date.getUTCDate(),
         D: dates[language].daysShort[date.getUTCDay()],
         DD: dates[language].days[date.getUTCDay()],
@@ -1970,8 +1970,8 @@
       val.dd = (val.d < 10 ? '0' : '') + val.d
       val.mm = (val.m < 10 ? '0' : '') + val.m
       date = []
-      var seps = $.extend([], format.separators)
-      for (var i = 0, cnt = format.parts.length; i <= cnt; i++) {
+      const seps = $.extend([], format.separators)
+      for (let i = 0, cnt = format.parts.length; i <= cnt; i++) {
         if (seps.length) date.push(seps.shift())
         date.push(val[format.parts[i]])
       }
@@ -2045,7 +2045,7 @@
     'focus.datepicker.data-api click.datepicker.data-api',
     '[data-provide="datepicker"]',
     function(e) {
-      var $this = $(this)
+      const $this = $(this)
       if ($this.data('datepicker')) return
       e.preventDefault()
       // component click requires us to explicitly show it

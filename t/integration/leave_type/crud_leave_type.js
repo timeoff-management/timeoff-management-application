@@ -1,26 +1,26 @@
 'use strict'
 
-const test = require('selenium-webdriver/testing'),
-  register_new_user_func = require('../../lib/register_new_user'),
-  open_page_func = require('../../lib/open_page'),
-  submit_form_func = require('../../lib/submit_form'),
-  check_elements_func = require('../../lib/check_elements'),
-  By = require('selenium-webdriver').By,
-  config = require('../../lib/config'),
-  Bluebird = require('bluebird'),
-  expect = require('chai').expect,
-  application_host = config.get_application_host(),
-  leave_type_edit_form_id = '#leave_type_edit_form',
-  leave_type_new_form_id = '#leave_type_new_form'
+const test = require('selenium-webdriver/testing');
+  const register_new_user_func = require('../../lib/register_new_user');
+  const open_page_func = require('../../lib/open_page');
+  const submit_form_func = require('../../lib/submit_form');
+  const check_elements_func = require('../../lib/check_elements');
+  const By = require('selenium-webdriver').By;
+  const config = require('../../lib/config');
+  const Bluebird = require('bluebird');
+  const expect = require('chai').expect;
+  const application_host = config.get_application_host();
+  const leave_type_edit_form_id = '#leave_type_edit_form';
+  const leave_type_new_form_id = '#leave_type_new_form'
 
 describe('CRUD for leave types', function() {
-  var driver
+  let driver
 
   this.timeout(config.get_execution_timeout())
 
   it('Performing registration process', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(function(data) {
       driver = data.driver
       done()
@@ -30,7 +30,7 @@ describe('CRUD for leave types', function() {
   it('Open page with leave types', function(done) {
     open_page_func({
       url: application_host + 'settings/general/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -38,7 +38,7 @@ describe('CRUD for leave types', function() {
 
   it('Check if there are default leave types', function(done) {
     check_elements_func({
-      driver: driver,
+      driver,
       elements_to_check: [
         {
           selector:
@@ -58,7 +58,7 @@ describe('CRUD for leave types', function() {
     })
   })
 
-  it('Make sure default colours are set for leave types', done => {
+  it('Make sure default colours are set for leave types', function(done) {
     driver
       .findElements(By.css('form#leave_type_edit_form [data-tom-color-picker]'))
       .then(els => {
@@ -81,9 +81,9 @@ describe('CRUD for leave types', function() {
       })
   })
 
-  it('Change Sick leave type to be non-default colour', done => {
+  it('Change Sick leave type to be non-default colour', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector:
@@ -100,7 +100,7 @@ describe('CRUD for leave types', function() {
     }).then(() => done())
   })
 
-  it('Ensure that color class for Sick days was updated to be non-default', done => {
+  it('Ensure that color class for Sick days was updated to be non-default', function(done) {
     driver
       .findElements(
         By.css(
@@ -119,7 +119,7 @@ describe('CRUD for leave types', function() {
 
   it('Make sure that both leave types have "use allowance" tick boxes set', function(done) {
     check_elements_func({
-      driver: driver,
+      driver,
       elements_to_check: [
         {
           selector:
@@ -143,7 +143,7 @@ describe('CRUD for leave types', function() {
 
   it('Check that updating "use allowance flag" works', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector:
@@ -164,7 +164,7 @@ describe('CRUD for leave types', function() {
 
   it('Double check that "use allowance" tick boxes were updated correctly', function(done) {
     check_elements_func({
-      driver: driver,
+      driver,
       elements_to_check: [
         {
           selector:
@@ -188,7 +188,7 @@ describe('CRUD for leave types', function() {
 
   it('Check that it is possible to update Limits', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector:
@@ -214,7 +214,7 @@ describe('CRUD for leave types', function() {
 
   it('Make sure that Limit cannot be negative', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector:
@@ -242,7 +242,7 @@ describe('CRUD for leave types', function() {
         driver.sleep(1000)
 
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: leave_type_new_form_id + ' input[name="name__new"]',
@@ -266,7 +266,7 @@ describe('CRUD for leave types', function() {
 
   it('Check that new leave type was added at the beginning of the list as it starts with "A"', function(done) {
     check_elements_func({
-      driver: driver,
+      driver,
       elements_to_check: [
         {
           selector:
@@ -294,7 +294,7 @@ describe('CRUD for leave types', function() {
 
   it('And rename newly added leave type to start with "M"', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector:
@@ -313,7 +313,7 @@ describe('CRUD for leave types', function() {
 
   it('Make sure that updated new leave type was moved into second position', function(done) {
     check_elements_func({
-      driver: driver,
+      driver,
       elements_to_check: [
         {
           selector:
@@ -341,7 +341,7 @@ describe('CRUD for leave types', function() {
 
   it('Remove empty newly added leave type', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       elements_to_check: [
         {
           selector:
@@ -367,7 +367,7 @@ describe('CRUD for leave types', function() {
 
   it('And make sure only two old leave types are left', function(done) {
     check_elements_func({
-      driver: driver,
+      driver,
       elements_to_check: [
         {
           selector:
@@ -395,7 +395,7 @@ describe('CRUD for leave types', function() {
       .then(() => driver.sleep(1000))
       .then(() =>
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: leave_type_new_form_id + ' input[name="name__new"]',
@@ -418,7 +418,7 @@ describe('CRUD for leave types', function() {
       .then(() => driver.sleep(1000))
       .then(() =>
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: leave_type_new_form_id + ' input[name="name__new"]',
@@ -441,7 +441,7 @@ describe('CRUD for leave types', function() {
 
   it('Ensure AAA is first and ZZZ is last in the list (general settings page)', function(done) {
     check_elements_func({
-      driver: driver,
+      driver,
       elements_to_check: [
         {
           selector:
@@ -476,7 +476,7 @@ describe('CRUD for leave types', function() {
       .findElements(By.css('select#leave_type option'))
       .then(options =>
         Bluebird.map(options, option => {
-          let option_info = {}
+          const option_info = {}
           return option
             .getAttribute('data-tom-index')
             .then(val => Bluebird.resolve((option_info.value = val)))
@@ -509,7 +509,7 @@ describe('CRUD for leave types', function() {
       .then(name => Bluebird.resolve(name.split('__')[1]))
       .then(id =>
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector:
@@ -531,7 +531,7 @@ describe('CRUD for leave types', function() {
 
   it('Ensure AAA is first and ZZZ is last in the list (general settings page)', function(done) {
     check_elements_func({
-      driver: driver,
+      driver,
       elements_to_check: [
         {
           selector:
@@ -566,7 +566,7 @@ describe('CRUD for leave types', function() {
       .findElements(By.css('select#leave_type option'))
       .then(options =>
         Bluebird.map(options, option => {
-          let option_info = {}
+          const option_info = {}
           return option
             .getAttribute('data-tom-index')
             .then(val => Bluebird.resolve((option_info.value = val)))

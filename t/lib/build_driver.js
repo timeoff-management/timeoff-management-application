@@ -1,6 +1,6 @@
-var webdriver = require('selenium-webdriver'),
-  chrome = require('selenium-webdriver/chrome')
-capabilities = process.env.USE_CHROME ? 'chrome' : 'phantomjs'
+const webdriver = require('selenium-webdriver')
+const chrome = require('selenium-webdriver/chrome')
+const capabilities = process.env.USE_CHROME ? 'chrome' : 'phantomjs'
 
 module.exports = function() {
   if (capabilities === 'phantomjs') {
@@ -9,7 +9,7 @@ module.exports = function() {
       .build()
   }
 
-  var options = new chrome.Options()
+  const options = new chrome.Options()
   if (!process.env.SHOW_CHROME) {
     options.addArguments('headless')
     options.addArguments('disable-gpu')

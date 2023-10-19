@@ -1,16 +1,16 @@
 'use strict'
 
-var webdriver = require('selenium-webdriver'),
-  By = require('selenium-webdriver').By,
-  expect = require('chai').expect,
-  until = require('selenium-webdriver').until,
-  Promise = require('bluebird')
+const webdriver = require('selenium-webdriver');
+  const By = require('selenium-webdriver').By;
+  const expect = require('chai').expect;
+  const until = require('selenium-webdriver').until;
+  const Promise = require('bluebird')
 
-var logout_user_func = Promise.promisify(function(args, callback) {
-  var application_host = args.application_host,
-    driver = args.driver,
-    result_callback = callback,
-    logout_link_css_selector = 'li.hidden-xs a[href="/logout/"]'
+const logout_user_func = Promise.promisify(function(args, callback) {
+  const application_host = args.application_host;
+    const driver = args.driver;
+    const result_callback = callback;
+    const logout_link_css_selector = 'li.hidden-xs a[href="/logout/"]'
 
   // Open front page
   driver.get(application_host)
@@ -45,7 +45,7 @@ var logout_user_func = Promise.promisify(function(args, callback) {
 
       // "export" current driver
       result_callback(null, {
-        driver: driver
+        driver
       })
     })
 })

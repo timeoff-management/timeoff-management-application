@@ -1,12 +1,12 @@
 'use strict'
 
-var expect = require('chai').expect,
-  _ = require('underscore'),
-  model = require('../../../../lib/model/db'),
-  LeaveRequestParameters = require('../../../../lib/model/leave_request_parameters')
+const expect = require('chai').expect;
+  const _ = require('underscore');
+  const model = require('../../../../lib/model/db');
+  const LeaveRequestParameters = require('../../../../lib/model/leave_request_parameters')
 
 describe('Check bug when type mismatch happenned', function() {
-  var leave = model.Leave.build({
+  const leave = model.Leave.build({
     status: '1',
     date_start: '2015-05-07 00:00:00.000 +00:00',
     day_part_start: 2,
@@ -32,7 +32,7 @@ describe('Check bug when type mismatch happenned', function() {
 })
 
 describe('leave request half a day with existing booking of half a day', function() {
-  var leave = model.Leave.build({
+  const leave = model.Leave.build({
     status: '1',
     date_start: '2015-04-09',
     date_end: '2015-04-09',
@@ -74,7 +74,7 @@ describe('leave request half a day with existing booking of half a day', functio
 })
 
 describe('Leave request is spread through more then one day', function() {
-  var leave = model.Leave.build({
+  const leave = model.Leave.build({
     status: '1',
 
     date_start: '2015-04-09',
@@ -169,7 +169,7 @@ describe('Leave request is spread through more then one day', function() {
 })
 
 describe('Case when leave request is within one day', function() {
-  var leave = model.Leave.build({
+  const leave = model.Leave.build({
     status: '1',
 
     date_start: '2015-04-09',

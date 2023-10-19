@@ -1,10 +1,10 @@
 'use strict'
 
-var expect = require('chai').expect,
-  _ = require('underscore'),
-  model = require('../../../../lib/model/db')
+const expect = require('chai').expect;
+  const _ = require('underscore');
+  const model = require('../../../../lib/model/db')
 
-var default_params = {
+const default_params = {
   date_start: '2015-04-09',
   date_end: '2015-04-10',
   status: 1,
@@ -14,11 +14,11 @@ var default_params = {
 
 describe('Check get_objects_for_bulk_create', function() {
   it('Check case when start and finish dates are the same', function() {
-    var params = _.clone(default_params)
+    const params = _.clone(default_params)
     params.date_start = '2015-04-09'
     params.date_end = '2015-04-09'
 
-    var leave = model.Leave.build(params)
+    const leave = model.Leave.build(params)
 
     expect(
       _.map(leave.get_days(), function(d) {
@@ -33,14 +33,14 @@ describe('Check get_objects_for_bulk_create', function() {
   })
 
   it('Start and end dates are the same, and half day', function() {
-    var params = _.clone(default_params)
+    const params = _.clone(default_params)
     params.date_start = '2015-04-09'
     params.date_end = '2015-04-09'
     params.day_part_start = 3
     // finish date part setting is ignored if both dates are the sane
     params.day_part_end = 1
 
-    var leave = model.Leave.build(params)
+    const leave = model.Leave.build(params)
 
     expect(
       _.map(leave.get_days(), function(d) {
@@ -55,8 +55,8 @@ describe('Check get_objects_for_bulk_create', function() {
   })
 
   it('Two days in a row', function() {
-    var params = _.clone(default_params)
-    var leave = model.Leave.build(params)
+    const params = _.clone(default_params)
+    const leave = model.Leave.build(params)
 
     expect(
       _.map(leave.get_days(), function(d) {
@@ -75,11 +75,11 @@ describe('Check get_objects_for_bulk_create', function() {
   })
 
   it('Three days in a row with first half day', function() {
-    var params = _.clone(default_params)
+    const params = _.clone(default_params)
     params.date_end = '2015-04-11'
     params.day_part_start = 3
 
-    var leave = model.Leave.build(params)
+    const leave = model.Leave.build(params)
 
     expect(
       _.map(leave.get_days(), function(d) {

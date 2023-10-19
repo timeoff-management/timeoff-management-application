@@ -1,22 +1,22 @@
 'use strict'
 
-var test = require('selenium-webdriver/testing'),
-  By = require('selenium-webdriver').By,
-  until = require('selenium-webdriver').until,
-  Promise = require('bluebird'),
-  expect = require('chai').expect,
-  moment = require('moment'),
-  add_new_user_func = require('../../lib/add_new_user'),
-  check_elements_func = require('../../lib/check_elements'),
-  config = require('../../lib/config'),
-  login_user_func = require('../../lib/login_with_user'),
-  logout_user_func = require('../../lib/logout_user'),
-  open_page_func = require('../../lib/open_page'),
-  register_new_user_func = require('../../lib/register_new_user'),
-  submit_form_func = require('../../lib/submit_form'),
-  user_info_func = require('../../lib/user_info'),
-  application_host = config.get_application_host(),
-  userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year')
+const test = require('selenium-webdriver/testing');
+  const By = require('selenium-webdriver').By;
+  const until = require('selenium-webdriver').until;
+  const Promise = require('bluebird');
+  const expect = require('chai').expect;
+  const moment = require('moment');
+  const add_new_user_func = require('../../lib/add_new_user');
+  const check_elements_func = require('../../lib/check_elements');
+  const config = require('../../lib/config');
+  const login_user_func = require('../../lib/login_with_user');
+  const logout_user_func = require('../../lib/logout_user');
+  const open_page_func = require('../../lib/open_page');
+  const register_new_user_func = require('../../lib/register_new_user');
+  const submit_form_func = require('../../lib/submit_form');
+  const user_info_func = require('../../lib/user_info');
+  const application_host = config.get_application_host();
+  const userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year')
 
 /*
  *  Scenario (based in bug #166):
@@ -35,11 +35,11 @@ var test = require('selenium-webdriver/testing'),
 describe('Leave request cancelation', function() {
   this.timeout(config.get_execution_timeout())
 
-  var driver, email_A, user_id_A
+  let driver, email_A, user_id_A
 
   it('Register new company', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(function(data) {
       driver = data.driver
       email_A = data.email
@@ -49,7 +49,7 @@ describe('Leave request cancelation', function() {
 
   it('Obtain information about admin user A', function(done) {
     user_info_func({
-      driver: driver,
+      driver,
       email: email_A
     }).then(function(data) {
       user_id_A = data.user.id
@@ -57,7 +57,7 @@ describe('Leave request cancelation', function() {
     })
   })
 
-  it('Update admin details to have start date at very beginig of this year', done => {
+  it('Update admin details to have start date at very beginig of this year', function(done) {
     userStartsAtTheBeginingOfYear({
       driver,
       email: email_A
@@ -82,7 +82,7 @@ describe('Leave request cancelation', function() {
   it('Submit new leave request for user A one weekday', function(done) {
     const currentYear = moment.utc().year()
     submit_form_func({
-      driver: driver,
+      driver,
       form_params: [
         {
           selector: 'input#from',
@@ -102,7 +102,7 @@ describe('Leave request cancelation', function() {
   it('Open requests page', function(done) {
     open_page_func({
       url: application_host + 'requests/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -128,7 +128,7 @@ describe('Leave request cancelation', function() {
   it('Open user A details page (abcenses section)', function(done) {
     open_page_func({
       url: application_host + 'users/edit/' + user_id_A + '/absences/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -149,7 +149,7 @@ describe('Leave request cancelation', function() {
   it('Open employees list page', function(done) {
     open_page_func({
       url: application_host + 'users',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -186,7 +186,7 @@ describe('Leave request cancelation', function() {
   it('Open requests page', function(done) {
     open_page_func({
       url: application_host + 'requests/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -210,7 +210,7 @@ describe('Leave request cancelation', function() {
   it('Open user A details page (abcenses section)', function(done) {
     open_page_func({
       url: application_host + 'users/edit/' + user_id_A + '/absences/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -231,7 +231,7 @@ describe('Leave request cancelation', function() {
   it('Open employees list page', function(done) {
     open_page_func({
       url: application_host + 'users',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })

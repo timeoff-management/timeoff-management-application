@@ -1,31 +1,31 @@
 'use strict'
 
-var test = require('selenium-webdriver/testing'),
-  config = require('../../lib/config'),
-  application_host = config.get_application_host(),
-  By = require('selenium-webdriver').By,
-  expect = require('chai').expect,
-  _ = require('underscore'),
-  Promise = require('bluebird'),
-  moment = require('moment'),
-  until = require('selenium-webdriver').until,
-  login_user_func = require('../../lib/login_with_user'),
-  register_new_user_func = require('../../lib/register_new_user'),
-  logout_user_func = require('../../lib/logout_user'),
-  open_page_func = require('../../lib/open_page'),
-  submit_form_func = require('../../lib/submit_form'),
-  check_elements_func = require('../../lib/check_elements'),
-  check_booking_func = require('../../lib/check_booking_on_calendar'),
-  add_new_user_func = require('../../lib/add_new_user')
+const test = require('selenium-webdriver/testing');
+  const config = require('../../lib/config');
+  const application_host = config.get_application_host();
+  const By = require('selenium-webdriver').By;
+  const expect = require('chai').expect;
+  const _ = require('underscore');
+  const Promise = require('bluebird');
+  const moment = require('moment');
+  const until = require('selenium-webdriver').until;
+  const login_user_func = require('../../lib/login_with_user');
+  const register_new_user_func = require('../../lib/register_new_user');
+  const logout_user_func = require('../../lib/logout_user');
+  const open_page_func = require('../../lib/open_page');
+  const submit_form_func = require('../../lib/submit_form');
+  const check_elements_func = require('../../lib/check_elements');
+  const check_booking_func = require('../../lib/check_booking_on_calendar');
+  const add_new_user_func = require('../../lib/add_new_user')
 
 describe('Check the client side logic to facilitate filling new absence form', function() {
   this.timeout(config.get_execution_timeout())
 
-  var driver
+  let driver
 
   it('Register new company', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(function(data) {
       driver = data.driver
       done()
@@ -35,7 +35,7 @@ describe('Check the client side logic to facilitate filling new absence form', f
   it('Open calendar page', function(done) {
     open_page_func({
       url: application_host + 'calendar/?year=2017&show_full_year=1',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -58,7 +58,7 @@ describe('Check the client side logic to facilitate filling new absence form', f
 
   it('Ensure by default FROM and TO fields are populated with current date', function(done) {
     check_elements_func({
-      driver: driver,
+      driver,
       elements_to_check: [
         {
           selector: 'input.book-leave-from-input',
@@ -75,8 +75,8 @@ describe('Check the client side logic to facilitate filling new absence form', f
   })
 
   it('Update FROM to be in future and make sure TO is automatically addusted to the same date', function(done) {
-    var inp_from,
-      tomorrow_str = moment()
+    let inp_from;
+      const tomorrow_str = moment()
         .add(1, 'days')
         .format('YYYY-MM-DD')
 
@@ -92,7 +92,7 @@ describe('Check the client side logic to facilitate filling new absence form', f
 
     driver.call(function() {
       check_elements_func({
-        driver: driver,
+        driver,
         elements_to_check: [
           {
             selector: 'input.book-leave-from-input',
@@ -110,11 +110,11 @@ describe('Check the client side logic to facilitate filling new absence form', f
   })
 
   it('Update FROM to be in past and make sure TO is stays unchanged', function(done) {
-    var inp_from,
-      tomorrow_str = moment()
+    let inp_from;
+      const tomorrow_str = moment()
         .add(1, 'days')
-        .format('YYYY-MM-DD'),
-      yesterday_str = moment()
+        .format('YYYY-MM-DD');
+      const yesterday_str = moment()
         .subtract(1, 'days')
         .format('YYYY-MM-DD')
 
@@ -130,7 +130,7 @@ describe('Check the client side logic to facilitate filling new absence form', f
 
     driver.call(function() {
       check_elements_func({
-        driver: driver,
+        driver,
         elements_to_check: [
           {
             selector: 'input.book-leave-from-input',

@@ -1,18 +1,18 @@
 'use strict'
 
-const By = require('selenium-webdriver').By,
-  moment = require('moment'),
-  addNewUserFunc = require('../../lib/add_new_user'),
-  config = require('../../lib/config'),
-  loginUserFunc = require('../../lib/login_with_user'),
-  logoutUserFunc = require('../../lib/logout_user'),
-  openPageFunc = require('../../lib/open_page'),
-  registerNewUserFunc = require('../../lib/register_new_user'),
-  submitFormFunc = require('../../lib/submit_form'),
-  userInfoFunc = require('../../lib/user_info'),
-  application_host = config.get_application_host(),
-  checkBookingFunc = require('../../lib/check_booking_on_calendar'),
-  someWeekdayDate = moment()
+const By = require('selenium-webdriver').By;
+  const moment = require('moment');
+  const addNewUserFunc = require('../../lib/add_new_user');
+  const config = require('../../lib/config');
+  const loginUserFunc = require('../../lib/login_with_user');
+  const logoutUserFunc = require('../../lib/logout_user');
+  const openPageFunc = require('../../lib/open_page');
+  const registerNewUserFunc = require('../../lib/register_new_user');
+  const submitFormFunc = require('../../lib/submit_form');
+  const userInfoFunc = require('../../lib/user_info');
+  const application_host = config.get_application_host();
+  const checkBookingFunc = require('../../lib/check_booking_on_calendar');
+  const someWeekdayDate = moment()
     .utc()
     .startOf('year')
     .add(1, 'week')
@@ -36,34 +36,34 @@ describe('Ensure employee calendar from admin section shows bookings', function(
 
   let driver, emailA, emailB, userIdB
 
-  it('Register new company', async () => {
-    ;({ driver: driver, email: emailA } = await registerNewUserFunc({
+  it('Register new company', async function() {
+    ;({ driver, email: emailA } = await registerNewUserFunc({
       application_host
     }))
   })
 
-  it('Create second user B', async () => {
+  it('Create second user B', async function() {
     ;({ new_user_email: emailB } = await addNewUserFunc({
       application_host,
       driver
     }))
   })
 
-  it('Obtain information about user B', async () => {
+  it('Obtain information about user B', async function() {
     ;({
       user: { id: userIdB }
     } = await userInfoFunc({ driver, email: emailB }))
   })
 
-  it('Logout from user A (admin)', async () => {
+  it('Logout from user A (admin)', async function() {
     await logoutUserFunc({ application_host, driver })
   })
 
-  it('Login as user B', async () => {
+  it('Login as user B', async function() {
     await loginUserFunc({ application_host, driver, user_email: emailB })
   })
 
-  it('Open Book leave popup window', async () => {
+  it('Open Book leave popup window', async function() {
     const el = await driver.findElement(By.css('#book_time_off_btn'))
     await el.click()
 
@@ -71,7 +71,7 @@ describe('Ensure employee calendar from admin section shows bookings', function(
     await driver.sleep(1000)
   })
 
-  it('Submit new leave request from user B', async () => {
+  it('Submit new leave request from user B', async function() {
     await submitFormFunc({
       driver,
       form_params: [
@@ -88,15 +88,15 @@ describe('Ensure employee calendar from admin section shows bookings', function(
     })
   })
 
-  it('Logout from user B', async () => {
+  it('Logout from user B', async function() {
     await logoutUserFunc({ application_host, driver })
   })
 
-  it('Login as admin user A', async () => {
+  it('Login as admin user A', async function() {
     await loginUserFunc({ driver, application_host, user_email: emailA })
   })
 
-  it('Open user B calendar section and ensure the newly added booking is there', async () => {
+  it('Open user B calendar section and ensure the newly added booking is there', async function() {
     await openPageFunc({
       driver,
       url: `${application_host}users/edit/${userIdB}/calendar/`
@@ -109,7 +109,7 @@ describe('Ensure employee calendar from admin section shows bookings', function(
     })
   })
 
-  after(async () => {
+  after(async function() {
     await driver.quit()
   })
 })

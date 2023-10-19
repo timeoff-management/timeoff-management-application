@@ -1,22 +1,22 @@
 'use strict'
 
-const test = require('selenium-webdriver/testing'),
-  By = require('selenium-webdriver').By,
-  expect = require('chai').expect,
-  _ = require('underscore'),
-  Promise = require('bluebird'),
-  moment = require('moment'),
-  login_user_func = require('../../lib/login_with_user'),
-  register_new_user_func = require('../../lib/register_new_user'),
-  open_page_func = require('../../lib/open_page'),
-  submit_form_func = require('../../lib/submit_form'),
-  check_elements_func = require('../../lib/check_elements'),
-  check_booking_func = require('../../lib/check_booking_on_calendar'),
-  leave_type_edit_form_id = '#leave_type_edit_form',
-  leave_type_new_form_id = '#leave_type_new_form',
-  config = require('../../lib/config'),
-  application_host = config.get_application_host(),
-  userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year')
+const test = require('selenium-webdriver/testing');
+  const By = require('selenium-webdriver').By;
+  const expect = require('chai').expect;
+  const _ = require('underscore');
+  const Promise = require('bluebird');
+  const moment = require('moment');
+  const login_user_func = require('../../lib/login_with_user');
+  const register_new_user_func = require('../../lib/register_new_user');
+  const open_page_func = require('../../lib/open_page');
+  const submit_form_func = require('../../lib/submit_form');
+  const check_elements_func = require('../../lib/check_elements');
+  const check_booking_func = require('../../lib/check_booking_on_calendar');
+  const leave_type_edit_form_id = '#leave_type_edit_form';
+  const leave_type_new_form_id = '#leave_type_new_form';
+  const config = require('../../lib/config');
+  const application_host = config.get_application_host();
+  const userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year')
 
 /*
  *  Scenario to go in this test:
@@ -31,18 +31,18 @@ const test = require('selenium-webdriver/testing'),
 describe('Try to remove used leave type', function() {
   this.timeout(config.get_execution_timeout())
 
-  var driver, email
+  let driver, email
 
   it('Create new company', function(done) {
     register_new_user_func({
-      application_host: application_host
+      application_host
     }).then(function(data) {
       ;({ driver, email } = data)
       done()
     })
   })
 
-  it('Ensure user starts at the very beginning of current year', done => {
+  it('Ensure user starts at the very beginning of current year', function(done) {
     userStartsAtTheBeginingOfYear({ driver, email, year: 2015 }).then(() =>
       done()
     )
@@ -51,7 +51,7 @@ describe('Try to remove used leave type', function() {
   it('Open page with leave types', function(done) {
     open_page_func({
       url: application_host + 'settings/general/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -68,7 +68,7 @@ describe('Try to remove used leave type', function() {
         driver.sleep(1000)
 
         submit_form_func({
-          driver: driver,
+          driver,
           form_params: [
             {
               selector: leave_type_new_form_id + ' input[name="name__new"]',
@@ -93,7 +93,7 @@ describe('Try to remove used leave type', function() {
   it('Open calendar page', function(done) {
     open_page_func({
       url: application_host + 'calendar/?show_full_year=1&year=2015',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -112,7 +112,7 @@ describe('Try to remove used leave type', function() {
         driver.sleep(1000)
 
         submit_form_func({
-          driver: driver,
+          driver,
           // The order matters here as we need to populate dropdown prior date filds
           form_params: [
             {
@@ -141,7 +141,7 @@ describe('Try to remove used leave type', function() {
 
   it('Check that all days are marked as pended', function(done) {
     check_booking_func({
-      driver: driver,
+      driver,
       full_days: [moment('2015-06-16')],
       halfs_1st_days: [moment('2015-06-15')],
       type: 'pended'
@@ -153,7 +153,7 @@ describe('Try to remove used leave type', function() {
   it('Open page with leave types', function(done) {
     open_page_func({
       url: application_host + 'settings/general/',
-      driver: driver
+      driver
     }).then(function() {
       done()
     })
@@ -161,7 +161,7 @@ describe('Try to remove used leave type', function() {
 
   it('Try to remove newly added leave type and ensure it fails', function(done) {
     submit_form_func({
-      driver: driver,
+      driver,
       submit_button_selector:
         leave_type_edit_form_id +
         ' button[data-tom-leave-type-order="remove_0"]',

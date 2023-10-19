@@ -1,28 +1,28 @@
 'use strict'
 
-var expect = require('chai').expect,
-  _ = require('underscore'),
-  MockExpressReq = require('../../lib/mock_express_request'),
-  leave_request_validator = require('../../../lib/route/validator/leave_request')
+const expect = require('chai').expect;
+  const _ = require('underscore');
+  const MockExpressReq = require('../../lib/mock_express_request');
+  const leave_request_validator = require('../../../lib/route/validator/leave_request')
 
 describe('Check validation for leave request', function() {
   it('No parameters provided', function() {
-    var req = new MockExpressReq()
+    const req = new MockExpressReq()
 
     expect(function() {
-      leave_request_validator({ req: req, params: req.body })
+      leave_request_validator({ req, params: req.body })
     }).to.throw('Got validation errors')
 
     expect(req.session.flash.errors.length).to.be.equal(4)
   })
 
   it('User index is invalid', function() {
-    var req = new MockExpressReq({
+    const req = new MockExpressReq({
       params: { user: 'foo' }
     })
 
     expect(function() {
-      leave_request_validator({ req: req })
+      leave_request_validator({ req })
     }).to.throw('Got validation errors')
 
     expect(
@@ -34,7 +34,7 @@ describe('Check validation for leave request', function() {
     expect(req.session.flash.errors.length).to.be.equal(5)
   })
 
-  var valid_params = {
+  const valid_params = {
     user: '1',
     leave_type: '1',
     from_date: '2015-05-10',
@@ -45,11 +45,11 @@ describe('Check validation for leave request', function() {
   }
 
   it('Successfull scenario', function() {
-    var req = new MockExpressReq({
+    const req = new MockExpressReq({
       params: valid_params
     })
 
-    expect(leave_request_validator({ req: req }).as_data_object()).to.be.eql(
+    expect(leave_request_validator({ req }).as_data_object()).to.be.eql(
       valid_params
     )
 
@@ -57,11 +57,11 @@ describe('Check validation for leave request', function() {
   })
 
   it('from_date_part has invalid value', function() {
-    var params = _.clone(valid_params)
+    const params = _.clone(valid_params)
     params.from_date_part = '11'
-    var req = new MockExpressReq({ params: params })
+    const req = new MockExpressReq({ params })
     expect(function() {
-      leave_request_validator({ req: req })
+      leave_request_validator({ req })
     }).to.throw('Got validation errors')
 
     expect(
@@ -74,13 +74,13 @@ describe('Check validation for leave request', function() {
   })
 
   it('from_date has invalid value', function() {
-    var params = _.clone(valid_params)
+    const params = _.clone(valid_params)
     params.from_date = 'some horrible date'
-    var req = new MockExpressReq({
-      params: params
+    const req = new MockExpressReq({
+      params
     })
     expect(function() {
-      leave_request_validator({ req: req })
+      leave_request_validator({ req })
     }).to.throw('Got validation errors')
 
     expect(
@@ -91,26 +91,26 @@ describe('Check validation for leave request', function() {
   })
 
   it('start dates is greater than end one', function() {
-    var params = _.clone(valid_params)
+    const params = _.clone(valid_params)
     params.from_date = '2015-04-12'
     params.to_date = '2015-04-02'
-    var req = new MockExpressReq({
-      params: params
+    const req = new MockExpressReq({
+      params
     })
     expect(function() {
-      leave_request_validator({ req: req })
+      leave_request_validator({ req })
     }).to.throw('From date should be before To date')
 
     expect(req.session).not.to.have.property('flash')
   })
 
   it('inter_year leave request', function() {
-    var params = _.clone(valid_params)
+    const params = _.clone(valid_params)
     params.from_date = '2014-04-12'
     params.to_date = '2015-04-02'
-    var req = new MockExpressReq({ params: params })
+    const req = new MockExpressReq({ params })
     expect(function() {
-      leave_request_validator({ req: req })
+      leave_request_validator({ req })
     }).to.throw('Got validation errors')
 
     expect(
@@ -126,13 +126,13 @@ describe('Check validation for leave request', function() {
   })
 
   it('Reason is optional', function() {
-    var params = _.clone(valid_params)
+    const params = _.clone(valid_params)
     delete params.reason
-    var vp = _.clone(valid_params)
+    const vp = _.clone(valid_params)
     vp.reason = ''
-    var req = new MockExpressReq({ params: params })
+    const req = new MockExpressReq({ params })
 
-    expect(leave_request_validator({ req: req }).as_data_object()).to.be.eql(vp)
+    expect(leave_request_validator({ req }).as_data_object()).to.be.eql(vp)
 
     expect(req.session).not.to.have.property('flash')
   })
