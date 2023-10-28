@@ -9,7 +9,7 @@
       </div>
 
 
-      {{#each company.bank_holidays}}
+      {{#each bankholidays}}
         <input type="hidden" value="{{name}}" name="name__{{@index}}">
         <input type="hidden" value="{{as_date date}}" name="date__{{@index}}">
       {{/each}}
