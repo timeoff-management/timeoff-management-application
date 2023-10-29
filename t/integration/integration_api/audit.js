@@ -1,18 +1,18 @@
 'use strict'
 
-const test = require('selenium-webdriver/testing');
-  const By = require('selenium-webdriver').By;
-  const expect = require('chai').expect;
-  const Promise = require('bluebird');
-  const rp = require('request-promise');
-  const registerNewUserFunc = require('../../lib/register_new_user');
-  const openPageFunc = require('../../lib/open_page');
-  const submitFormFunc = require('../../lib/submit_form');
-  const userInfoFunc = require('../../lib/user_info');
-  const checkElementsFunc = require('../../lib/check_elements');
-  const addNewUserFunc = require('../../lib/add_new_user');
-  const config = require('../../lib/config');
-  const applicationHost = config.get_application_host()
+const test = require('selenium-webdriver/testing')
+const By = require('selenium-webdriver').By
+const expect = require('chai').expect
+const Promise = require('bluebird')
+const rp = require('request-promise')
+const registerNewUserFunc = require('../../lib/register_new_user')
+const openPageFunc = require('../../lib/open_page')
+const submitFormFunc = require('../../lib/submit_form')
+const userInfoFunc = require('../../lib/user_info')
+const checkElementsFunc = require('../../lib/check_elements')
+const addNewUserFunc = require('../../lib/add_new_user')
+const config = require('../../lib/config')
+const applicationHost = config.get_application_host()
 
 /*
  * Scenario:
@@ -134,8 +134,8 @@ describe('Basic audit for user changes', function() {
       .then(res => JSON.parse(res))
       .then(obj => {
         const twoEvents = obj
-          .filter(i => i.entityType === 'USER')
-          .filter(i => i.entityId === userId)
+          .filter(i => i.entity_type === 'USER')
+          .filter(i => i.entity_id === userId)
 
         expect(twoEvents.length).to.be.eql(2)
 
@@ -147,8 +147,8 @@ describe('Basic audit for user changes', function() {
         )
 
         const removedEvents = obj
-          .filter(i => i.entityType === 'USER')
-          .filter(i => i.entityId === secondUserId)
+          .filter(i => i.entity_type === 'USER')
+          .filter(i => i.entity_id === secondUserId)
 
         expect(
           removedEvents.length,
