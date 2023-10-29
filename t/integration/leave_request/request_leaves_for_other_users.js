@@ -1,20 +1,20 @@
 'use strict'
 
-const test = require('selenium-webdriver/testing');
-  const config = require('../../lib/config');
-  const application_host = config.get_application_host();
-  const By = require('selenium-webdriver').By;
-  const expect = require('chai').expect;
-  const _ = require('underscore');
-  const Promise = require('bluebird');
-  const until = require('selenium-webdriver').until;
-  const login_user_func = require('../../lib/login_with_user');
-  const register_new_user_func = require('../../lib/register_new_user');
-  const logout_user_func = require('../../lib/logout_user');
-  const open_page_func = require('../../lib/open_page');
-  const submit_form_func = require('../../lib/submit_form');
-  const add_new_user_func = require('../../lib/add_new_user');
-  const new_department_form_id = '#add_new_department_form'
+const test = require('selenium-webdriver/testing')
+const config = require('../../lib/config')
+const application_host = config.get_application_host()
+const By = require('selenium-webdriver').By
+const expect = require('chai').expect
+const _ = require('underscore')
+const Promise = require('bluebird')
+const until = require('selenium-webdriver').until
+const login_user_func = require('../../lib/login_with_user')
+const register_new_user_func = require('../../lib/register_new_user')
+const logout_user_func = require('../../lib/logout_user')
+const open_page_func = require('../../lib/open_page')
+const submit_form_func = require('../../lib/submit_form')
+const add_new_user_func = require('../../lib/add_new_user')
+const new_department_form_id = '#add_new_department_form'
 
 /*
  *  Scenario to go in this test:
@@ -33,7 +33,7 @@ const test = require('selenium-webdriver/testing');
  *
  * */
 
-describe('Request leave for outher users', function() {
+describe('Request leave for other users', function() {
   this.timeout(config.get_execution_timeout())
 
   let ordenary_user_email,
@@ -83,7 +83,7 @@ describe('Request leave for outher users', function() {
 
   it('Save ID of ordenry user', function(done) {
     driver
-      .findElement(By.css('select[name="boss_id__new"] option:nth-child(3)'))
+      .findElement(By.css('select[name="manager_id__new"] option:nth-child(3)'))
       .then(function(el) {
         return el.getAttribute('value')
       })
@@ -123,9 +123,9 @@ describe('Request leave for outher users', function() {
               },
               {
                 selector:
-                  new_department_form_id + ' select[name="boss_id__new"]',
+                  new_department_form_id + ' select[name="manager_id__new"]',
                 option_selector:
-                  'select[name="boss_id__new"] option:nth-child(2)'
+                  'select[name="manager_id__new"] option:nth-child(2)'
               }
             ],
             submit_button_selector:
@@ -204,7 +204,8 @@ describe('Request leave for outher users', function() {
         driver.sleep(1000)
 
         driver
-          .isElementPresent(By.css('select#employee'))
+          .findElements(By.css('select#employee'))
+          .then(found => !!found.length)
           .then(function(is_present) {
             expect(is_present).to.be.equal(false)
             done()
@@ -255,7 +256,8 @@ describe('Request leave for outher users', function() {
 
           // Make sure there is a drop down with users
           driver
-            .isElementPresent(By.css('select#employee'))
+            .findElements(By.css('select#employee'))
+            .then(found => !!found.length)
             .then(function(is_present) {
               expect(is_present).to.be.equal(true)
               done()
@@ -332,7 +334,8 @@ describe('Request leave for outher users', function() {
 
         // Make sure there is a drop down with users
         driver
-          .isElementPresent(By.css('select#employee'))
+          .findElements(By.css('select#employee'))
+          .then(found => !!found.length)
           .then(function(is_present) {
             expect(is_present).to.be.equal(true)
           })

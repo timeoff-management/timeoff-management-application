@@ -22,22 +22,22 @@
  *
  * */
 
-const test = require('selenium-webdriver/testing');
-  const By = require('selenium-webdriver').By;
-  const Promise = require('bluebird');
-  const expect = require('chai').expect;
-  const add_new_user_func = require('../../lib/add_new_user');
-  const check_elements_func = require('../../lib/check_elements');
-  const config = require('../../lib/config');
-  const login_user_func = require('../../lib/login_with_user');
-  const logout_user_func = require('../../lib/logout_user');
-  const open_page_func = require('../../lib/open_page');
-  const register_new_user_func = require('../../lib/register_new_user');
-  const submit_form_func = require('../../lib/submit_form');
-  const user_info_func = require('../../lib/user_info');
-  const application_host = config.get_application_host();
-  const new_department_form_id = '#add_new_department_form';
-  const company_edit_form_id = '#company_edit_form'
+const test = require('selenium-webdriver/testing')
+const By = require('selenium-webdriver').By
+const Promise = require('bluebird')
+const expect = require('chai').expect
+const add_new_user_func = require('../../lib/add_new_user')
+const check_elements_func = require('../../lib/check_elements')
+const config = require('../../lib/config')
+const login_user_func = require('../../lib/login_with_user')
+const logout_user_func = require('../../lib/logout_user')
+const open_page_func = require('../../lib/open_page')
+const register_new_user_func = require('../../lib/register_new_user')
+const submit_form_func = require('../../lib/submit_form')
+const user_info_func = require('../../lib/user_info')
+const application_host = config.get_application_host()
+const new_department_form_id = '#add_new_department_form'
+const company_edit_form_id = '#company_edit_form'
 
 describe('Check that values for new columns are shown only for employess currently login user can supervise', function() {
   this.timeout(config.get_execution_timeout())
@@ -169,8 +169,8 @@ describe('Check that values for new columns are shown only for employess current
               value: '15'
             },
             {
-              selector: `${new_department_form_id} select[name="boss_id__new"]`,
-              option_selector: `select[name="boss_id__new"] option[value="${user_id_B}"]`
+              selector: `${new_department_form_id} select[name="manager_id__new"]`,
+              option_selector: `select[name="manager_id__new"] option[value="${user_id_B}"]`
             }
           ],
           submit_button_selector: `${new_department_form_id} button[type="submit"]`,

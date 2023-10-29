@@ -1,16 +1,16 @@
 'use strict'
 
-const webdriver = require('selenium-webdriver');
-  const By = require('selenium-webdriver').By;
-  const expect = require('chai').expect;
-  const until = require('selenium-webdriver').until;
-  const Promise = require('bluebird')
+const By = require('selenium-webdriver').By
+const expect = require('chai').expect
+const until = require('selenium-webdriver').until
+const Promise = require('bluebird')
 
 const logout_user_func = Promise.promisify(function(args, callback) {
-  const application_host = args.application_host;
-    const driver = args.driver;
-    const result_callback = callback;
-    const logout_link_css_selector = 'li.hidden-xs a[href="/logout/"]'
+  const application_host = args.application_host
+  const driver = args.driver
+  const result_callback = callback
+  const logout_link_css_selector =
+    'li.hidden-xs > ul.dropdown-menu li > a[href="/logout/"]'
 
   // Open front page
   driver.get(application_host)
@@ -22,7 +22,9 @@ const logout_user_func = Promise.promisify(function(args, callback) {
     })
     // Make sure that Logout link exists
     .then(function() {
-      return driver.isElementPresent(By.css(logout_link_css_selector))
+      return driver
+        .findElements(By.css(logout_link_css_selector))
+        .then(found => !!found.length)
     })
     .then(function(is_present) {
       expect(is_present).to.be.equal(true)
@@ -37,7 +39,9 @@ const logout_user_func = Promise.promisify(function(args, callback) {
     .then(function() {
       driver.wait(until.elementLocated(By.css('body')), 1000)
 
-      return driver.isElementPresent(By.css(logout_link_css_selector))
+      return driver
+        .findElements(By.css(logout_link_css_selector))
+        .then(found => !!found.length)
     })
     // Check that there is no more Logout link
     .then(function(is_present) {

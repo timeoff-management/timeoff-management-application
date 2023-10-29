@@ -1,22 +1,22 @@
 'use strict'
 
-const test = require('selenium-webdriver/testing');
-  const By = require('selenium-webdriver').By;
-  const expect = require('chai').expect;
-  const _ = require('underscore');
-  const Promise = require('bluebird');
-  const moment = require('moment');
-  const login_user_func = require('../../lib/login_with_user');
-  const register_new_user_func = require('../../lib/register_new_user');
-  const logout_user_func = require('../../lib/logout_user');
-  const open_page_func = require('../../lib/open_page');
-  const submit_form_func = require('../../lib/submit_form');
-  const check_elements_func = require('../../lib/check_elements');
-  const check_booking_func = require('../../lib/check_booking_on_calendar');
-  const add_new_user_func = require('../../lib/add_new_user');
-  const leave_type_edit_form_id = '#leave_type_edit_form';
-  const config = require('../../lib/config');
-  const application_host = config.get_application_host()
+const test = require('selenium-webdriver/testing')
+const By = require('selenium-webdriver').By
+const expect = require('chai').expect
+const _ = require('underscore')
+const Promise = require('bluebird')
+const moment = require('moment')
+const login_user_func = require('../../lib/login_with_user')
+const register_new_user_func = require('../../lib/register_new_user')
+const logout_user_func = require('../../lib/logout_user')
+const open_page_func = require('../../lib/open_page')
+const submit_form_func = require('../../lib/submit_form')
+const check_elements_func = require('../../lib/check_elements')
+const check_booking_func = require('../../lib/check_booking_on_calendar')
+const add_new_user_func = require('../../lib/add_new_user')
+const leave_type_edit_form_id = '#leave_type_edit_form'
+const config = require('../../lib/config')
+const application_host = config.get_application_host()
 
 /*
  *  Scenario to go in this test:
@@ -31,7 +31,7 @@ const test = require('selenium-webdriver/testing');
  *
  * */
 
-describe('Leave type limits in actoion', function() {
+describe('Leave type limits in action', function() {
   this.timeout(config.get_execution_timeout())
 
   let non_admin_user_email, driver

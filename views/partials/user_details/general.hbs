@@ -32,7 +32,7 @@
     <select class="form-control" id="select_inp" name="department" aria-describedby="department_help">
       {{#each company.departments}}
           <option value="{{this.id}}" {{#if_equal ../employee.department_id this.id}}
-                  selected="selected"{{/if_equal}}>{{this.name}} (approver {{this.boss.name}} {{this.boss.lastname}})
+                  selected="selected"{{/if_equal}}>{{this.name}} (approver {{this.manager.name}} {{this.manager.lastname}})
           </option>
       {{/each}}
     </select>

@@ -1,9 +1,6 @@
 'use strict'
 
-const test = require('selenium-webdriver/testing')
 const By = require('selenium-webdriver').By
-const until = require('selenium-webdriver').until
-const Promise = require('bluebird')
 const expect = require('chai').expect
 const moment = require('moment')
 const registerNewUserFunc = require('../../lib/register_new_user')
@@ -29,7 +26,7 @@ const userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_th
  *
  * */
 
-describe('No negative allowanca is carried overs', function() {
+describe('No negative allowance is carried overs', function() {
   this.timeout(config.get_execution_timeout())
 
   let driver, email, userId
@@ -59,7 +56,7 @@ describe('No negative allowanca is carried overs', function() {
     }).then(() => done())
   })
 
-  it('Update user to have her leaves be auto apporved', function(done) {
+  it('Update user to have her leaves be auto approved', function(done) {
     openPageFunc({
       driver,
       url: `${applicationHost}users/edit/${userId}/`

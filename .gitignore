@@ -6,3 +6,4 @@
 node_modules/
 *.sqlite
 *.DS_Store
+t/integration/test.csv

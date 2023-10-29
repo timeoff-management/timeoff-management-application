@@ -4,7 +4,7 @@
  * */
 $(document).ready(function() {
   /*
-   *  When FROM field in New absense form chnages: update TO one if necessary
+   *  When FROM field in New absense form changes: update TO one if necessary
    */
   $('input.book-leave-from-input').on('change', function(e) {
     e.stopPropagation()
@@ -95,9 +95,9 @@ $(function() {
  * */
 
 $('#add_secondary_supervisers_modal').on('show.bs.modal', function(event) {
-  const button = $(event.relatedTarget);
-    const department_name = button.data('department_name');
-    const department_id = button.data('department_id')
+  const button = $(event.relatedTarget)
+  const department_name = button.data('department_name')
+  const department_id = button.data('department_id')
 
   const modal = $(this)
 
@@ -127,8 +127,8 @@ function getUrlVars(url) {
   if (!url) {
     url = window.location.href
   }
-  const vars = {};
-    let hash
+  const vars = {}
+  let hash
   const hashes = url.slice(url.indexOf('?') + 1).split('&')
   for (let i = 0; i < hashes.length; i++) {
     hash = hashes[i].split('=')

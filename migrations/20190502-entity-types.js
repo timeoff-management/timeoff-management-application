@@ -70,6 +70,10 @@ module.exports = {
           'department_id'
         )
       }
+
+      if (attributes.bossId) {
+        await queryInterface.renameColumn('Department', 'bossId', 'manager_id')
+      }
     })
 
     await queryInterface.describeTable('BankHoliday').then(async attributes => {

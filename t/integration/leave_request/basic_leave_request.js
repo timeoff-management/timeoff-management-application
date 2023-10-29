@@ -1,24 +1,24 @@
 'use strict'
 
-const test = require('selenium-webdriver/testing');
-  const config = require('../../lib/config');
-  const application_host = config.get_application_host();
-  const By = require('selenium-webdriver').By;
-  const expect = require('chai').expect;
-  const _ = require('underscore');
-  const Promise = require('bluebird');
-  const moment = require('moment');
-  const until = require('selenium-webdriver').until;
-  const login_user_func = require('../../lib/login_with_user');
-  const register_new_user_func = require('../../lib/register_new_user');
-  const logout_user_func = require('../../lib/logout_user');
-  const open_page_func = require('../../lib/open_page');
-  const submit_form_func = require('../../lib/submit_form');
-  const check_elements_func = require('../../lib/check_elements');
-  const check_booking_func = require('../../lib/check_booking_on_calendar');
-  const user_info_func = require('../../lib/user_info');
-  const add_new_user_func = require('../../lib/add_new_user');
-  const userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year')
+const test = require('selenium-webdriver/testing')
+const config = require('../../lib/config')
+const application_host = config.get_application_host()
+const By = require('selenium-webdriver').By
+const expect = require('chai').expect
+const _ = require('underscore')
+const Promise = require('bluebird')
+const moment = require('moment')
+const until = require('selenium-webdriver').until
+const login_user_func = require('../../lib/login_with_user')
+const register_new_user_func = require('../../lib/register_new_user')
+const logout_user_func = require('../../lib/logout_user')
+const open_page_func = require('../../lib/open_page')
+const submit_form_func = require('../../lib/submit_form')
+const check_elements_func = require('../../lib/check_elements')
+const check_booking_func = require('../../lib/check_booking_on_calendar')
+const user_info_func = require('../../lib/user_info')
+const add_new_user_func = require('../../lib/add_new_user')
+const userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_the_beginning_of_the_year')
 
 /*
  *  Scenario to go in this test:
@@ -110,7 +110,8 @@ describe('Basic leave request', function() {
 
   it('Following code is to ensure that non admin user can request leave only for herself', function(done) {
     driver
-      .isElementPresent(By.css('select#employee'))
+      .findElements(By.css('select#employee'))
+      .then(found => !!found.length)
       .then(function(is_present) {
         expect(is_present).to.be.equal(false)
         done()

@@ -1,16 +1,16 @@
 'use strict'
 
-const test = require('selenium-webdriver/testing');
-  const register_new_user_func = require('../lib/register_new_user');
-  const login_user_func = require('../lib/login_with_user');
-  const add_new_user_func = require('../lib/add_new_user');
-  const By = require('selenium-webdriver').By;
-  const bluebird = require('bluebird');
-  const expect = require('chai').expect;
-  const _ = require('underscore');
-  const logout_user_func = require('../lib/logout_user');
-  const config = require('../lib/config');
-  const application_host = config.get_application_host()
+const test = require('selenium-webdriver/testing')
+const register_new_user_func = require('../lib/register_new_user')
+const login_user_func = require('../lib/login_with_user')
+const add_new_user_func = require('../lib/add_new_user')
+const By = require('selenium-webdriver').By
+const bluebird = require('bluebird')
+const expect = require('chai').expect
+const _ = require('underscore')
+const logout_user_func = require('../lib/logout_user')
+const config = require('../lib/config')
+const application_host = config.get_application_host()
 
 /*
  *  Scenario to check in thus test.
@@ -131,15 +131,18 @@ describe('Menu bar reflect permissions of logged in user', function() {
 })
 
 function check_presense_promises(args) {
-  const selectors = args.selectors;
-    const driver = args.driver;
-    const presense = args.presense || false
+  const selectors = args.selectors
+  const driver = args.driver
+  const presense = args.presense || false
 
   const promises_to_check = _.map(selectors, function(selector) {
-    return driver.isElementPresent(By.css(selector)).then(function(is_present) {
-      expect(is_present).to.be.equal(presense)
-      return bluebird.resolve()
-    })
+    return driver
+      .findElements(By.css(selector))
+      .then(found => !!found.length)
+      .then(function(is_present) {
+        expect(is_present).to.be.equal(presense)
+        return bluebird.resolve()
+      })
   })
 
   return promises_to_check

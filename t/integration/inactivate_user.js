@@ -1,24 +1,24 @@
 'use strict'
 
-const test = require('selenium-webdriver/testing');
-  const By = require('selenium-webdriver').By;
-  const expect = require('chai').expect;
-  const _ = require('underscore');
-  const moment = require('moment');
-  const bluebird = require('bluebird');
-  const until = require('selenium-webdriver').until;
-  const register_new_user_func = require('../lib/register_new_user');
-  const login_user_func = require('../lib/login_with_user');
-  const open_page_func = require('../lib/open_page');
-  const submit_form_func = require('../lib/submit_form');
-  const add_new_user_func = require('../lib/add_new_user');
-  const logout_user_func = require('../lib/logout_user');
-  const check_elements_func = require('../lib/check_elements');
-  const teamview_check_func = require('../lib/teamview_check_user');
-  const user_info_func = require('../lib/user_info');
-  const config = require('../lib/config');
-  const application_host = config.get_application_host();
-  const department_edit_form_id = '#department_edit_form'
+const test = require('selenium-webdriver/testing')
+const By = require('selenium-webdriver').By
+const expect = require('chai').expect
+const _ = require('underscore')
+const moment = require('moment')
+const bluebird = require('bluebird')
+const until = require('selenium-webdriver').until
+const register_new_user_func = require('../lib/register_new_user')
+const login_user_func = require('../lib/login_with_user')
+const open_page_func = require('../lib/open_page')
+const submit_form_func = require('../lib/submit_form')
+const add_new_user_func = require('../lib/add_new_user')
+const logout_user_func = require('../lib/logout_user')
+const check_elements_func = require('../lib/check_elements')
+const teamview_check_func = require('../lib/teamview_check_user')
+const user_info_func = require('../lib/user_info')
+const config = require('../lib/config')
+const application_host = config.get_application_host()
+const department_edit_form_id = '#department_edit_form'
 
 /*
  * Scenario to check:
@@ -115,8 +115,8 @@ describe('Dealing with inactive users', function() {
               value: '15'
             },
             {
-              selector: 'select[name="boss_id"]',
-              option_selector: 'select[name="boss_id"] option:nth-child(2)'
+              selector: 'select[name="manager_id"]',
+              option_selector: 'select[name="manager_id"] option:nth-child(2)'
             }
           ],
           submit_button_selector:
@@ -160,7 +160,7 @@ describe('Dealing with inactive users', function() {
     driver
       .findElements(
         By.css(
-          'select[name="boss_id__new"] option[value="' + employee_id + '"]'
+          'select[name="manager_id__new"] option[value="' + employee_id + '"]'
         )
       )
       .then(function(option) {
@@ -286,7 +286,7 @@ describe('Dealing with inactive users', function() {
     driver
       .findElements(
         By.css(
-          'select[name="boss_id__new"] option[value="' + employee_id + '"]'
+          'select[name="manager_id__new"] option[value="' + employee_id + '"]'
         )
       )
       .then(function(option) {

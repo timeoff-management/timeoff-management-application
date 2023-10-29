@@ -238,7 +238,7 @@ describe('Changing default company wide schedule', function() {
  *    * Ensure the "used days" for previously added leave reflects the change
  * */
 
-describe('Leave request reflects shanges in company schedule', function() {
+describe('Leave request reflects changes in company schedule', function() {
   this.timeout(config.get_execution_timeout())
 
   let driver, email_A
