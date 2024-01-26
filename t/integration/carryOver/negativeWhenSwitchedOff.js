@@ -29,7 +29,7 @@ const userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_th
 describe('No negative allowance is carried overs', function() {
   this.timeout(config.get_execution_timeout())
 
-  let driver, email, userId
+  let driver, email, user_id
 
   it('Register new company', function(done) {
     registerNewUserFunc({ applicationHost }).then(data => {
@@ -40,7 +40,7 @@ describe('No negative allowance is carried overs', function() {
 
   it('Obtain information about admin user', function(done) {
     userInfoFunc({ driver, email }).then(data => {
-      userId = data.user.id
+      user_id = data.user.id
       done()
     })
   })
@@ -59,7 +59,7 @@ describe('No negative allowance is carried overs', function() {
   it('Update user to have her leaves be auto approved', function(done) {
     openPageFunc({
       driver,
-      url: `${applicationHost}users/edit/${userId}/`
+      url: `${applicationHost}users/edit/${user_id}/`
     })
       .then(() =>
         submitFormFunc({
@@ -137,7 +137,7 @@ describe('No negative allowance is carried overs', function() {
   it('Ensure that nominal allowance was reduced to 1', function(done) {
     openPageFunc({
       driver,
-      url: `${applicationHost}users/edit/${userId}/absences/`
+      url: `${applicationHost}users/edit/${user_id}/absences/`
     })
       .then(() => driver.findElement(By.css('#nominalAllowancePart')))
       .then(el => el.getText())
@@ -179,7 +179,7 @@ describe('No negative allowance is carried overs', function() {
   it("Ensure that newly created user's carried over still remains 0", function(done) {
     openPageFunc({
       driver,
-      url: `${applicationHost}users/edit/${userId}/absences/`
+      url: `${applicationHost}users/edit/${user_id}/absences/`
     })
       .then(() => driver.findElement(By.css('#allowanceCarriedOverPart')))
       .then(span => span.getText())

@@ -124,28 +124,38 @@ docker-compose up
 
 ### Using environment variables
 
-| Variable                  | Description                             | Default value  |
-| ------------------------- | --------------------------------------- | -------------- |
-| PORT                      | Port of the application                 | 3000           |
-| NODE_ENV                  | Environment of NodeJs                   | development    |
-| SMTP_HOST                 | Host of the smtp server                 | localhost      |
-| SMTP_PORT                 | Port of the smtp server                 | 25             |
-| SMTP_FROM                 | Sender email                            | email@test.com |
-| SMTP_AUTH_USER            | Username for the smtp server            |                |
-| SMTP_AUTH_PASS            | Password for the smtp server            |                |
-| SMTP_REQUIRE_TLS          | Use STARTTLS                            | false          |
-| SLACK_TOKEN               | If set, the Slack token to send message |                |
-| SLACK_BOT_NAME            | Name of the bot on Slack                |                |
-| SLACK_ICON_URL            | Icon of the bot on Slack                |                |
-| GA_TRACKER                | Google Analytics tracker code           |                |
-| ALLOW_CREATE_NEW_ACCOUNTS | Display the account creation form       | true           |
+| Variable                  | Description                                                  | Default value   |
+| ------------------------- | ------------------------------------------------------------ | --------------- |
+| PORT                      | Port of the application                                      | 3000            |
+| NODE_ENV                  | Environment of NodeJs                                        | development     |
+| DATABASE_URL              | Database URL format (`mysql://localhost:3306/database`)      |                 |
+| DB_HOST                   | Database hostname                                            |                 |
+| DB_DATABASE               | Database name                                                |                 |
+| DB_USERNAME               | Database username                                            |                 |
+| DB_PASSWORD               | Database password                                            |                 |
+| DB_DIALECT                | Database dialect (sqlite, mysql, postgres)                   | sqlite          |
+| DB_STORAGE                | Database storage file                                        | db.[ENV].sqlite |
+| DB_LOGGING                | Logging of queries                                           | false           |
+| DB_POOL_MAX               | Maximum number of connection in pool                         | 5               |
+| DB_POOL_MIN               | Minimum number of connection in pool                         | 0               |
+| DB_POOL_ACQUIRE           | The maximum time, in milliseconds, that pool will try to get connection before throwing error | 60000           |
+| DB_POOL_IDLE              | The maximum time, in milliseconds, that a connection can be idle before being released. | 10000           |
+| SMTP_HOST                 | Host of the smtp server                                      | localhost       |
+| SMTP_PORT                 | Port of the smtp server                                      | 25              |
+| SMTP_FROM                 | Sender email                                                 | email@test.com  |
+| SMTP_AUTH_USER            | Username for the smtp server                                 |                 |
+| SMTP_AUTH_PASS            | Password for the smtp server                                 |                 |
+| SMTP_REQUIRE_TLS          | Use STARTTLS                                                 | false           |
+| SLACK_TOKEN               | If set, the Slack token to send message                      |                 |
+| SLACK_BOT_NAME            | Name of the bot on Slack                                     |                 |
+| SLACK_ICON_URL            | Icon of the bot on Slack                                     |                 |
+| GA_TRACKER                | Google Analytics tracker code                                |                 |
+| ALLOW_CREATE_NEW_ACCOUNTS | Display the account creation form                            | true            |
 
 
 ### Using the JSON configuration files
 
 #### app.json
-
-#### db.json
 
 
 ## Run tests
@@ -212,3 +222,4 @@ Follow instructions on [this page](docs/SessionStoreInRedis.md).
 ## Feedback
 
 Please report any issues or feedback to <a href="https://twitter.com/FreeTimeOffApp">twitter</a> or Email: pavlo at timeoff.management
+

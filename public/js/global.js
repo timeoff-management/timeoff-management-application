@@ -213,9 +213,9 @@ $(document).ready(function() {
     }
   })
 
-  function detailsInPopup(userId, divId) {
+  function detailsInPopup(user_id, divId) {
     $.ajax({
-      url: '/users/summary/' + userId + '/',
+      url: '/users/summary/' + user_id + '/',
       success: function(response) {
         $('#' + divId).html(response)
       }

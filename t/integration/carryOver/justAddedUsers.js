@@ -29,7 +29,7 @@ const userStartsAtTheBeginingOfYear = require('../../lib/set_user_to_start_at_th
 describe('Carry over issue for users started in current year', function() {
   this.timeout(config.get_execution_timeout())
 
-  let driver, email, userId
+  let driver, email, user_id
 
   it('Register new company', function(done) {
     registerNewUserFunc({ applicationHost }).then(data => {
@@ -40,7 +40,7 @@ describe('Carry over issue for users started in current year', function() {
 
   it('Obtain information about admin user', function(done) {
     userInfoFunc({ driver, email }).then(data => {
-      userId = data.user.id
+      user_id = data.user.id
       done()
     })
   })
@@ -52,7 +52,7 @@ describe('Carry over issue for users started in current year', function() {
   it('Open user details page (abcenses section)', function(done) {
     openPageFunc({
       driver,
-      url: `${applicationHost}users/edit/${userId}/absences/`
+      url: `${applicationHost}users/edit/${user_id}/absences/`
     }).then(() => done())
   })
 
@@ -102,7 +102,7 @@ describe('Carry over issue for users started in current year', function() {
   it("Ensure that newly created user's carried over still remains 0", function(done) {
     openPageFunc({
       driver,
-      url: `${applicationHost}users/edit/${userId}/absences/`
+      url: `${applicationHost}users/edit/${user_id}/absences/`
     })
       .then(() => driver.findElement(By.css('#allowanceCarriedOverPart')))
       .then(span => span.getText())
