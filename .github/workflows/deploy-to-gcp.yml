@@ -1,0 +1,98 @@
+name: Build and Deploy to GKE
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  PROJECT_ID: ${{ secrets.GCP_PROJECT }}
+  GKE_CLUSTER: timeoff-mgmt-cluster
+  GKE_REGION: us-central1
+  GKE_ZONE: us-central1-a
+  DEPLOYMENT_NAME: timeoff-mgmt-deploy
+  IMAGE: timeoff-mgmt-image
+  CHART_NAME: timeoff-mgmt-chart
+  REPO_NAME: timeoff-mgmt-repo
+  NAMESPACE: timeoff-mgmt-dev
+
+jobs:
+  setup-build-publish-deploy:
+    name: Setup, Build, Publish, and Deploy
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # Setup gcloud CLI
+      - uses: google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
+        with:
+          service_account_key: ${{ secrets.GKE_SA_KEY }}
+          project_id: ${{ secrets.GCP_PROJECT }}
+
+      - name: Setup Terraform
+          uses: hashicorp/setup-terraform@v1
+          with:
+            terraform_version: 0.14
+
+      - name: Apply Terraform
+          env:
+            GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_DEPLOY_SA }}
+          run: |
+            cd ../../terraform/dev/
+            terraform init -backend-config=backend.tf
+            terraform apply -auto-approve
+
+      # Configure Docker to use the gcloud command-line tool as a credential
+      # helper for authentication
+      - run: |-
+          gcloud --quiet auth configure-docker
+
+      # Get the GKE credentials so we can deploy to the cluster
+      - uses: google-github-actions/get-gke-credentials@fb08709ba27618c31c09e014e1d8364b02e5042e
+        with:
+          cluster_name: ${{ env.GKE_CLUSTER }}
+          location: ${{ env.GKE_ZONE }}
+          credentials: ${{ secrets.GCP_DEPLOY_SA }}
+
+      # Build the Docker image
+      - name: Build
+        run: |-
+          docker build \
+            --tag "$GKE_REGION-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/$IMAGE:$GITHUB_SHA" \
+            --build-arg GITHUB_SHA="$GITHUB_SHA" \
+            --build-arg GITHUB_REF="$GITHUB_REF"
+
+      # Push the Docker image to Google Container Registry
+      - name: Publish
+        run: |-
+          docker push "$GKE_REGION-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/$IMAGE:$GITHUB_SHA"
+
+      # Set up Helm
+      - name: Set up Helm
+          uses: helm/setup-helm@v1
+          with:
+            version: 3.11.0
+
+      # Create a new tag for the chart version
+      - name: Create Tag
+        run: |
+          git tag ${GITHUB_SHA} && git push --tags
+
+      # Package the chart
+      - name: Package Chart
+        run: |
+          helm package --version ${GITHUB_SHA} ../../k8s/timeoff-mgmt
+
+      # Publish the chart to the chart repo
+      - name: Publish Chart
+        run: |
+          helm push ${CHART_NAME}-${GITHUB_SHA}.tgz oci://$GKE_REGION-docker.pkg.dev/$PROJECT_ID/$REPO_NAME
+
+      # Deploy the chart to the GKE cluster
+      - name: Deploy to GKE
+        run: |
+          helm upgrade ${DEPLOYMENT_NAME} ${CHART_NAME}-${GITHUB_SHA}.tgz --install --wait --namespace ${NAMESPACE} \
+          --set image.tag=$GITHUB_SHA,image.repository=$GKE_REGION-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/$IMAGE

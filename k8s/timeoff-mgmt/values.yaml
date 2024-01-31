@@ -1,0 +1,17 @@
+deployment:
+  name: timeoff-mgmt-deployment
+  replicas: 1
+image:
+  repository: us-central1-docker.pkg.dev/timeoff-mgmt/timeoff-mgmt-registry/timeoff-mgmt
+  tag: latest
+service:
+  port: 80
+  name: timeoff-mgmt-svc
+portName: http
+resources:
+  limits:
+    cpu: "100m"
+    memory: "256Mi"
+  requests:
+    cpu: "100m"
+    memory: "256Mi"
