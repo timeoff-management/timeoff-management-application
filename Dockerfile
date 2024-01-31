@@ -15,12 +15,14 @@
 #	docker exec -ti --user root alpine_timeoff /bin/sh
 # --------------------------------------------------------------------
 FROM alpine:latest as dependencies
+RUN apk upgrade
+RUN apk update
 
 RUN apk add --no-cache \
     nodejs npm 
 
 COPY package.json  .
-RUN npm install 
+RUN npm install -g npm
 
 FROM alpine:latest
 
@@ -35,8 +37,7 @@ RUN adduser --system app --home /app
 USER app
 WORKDIR /app
 COPY . /app
-COPY --from=dependencies node_modules ./node_modules
+#COPY --from=dependencies node_modules ./node_modules
 
 CMD npm start
-
 EXPOSE 3000
