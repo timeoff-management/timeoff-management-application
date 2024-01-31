@@ -10064,6 +10064,54 @@
         {
           "date": "2025-12-25",
           "name": "Navidad"
+        },
+        {
+          "date": "2022-01-01",
+          "name": "Año nuevo"
+        },
+        {
+          "date": "2022-01-06",
+          "name": "Epifanía del señor"
+        },
+        {
+          "date": "2022-04-14",
+          "name": "Jueves Santo"
+        },
+        {
+          "date": "2022-04-15",
+          "name": "Viernes Santo"
+        },
+        {
+          "date": "2022-05-02",
+          "name": "Fiesta comunidad de madrid"
+        },
+        {
+          "date": "2022-07-25",
+          "name": "Santiago Apóstol"
+        },
+        {
+          "date": "2022-08-15",
+          "name": "Asunción de la Virgen"
+        },
+        {
+          "date": "2022-10-12",
+          "name": "Fiesta de la Hispanidad"
+        },
+        {
+          "date": "2022-11-01",
+          "name": "Todos los Santos"
+        },
+        {
+          "date": "2022-12-06",
+          "name": "Día de la Constitución"
+        },
+        {
+          "date": "2022-12-08",
+          "name": "Inmaculada Concepción"
+        },
+        {
+          "date": "2022-12-26",
+          "name": "Navidad"
         }
       ]
     },

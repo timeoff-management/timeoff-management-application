@@ -153,6 +153,10 @@ flag to be `true` in the `config/app.json` file.
 
 Follow instructions on [this page](docs/SessionStoreInRedis.md).
 
+## Deploy using docker-compose
+
+Follow instructions on [this page](docs/DockerCompose.md).
+
 ## Feedback
 
 Please report any issues or feedback to <a href="https://twitter.com/FreeTimeOffApp">twitter</a> or Email: pavlo at timeoff.management
