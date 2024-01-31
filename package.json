@@ -36,7 +36,7 @@
     "passport-local": "^1.0.0",
     "redis": "^3.1.2",
     "sequelize": "^3.19.2",
-    "sequelize-cli": "2.5.1",
+    "sequelize-cli": "6.5.2",
     "serve-favicon": "^2.1.7",
     "sqlite3": "^4.0.1",
     "underscore": "^1.8.3",
@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "chai": "^2.2.0",
-    "mocha": "^6.2.2",
+    "mocha": "^10.1.0",
     "node-sass": "^4.5.3",
     "request-promise": "^4.2.2",
     "selenium-webdriver": "2.53.3"
