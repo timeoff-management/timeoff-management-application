@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"vpc","Source":"registry.terraform.io/terraform-aws-modules/vpc/aws","Version":"3.14.0","Dir":".terraform/modules/vpc"},{"Key":"web_security_group","Source":"registry.terraform.io/terraform-aws-modules/security-group/aws","Version":"4.9.0","Dir":".terraform/modules/web_security_group"}]}

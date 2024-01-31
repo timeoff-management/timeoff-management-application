@@ -1,0 +1,18 @@
+version: 0.2	
+  
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14
+  pre_build:
+    commands:
+      - docker login -u $dockerhub_username -p $dockerhub_password
+  build:
+    commands:
+      - docker build -t $ecr_repo_name:$image_tag .
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing image to $ecr_repo_name
+      - aws ecr get-login-password --region $AWS_REGION | docker login -u AWS --password-stdin $account_id.dkr.ecr.$AWS_REGION.amazonaws.com
+      - docker push $ecr_repo_name:$image_tag
