@@ -102,6 +102,19 @@ Open http://localhost:3000/ in your browser.
 
 #### Using Docker
 
+##### Using an image from DockerHub [aliengen/timeoff-management-application](https://hub.docker.com/r/aliengen/timeoff-management-application)
+
+```bash
+# Pull the image
+docker pull aliengen/timeoff-management-application:master
+
+# Run the container using an `env` file to load the configuration
+docker run -d -p 3000:3000 --env-file ./env --name timeoff aliengen/timeoff-management-application:master 
+
+# Or you can run the container using the `app.json` file to load the configuration
+docker run -d -p 3000:3000 -v ./config/app.json:/app/config/app.json --name timeoff aliengen/timeoff-management-application:master
+```
+
 ##### Build the image manually
 
 You can build the image from the latest version of the repository.
@@ -126,8 +139,11 @@ docker-compose up
 
 | Variable                  | Description                                                  | Default value   |
 | ------------------------- | ------------------------------------------------------------ | --------------- |
+| BRANDING_URL | URL of the application | http://app.timeoff.management/ |
+| BRANDING_WEBSITE | URL of the company's website                                | http://timeoff.management/ |
 | PORT                      | Port of the application                                      | 3000            |
 | NODE_ENV                  | Environment of NodeJs                                        | development     |
+| CRYPTO_SECRET | Secret for password hashing |  |
 | DATABASE_URL              | Database URL format (`mysql://localhost:3306/database`)      |                 |
 | DB_HOST                   | Database hostname                                            |                 |
 | DB_DATABASE               | Database name                                                |                 |
@@ -146,17 +162,71 @@ docker-compose up
 | SMTP_AUTH_USER            | Username for the smtp server                                 |                 |
 | SMTP_AUTH_PASS            | Password for the smtp server                                 |                 |
 | SMTP_REQUIRE_TLS          | Use STARTTLS                                                 | false           |
+| SESSIONS_SECRET | Secret for the sessions |  |
+| SESSIONS_STORE | Storage for the sessions (`sequelize`,`redis`) | sequelize |
+| SESSIONS_REDIS_HOST | Redis hostname | localhost |
+| SESSIONS_REDIS_PORT | Redis port | 6379 |
 | SLACK_TOKEN               | If set, the Slack token to send message                      |                 |
 | SLACK_BOT_NAME            | Name of the bot on Slack                                     |                 |
 | SLACK_ICON_URL            | Icon of the bot on Slack                                     |                 |
-| GA_TRACKER                | Google Analytics tracker code                                |                 |
-| ALLOW_CREATE_NEW_ACCOUNTS | Display the account creation form                            | true            |
-| APPLICATION_DOMAIN        | URL of the application appearing in the communication (mail).| http://app.timeoff.management/ |
-| PROMOTION_WEBSITE_DOMAIN  | URL of the company's website.                                | http://timeoff.management/ |
+| LOGIN_DEFAULT | Display the default login form | true |
+| LOGIN_GOOGLE | Enable the authentication with Google | false |
+| GOOGLE_ANALYTICS_TRACKER | Google Analytics tracker code                                |                 |
+| GOOGLE_AUTH_CLIENTID | Google Auth client ID | |
+| GOOGLE_AUTH_CLIENTSECRET | Google Auth client secret | |
+| OPTIONS_REGISTRATION | Allow users to create a new company account on Timeoff | true            |
 
 ### Using the JSON configuration files
 
 #### app.json
+
+```json
+{
+  "branding": {
+    "url": "http://app.timeoff.management",
+    "website": "http://timeoff.management"
+  },
+  "crypto_secret": "Secret used for password hashing",
+  "login": {
+    "default": true,
+    "google": false
+  },
+  "smtp": {
+    "host": "localhost",
+    "port": 25,
+    "from": "email@test.com",
+    "auth": {
+      "user": "user",
+      "pass": "pass"
+    }
+  },
+  "sessions": {
+    "secret": "Secret used for sessions",
+    "store": "sequelize",
+    "redis": {
+      "host": "localhost",
+      "port": 6379
+    }
+  },
+  "google": {
+    "analytics": {
+      "tracker": "Your GA tracker code"
+    },
+    "auth": {
+      "clientId": "123",
+      "clientSecret": "123"
+    }
+  },
+  "slack": {
+    "token": "Get your Web API token from you Slack admin page.",
+    "icon_url": "The image can be hosted anywhere, but I would recoment to upload an icon to your Slack and use it's url.",
+    "bot_name": "The display name for the messages being sent."
+  },
+  "options": {
+    "registration": true
+  },
+}
+```
 
 
 ## Run tests

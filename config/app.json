@@ -1,17 +1,12 @@
 {
-  "allow_create_new_accounts": true,
-  "slack": {
-    "token": "Get your Web API token from you Slack admin page.",
-    "icon_url": "The image can be hosted anywhere, but I would recoment to upload an icon to your Slack and use it's url.",
-    "bot_name": "The display name for the messages being sent."
+  "branding": {
+    "url": "http://app.timeoff.management",
+    "website": "http://timeoff.management"
   },
+  "crypto_secret": "!2~`HswpPPLa22+=±§sdq qwe,appp qwwokDF_",
   "login": {
     "default": true,
-    "google": ["hokify.com"]
-  },
-  "google": {
-    "clientID": "123",
-    "clientSecret": "123"
+    "google": false
   },
   "smtp": {
     "host": "localhost",
@@ -22,17 +17,31 @@
       "pass": "pass"
     }
   },
-  "sessionStore": {
-    "useRedis": false,
-    "redisConnectionConfiguration": {
+  "sessions": {
+    "secret": "my dirty secret ;khjsdkjahsdajhasdam,nnsnad,",
+    "store": "sequelize",
+    "redis": {
       "host": "localhost",
       "port": 6379
     }
   },
-  "ga_tracker": "",
-  "crypto_secret": "!2~`HswpPPLa22+=±§sdq qwe,appp qwwokDF_",
-  "application_domain": "http://app.timeoff.management",
-  "promotion_website_domain": "http://timeoff.management",
+  "google": {
+    "analytics": {
+      "tracker": ""
+    },
+    "auth": {
+      "clientId": "123",
+      "clientSecret": "123"
+    }
+  },
+  "slack": {
+    "token": "Get your Web API token from you Slack admin page.",
+    "icon_url": "The image can be hosted anywhere, but I would recoment to upload an icon to your Slack and use it's url.",
+    "bot_name": "The display name for the messages being sent."
+  },
+  "options": {
+    "registration": true
+  },
   "locale_code_for_sorting": "en",
   "force_to_explicitly_select_type_when_requesting_new_leave": false
 }
