@@ -151,7 +151,8 @@ docker-compose up
 | SLACK_ICON_URL            | Icon of the bot on Slack                                     |                 |
 | GA_TRACKER                | Google Analytics tracker code                                |                 |
 | ALLOW_CREATE_NEW_ACCOUNTS | Display the account creation form                            | true            |
-
+| APPLICATION_DOMAIN        | URL of the application appearing in the communication (mail).| http://app.timeoff.management/ |
+| PROMOTION_WEBSITE_DOMAIN  | URL of the company's website.                                | http://timeoff.management/ |
 
 ### Using the JSON configuration files
 
