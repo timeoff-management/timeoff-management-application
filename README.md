@@ -109,7 +109,7 @@ Open http://localhost:3000/ in your browser.
 docker pull aliengen/timeoff-management-application:master
 
 # Run the container using an `env` file to load the configuration
-docker run -d -p 3000:3000 --env-file ./env --name timeoff aliengen/timeoff-management-application:master 
+docker run -d -p 3000:3000 --env-file ./env --name timeoff aliengen/timeoff-management-application:master
 
 # Or you can run the container using the `app.json` file to load the configuration
 docker run -d -p 3000:3000 -v ./config/app.json:/app/config/app.json --name timeoff aliengen/timeoff-management-application:master
@@ -174,6 +174,7 @@ docker-compose up
 | GOOGLE_ANALYTICS_TRACKER | Google Analytics tracker code                                |                 |
 | GOOGLE_AUTH_CLIENTID | Google Auth client ID | |
 | GOOGLE_AUTH_CLIENTSECRET | Google Auth client secret | |
+| GOOGLE_AUTH_DOMAINS  | Allowed domains | |
 | OPTIONS_REGISTRATION | Allow users to create a new company account on Timeoff | true            |
 
 ### Using the JSON configuration files
@@ -214,7 +215,8 @@ docker-compose up
     },
     "auth": {
       "clientId": "123",
-      "clientSecret": "123"
+      "clientSecret": "123",
+      "domains": ["myalloweddomain.com"]
     }
   },
   "slack": {

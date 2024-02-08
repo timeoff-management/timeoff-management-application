@@ -31,7 +31,8 @@
     },
     "auth": {
       "clientId": "123",
-      "clientSecret": "123"
+      "clientSecret": "123",
+      "domains": ["mydomain.com"]
     }
   },
   "slack": {
