@@ -1,26 +1,48 @@
 {
-  "allow_create_new_accounts" : true,
-  "send_emails"              : false,
-  "application_sender_email" : "email@test.com",
-  "email_transporter" : {
-    "host" : "localhost",
-    "port" : 25,
-    "auth" : {
-      "user" : "user",
-      "pass" : "pass"
+  "branding": {
+    "url": "http://app.timeoff.management",
+    "website": "http://timeoff.management"
+  },
+  "crypto_secret": "!2~`HswpPPLa22+=±§sdq qwe,appp qwwokDF_",
+  "login": {
+    "default": true,
+    "google": false
+  },
+  "smtp": {
+    "host": "localhost",
+    "port": 25,
+    "from": "email@test.com",
+    "auth": {
+      "user": "user",
+      "pass": "pass"
     }
   },
-  "sessionStore": {
-    "useRedis": false,
-    "redisConnectionConfiguration": {
+  "sessions": {
+    "secret": "my dirty secret ;khjsdkjahsdajhasdam,nnsnad,",
+    "store": "sequelize",
+    "redis": {
       "host": "localhost",
       "port": 6379
     }
   },
-  "ga_analytics_on" : false,
-  "crypto_secret" : "!2~`HswpPPLa22+=±§sdq qwe,appp qwwokDF_",
-  "application_domain" : "http://app.timeoff.management",
-  "promotion_website_domain" : "http://timeoff.management",
+  "google": {
+    "analytics": {
+      "tracker": ""
+    },
+    "auth": {
+      "clientId": "123",
+      "clientSecret": "123",
+      "domains": ["mydomain.com"]
+    }
+  },
+  "slack": {
+    "token": "Get your Web API token from you Slack admin page.",
+    "icon_url": "The image can be hosted anywhere, but I would recoment to upload an icon to your Slack and use it's url.",
+    "bot_name": "The display name for the messages being sent."
+  },
+  "options": {
+    "registration": true
+  },
   "locale_code_for_sorting": "en",
   "force_to_explicitly_select_type_when_requesting_new_leave": false
 }

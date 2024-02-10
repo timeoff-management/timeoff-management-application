@@ -41,7 +41,7 @@
           </form>
           {{/unless}}
           {{else}}
-            {{#if_equal this.userId ../logged_user.id }}
+            {{#if_equal this.user_id ../logged_user.id }}
             <form method="post" action='/requests/cancel/'>
               <input type="hidden" value="{{this.id}}" name="request">
               <button type="submit" class="pull-right btn btn-default btn-xs revoke-btn single-click" title="Cancel leave request" value="cancel"><i class="fa fa-trash"></i> Cancel</button>

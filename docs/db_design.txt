@@ -47,11 +47,11 @@ To have nice visualisation of database schema use this tool http://ondras.zarovi
 <row name="name" null="1" autoincrement="0">
 <datatype>VARBINARY</datatype>
 <default>NULL</default></row>
-<row name="companyId" null="0" autoincrement="0">
+<row name="company_id" null="0" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="company" row="id" />
 </row>
-<row name="departmentId" null="1" autoincrement="0">
+<row name="department_id" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="departments" row="id" />
 </row>
@@ -71,6 +71,9 @@ To have nice visualisation of database schema use this tool http://ondras.zarovi
 <row name="admin" null="1" autoincrement="0">
 <datatype>TINYINT</datatype>
 <default>NULL</default></row>
+<row name="slack_username" null="0" autoincrement="0">
+<datatype>VARBINARY</datatype>
+<default>'NULL'</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
@@ -112,7 +115,7 @@ To have nice visualisation of database schema use this tool http://ondras.zarovi
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="users" row="id" />
 </row>
-<row name="companyId" null="1" autoincrement="0">
+<row name="company_id" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="company" row="id" />
 </row>
@@ -124,7 +127,7 @@ To have nice visualisation of database schema use this tool http://ondras.zarovi
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="companyId" null="1" autoincrement="0">
+<row name="company_id" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="company" row="id" />
 </row>
@@ -142,7 +145,7 @@ To have nice visualisation of database schema use this tool http://ondras.zarovi
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="companyId" null="1" autoincrement="0">
+<row name="company_id" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="company" row="id" />
 </row>

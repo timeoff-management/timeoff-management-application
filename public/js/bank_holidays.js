@@ -1,25 +1,25 @@
+$(document).ready(function() {
+  $('button.bankholiday-remove-btn').on('click', function(e) {
+    e.stopPropagation()
 
-$(document).ready(function () {
-  $('button.bankholiday-remove-btn').on('click', function(e){
+    const delete_form = $('#delete_bankholiday_form')
+    delete_form.attr(
+      'action',
+      delete_form.attr('action') + $(this).attr('value') + '/'
+    )
 
-    e.stopPropagation();
+    delete_form.submit()
 
-    var delete_form = $('#delete_bankholiday_form');
-    delete_form.attr('action', delete_form.attr('action') + $(this).attr('value') + '/');
+    return false
+  })
 
-    delete_form.submit();
+  $('#bankholiday-import-btn').on('click', function(e) {
+    e.stopPropagation()
 
-    return false;
-  });
+    const import_form = $('#import_bankholiday_form')
 
-  $('#bankholiday-import-btn').on('click', function(e){
+    import_form.submit()
 
-    e.stopPropagation();
-
-    var import_form = $('#import_bankholiday_form');
-
-    import_form.submit();
-
-    return false;
-  });
-});
+    return false
+  })
+})

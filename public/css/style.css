@@ -4,111 +4,137 @@
       sassc scss/main.scss public/css/style.css
 */
 body {
-  font: 14px "Open Sans", Helvetica, Arial, sans-serif;
-  color: #61686b; }
+  font: 14px 'Open Sans', Helvetica, Arial, sans-serif;
+  color: #61686b;
+}
 
 a {
-  color: #5ba4e5; }
+  color: #5ba4e5;
+}
 
 /*
   Simple class that makes its content's font size little bit bigger
  */
 .text-bigger {
-  font-size: 16px; }
+  font-size: 16px;
+}
 
 /*
   Add special class to remove default buttom space
 */
 .no-bottom-space {
-  margin-bottom: 0px; }
+  margin-bottom: 0px;
+}
 
 .large-bottom-space {
-  margin-bottom: 300px; }
+  margin-bottom: 300px;
+}
 
 /*
   Increase space between form groups so they are more prominent
 */
 .form-group {
-  margin-bottom: 20px; }
+  margin-bottom: 20px;
+}
 
 /*
   Make help blocks in forms to be more distinguishable
  */
 .form-group .help-block {
-  font-style: italic; }
+  font-style: italic;
+}
 
 /*
  Make certain progress bars to be taller
  */
 .progress.bigger {
-  height: 38px; }
-  .progress.bigger .progress-bar {
-    line-height: 38px; }
+  height: 38px;
+}
+.progress.bigger .progress-bar {
+  line-height: 38px;
+}
 
 /* Space out content a bit */
 body {
   padding-top: 20px;
-  padding-bottom: 20px; }
+  padding-bottom: 20px;
+}
 
 label.label-plain {
-  font-weight: normal; }
+  font-weight: normal;
+}
 
 /* Make breadcrumbs to be transparant */
 .breadcrumb {
   background: none;
   padding-right: 0;
-  padding-left: 0; }
+  padding-left: 0;
+}
 
 /* Make the masthead heading the same height as the navigation */
 .header h3 {
   padding-bottom: 19px;
   margin-top: 0;
   margin-bottom: 0;
-  line-height: 40px; }
+  line-height: 40px;
+}
 
 /* Custom page footer */
 .footer {
   margin-top: 20px;
   padding-top: 20px;
-  border-top: 1px solid #e5e5e5; }
+  border-top: 1px solid #e5e5e5;
+}
 
-.header, .marketing, .footer {
+.header,
+.marketing,
+.footer {
   padding-right: 0;
-  padding-left: 0; }
+  padding-left: 0;
+}
 
 /* Space out the masthead */
 .header {
-  margin-bottom: 30px; }
+  margin-bottom: 30px;
+}
 
 .popover {
-  min-width: 300px; }
+  min-width: 300px;
+}
 
 /* styling calendar*/
 .calendar_month {
-  width: 100%; }
+  width: 100%;
+}
 
 .calendar_month td {
   text-align: center;
   padding-top: 5px;
-  padding-bottom: 5px; }
+  padding-bottom: 5px;
+}
 
 .calendar_month thead {
   text-align: center;
-  font-weight: bolder; }
+  font-weight: bolder;
+}
 
 div.month_container {
-  height: 250px; }
+  height: 250px;
+}
 
 .team-view-table {
-  width: 100%; }
+  width: 100%;
+}
 
 .team-view-table td {
   padding-top: 5px;
-  padding-bottom: 5px; }
+  padding-bottom: 5px;
+}
 
 td.team-view-header {
   height: 43px;
-  text-align: center; }
+  text-align: center;
+}
 
 td.calendar_cell {
   width: 15px !important;
@@ -117,7 +143,8 @@ td.calendar_cell {
   position: relative;
   text-align: center;
   padding-top: 5px;
-  padding-bottom: 5px; }
+  padding-bottom: 5px;
+}
 
 td.calendar_cell span {
   position: relative;
@@ -125,31 +152,38 @@ td.calendar_cell span {
   top: -1px;
   display: block;
   text-align: center;
-  z-index: 10; }
+  z-index: 10;
+}
 
 td.current_day_cell {
-  background: #FFCDD2;
-  color: #ffffff; }
+  background: #ffcdd2;
+  color: #ffffff;
+}
 
 td.weekend_cell {
-  background: #F5F7F8; }
+  background: #f5f7f8;
+}
 
 td.bank_holiday_cell {
-  background: #31B0D5;
-  color: #ffffff; }
+  background: #31b0d5;
+  color: #ffffff;
+}
 
 td.leave_cell {
   background: #9fbb58;
   color: #61686b;
-  font-weight: bolder; }
+  font-weight: bolder;
+}
 
 td.leave_cell_pended {
-  background: #FFCBA4;
+  background: #ffcba4;
   color: #61686b;
-  font-weight: bolder; }
+  font-weight: bolder;
+}
 
 .modal-dialog {
-  max-width: 450px; }
+  max-width: 450px;
+}
 
 .left-column-cell {
   text-overflow: ellipsis;
@@ -157,7 +191,8 @@ td.leave_cell_pended {
   width: 165px;
   white-space: nowrap;
   overflow: hidden;
-  display: inline-block; }
+  display: inline-block;
+}
 
 .main-row_header {
   /* TODO refactore */
@@ -169,81 +204,103 @@ td.leave_cell_pended {
   line-height: 1.15em;
   text-align: left;
   padding-top: 30px;
-  padding-bottom: 30px; }
+  padding-bottom: 30px;
+}
 
 /* Feeds */
 .feed-calendar-big {
   font-size: 450px;
-  color: #F8F8F8; }
+  color: #f8f8f8;
+}
 
 .feed-calendar-big-picture-holder {
-  text-align: center; }
+  text-align: center;
+}
 
 p.description-paragraph {
   padding-top: 20px;
-  padding-left: 15px; }
+  padding-left: 15px;
+}
 
 div.feeds-holder {
-  margin-top: 20px; }
+  margin-top: 20px;
+}
 
 /* Calendars */
 .top-leave-type-statistics {
-  text-align: center; }
+  text-align: center;
+}
 
 .top-leave-type-statistics dt {
   font-size: 75px;
   color: #61686b;
   font-weight: 100;
   border-bottom: 1px solid #e5e5e5;
-  margin-bottom: 20px; }
+  margin-bottom: 20px;
+}
 
 .top-leave-type-statistics dd {
-  font-size: 16px; }
+  font-size: 16px;
+}
 
 .secondary-leave-type-statistics {
-  font-size: 16px; }
+  font-size: 16px;
+}
 
 .secondary-leave-type-statistics dt {
   text-align: center;
   padding-bottom: 15px;
   margin-bottom: 15px;
-  border-bottom: 1px solid #e5e5e5; }
+  border-bottom: 1px solid #e5e5e5;
+}
 
 .secondary-leave-type-statistics dd {
   padding-left: 10px;
-  padding-right: 10px; }
+  padding-right: 10px;
+}
 
 .calendar-section-caption {
   text-align: center;
-  font-size: 1.2em; }
+  font-size: 1.2em;
+}
 
 .setting-general-2nd-column {
-  padding-left: 30px; }
+  padding-left: 30px;
+}
 
 .label.bigger {
-  font-size: large; }
+  font-size: large;
+}
 
 /* Fix for issue with modal scrollings on mobiles */
 @media (max-width: 768px) {
   body.modal-open {
-    position: fixed; } }
+    position: fixed;
+  }
+}
 
 /* To be used for selected items in lists */
 .selected-item {
-  background: #F5F7F8;
-  font-weight: bolder; }
+  background: #f5f7f8;
+  font-weight: bolder;
+}
 
 .leave_type_color_1 {
-  background: #96c521 !important; }
+  background: #96c521 !important;
+}
 
 .leave_type_color_2 {
-  background: #40C4FF !important; }
+  background: #40c4ff !important;
+}
 
 .leave_type_color_3 {
-  background: #FF5722 !important; }
+  background: #ff5722 !important;
+}
 
 .leave_type_color_4 {
-  background: #FF80AB !important; }
+  background: #ff80ab !important;
+}
 
 .leave_type_color_5 {
-  background: #00BCD4 !important; }
+  background: #00bcd4 !important;
+}

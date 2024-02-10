@@ -16,12 +16,12 @@
 
   <div class="form-group">
     <label for="manager_id" class="control-label">Manager</label>
-    <select class="form-control" name="boss_id" id="manager_id">
+    <select class="form-control" name="manager_id" id="manager_id">
     {{#each company.users}}
-      <option value="{{this.id}}" {{#if_equal ../department.bossId this.id }} selected="selected"{{/if_equal}}>{{this.full_name}}</option>
+      <option value="{{this.id}}" {{#if_equal ../department.manager_id this.id }} selected="selected"{{/if_equal}}>{{this.full_name}}</option>
     {{/each}}
     </select>
-    <span class="help-block">Head of {{department.name}} department. Main manager. <a href="/users/edit/{{department.bossId}}/">More details <i class="fa fa-angle-double-right"></i></a></span>
+    <span class="help-block">Head of {{department.name}} department. Main manager. <a href="/users/edit/{{department.manager_id}}/">More details <i class="fa fa-angle-double-right"></i></a></span>
   </div>
 
   <div class="form-group">

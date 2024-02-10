@@ -61,7 +61,7 @@
         {{#each departments}}
         <tr data-vpp-department-list-mode="readonly">
           <td><a href="/settings/departments/edit/{{this.id}}/" data-vpp-department-name=1>{{this.name}}</a></td>
-          <td><a href="/users/edit/{{this.boss.id}}/">{{# with this.boss }}{{this.full_name }}{{/with}}</a></td>
+          <td><a href="/users/edit/{{this.manager.id}}/">{{# with this.manager }}{{this.full_name }}{{/with}}</a></td>
           <td>
             {{#each ../allowance_options}}{{#if_equal this.value ../allowance}}{{caption}}{{/if_equal}}{{/each}}
           </td>
