@@ -17,11 +17,14 @@
 FROM alpine:latest as dependencies
 
 RUN apk add --no-cache \
-    nodejs npm 
+    nodejs npm \
+    python3 make \
+    build-base
 
 COPY package.json  .
-RUN npm install 
+RUN npm install
 
+# --------------------------------------------------------------------
 FROM alpine:latest
 
 LABEL org.label-schema.schema-version="1.0"
@@ -29,7 +32,10 @@ LABEL org.label-schema.docker.cmd="docker run -d -p 3000:3000 --name alpine_time
 
 RUN apk add --no-cache \
     nodejs npm \
-    vim
+    vim \
+    python3 \
+    make \
+    build-base
 
 RUN adduser --system app --home /app
 USER app
