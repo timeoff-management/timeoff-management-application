@@ -48,6 +48,15 @@ jobs:
         path: k8s-manifests
         ref: main
 
+    - name: Debud - print current directory
+      run: pwd
+    
+    - name: Debug - list directory contents
+      run: ls -la
+
+    - name: Debug - list parent directory contents
+      run: ls -la ..
+      
     - name: List directory contents
       run: ls -la morningstar-assignment/k8s-manifests
 
