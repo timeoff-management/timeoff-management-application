@@ -46,7 +46,7 @@ jobs:
         token: ${{ secrets.PAT_MORNINGSTAR }}
         repository: nrbs/morningstar-assignment
         path: k8s-manifests
-        # ref: master
+        ref: main
 
     - name: Update Kubernetes deployment
       env: 
@@ -65,6 +65,7 @@ jobs:
 
           # Show updated deployment file
           cat "$DEPLOYMENT_FILE"
+        fi
     # - name: Set up kubectl
     #   uses: azure/setup-kubectl@v1
     #   with:
