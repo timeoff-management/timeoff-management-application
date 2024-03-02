@@ -45,8 +45,12 @@ jobs:
       with:
         token: ${{ secrets.PAT_MORNINGSTAR }}
         repository: nrbs/morningstar-assignment
-        # path: k8s-manifests
+        path: k8s-manifests
         ref: main
+        sparse-checkout: true
+        sparse-checkout-cone-mode: true
+        # sparse-checkout-paths: |
+        #   path/to/directory
 
     - name: Debud - print current directory
       run: pwd
