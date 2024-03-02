@@ -49,7 +49,7 @@ jobs:
         ref: main
         sparse-checkout: |
           k8s-manifests
-        sparse-checkout-cone-mode: true
+        sparse-checkout-cone-mode: false
 
     - name: Debud - print current directory
       run: pwd
