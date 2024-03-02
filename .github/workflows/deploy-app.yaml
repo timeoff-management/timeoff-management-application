@@ -45,7 +45,7 @@ jobs:
         repository: "nrbs/morningstar-assignment"
         path: "k8s-manifests"
         ref: "master"
-        token: ${{ secrets.morningstar }}
+        token: ${{ secrets.PAT_MORNINGSTAR }}
 
     - name: Update Kubernetes deployment
       env: 
