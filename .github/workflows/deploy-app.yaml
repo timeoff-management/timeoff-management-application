@@ -39,6 +39,23 @@ jobs:
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         
+    - name: Update Kubernetes deployment
+      env: 
+        ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+        ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+        IMAGE_TAG: details-${{ env.sha }}
+      run: |
+        DEPLOYMENT_FILE = "k8s-manifests/deployment.yaml"
+
+        # Check if the deployment file needs to be updated
+        if grep -q "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" "$DEPLOYMENT_FILE"; then
+          echo "Image is already up to date in $DEPLOYMENT_FILE"
+        else
+          # Update image tag in deployment file
+          sed -i "s|image: $ECR_REGISTRY/$ECR_REPOSITORY:.*|image: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|" "$DEPLOYMENT_FILE"
+
+          # Show updated deployment file
+          cat "$DEPLOYMENT_FILE"
     # - name: Set up kubectl
     #   uses: azure/setup-kubectl@v1
     #   with:
