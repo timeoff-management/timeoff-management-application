@@ -60,6 +60,8 @@ jobs:
     - name: Debug - list k8s-manifests directory contents
       run: ls -la k8s-manifests
 
+    - name: Debug - list k8s-manifests/k8s-manifests directory contents
+      run: ls -la k8s-manifests/k8s-manifests
     # - name: List directory contents
     #   run: ls -la morningstar-assignment/k8s-manifests
 
