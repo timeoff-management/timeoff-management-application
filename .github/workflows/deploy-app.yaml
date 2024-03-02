@@ -51,24 +51,11 @@ jobs:
           k8s-manifests
         sparse-checkout-cone-mode: false
 
-    - name: Debud - print current directory
-      run: pwd
+    # - name: Debud - print current directory
+    #   run: pwd
     
-    - name: Debug - list directory contents
-      run: ls -la
-
-    # - name: Debug - list parent directory contents
-    #   run: ls -la ..
-
-    # - name: Debug - list k8s-manifests directory contents
-    #   run: ls -la k8s-manifests
-
-    - name: Debug - list k8s-manifests directory contents
-      run: |
-        ls -la k8s-manifests
-        # ls -la k8s-manifests/k8s-manifests
-    # - name: List directory contents
-    #   run: ls -la morningstar-assignment/k8s-manifests
+    # - name: Debug - list directory contents
+    #   run: ls -la
 
     - name: Update Kubernetes deployment
       env: 
@@ -92,6 +79,8 @@ jobs:
     - name: Update kube-config
       run: |
         aws eks update-kubeconfig --name timeoff-app --region us-east-1
+        pwd
+        ls -la
       
 
     # - name: Set up kubectl
