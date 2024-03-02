@@ -56,9 +56,9 @@ jobs:
 
     - name: Debug - list parent directory contents
       run: ls -la ..
-      
-    - name: List directory contents
-      run: ls -la morningstar-assignment/k8s-manifests
+
+    # - name: List directory contents
+    #   run: ls -la morningstar-assignment/k8s-manifests
 
     - name: Update Kubernetes deployment
       env: 
@@ -66,7 +66,7 @@ jobs:
         ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
         IMAGE_TAG: details-${{ env.sha }}
       run: |
-        DEPLOYMENT_FILE="morningstar-assignment/k8s-manifests/deployment.yaml"
+        DEPLOYMENT_FILE="k8s-manifests/deployment.yaml"
 
         # Check if the deployment file needs to be updated
         if grep -q "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" "$DEPLOYMENT_FILE"; then
