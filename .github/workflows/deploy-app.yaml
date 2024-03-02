@@ -88,6 +88,12 @@ jobs:
           # Show updated deployment file
           cat "$DEPLOYMENT_FILE"
         fi
+
+    - name: Update kube-config
+      run: |
+        aws eks update-kubeconfig --name timeoff-app --region us-east-1
+      
+
     # - name: Set up kubectl
     #   uses: azure/setup-kubectl@v1
     #   with:
