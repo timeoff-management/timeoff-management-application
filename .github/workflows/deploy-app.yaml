@@ -37,8 +37,8 @@ jobs:
         IMAGE_TAG: details-${{ env.sha }}
       run: |
         echo "Temp - Hello World"
-        # docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        # docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
     
     - name: Checkout repo with K8s deployment files
       uses: actions/checkout@v3
@@ -54,7 +54,7 @@ jobs:
         ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
         IMAGE_TAG: details-${{ env.sha }}
       run: |
-        DEPLOYMENT_FILE="k8s-manifests/deployment.yaml"
+        DEPLOYMENT_FILE="morningstar-assignment/k8s-manifests/deployment.yaml"
 
         # Check if the deployment file needs to be updated
         if grep -q "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" "$DEPLOYMENT_FILE"; then
