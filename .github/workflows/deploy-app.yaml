@@ -37,8 +37,8 @@ jobs:
         IMAGE_TAG: details-${{ env.sha }}
       run: |
         echo "Temp - Hello World"
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        # docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        # docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
     
     - name: Checkout repo with K8s deployment files
       uses: actions/checkout@v3
@@ -47,6 +47,9 @@ jobs:
         repository: nrbs/morningstar-assignment
         path: k8s-manifests
         ref: main
+
+    - name: List directory contents
+      run: ls -la morningstar-assignment/k8s-manifests
 
     - name: Update Kubernetes deployment
       env: 
