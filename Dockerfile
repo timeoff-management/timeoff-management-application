@@ -18,7 +18,8 @@ FROM alpine:latest as dependencies
 
 RUN apk add --no-cache \
     nodejs npm \
-    python3 make \
+    python3 \
+	make \
     build-base
 
 COPY package.json  .
