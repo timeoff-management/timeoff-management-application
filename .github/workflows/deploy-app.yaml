@@ -80,7 +80,15 @@ jobs:
       run: |
         aws eks update-kubeconfig --name timeoff-app --region us-east-1
         pwd
+        cd k8s-manifests
         ls -la
+        cat deployment.yaml
+        cat nginx-ingress.yaml
+        cat cert-manager.yaml
+        kubectl get namespaces
+        kubectl config set-context --current --namespace=cert-manager
+        kubectl config view --minify | grep namespace:
+
       
 
     # - name: Set up kubectl
