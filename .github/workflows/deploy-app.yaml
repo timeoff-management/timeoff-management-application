@@ -79,15 +79,21 @@ jobs:
     - name: Update kube-config
       run: |
         aws eks update-kubeconfig --name timeoff-app --region us-east-1
-        pwd
+    
+    - name: Deploy to EKS
+      run: |
         cd k8s-manifests
-        ls -la
-        cat deployment.yaml
-        cat nginx-ingress.yaml
-        cat cert-manager.yaml
+        echo "Current directory: $PWD"
+        echo "Namespaces: \n--------------------------------------------------"
         kubectl get namespaces
+        echo "--------------------------------------------------"
+        kubectl apply -f deployment.yaml
+        kubectl apply -f nginx-ingress.yaml
+        echo "--------------------------------------------------"
         kubectl config set-context --current --namespace=cert-manager
-        kubectl config view --minify | grep namespace:
+        echo "--------------------------------------------------"
+        echo "Current namespace: $(kubectl config view --minify --output 'jsonpath={..namespace}')"
+        kubectl apply -f cert-manager.yaml
 
       
 
