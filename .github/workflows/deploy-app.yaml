@@ -66,7 +66,8 @@ jobs:
         DEPLOYMENT_FILE="k8s-manifests/deployment.yaml"
         cat "$DEPLOYMENT_FILE"
         echo "---------------------------------------------------------------------"
-        sed -i "s|image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:.*|image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}|" "$DEPLOYMENT_FILE"
+        sed -i "s|image: ECR_REGISTRY/ECR_REPOSITORY:IMAGE_TAG|image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}|" "$DEPLOYMENT_FILE"
+        # sed -i "s|image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:.*|image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}|" "$DEPLOYMENT_FILE"
         # sed -i "s|image: $ECR_REGISTRY/$ECR_REPOSITORY:.*|image: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|" "$DEPLOYMENT_FILE"
         cat "$DEPLOYMENT_FILE"
 
