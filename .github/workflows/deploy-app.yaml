@@ -87,11 +87,12 @@ jobs:
         echo "Namespaces: \n--------------------------------------------------"
         kubectl get namespaces
         echo "--------------------------------------------------"
+        kubectl config set-context --current --namespace=timeoff-app
+        echo "Current namespace: $(kubectl config view --minify --output 'jsonpath={..namespace}')"
         kubectl apply -f deployment.yaml
         kubectl apply -f nginx-ingress.yaml
         echo "--------------------------------------------------"
         kubectl config set-context --current --namespace=cert-manager
-        echo "--------------------------------------------------"
         echo "Current namespace: $(kubectl config view --minify --output 'jsonpath={..namespace}')"
         kubectl apply -f cert-manager.yaml
 
