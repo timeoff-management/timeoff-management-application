@@ -84,7 +84,8 @@ jobs:
       run: |
         cd k8s-manifests
         echo "Current directory: $PWD"
-        echo "Namespaces: \n--------------------------------------------------"
+        echo "--------------------------------------------------"
+        echo "Namespaces:"
         kubectl get namespaces
         echo "--------------------------------------------------"
         kubectl config set-context --current --namespace=timeoff-app
