@@ -2,7 +2,9 @@ name: Deploy Time Off app to EKS
 
 on: 
   workflow_dispatch:
-
+  push:
+    branches:
+      - main
 
 env:
     ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
@@ -64,23 +66,19 @@ jobs:
         IMAGE_TAG: details-${{ env.sha }}
       run: |
         DEPLOYMENT_FILE="k8s-manifests/deployment.yaml"
-        cat "$DEPLOYMENT_FILE"
-        echo "---------------------------------------------------------------------"
-        sed -i "s|image: ECR_REGISTRY/ECR_REPOSITORY:IMAGE_TAG|image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}|" "$DEPLOYMENT_FILE"
-        # sed -i "s|image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:.*|image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}|" "$DEPLOYMENT_FILE"
-        # sed -i "s|image: $ECR_REGISTRY/$ECR_REPOSITORY:.*|image: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|" "$DEPLOYMENT_FILE"
-        cat "$DEPLOYMENT_FILE"
+        # sed -i "s|image: ECR_REGISTRY/ECR_REPOSITORY:IMAGE_TAG|image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}|" "$DEPLOYMENT_FILE"
 
-        # # Check if the deployment file needs to be updated
-        # if grep -q "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" "$DEPLOYMENT_FILE"; then
-        #   echo "Image is already up to date in $DEPLOYMENT_FILE"
-        # else
-        #   # Update image tag in deployment file
-        #   sed -i "s|image: $ECR_REGISTRY/$ECR_REPOSITORY:.*|image: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|" "$DEPLOYMENT_FILE"
+        # Check if the deployment file needs to be updated
+        if grep -q "image: ECR_REGISTRY/ECR_REPOSITORY:IMAGE_TAG" "$DEPLOYMENT_FILE"; then
+          echo "Image is already up to date in $DEPLOYMENT_FILE"
+        else
+          # Update image tag in deployment file
+          sed -i "s|image: ECR_REGISTRY/ECR_REPOSITORY:IMAGE_TAG|image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}|" "$DEPLOYMENT_FILE"
 
-        #   # Show updated deployment file
-        #   cat "$DEPLOYMENT_FILE"
-        # fi
+          # Show updated deployment file
+          echo "---------------------------------------------------------------------"
+          cat "$DEPLOYMENT_FILE"
+        fi
 
     - name: Update kube-config
       run: |
@@ -104,18 +102,3 @@ jobs:
         kubectl apply -f cert-manager.yaml
 
       
-
-    # - name: Set up kubectl
-    #   uses: azure/setup-kubectl@v1
-    #   with:
-    #     version: '1.18.8'
-
-    # - name: Configure kubectl
-    #   run: |
-    #     echo ${{ secrets.KUBE_CONFIG_DATA }} | base64 --decode > kubeconfig
-    #     mkdir -p $HOME/.kube
-    #     mv kubeconfig $HOME/.kube/config
-
-    # - name: Deploy to EKS
-    #   run: |
-    #     kubectl apply -f k8s/
