@@ -65,7 +65,9 @@ jobs:
       run: |
         DEPLOYMENT_FILE="k8s-manifests/deployment.yaml"
         cat "$DEPLOYMENT_FILE"
-        sed -i "s|image: $ECR_REGISTRY/$ECR_REPOSITORY:.*|image: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|" "$DEPLOYMENT_FILE"
+        echo "---------------------------------------------------------------------"
+        sed -i "s|image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:.*|image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}|" "$DEPLOYMENT_FILE"
+        # sed -i "s|image: $ECR_REGISTRY/$ECR_REPOSITORY:.*|image: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|" "$DEPLOYMENT_FILE"
         cat "$DEPLOYMENT_FILE"
 
         # # Check if the deployment file needs to be updated
@@ -87,15 +89,15 @@ jobs:
       run: |
         cd k8s-manifests
         echo "Current directory: $PWD"
-        echo "--------------------------------------------------"
+        echo "---------------------------------------------------------------------"
         echo "Namespaces:"
         kubectl get namespaces
-        echo "--------------------------------------------------"
+        echo "---------------------------------------------------------------------"
         kubectl config set-context --current --namespace=timeoff-app
         echo "Current namespace: $(kubectl config view --minify --output 'jsonpath={..namespace}')"
         kubectl apply -f deployment.yaml
         kubectl apply -f nginx-ingress.yaml
-        echo "--------------------------------------------------"
+        echo "---------------------------------------------------------------------"
         kubectl config set-context --current --namespace=cert-manager
         echo "Current namespace: $(kubectl config view --minify --output 'jsonpath={..namespace}')"
         kubectl apply -f cert-manager.yaml
