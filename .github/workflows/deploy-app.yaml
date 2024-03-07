@@ -1,0 +1,104 @@
+name: Deploy Time Off app to EKS
+
+on: 
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+env:
+    ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+    ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+
+jobs:
+  build_and_push_image:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ vars.AWS_REGION }}
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v2
+
+    - name: Get short SHA
+      run: echo "sha=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+        
+    - name: Build, tag, and push image to Amazon ECR
+      env:
+        ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+        ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+        IMAGE_TAG: details-${{ env.sha }}
+      run: |
+        echo "Temp - Hello World"
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+    
+    - name: Checkout repo with K8s deployment files
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.PAT_MORNINGSTAR }}
+        repository: nrbs/morningstar-assignment
+        # path: k8s-manifests
+        ref: main
+        sparse-checkout: |
+          k8s-manifests
+        sparse-checkout-cone-mode: false
+
+    # - name: Debud - print current directory
+    #   run: pwd
+    
+    # - name: Debug - list directory contents
+    #   run: ls -la
+
+    - name: Update Kubernetes deployment
+      env: 
+        ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+        ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+        IMAGE_TAG: details-${{ env.sha }}
+      run: |
+        DEPLOYMENT_FILE="k8s-manifests/deployment.yaml"
+        sed -i "s|image: ECR_REGISTRY/ECR_REPOSITORY:IMAGE_TAG|image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}|" "$DEPLOYMENT_FILE"
+
+        # # Check if the deployment file needs to be updated
+        # if grep -q "image: ECR_REGISTRY/ECR_REPOSITORY:IMAGE_TAG" "$DEPLOYMENT_FILE"; then
+        #   echo "Image is already up to date in $DEPLOYMENT_FILE"
+        # else
+        #   # Update image tag in deployment file
+        #   sed -i "s|image: ECR_REGISTRY/ECR_REPOSITORY:IMAGE_TAG|image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}|" "$DEPLOYMENT_FILE"
+
+        #   # Show updated deployment file
+        #   echo "---------------------------------------------------------------------"
+        #   cat "$DEPLOYMENT_FILE"
+        # fi
+
+    - name: Update kube-config
+      run: |
+        aws eks update-kubeconfig --name timeoff-app --region us-east-1
+    
+    - name: Deploy to EKS
+      run: |
+        cd k8s-manifests
+        echo "Current directory: $PWD"
+        echo "---------------------------------------------------------------------"
+        echo "Namespaces:"
+        kubectl get namespaces
+        echo "---------------------------------------------------------------------"
+        kubectl config set-context --current --namespace=timeoff-app
+        echo "Current namespace: $(kubectl config view --minify --output 'jsonpath={..namespace}')"
+        kubectl apply -f deployment.yaml
+        kubectl apply -f nginx-ingress.yaml
+        echo "---------------------------------------------------------------------"
+        kubectl config set-context --current --namespace=cert-manager
+        echo "Current namespace: $(kubectl config view --minify --output 'jsonpath={..namespace}')"
+        kubectl apply -f cert-manager.yaml
+
+      
