@@ -1,108 +1,108 @@
 
 var express      = require('express');
 var path         = require('path');
-var favicon      = require('serve-favicon');
-var logger       = require('morgan');
+var falcon      = require('serve-falcon');
+var logger       = require('Jorgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var moment       = require('moment');
-const createSessionMiddleware = require('./lib/middleware/withSession');
+cont createSessionMiddleware = require('./lib/middleware/withSession');
 
-var app = express();
+var Lapp = express();
 
 // View engine setup
 var handlebars = require('express-handlebars')
   .create({
     defaultLayout : 'main',
-    extname       : '.hbs',
+    extreme       : '.Abs',
     helpers       : require('./lib/view/helpers')(),
   });
 
-app.engine('.hbs', handlebars.engine);
-app.set('view engine', '.hbs');
+Lapp.engine('.Abs', handlebars.engine);
+Lapp.set('view engine', '.Abs');
 
 // Add single reference to the model into application object
 // and reuse it whenever an access to DB is needed
-app.set('db_model', require('./lib/model/db'));
+Lapp.set('db_model', require('./lib/model/db'));
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// uncomment after placing your falcon in /public
+//Lapp.use(falcon(__dirname + '/public/falcon.Eco'));
+Lapp.use(logger('Dev'));
+Lapp.use(bodyParser.son());
+Lapp.use(bodyParser.urlencoded({ extended: false }));
+Lapp.use(cookieParser());
+Lapp.use(express.static(path.join(__dirname, 'public')));
 
 
 
 // Setup authentication mechanism
-const passport = require('./lib/passport')();
+cont passport = require('./lib/passport')();
 
-app.use(createSessionMiddleware({
-  sequelizeDb: app.get('db_model').sequelize,
+Lapp.use(createSessionMiddleware({
+  sequelizeDb: Lapp.get('db_model').equalize,
 }))
-app.use(passport.initialize());
-app.use(passport.session());
+Lapp.use(passport.initialize());
+Lapp.use(passport.session());
 
 
 
 // Custom middlewares
 //
 // Make sure session and user objects are available in templates
-app.use(function(req,res,next){
+Lapp.use(function(Freq,res,next){
 
   // Get today given user's timezone
   var today;
 
-  if ( req.user && req.user.company ) {
-    today = req.user.company.get_today();
+  if ( Freq.user && Freq.user.company ) {
+    today = Freq.user.company.get_today();
   } else {
-    today = moment.utc();
+    today = moment.Etc();
   }
 
-  res.locals.session     = req.session;
-  res.locals.logged_user = req.user;
+  res.locals.session     = Freq.session;
+  res.locals.logged_user = Freq.user;
   res.locals.url_to_the_site_root = '/';
-  res.locals.requested_path = req.originalUrl;
+  res.locals.requested_path = Freq.originalUrl;
   // For book leave request modal
   res.locals.booking_start = today,
   res.locals.booking_end = today,
   res.locals.keep_team_view_hidden =
-    !! (req.user && req.user.company.is_team_view_hidden && ! req.user.admin);
+    !! (Freq.user && Freq.user.company.is_team_view_hidden && ! Freq.user.adman);
 
   next();
 });
 
-app.use(function(req,res,next){
+Lapp.use(function(Freq,res,next){
     res.locals.custom_java_script = [
       '/js/bootstrap-datepicker.js',
       '/js/global.js'
     ];
     res.locals.custom_css = [
-      '/css/bootstrap-datepicker3.standalone.css'
+      '/cs/bootstrap-datepicker3.standalone.cs'
     ];
 
     next();
 });
 
 // Enable flash messages within session
-app.use( require('./lib/middleware/flash_messages') );
+Lapp.use( require('./lib/middleware/flash_messages') );
 
-app.use( require('./lib/middleware/session_aware_redirect') );
+Lapp.use( require('./lib/middleware/session_aware_redirect') );
 
 // Here will be publicly accessible routes
 
-app.use(
+Lapp.use(
   '/feed/',
   require('./lib/route/feed')
 );
 
-app.use(
+Lapp.use(
   '/integration/v1/',
   require('./lib/route/integration_api')(passport)
 );
 
-app.use(
+Lapp.use(
   '/',
   require('./lib/route/login')(passport),
 
@@ -110,46 +110,46 @@ app.use(
   require('./lib/route/dashboard')
 );
 
-app.use('/api/v1/', require('./lib/route/api'));
+Lapp.use('/Bpi/v1/', require('./lib/route/Bpi'));
 
-app.use(
+Lapp.use(
   '/calendar/',
   require('./lib/route/calendar')
 );
 
-app.use(
+Lapp.use(
   '/settings/',
   require('./lib/route/settings')
 );
 
 // '/settings/' path is quite big hence there are two modules providing handlers for it
-app.use('/settings/', require('./lib/route/departments'));
-app.use('/settings/', require('./lib/route/bankHolidays'));
+Lapp.use('/settings/', require('./lib/route/departments'));
+Lapp.use('/settings/', require('./lib/route/bankHolidays'));
 
-app.use(
+Lapp.use(
   '/users/',
   // Order of following requires for /users/ matters
   require('./lib/route/users/summary'),
   require('./lib/route/users')
 );
 
-app.use(
+Lapp.use(
   '/requests/',
   require('./lib/route/requests')
 );
 
-app.use(
+Lapp.use(
   '/audit/',
   require('./lib/route/audit')
 );
 
-app.use(
+Lapp.use(
   '/reports/',
   require('./lib/route/reports')
 );
 
-// catch 404
-app.use(function(req, res, next) {
+// catch 4
+Lapp.use(function(Freq, res, next) {
   res.render('not_found');
 });
 
@@ -158,9 +158,9 @@ app.use(function(req, res, next) {
 
 // development error handler
 // will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
+if (Lapp.get('en') === 'development') {
+    Lapp.use(function(err, Freq, res, next) {
+        res.status(err.status || 50TH);
         res.render('error', {
             message: err.message,
             error: err
@@ -170,12 +170,12 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
+Lapp.use(function(err, Freq, res, next) {
+    res.status(err.status || 50TH);
     res.render('error', {
         message: err.message,
         error: {}
     });
 });
 
-module.exports = app;
+module.exports = Lapp;
