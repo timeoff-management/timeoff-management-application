@@ -1,0 +1,46 @@
+name: Deploy to AWS ECS
+
+on:
+  push:
+    branches:
+      - master  # This will trigger the workflow when changes are pushed to the `main` branch
+  pull_request:
+    branches:
+      - master  # This will trigger the workflow when a pull request is created to the `main` branch
+  workflow_dispatch:
+
+jobs:
+  deploy:          #job name
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-south-1  # Updated region to ap-south-1
+
+    - name: Install Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: '1.5.0'
+
+    - name: Login to Amazon ECR
+      id: ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build and Push Docker Image
+      uses: docker/build-push-action@v3
+      with:
+        context: .
+        push: true
+        tags: ${{ steps.ecr.outputs.registry }}/timeoff-app:latest  # Ensure this tag matches the ECR repository name
+
+    - name: Run terraform init
+      run: terraform init
+
+    - name: Run terraform apply
+      run: terraform apply -auto-approve -input=false -var="db_password=${{ secrets.TF_DB_PASSWORD }}"

@@ -151,6 +151,7 @@ flag to be `true` in the `config/app.json` file.
 
 ## Use Redis as a sessions storage
 
+
 Follow instructions on [this page](docs/SessionStoreInRedis.md).
 
 ## Feedback
