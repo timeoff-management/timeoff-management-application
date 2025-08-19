@@ -1,42 +1,47 @@
-# -------------------------------------------------------------------
-# Minimal dockerfile from alpine base
-#
-# Instructions:
-# =============
-# 1. Create an empty directory and copy this file into it.
-#
-# 2. Create image with: 
-#	docker build --tag timeoff:latest .
-#
-# 3. Run with: 
-#	docker run -d -p 3000:3000 --name alpine_timeoff timeoff
-#
-# 4. Login to running container (to update config (vi config/app.json): 
-#	docker exec -ti --user root alpine_timeoff /bin/sh
-# --------------------------------------------------------------------
-FROM alpine:latest as dependencies
+##
+## Multi-stage build using official Node image for compatibility
+## Avoids Alpine musl/node-gyp issues with native modules like sqlite3
+##
 
-RUN apk add --no-cache \
-    nodejs npm 
-
-COPY package.json  .
-RUN npm install 
-
-FROM alpine:latest
-
-LABEL org.label-schema.schema-version="1.0"
-LABEL org.label-schema.docker.cmd="docker run -d -p 3000:3000 --name alpine_timeoff"
-
-RUN apk add --no-cache \
-    nodejs npm \
-    vim
-
-RUN adduser --system app --home /app
-USER app
+FROM node:22-slim AS builder
 WORKDIR /app
-COPY . /app
-COPY --from=dependencies node_modules ./node_modules
 
-CMD npm start
+# System deps required to build native modules when prebuilds are unavailable
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+    python3 \
+    make \
+    g++ \
+    ca-certificates \
+  && rm -rf /var/lib/apt/lists/*
+
+# Ensure node-gyp finds Python 3 if a build-from-source is needed
+ENV PYTHON=/usr/bin/python3
+ENV npm_config_python=/usr/bin/python3
+
+# Install dependencies first for better layer caching
+COPY package.json ./
+# If a lockfile exists, use it for reproducible builds
+# COPY package-lock.json ./
+
+RUN npm install
+
+# Copy the rest of the app
+COPY . .
+
+# Optional: compile CSS if needed (non-fatal if sources are already present)
+RUN npm run compile-sass || true
+
+# Prune devDependencies for smaller runtime image
+ENV NODE_ENV=production
+RUN npm prune --omit=dev
+
+
+FROM node:22-slim AS runtime
+WORKDIR /app
+
+# Copy app and pruned node_modules from builder
+COPY --from=builder /app /app
 
 EXPOSE 3000
+CMD ["npm","start"]

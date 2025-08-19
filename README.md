@@ -80,17 +80,33 @@ Create company account and use cloud based version.
 
 ### Self hosting
 
-Install TimeOff.Management application within your infrastructure:
+Install TimeOff.Management within your infrastructure.
 
-(make sure you have Node.js (>=4.0.0) and SQLite installed)
+Prerequisites:
+- Node.js 18+ (Node 22 supported). Use `nvm` if possible.
+- Git and a working C/C++ toolchain are not required for a standard install (sqlite3 is prebuilt).
 
+Recommended install steps:
 ```bash
 git clone https://github.com/timeoff-management/application.git timeoff-management
 cd timeoff-management
+
+# If you see "Invalid Version" errors from an old lockfile, remove it
+rm -f package-lock.json
+
 npm install
+
+# Build CSS (uses dart-sass)
+npm run compile-sass
+
+# Start the app
 npm start
 ```
 Open http://localhost:3000/ in your browser.
+
+Notes:
+- The project now uses `sqlite3@^5` and `sass` (dart-sass) instead of `node-sass` to avoid native build issues on modern Node.
+- If you use a different Node version per machine, consider adding an `.nvmrc` (e.g., `18`).
 
 ## Run tests
 
@@ -120,6 +136,35 @@ git pull origin master
 npm install
 npm run-script db-update
 npm start
+```
+
+## Run in background (forever)
+
+Recommended: PM2 process manager
+- Install: `npm i -g pm2`
+- Start: `pm2 start bin/wwww --name timeoff`
+- Persist reboots: `pm2 save && pm2 startup` (run the printed command)
+- Manage: `pm2 status`, `pm2 logs timeoff`, `pm2 restart timeoff`, `pm2 stop timeoff`
+
+Alternative: macOS Launchd
+- Create a LaunchAgent with `KeepAlive=true` pointing to `node /absolute/path/to/bin/wwww` and load with `launchctl`.
+
+## Docker
+
+This repository includes a Dockerfile based on `node:22-slim` for reliable installs on modern Node.
+
+Prerequisite: Docker daemon must be running (Docker Desktop on macOS). Verify with `docker info`.
+
+Build and run:
+```bash
+docker build -t timeoff .
+docker run -d --name timeoff -p 3000:3000 --restart unless-stopped timeoff
+```
+Then open http://localhost:3000/.
+
+If you prefer BuildKit/buildx:
+```bash
+docker buildx build --load -t timeoff .
 ```
 
 ## How to?
@@ -156,4 +201,3 @@ Follow instructions on [this page](docs/SessionStoreInRedis.md).
 ## Feedback
 
 Please report any issues or feedback to <a href="https://twitter.com/FreeTimeOffApp">twitter</a> or Email: pavlo at timeoff.management
-
