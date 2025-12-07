@@ -92,6 +92,13 @@
         </div>
       </div>
 
+      <div class="form-group">
+        <label for="ldap_search_filter" class="col-md-3 control-label">Search Filter</label>
+        <div class="col-md-5">
+          <input class="form-control" id="ldap_search_filter" placeholder="(mail=&#123;&#123;username&#125;&#125;)" name="searchfilter" value="{{ ldap_config.searchfilter }}">
+        </div>
+      </div>
+
       <hr/>
 
       <p class="col-md-offset-2">In order to prevent a situation where a company account locks itself out, the current administrator (<strong>{{# with logged_user}}{{this.full_name}}{{/with}}</strong>) has to enter the password associated with her/his email on the LDAP server.</p>

@@ -4,16 +4,16 @@
       sassc scss/main.scss public/css/style.css
 */
 
-$primary-font-color : #61686b;
-$border-color : #e5e5e5;
-$link-color : #5ba4e5;
+$primary-font-color: #61686b;
+$border-color: #e5e5e5;
+$link-color: #5ba4e5;
 
-$font-size-primary : 14px;
-$font-size-bigger : 16px;
+$font-size-primary: 14px;
+$font-size-bigger: 16px;
 
-$selected-item-background : #F5F7F8;
+$selected-item-background: #f5f7f8;
 
-$leave_cell_font_color : #61686b;
+$leave_cell_font_color: #61686b;
 
 // 5E5E5E
 
@@ -86,7 +86,6 @@ label.label-plain {
   padding-left: 0;
 }
 
-
 /* Make the masthead heading the same height as the navigation */
 .header h3 {
   padding-bottom: 19px;
@@ -98,16 +97,17 @@ label.label-plain {
 /* Custom page footer */
 
 .footer {
-  margin-top  : 20px;
-  padding-top : 20px;
-  border-top  : 1px solid $border-color;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid $border-color;
 }
 
-.header, .marketing, .footer {
-    padding-right: 0;
-    padding-left: 0;
+.header,
+.marketing,
+.footer {
+  padding-right: 0;
+  padding-left: 0;
 }
-
 
 /* Space out the masthead */
 .header {
@@ -121,76 +121,74 @@ label.label-plain {
 /* styling calendar*/
 
 .calendar_month {
-  width : 100%;
+  width: 100%;
 }
 .calendar_month td {
   text-align: center;
-  padding-top    : 5px;
-  padding-bottom : 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 .calendar_month thead {
- text-align: center;
- font-weight: bolder;
+  text-align: center;
+  font-weight: bolder;
 }
 
-
 div.month_container {
-    height : 250px;
+  height: 250px;
 }
 
 .team-view-table {
-  width : 100%;
+  width: 100%;
 }
 .team-view-table td {
-  padding-top    : 5px;
-  padding-bottom : 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 td.team-view-header {
   height: 43px;
   text-align: center;
 }
 
-
 td.calendar_cell {
-    width          : 15px !important;
-    min-width      : 15px !important;
-    max-width      : 15px !important;
-    position       : relative;
-    text-align     : center;
-    padding-top    : 5px;
-    padding-bottom : 5px;
+  width: 15px !important;
+  min-width: 15px !important;
+  max-width: 15px !important;
+  position: relative;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 td.calendar_cell span {
-    position   : relative;
-    left       : 9px;
-    top        : -1px;
-    display    : block;
-    text-align : center;
-    z-index : 10;
+  position: relative;
+  left: 9px;
+  top: -1px;
+  display: block;
+  text-align: center;
+  z-index: 10;
 }
 td.current_day_cell {
-  background: #FFCDD2;
-  color : #ffffff;
+  background: #ffcdd2;
+  color: #ffffff;
 }
 td.weekend_cell {
   background: $selected-item-background;
 }
 td.bank_holiday_cell {
-    background : #31B0D5;
-    color : #ffffff;
+  background: #31b0d5;
+  color: #ffffff;
 }
 td.leave_cell {
-    background : #9fbb58;
-    color : $leave_cell_font_color;
+  background: #9fbb58;
+  color: $leave_cell_font_color;
   font-weight: bolder;
 }
 td.leave_cell_pended {
-  background: #FFCBA4;
+  background: #ffcba4;
   color: $leave_cell_font_color;
   font-weight: bolder;
 }
 .modal-dialog {
-    max-width : 450px;
+  max-width: 450px;
 }
 .left-column-cell {
   text-overflow: ellipsis;
@@ -201,7 +199,8 @@ td.leave_cell_pended {
   display: inline-block;
 }
 
-.main-row_header {  /* TODO refactore */
+.main-row_header {
+  /* TODO refactore */
   border: none;
   font-weight: normal;
   color: $link-color;
@@ -213,12 +212,10 @@ td.leave_cell_pended {
   padding-bottom: 30px;
 }
 
-
-
 /* Feeds */
 .feed-calendar-big {
   font-size: 450px;
-  color: #F8F8F8;
+  color: #f8f8f8;
 }
 
 .feed-calendar-big-picture-holder {
@@ -234,7 +231,6 @@ div.feeds-holder {
   margin-top: 20px;
 }
 
-
 /* Calendars */
 .top-leave-type-statistics {
   text-align: center;
@@ -243,34 +239,31 @@ div.feeds-holder {
   font-size: 75px;
   color: $primary-font-color;
   font-weight: 100;
-  border-bottom  : 1px solid $border-color;
-  margin-bottom : 20px;
+  border-bottom: 1px solid $border-color;
+  margin-bottom: 20px;
 }
 .top-leave-type-statistics dd {
   font-size: $font-size-bigger;
 }
 
-
 .secondary-leave-type-statistics {
-  font-size : $font-size-bigger;
+  font-size: $font-size-bigger;
 }
 .secondary-leave-type-statistics dt {
   text-align: center;
   padding-bottom: 15px;
   margin-bottom: 15px;
-  border-bottom  : 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
 }
 .secondary-leave-type-statistics dd {
   padding-left: 10px;
   padding-right: 10px;
 }
 
-
 .calendar-section-caption {
   text-align: center;
   font-size: 1.2em;
 }
-
 
 .setting-general-2nd-column {
   padding-left: 30px;
@@ -282,12 +275,14 @@ div.feeds-holder {
 
 /* Fix for issue with modal scrollings on mobiles */
 @media (max-width: 768px) {
-  body.modal-open { position: fixed; }
+  body.modal-open {
+    position: fixed;
+  }
 }
 
 /* To be used for selected items in lists */
 .selected-item {
-  background : $selected-item-background;
+  background: $selected-item-background;
   font-weight: bolder;
 }
 
@@ -296,17 +291,17 @@ div.feeds-holder {
 }
 
 .leave_type_color_2 {
-  background: #40C4FF !important;
+  background: #40c4ff !important;
 }
 
 .leave_type_color_3 {
-  background: #FF5722 !important;
+  background: #ff5722 !important;
 }
 
 .leave_type_color_4 {
-  background: #FF80AB !important;
+  background: #ff80ab !important;
 }
 
 .leave_type_color_5 {
-  background: #00BCD4 !important;
+  background: #00bcd4 !important;
 }

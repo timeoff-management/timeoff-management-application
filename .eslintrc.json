@@ -1,0 +1,33 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true
+    },
+    "extends": [
+      "standard",
+      "prettier",
+      "plugin:mocha/recommended"
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "plugins": [
+      "mocha"
+    ],
+    "rules": {
+      "camelcase": 0,
+      "space-before-function-paren": 0,
+      "arrow-body-style": ["error", "as-needed"],
+      //"prefer-arrow-callback": [
+      //  "error",
+      //  { "allowNamedFunctions": true }
+      //],
+      "func-style": [
+        "error",
+        "declaration",
+        { "allowArrowFunctions": true }
+      ]
+
+    }
+}

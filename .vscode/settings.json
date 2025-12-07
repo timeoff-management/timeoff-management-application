@@ -1,0 +1,25 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+    "source.addMissingImports": "explicit",
+    "source.fixAll.eslint": "explicit"
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.vscode": true,
+    "**/build": true,
+    "**/dist": true
+  },
+  "git.autofetch": true,
+  "editor.trimAutoWhitespace": true,
+  "files.encoding": "utf8",
+  "files.trimFinalNewlines": false,
+  "files.trimTrailingWhitespace": true,
+  "css.validate": false,
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "editor.detectIndentation": false,
+  "editor.tabSize": 2
+}

@@ -22,13 +22,23 @@
   </div>
 
   <div class="form-group">
+    <label for="slack_username_inp" class="control-label">Slack Username</label>
+    <input class="form-control" id="slack_username_inp" name="slack_username" value="{{employee.slack_username}}" aria-describedby="slack_username_help">
+    <span id="slack_username_help" class="help-block">Slack Username used by this user</span>
+  </div>
+
+  <div class="form-group">
     <label for="select_inp" class="control-label">Department</label>
     <select class="form-control" id="select_inp" name="department" aria-describedby="department_help">
-      {{#each departments}}
-          <option value="{{this.id}}" {{#if_equal ../employee.DepartmentId this.id}} selected="selected"{{/if_equal}}>{{this.name}} (approver {{this.boss.name}} {{this.boss.lastname}})</option>
+      {{#each company.departments}}
+          <option value="{{this.id}}" {{#if_equal ../employee.department_id this.id}}
+                  selected="selected"{{/if_equal}}>{{this.name}} (approver {{this.manager.name}} {{this.manager.lastname}})
+          </option>
       {{/each}}
     </select>
-    <span id="department_help" class="help-block">Department current user is part of. <a href="/settings/departments/edit/{{employee.DepartmentId}}">More details <i class="fa fa-angle-double-right"></i></a></span>
+      <span id="department_help" class="help-block">Department current user is part of. <a
+              href="/settings/departments/edit/{{employee.department_id}}">More details <i
+              class="fa fa-angle-double-right"></i></a></span>
   </div>
 
   <div class="form-group">

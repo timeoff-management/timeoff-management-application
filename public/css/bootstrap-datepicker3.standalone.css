@@ -24,7 +24,7 @@
   padding: 4px;
 }
 .datepicker-dropdown:before {
-  content: '';
+    content: "";
   display: inline-block;
   border-left: 7px solid transparent;
   border-right: 7px solid transparent;
@@ -34,7 +34,7 @@
   position: absolute;
 }
 .datepicker-dropdown:after {
-  content: '';
+    content: "";
   display: inline-block;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
@@ -652,7 +652,12 @@ fieldset[disabled] .datepicker table tr td.active.highlighted.focus {
 .open > .dropdown-toggle.datepicker table tr td span.active:hover,
 .open > .dropdown-toggle.datepicker table tr td span.active:hover:hover,
 .open > .dropdown-toggle.datepicker table tr td span.active.disabled:hover,
-.open > .dropdown-toggle.datepicker table tr td span.active.disabled:hover:hover,
+.open
+> .dropdown-toggle.datepicker
+table
+tr
+td
+span.active.disabled:hover:hover,
 .datepicker table tr td span.active:active:focus,
 .datepicker table tr td span.active:hover:active:focus,
 .datepicker table tr td span.active.disabled:active:focus,
@@ -664,7 +669,12 @@ fieldset[disabled] .datepicker table tr td.active.highlighted.focus {
 .open > .dropdown-toggle.datepicker table tr td span.active:focus,
 .open > .dropdown-toggle.datepicker table tr td span.active:hover:focus,
 .open > .dropdown-toggle.datepicker table tr td span.active.disabled:focus,
-.open > .dropdown-toggle.datepicker table tr td span.active.disabled:hover:focus,
+.open
+> .dropdown-toggle.datepicker
+table
+tr
+td
+span.active.disabled:hover:focus,
 .datepicker table tr td span.active:active.focus,
 .datepicker table tr td span.active:hover:active.focus,
 .datepicker table tr td span.active.disabled:active.focus,
@@ -676,7 +686,12 @@ fieldset[disabled] .datepicker table tr td.active.highlighted.focus {
 .open > .dropdown-toggle.datepicker table tr td span.active.focus,
 .open > .dropdown-toggle.datepicker table tr td span.active:hover.focus,
 .open > .dropdown-toggle.datepicker table tr td span.active.disabled.focus,
-.open > .dropdown-toggle.datepicker table tr td span.active.disabled:hover.focus {
+.open
+> .dropdown-toggle.datepicker
+table
+tr
+td
+span.active.disabled:hover.focus {
   color: #ffffff;
   background-color: #285e8e;
   border-color: #193c5a;

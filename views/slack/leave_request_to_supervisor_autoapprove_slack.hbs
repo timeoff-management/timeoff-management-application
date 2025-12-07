@@ -1,0 +1,7 @@
+Hello *{{#with approver }}{{this.full_name}}{{/with}}*,
+
+*{{#with requester}}{{this.full_name}}{{/with}}* added new leave *{{>leave_request_detail leave=leave }}*.
+
+There is no need to approve/reject leaves from {{#with requester}}{{this.full_name}}{{/with}}.
+
+Thanks

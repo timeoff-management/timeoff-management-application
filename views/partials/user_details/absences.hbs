@@ -6,7 +6,8 @@
   <input type="hidden" name="name" value="{{employee.name}}">
   <input type="hidden" name="lastname" value="{{employee.lastname}}">
   <input type="hidden" name="email_address" value="{{employee.email}}">
-  <input type="hidden" name="department" value="{{employee.DepartmentId}}">
+  <input type="hidden" name="slack_username" value="{{employee.slack_username}}">
+  <input type="hidden" name="department" value="{{employee.department_id}}">
   <input type="hidden" name="admin" value="{{#if employee.admin}}1{{else}}0{{/if}}">
   <input type="hidden" name="start_date" value="{{as_date employee.start_date}}">
   <input type="hidden" name="end_date" value="{{as_date employee.end_date}}">
@@ -49,7 +50,9 @@
     <label class="control-label">Is Accrued Allowance?</label>
     <p>{{# if user_allowance.is_accrued_allowance }}Yes{{else}}No{{/if}}</p>
     <span class="help-block">
-      The way of available allowance calculation is defined on department level. <a href="/settings/departments/edit/{{employee.DepartmentId}}">More details <i class="fa fa-angle-double-right"></i></a>
+      The way of available allowance calculation is defined on department level. <a
+            href="/settings/departments/edit/{{employee.department_id}}">More details <i
+            class="fa fa-angle-double-right"></i></a>
     </span>
   </div>
 

@@ -1,22 +1,20 @@
+'use strict'
 
-'use strict';
-
-
-var test                 = require('selenium-webdriver/testing'),
-  By                     = require('selenium-webdriver').By,
-  expect                 = require('chai').expect,
-  Promise                = require("bluebird"),
-  until                  = require('selenium-webdriver').until,
-  register_new_user_func = require('../../lib/register_new_user'),
-  login_user_func        = require('../../lib/login_with_user'),
-  open_page_func         = require('../../lib/open_page'),
-  submit_form_func       = require('../../lib/submit_form'),
-  check_elements_func    = require('../../lib/check_elements'),
-  add_new_user_func      = require('../../lib/add_new_user'),
-  By                     = require('selenium-webdriver').By,
-  new_department_form_id = '#add_new_department_form',
-  config                 = require('../../lib/config'),
-  application_host       = config.get_application_host();
+const test = require('selenium-webdriver/testing');
+  var By = require('selenium-webdriver').By;
+  const expect = require('chai').expect;
+  const Promise = require('bluebird');
+  const until = require('selenium-webdriver').until;
+  const register_new_user_func = require('../../lib/register_new_user');
+  const login_user_func = require('../../lib/login_with_user');
+  const open_page_func = require('../../lib/open_page');
+  const submit_form_func = require('../../lib/submit_form');
+  const check_elements_func = require('../../lib/check_elements');
+  const add_new_user_func = require('../../lib/add_new_user');
+  var By = require('selenium-webdriver').By;
+  const new_department_form_id = '#add_new_department_form';
+  const config = require('../../lib/config');
+  const application_host = config.get_application_host()
 
 /*
  *  Scenario to check that filtering by department feature on users page.
@@ -31,155 +29,166 @@ var test                 = require('selenium-webdriver/testing'),
  *
  * */
 
-describe('Check filtering on "users" page', function(){
-  var driver;
+describe('Check filtering on "users" page', function() {
+  let driver
 
-  this.timeout( config.get_execution_timeout() );
+  this.timeout(config.get_execution_timeout())
 
-  it("Performing registration process", function(done){
+  it('Performing registration process', function(done) {
     register_new_user_func({
-      application_host : application_host,
+      application_host
+    }).then(function(data) {
+      driver = data.driver
+      done()
     })
-    .then(function(data){
-      driver = data.driver;
-      done();
-    });
-  });
+  })
 
-  it('Create new department "IT": open page', function(done){
+  it('Create new department "IT": open page', function(done) {
     open_page_func({
-      url    : application_host + 'settings/departments/',
-      driver : driver,
+      url: application_host + 'settings/departments/',
+      driver
+    }).then(function() {
+      done()
     })
-    .then(function(){ done() });
-  });
+  })
 
-  it("... and submit the form", function(done){
-    driver.findElement(By.css('#add_new_department_btn'))
-      .then(function(el){
-        return el.click();
+  it('... and submit the form', function(done) {
+    driver
+      .findElement(By.css('#add_new_department_btn'))
+      .then(function(el) {
+        return el.click()
       })
-      .then(function(){
-
+      .then(function() {
         // This is very important line when working with Bootstrap modals!
-        driver.sleep(1000);
+        driver.sleep(1000)
 
         submit_form_func({
-          driver      : driver,
-          form_params : [{
-            selector : new_department_form_id+' input[name="name__new"]',
-            value : 'IT',
-          },{
-            selector        : new_department_form_id+' select[name="allowance__new"]',
-            option_selector : 'option[value="10"]',
-            value : '10',
-          }],
-          submit_button_selector : new_department_form_id+' button[type="submit"]',
-          message : /Changes to departments were saved/,
+          driver,
+          form_params: [
+            {
+              selector: new_department_form_id + ' input[name="name__new"]',
+              value: 'IT'
+            },
+            {
+              selector:
+                new_department_form_id + ' select[name="allowance__new"]',
+              option_selector: 'option[value="10"]',
+              value: '10'
+            }
+          ],
+          submit_button_selector:
+            new_department_form_id + ' button[type="submit"]',
+          message: /Changes to departments were saved/
+        }).then(function() {
+          done()
         })
-        .then(function(){ done() });
-      });
-  });
+      })
+  })
 
-  it("Create new non-admin user", function(done){
+  it('Create new non-admin user', function(done) {
     add_new_user_func({
-      application_host : application_host,
-      driver           : driver,
+      application_host,
+      driver,
       // We know that departments are ordered alphabetically, so newly
       // added "ID" is before default "Sales" one
-      department_index : "0",
+      department_index: '0'
+    }).then(function() {
+      done()
     })
-    .then(function(){ done() });
-  });
+  })
 
-  it("Open 'users' page", function(done){
+  it("Open 'users' page", function(done) {
     open_page_func({
-      url    : application_host + 'users/',
-      driver : driver,
+      url: application_host + 'users/',
+      driver
+    }).then(function() {
+      done()
     })
-    .then(function(){ done() });
-  });
+  })
 
-  it("Make sure that both users are shown", function(done){
-    driver
-      .findElements(By.css( 'td.user_department' ))
-      .then(function(elements){
-        expect(elements.length).to.be.equal(2);
-        done();
-      });
-  });
+  it('Make sure that both users are shown', function(done) {
+    driver.findElements(By.css('td.user_department')).then(function(elements) {
+      expect(elements.length).to.be.equal(2)
+      done()
+    })
+  })
 
-  it("Click on IT department", function(done){
+  it('Click on IT department', function(done) {
     driver
       // Departments are ordered by names so we are sure that first item
       // after general link "All" is going to be "IT"
-      .findElement( By.css('div.all-departments a:nth-child(2)') )
-      .then(function(element){
-        element.click();
-        return driver.wait(until.elementLocated(By.css('h1')), 1000);
+      .findElement(By.css('div.all-departments a:nth-child(2)'))
+      .then(function(element) {
+        element.click()
+        return driver.wait(until.elementLocated(By.css('h1')), 1000)
       })
-      .then(function(){ done() });
-  });
-
-  it("... and make sure only user from IT department is shown", function(done){
-    driver
-      .findElements(By.css( 'td.user_department' ))
-      .then(function(elements){
-        expect(elements.length).to.be.equal(1);
-        return elements[0].getText();
+      .then(function() {
+        done()
       })
-      .then(function(text){
-        expect(text).to.be.equal('IT');
-        done();
-      });
-  });
+  })
 
-  it('Click on "Sales"', function(done){
-   driver
-     // Departments are ordered by names so we are sure that second item
-     // after general link "All" is going to be "Sales"
-     .findElement( By.css('div.all-departments a:nth-child(3)') )
-     .then(function(element){
-       element.click();
-       return driver.wait(until.elementLocated(By.css('h1')), 1000);
-     })
-     .then(function(){ done() });
-  });
-
-  it("... department and make sure that only one user from that department is shown", function(done){
+  it('... and make sure only user from IT department is shown', function(done) {
     driver
-      .findElements(By.css( 'td.user_department' ))
-      .then(function(elements){
-        expect(elements.length).to.be.equal(1);
-        return elements[0].getText();
+      .findElements(By.css('td.user_department'))
+      .then(function(elements) {
+        expect(elements.length).to.be.equal(1)
+        return elements[0].getText()
       })
-      .then(function(text){
-        expect(text).to.be.equal('Sales');
-        done();
-      });
-  });
-
-  it('Click on "All" filter', function(done){
-    driver
-      .findElement( By.css('div.all-departments a:nth-child(1)') )
-      .then(function(element){
-        element.click();
-        return driver.wait(until.elementLocated(By.css('h1')), 1000);
+      .then(function(text) {
+        expect(text).to.be.equal('IT')
+        done()
       })
-      .then(function(){ done() });
-  });
+  })
 
-  it("... and make sure that both users are presenyed", function(done){
+  it('Click on "Sales"', function(done) {
     driver
-      .findElements(By.css( 'td.user_department' ))
-      .then(function(elements){
-        expect(elements.length).to.be.equal(2);
-        done();
-      });
-  });
+      // Departments are ordered by names so we are sure that second item
+      // after general link "All" is going to be "Sales"
+      .findElement(By.css('div.all-departments a:nth-child(3)'))
+      .then(function(element) {
+        element.click()
+        return driver.wait(until.elementLocated(By.css('h1')), 1000)
+      })
+      .then(function() {
+        done()
+      })
+  })
 
-  after(function(done){
-    driver.quit().then(function(){ done(); });
-  });
+  it('... department and make sure that only one user from that department is shown', function(done) {
+    driver
+      .findElements(By.css('td.user_department'))
+      .then(function(elements) {
+        expect(elements.length).to.be.equal(1)
+        return elements[0].getText()
+      })
+      .then(function(text) {
+        expect(text).to.be.equal('Sales')
+        done()
+      })
+  })
 
-});
+  it('Click on "All" filter', function(done) {
+    driver
+      .findElement(By.css('div.all-departments a:nth-child(1)'))
+      .then(function(element) {
+        element.click()
+        return driver.wait(until.elementLocated(By.css('h1')), 1000)
+      })
+      .then(function() {
+        done()
+      })
+  })
+
+  it('... and make sure that both users are presenyed', function(done) {
+    driver.findElements(By.css('td.user_department')).then(function(elements) {
+      expect(elements.length).to.be.equal(2)
+      done()
+    })
+  })
+
+  after(function(done) {
+    driver.quit().then(function() {
+      done()
+    })
+  })
+})

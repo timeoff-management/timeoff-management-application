@@ -1,0 +1,7 @@
+Hello {{#with approver }}{{this.full_name}}{{/with}},
+
+*{{#with requester}}{{this.full_name}}{{/with}} cancelled* leave request *{{>leave_request_detail leave=leave }}*.
+
+There is no need to perform any actions regarding this leave.
+
+Thanks
