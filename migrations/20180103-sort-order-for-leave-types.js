@@ -6,7 +6,7 @@ var models = require('../lib/model/db');
 module.exports = {
   up: function (queryInterface, Sequelize) {
 
-    queryInterface.describeTable('LeaveTypes').then(function(attributes){
+    return queryInterface.describeTable('LeaveTypes').then(function(attributes){
 
       if (attributes.hasOwnProperty('sort_order')) {
         return 1;

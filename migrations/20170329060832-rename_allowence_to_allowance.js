@@ -5,7 +5,7 @@ var models = require('../lib/model/db');
 module.exports = {
   up: function (queryInterface, Sequelize) {
 
-    queryInterface.describeTable('Departments').then(function(attributes){
+    return queryInterface.describeTable('Departments').then(function(attributes){
 
       if (attributes.hasOwnProperty('allowance')) {
         return 1;

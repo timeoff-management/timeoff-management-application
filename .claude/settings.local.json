@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(head -5 C:UsersITADesktopdevtimeoff-management-applicationlibmodeldb*.js)",
+      "Bash(grep -v \"^$\")",
+      "Bash(node -e \":*)",
+      "Bash(rm -f db.development.sqlite)",
+      "Bash(taskkill /F /IM node.exe)"
+    ]
+  }
+}

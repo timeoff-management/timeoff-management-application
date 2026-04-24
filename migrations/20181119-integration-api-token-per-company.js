@@ -6,30 +6,17 @@ var models = require('../lib/model/db');
 module.exports = {
   up: (queryInterface, Sequelize) => {
 
-    queryInterface.describeTable('Companies').then(attributes => {
+    return queryInterface.describeTable('Companies').then(attributes => {
 
-      if (attributes.hasOwnProperty('integration_api_token')) {
-        return 1;
-      }
+      const addToken = attributes.hasOwnProperty('integration_api_token')
+        ? Promise.resolve()
+        : queryInterface.addColumn('Companies', 'integration_api_token', models.Company.attributes.integration_api_token);
 
-      return queryInterface.addColumn(
-        'Companies',
-        'integration_api_token',
-        models.Company.attributes.integration_api_token
-      );
-    });
+      const addEnabled = attributes.hasOwnProperty('integration_api_enabled')
+        ? Promise.resolve()
+        : queryInterface.addColumn('Companies', 'integration_api_enabled', models.Company.attributes.integration_api_enabled);
 
-    queryInterface.describeTable('Companies').then(attributes => {
-
-      if (attributes.hasOwnProperty('integration_api_enabled')) {
-        return 1;
-      }
-
-      return queryInterface.addColumn(
-        'Companies',
-        'integration_api_enabled',
-        models.Company.attributes.integration_api_enabled
-      );
+      return addToken.then(() => addEnabled);
     });
 
   },

@@ -1,21 +1,26 @@
 {
   "development": {
-    "dialect": "sqlite",
-    "storage": "./db.development.sqlite",
-    "logging": false 
+    "username": "root",
+    "password": "90swift15",
+    "database": "timeoff_manager",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "logging": false
   },
   "test": {
     "username": "root",
-    "password": null,
-    "database": "database_test",
+    "password": "90swift15",
+    "database": "timeoff_manager",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "logging": false
   },
   "production": {
     "username": "root",
-    "password": null,
-    "database": "database_production",
+    "password": "90swift15",
+    "database": "timeoff_manager",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "logging": false
   }
 }

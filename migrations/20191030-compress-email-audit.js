@@ -9,7 +9,7 @@ const
 module.exports = {
   up: () => {
     return models.EmailAudit.findAll()
-      .map(rec => rec.update({body : htmlToText.fromString(rec.body)}), {concurrency: 1})
+      .then(recs => Promise.map(recs, rec => rec.update({body : htmlToText.fromString(rec.body)}), {concurrency: 1}))
       .then(() => console.log('Done!'));
   },
 
