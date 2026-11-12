@@ -46,7 +46,7 @@ describe('calendar feed event names', function() {
   };
   const user = {
     full_name: () => 'Daniel Zehe',
-    company: {get_today: () => moment.utc('2026-11-01')},
+    company: {timezone: 'Asia/Singapore', get_today: () => moment.utc('2026-11-01')},
     promise_calendar: () => Promise.resolve([{as_for_team_view: () => [day]}]),
   };
 
@@ -72,4 +72,41 @@ describe('calendar feed event names', function() {
       day.leaveLabel = 'Annual Leave';
     }
   });
+
+  it('keeps all-day leave on the local calendar date in both feeds', async function() {
+    for (const token of ['personal', 'team']) {
+      const body = await fetchFeed(token, this.feedModel);
+      expect(body).to.contain('X-WR-TIMEZONE:Asia/Singapore');
+      expect(body).to.contain('DTSTART;VALUE=DATE:20261119');
+      expect(body).to.contain('DTEND;VALUE=DATE:20261120');
+    }
+  });
+
+  it('converts half-day times from the company timezone to UTC', async function() {
+    day.is_leave_afternoon = false;
+    try {
+      const body = await fetchFeed('personal', this.feedModel);
+      expect(body).to.contain('DTSTART:20261119T010000Z');
+      expect(body).to.contain('DTEND:20261119T050000Z');
+    } finally {
+      day.is_leave_afternoon = true;
+    }
+  });
+
+  it('uses the daylight-saving offset on the leave date', async function() {
+    day.is_leave_morning = false;
+    day.moment = moment.utc('2026-07-19');
+    user.company.timezone = 'Europe/London';
+    try {
+      const body = await fetchFeed('team', this.feedModel);
+      expect(body).to.contain('X-WR-TIMEZONE:Europe/London');
+      expect(body).to.contain('DTSTART:20260719T120000Z');
+      expect(body).to.contain('DTEND:20260719T160000Z');
+    } finally {
+      day.is_leave_morning = true;
+      day.moment = moment.utc('2026-11-19');
+      user.company.timezone = 'Asia/Singapore';
+    }
+  });
+
 });
