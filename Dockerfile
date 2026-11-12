@@ -25,6 +25,9 @@ RUN npm install
 
 FROM alpine:latest
 
+
+ARG USERID
+
 LABEL org.label-schema.schema-version="1.0"
 LABEL org.label-schema.docker.cmd="docker run -d -p 3000:3000 --name alpine_timeoff"
 
@@ -32,11 +35,13 @@ RUN apk add --no-cache \
     nodejs npm \
     vim
 
-RUN adduser --system app --home /app
-USER app
+RUN adduser --system timeoff-app --home /app --uid $USERID
+USER timeoff-app
 WORKDIR /app
 COPY . /app
 COPY --from=dependencies node_modules ./node_modules
+ 
+
 
 CMD npm start
 
